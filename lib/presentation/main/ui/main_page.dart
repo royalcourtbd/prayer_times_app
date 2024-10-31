@@ -10,12 +10,12 @@ class MainPage extends StatelessWidget {
   MainPage({super.key});
   final MainPresenter _mainPresenter = locate<MainPresenter>();
 
-  final List<Widget> _pages = const <Widget>[
-    PrayerTimePage(),
-    PrayerTimePage(),
-    PrayerTimePage(),
-    PrayerTimePage(),
-    PrayerTimePage(),
+  final List<Widget> _pages = <Widget>[
+    const PrayerTimePage(),
+    const PrayerTimePage(),
+    const PrayerTimePage(),
+    const PrayerTimePage(),
+    const PrayerTimePage(),
   ];
 
   @override
