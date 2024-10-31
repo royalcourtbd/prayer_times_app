@@ -398,20 +398,29 @@ Future<void> openUrl({
 
         if (!validUri) {
           await showMessage(
-              message: errorMessage, context: PrayerTimes.globalContext);
+              // ignore: use_build_context_synchronously
+              message: errorMessage,
+              // ignore: use_build_context_synchronously
+              context: PrayerTimes.globalContext);
           return;
         }
 
         validFallbackUri
             ? await launchUrl(fallbackUri, mode: LaunchMode.externalApplication)
             : await showMessage(
-                message: errorMessage, context: PrayerTimes.globalContext);
+                // ignore: use_build_context_synchronously
+                message: errorMessage,
+                // ignore: use_build_context_synchronously
+                context: PrayerTimes.globalContext);
       } catch (e) {
         logErrorStatic(e, _fileName);
         validFallbackUri
             ? await launchUrl(fallbackUri)
             : await showMessage(
-                message: errorMessage, context: PrayerTimes.globalContext);
+                // ignore: use_build_context_synchronously
+                message: errorMessage,
+                // ignore: use_build_context_synchronously
+                context: PrayerTimes.globalContext);
       }
     });
   });
