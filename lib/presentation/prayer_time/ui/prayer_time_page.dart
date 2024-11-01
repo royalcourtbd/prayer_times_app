@@ -5,11 +5,11 @@ import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_bui
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_card.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_switch.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/countdown_progress_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/daily_waqt_view.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/notification_permission_section.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/prayer_time_page_app_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/sehri_and_iftar_schedule_card.dart';
 
@@ -22,87 +22,68 @@ class PrayerTimePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return PresentableWidgetBuilder(
-        presenter: _prayerTimePresenter,
-        builder: () {
-          final PrayerTimeUiState currentUiState =
-              _prayerTimePresenter.currentUiState;
-          _prayerTimePresenter.updateContext(context);
-          return Scaffold(
-            appBar: HomePageAppBar(
-              theme: theme,
-              onTapNotification: () =>
-                  showMessage(context: context, message: 'Notification'),
-            ),
-            body: Padding(
-              padding: padding15,
-              child: Column(
-                children: [
-                  CustomCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '28 Rabiu Awal, 1445 H',
-                          style: theme.textTheme.bodyMedium!.copyWith(
-                            color: context.color.titleColor,
-                            fontSize: fourteenPx,
-                            fontWeight: FontWeight.w500,
-                          ),
+      presenter: _prayerTimePresenter,
+      builder: () {
+        final PrayerTimeUiState currentUiState =
+            _prayerTimePresenter.currentUiState;
+        _prayerTimePresenter.updateContext(context);
+        return Scaffold(
+          appBar: HomePageAppBar(
+            theme: theme,
+            onTapNotification: () =>
+                showMessage(context: context, message: 'Notification'),
+          ),
+          body: Padding(
+            padding: padding15,
+            child: Column(
+              children: [
+                CustomCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '28 Rabiu Awal, 1445 H',
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: context.color.titleColor,
+                          fontSize: fourteenPx,
+                          fontWeight: FontWeight.w500,
                         ),
-                        gapH5,
-                        Text(
-                          '15:30',
-                          style: theme.textTheme.bodyMedium!.copyWith(
-                            color: context.color.titleColor,
-                            fontSize: thirtyNinePx,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      ),
+                      gapH5,
+                      Text(
+                        '15:30',
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: context.color.titleColor,
+                          fontSize: thirtyNinePx,
+                          fontWeight: FontWeight.w600,
                         ),
-                        gapH16,
-                        CountdownProgressBar(
-                          theme: theme,
-                          remainingTime: '02:30:32',
-                          title: 'Asr',
-                          progress: 200,
-                        ),
-                        gapH25,
-                        DailyWaqtView(theme: theme),
-                        gapH25,
-                        Text(
-                          'Notify Me',
-                          style: theme.textTheme.bodyMedium!.copyWith(
-                            color: context.color.titleColor,
-                            fontSize: fourteenPx,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Notify me every prayer time',
-                              style: theme.textTheme.bodyMedium!.copyWith(
-                                color: context.color.subTitleColor,
-                                fontSize: twelvePx,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            CustomSwitch(
-                              value: currentUiState.notifyMe,
-                              onChanged: (value) =>
-                                  _prayerTimePresenter.toggleNotifyMe(value),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                      ),
+                      gapH16,
+                      CountdownProgressBar(
+                        theme: theme,
+                        remainingTime: '02:30:32',
+                        title: 'Asr',
+                        progress: 200,
+                      ),
+                      gapH25,
+                      DailyWaqtView(theme: theme),
+                      gapH25,
+                      NotificationPermissionSection(
+                        theme: theme,
+                        notifyMe: currentUiState.notifyMe,
+                        onChanged: (value) =>
+                            _prayerTimePresenter.toggleNotifyMe(value),
+                      ),
+                    ],
                   ),
-                  gapH16,
-                  SehriIftarScheduleCard(theme: theme),
-                ],
-              ),
+                ),
+                gapH16,
+                SehriIftarScheduleCard(theme: theme),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
