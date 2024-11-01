@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:get_it/get_it.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 
 // Implementation Note:
 //
@@ -75,7 +76,9 @@ class ServiceLocator {
   Future<void> _setUpDataSources() async {}
 
   Future<void> _setUpPresenters() async {
-    _serviceLocator.registerFactory(() => loadPresenter(MainPresenter()));
+    _serviceLocator
+      ..registerFactory(() => loadPresenter(MainPresenter()))
+      ..registerLazySingleton(() => loadPresenter(PrayerTimePresenter()));
   }
 
   Future<void> _setUpUseCase() async {}
