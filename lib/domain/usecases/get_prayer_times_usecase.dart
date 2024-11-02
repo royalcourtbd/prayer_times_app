@@ -19,7 +19,8 @@ class GetPrayerTimesUseCase extends BaseUseCase<PrayerTimeEntity> {
     required double longitude,
   }) async {
     return mapResultToEither(() async {
-      final result = await _repository.getPrayerTimes(
+      final Either<String, PrayerTimeEntity> result =
+          await _repository.getPrayerTimes(
         latitude: latitude,
         longitude: longitude,
       );
