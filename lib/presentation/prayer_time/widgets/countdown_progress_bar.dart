@@ -26,7 +26,7 @@ class CountdownProgressBar extends StatelessWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: '$title  ',
+                text: 'Remaining ${title ?? ''}  ',
                 style: theme.textTheme.bodyMedium!.copyWith(
                   color: context.color.titleColor,
                   fontSize: twelvePx,

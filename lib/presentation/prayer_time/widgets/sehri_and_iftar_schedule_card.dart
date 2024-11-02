@@ -9,29 +9,39 @@ class SehriIftarScheduleCard extends StatelessWidget {
   const SehriIftarScheduleCard({
     super.key,
     required this.theme,
+    required this.sehriTime,
+    required this.iftarTime,
+    required this.remainingTime,
+    required this.progress,
+    required this.title,
   });
 
   final ThemeData theme;
+  final String sehriTime;
+  final String iftarTime;
+  final String remainingTime;
+  final double progress;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return CustomCard(
       child: Column(
         children: [
-          const Row(
+          Row(
             children: [
               Expanded(
                 child: FastingTimeItem(
                   icon: SvgPath.icFazrFill,
                   title: 'Sehri',
-                  time: '4:27',
+                  time: sehriTime,
                 ),
               ),
               Expanded(
                 child: FastingTimeItem(
                   icon: SvgPath.icMaghribFill,
                   title: 'Iftar',
-                  time: '18:30',
+                  time: iftarTime,
                 ),
               ),
             ],
@@ -39,8 +49,9 @@ class SehriIftarScheduleCard extends StatelessWidget {
           gapH16,
           CountdownProgressBar(
             theme: theme,
-            progress: 50,
-            remainingTime: '4:27:23',
+            progress: progress,
+            remainingTime: remainingTime,
+            title: title,
           ),
         ],
       ),

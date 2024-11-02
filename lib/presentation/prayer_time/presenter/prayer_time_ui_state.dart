@@ -1,7 +1,9 @@
+// prayer_time_ui_state.dart
 import 'package:flutter/widgets.dart';
 import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
 
 class PrayerTimeUiState extends BaseUiState {
   const PrayerTimeUiState({
@@ -12,25 +14,33 @@ class PrayerTimeUiState extends BaseUiState {
     required this.nowTime,
     required this.activeWaqtType,
     required this.nextWaqtType,
-    required this.remainingDuration, // Changed to Duration
+    required this.remainingDuration,
     required this.remainingTimeProgress,
-    required this.totalDuration, // Added totalDuration
+    required this.totalDuration,
+    required this.fastingRemainingDuration,
+    required this.fastingTotalDuration,
+    required this.fastingProgress,
+    required this.fastingState,
     this.context,
   });
 
   factory PrayerTimeUiState.empty() {
-    return const PrayerTimeUiState(
+    return PrayerTimeUiState(
       isLoading: false,
       userMessage: '',
       notifyMe: false,
       context: null,
       prayerTime: null,
-      nowTime: null,
+      nowTime: DateTime.now(),
       activeWaqtType: null,
       nextWaqtType: null,
-      remainingDuration: Duration(), // Initialize with zero duration
-      totalDuration: Duration(),
+      remainingDuration: const Duration(),
+      totalDuration: const Duration(),
       remainingTimeProgress: 0,
+      fastingRemainingDuration: const Duration(),
+      fastingTotalDuration: const Duration(),
+      fastingProgress: 0,
+      fastingState: FastingState.none,
     );
   }
 
@@ -40,9 +50,15 @@ class PrayerTimeUiState extends BaseUiState {
   final BuildContext? context;
   final WaqtType? activeWaqtType;
   final WaqtType? nextWaqtType;
-  final Duration remainingDuration; // Changed from String to Duration
+  final Duration remainingDuration;
   final Duration totalDuration;
   final double remainingTimeProgress;
+
+  // New fasting related states
+  final Duration fastingRemainingDuration;
+  final Duration fastingTotalDuration;
+  final double fastingProgress;
+  final FastingState fastingState;
 
   @override
   List<Object?> get props => [
@@ -56,6 +72,10 @@ class PrayerTimeUiState extends BaseUiState {
         remainingDuration,
         totalDuration,
         remainingTimeProgress,
+        fastingRemainingDuration,
+        fastingTotalDuration,
+        fastingProgress,
+        fastingState,
         context,
       ];
 
@@ -71,6 +91,10 @@ class PrayerTimeUiState extends BaseUiState {
     Duration? remainingDuration,
     Duration? totalDuration,
     double? remainingTimeProgress,
+    Duration? fastingRemainingDuration,
+    Duration? fastingTotalDuration,
+    double? fastingProgress,
+    FastingState? fastingState,
   }) {
     return PrayerTimeUiState(
       isLoading: isLoading ?? this.isLoading,
@@ -85,6 +109,11 @@ class PrayerTimeUiState extends BaseUiState {
       totalDuration: totalDuration ?? this.totalDuration,
       remainingTimeProgress:
           remainingTimeProgress ?? this.remainingTimeProgress,
+      fastingRemainingDuration:
+          fastingRemainingDuration ?? this.fastingRemainingDuration,
+      fastingTotalDuration: fastingTotalDuration ?? this.fastingTotalDuration,
+      fastingProgress: fastingProgress ?? this.fastingProgress,
+      fastingState: fastingState ?? this.fastingState,
     );
   }
 }
