@@ -1,6 +1,12 @@
 import 'dart:async';
 import 'package:get_it/get_it.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
+import 'package:qibla_and_prayer_times/data/datasources/prayer_time_datasource.dart';
+import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
+import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 
@@ -66,20 +72,32 @@ class ServiceLocator {
 
   Future<void> _setUpAudioService() async {}
 
-  Future<void> _setUpRepositories() async {}
+  Future<void> _setUpRepositories() async {
+    _serviceLocator.registerLazySingleton<PrayerTimeRepository>(
+        () => PrayerTimeRepositoryImpl(locate()));
+  }
 
   Future<void> _setUpServices() async {
+    _serviceLocator.registerLazySingleton<ErrorMessageHandler>(
+        () => ErrorMessageHandlerImpl());
     await _setUpAudioService();
     await _setUpFirebaseServices();
   }
 
-  Future<void> _setUpDataSources() async {}
+  Future<void> _setUpDataSources() async {
+    _serviceLocator.registerLazySingleton<PrayerTimeDataSource>(
+        () => PrayerTimeDataSourceImpl());
+  }
 
   Future<void> _setUpPresenters() async {
     _serviceLocator
       ..registerFactory(() => loadPresenter(MainPresenter()))
-      ..registerLazySingleton(() => loadPresenter(PrayerTimePresenter()));
+      ..registerLazySingleton(
+          () => loadPresenter(PrayerTimePresenter(locate())));
   }
 
-  Future<void> _setUpUseCase() async {}
+  Future<void> _setUpUseCase() async {
+    _serviceLocator
+        .registerLazySingleton(() => GetPrayerTimesUseCase(locate(), locate()));
+  }
 }

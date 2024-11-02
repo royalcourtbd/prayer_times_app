@@ -2,6 +2,7 @@ class SvgPath {
   SvgPath._();
   static const String icCalenderOutline = 'assets/svg/ic_calendar_outline.svg';
   static const String icCalenderFill = 'assets/svg/ic_calendar_fill.svg';
+  static const String icCalenderOutline2 = 'assets/svg/ic_calendar_2.svg';
   static const String icCategoryOutline = 'assets/svg/ic_category_outline.svg';
   static const String icCategoryFill = 'assets/svg/ic_category_fill.svg';
   static const String icHomeOutline = 'assets/svg/ic_home_outline.svg';
@@ -23,4 +24,5 @@ class SvgPath {
   static const String icMaghribFill = 'assets/svg/ic_magrib_fill.svg';
   static const String icIshaOutline = 'assets/svg/ic_isha_outline.svg';
   static const String icIshaFill = 'assets/svg/ic_isha_fill.svg';
+  static const String icCrown = 'assets/svg/ic_crown.svg';
 }

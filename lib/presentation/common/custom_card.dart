@@ -6,16 +6,18 @@ class CustomCard extends StatelessWidget {
   const CustomCard({
     super.key,
     required this.child,
+    this.backgroundColor,
   });
   final Widget child;
+  final Color? backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: padding15,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: context.color.backgroundColor,
-        borderRadius: radius10,
+        color: backgroundColor ?? context.color.backgroundColor,
+        borderRadius: radius12,
       ),
       child: child,
     );

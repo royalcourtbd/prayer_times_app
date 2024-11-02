@@ -607,7 +607,7 @@ String getFormattedDate(DateTime? date, {String format = 'dd MMM yyyy'}) {
 }
 
 String getFormattedTime(DateTime? time) {
-  return time != null ? DateFormat('hh:mm a').format(time) : '--:--';
+  return time != null ? DateFormat('hh:mm').format(time) : '--:--';
 }
 
 String getFormattedDuration(Duration? duration) {

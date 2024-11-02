@@ -1,0 +1,58 @@
+// lib/presentation/prayer_time/models/waqt.dart
+
+import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
+import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+
+enum WaqtType {
+  fajr,
+  dhuhr,
+  asr,
+  maghrib,
+  isha;
+
+  String get displayName {
+    switch (this) {
+      case WaqtType.fajr:
+        return 'Fajr';
+      case WaqtType.dhuhr:
+        return 'Dhuhr';
+      case WaqtType.asr:
+        return 'Asr';
+      case WaqtType.maghrib:
+        return 'Maghrib';
+      case WaqtType.isha:
+        return 'Isha';
+    }
+  }
+
+  String get icon {
+    switch (this) {
+      case WaqtType.fajr:
+        return SvgPath.icFazrFill;
+      case WaqtType.dhuhr:
+        return SvgPath.icDhuhrFill;
+      case WaqtType.asr:
+        return SvgPath.icAsrFill;
+      case WaqtType.maghrib:
+        return SvgPath.icMaghribFill;
+      case WaqtType.isha:
+        return SvgPath.icIshaFill;
+    }
+  }
+}
+
+class WaqtViewModel {
+  final WaqtType type;
+  final DateTime? time;
+  final bool isActive;
+
+  const WaqtViewModel({
+    required this.type,
+    required this.time,
+    this.isActive = false,
+  });
+
+  String get displayName => type.displayName;
+  String get icon => type.icon;
+  String get formattedTime => getFormattedTime(time);
+}
