@@ -95,7 +95,13 @@ class PrayerTimePage extends StatelessWidget {
                     title: currentUiState.fastingState.displayName,
                   ),
                   gapH16,
-                  PrayerTrackerWidget(theme: theme),
+                  PrayerTrackerWidget(
+                    theme: theme,
+                    trackers: currentUiState.prayerTrackers,
+                    onTap: (p0) {
+                      _prayerTimePresenter.togglePrayerStatus(p0);
+                    },
+                  ),
                 ],
               ),
             ),

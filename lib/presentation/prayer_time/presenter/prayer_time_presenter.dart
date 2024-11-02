@@ -7,6 +7,7 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/models/prayer_tracker.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_ui_state.dart';
@@ -24,7 +25,10 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   @override
   void onInit() {
     super.onInit();
-    getPrayerTimes();
+
+    getPrayerTimes().then((_) {
+      _initializePrayerTracker();
+    });
     _startTimer();
   }
 
@@ -55,6 +59,56 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
         },
       );
     });
+  }
+
+  void _initializePrayerTracker() {
+    final DateTime now = _getCurrentDateTime();
+    final List<PrayerTrackerModel> trackers = [];
+
+    for (final type in WaqtType.values) {
+      final DateTime? prayerTime = _getWaqtTime(type);
+
+      final bool isSelectable = prayerTime != null && prayerTime.isBefore(now);
+
+      trackers.add(PrayerTrackerModel(
+        type: type,
+        isSelectable: isSelectable,
+      ));
+    }
+
+    uiState.value = currentUiState.copyWith(
+      prayerTrackers: trackers,
+    );
+  }
+
+  void togglePrayerStatus(WaqtType type) {
+    print('togglePrayerStatus called for: $type');
+    if (!currentUiState.prayerTrackers[type.index].isSelectable) {
+      print('Prayer is not selectable');
+      return;
+    }
+
+    final List<PrayerTrackerModel> trackers =
+        List<PrayerTrackerModel>.from(currentUiState.prayerTrackers);
+    final currentStatus = trackers[type.index].status;
+
+    print('Current status: $currentStatus');
+
+    final newStatus = currentStatus == PrayerStatus.none
+        ? PrayerStatus.completed
+        : PrayerStatus.none;
+
+    print('New status: $newStatus');
+
+    trackers[type.index] = trackers[type.index].copyWith(
+      status: newStatus,
+    );
+
+    uiState.value = currentUiState.copyWith(
+      prayerTrackers: trackers,
+    );
+
+    print('Updated trackers: ${uiState.value.prayerTrackers}');
   }
 
   DateTime _getCurrentDateTime() =>

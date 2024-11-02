@@ -2,6 +2,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/models/prayer_tracker.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
 
@@ -21,6 +22,7 @@ class PrayerTimeUiState extends BaseUiState {
     required this.fastingTotalDuration,
     required this.fastingProgress,
     required this.fastingState,
+    required this.prayerTrackers,
     this.context,
   });
 
@@ -41,6 +43,7 @@ class PrayerTimeUiState extends BaseUiState {
       fastingTotalDuration: const Duration(),
       fastingProgress: 0,
       fastingState: FastingState.none,
+      prayerTrackers: const [],
     );
   }
 
@@ -53,6 +56,7 @@ class PrayerTimeUiState extends BaseUiState {
   final Duration remainingDuration;
   final Duration totalDuration;
   final double remainingTimeProgress;
+  final List<PrayerTrackerModel> prayerTrackers;
 
   // New fasting related states
   final Duration fastingRemainingDuration;
@@ -76,6 +80,7 @@ class PrayerTimeUiState extends BaseUiState {
         fastingTotalDuration,
         fastingProgress,
         fastingState,
+        prayerTrackers,
         context,
       ];
 
@@ -95,6 +100,7 @@ class PrayerTimeUiState extends BaseUiState {
     Duration? fastingTotalDuration,
     double? fastingProgress,
     FastingState? fastingState,
+    List<PrayerTrackerModel>? prayerTrackers,
   }) {
     return PrayerTimeUiState(
       isLoading: isLoading ?? this.isLoading,
@@ -114,6 +120,7 @@ class PrayerTimeUiState extends BaseUiState {
       fastingTotalDuration: fastingTotalDuration ?? this.fastingTotalDuration,
       fastingProgress: fastingProgress ?? this.fastingProgress,
       fastingState: fastingState ?? this.fastingState,
+      prayerTrackers: prayerTrackers ?? this.prayerTrackers,
     );
   }
 }
