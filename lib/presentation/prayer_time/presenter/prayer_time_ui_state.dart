@@ -56,6 +56,7 @@ class PrayerTimeUiState extends BaseUiState {
         remainingDuration,
         totalDuration,
         remainingTimeProgress,
+        context,
       ];
 
   PrayerTimeUiState copyWith({

@@ -26,7 +26,7 @@ class CountdownProgressBar extends StatelessWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: 'Remaining ${title ?? ''}  ',
+                text: '$title  ',
                 style: theme.textTheme.bodyMedium!.copyWith(
                   color: context.color.titleColor,
                   fontSize: twelvePx,
@@ -60,7 +60,10 @@ class CountdownProgressBar extends StatelessWidget {
               height: ninePx,
               width: MediaQuery.sizeOf(context).width *
                   ((100 - progress!) / 100), // Reverse progress
-              color: context.color.primaryColor900,
+              decoration: BoxDecoration(
+                color: context.color.primaryColor900,
+                borderRadius: radius10,
+              ),
             ),
           ],
         ),

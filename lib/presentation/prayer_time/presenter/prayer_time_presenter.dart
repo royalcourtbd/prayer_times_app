@@ -197,7 +197,8 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   }
 
   String getCurrentTime() {
-    final DateTime now = currentUiState.nowTime ?? _timeService.getCurrentTime();
+    final DateTime now =
+        currentUiState.nowTime ?? _timeService.getCurrentTime();
     return getFormattedTime(now);
   }
 
@@ -215,7 +216,8 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   @override
   Future<void> addUserMessage(String message) async {
     uiState.value = currentUiState.copyWith(userMessage: message);
-    showMessage(message: message, context: currentUiState.context);
+    showMessage(
+        message: currentUiState.userMessage, context: currentUiState.context);
   }
 
   @override
