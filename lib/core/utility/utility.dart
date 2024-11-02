@@ -601,13 +601,13 @@ String getFormattedCurrentDate() {
   return DateFormat('MMM dd, yyyy - EEEE').format(DateTime.now());
 }
 
+String getFormattedTime(DateTime? time) {
+  return time != null ? DateFormat('HH:mm').format(time) : '--:--';
+}
+
 String getFormattedDate(DateTime? date, {String format = 'dd MMM yyyy'}) {
   if (date == null) return '';
   return DateFormat(format).format(date);
-}
-
-String getFormattedTime(DateTime? time) {
-  return time != null ? DateFormat('hh:mm').format(time) : '--:--';
 }
 
 String getFormattedDuration(Duration? duration) {

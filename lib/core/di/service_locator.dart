@@ -6,6 +6,7 @@ import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_
 import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
 import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
+import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
@@ -78,8 +79,10 @@ class ServiceLocator {
   }
 
   Future<void> _setUpServices() async {
-    _serviceLocator.registerLazySingleton<ErrorMessageHandler>(
-        () => ErrorMessageHandlerImpl());
+    _serviceLocator
+      ..registerLazySingleton<ErrorMessageHandler>(
+          () => ErrorMessageHandlerImpl())
+      ..registerLazySingleton(() => TimeService());
     await _setUpAudioService();
     await _setUpFirebaseServices();
   }
@@ -93,7 +96,7 @@ class ServiceLocator {
     _serviceLocator
       ..registerFactory(() => loadPresenter(MainPresenter()))
       ..registerLazySingleton(
-          () => loadPresenter(PrayerTimePresenter(locate())));
+          () => loadPresenter(PrayerTimePresenter(locate(), locate())));
   }
 
   Future<void> _setUpUseCase() async {

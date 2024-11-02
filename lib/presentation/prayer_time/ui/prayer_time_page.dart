@@ -30,6 +30,7 @@ class PrayerTimePage extends StatelessWidget {
         final PrayerTimeUiState currentUiState =
             _prayerTimePresenter.currentUiState;
         _prayerTimePresenter.updateContext(context);
+
         return Scaffold(
           appBar: HomePageAppBar(
             theme: theme,
@@ -55,7 +56,7 @@ class PrayerTimePage extends StatelessWidget {
                         ),
                         gapH5,
                         Text(
-                          '15:30',
+                          _prayerTimePresenter.getCurrentTime(),
                           style: theme.textTheme.bodyMedium!.copyWith(
                             color: context.color.titleColor,
                             fontSize: thirtyNinePx,
@@ -65,9 +66,10 @@ class PrayerTimePage extends StatelessWidget {
                         gapH16,
                         CountdownProgressBar(
                           theme: theme,
-                          remainingTime: '02:30:32',
-                          title: 'Asr',
-                          progress: 200,
+                          progress: currentUiState.remainingTimeProgress,
+                          remainingTime:
+                              _prayerTimePresenter.getFormattedRemainingTime(),
+                          title: _prayerTimePresenter.getRemainingTimeText(),
                         ),
                         gapH25,
                         DailyWaqtView(

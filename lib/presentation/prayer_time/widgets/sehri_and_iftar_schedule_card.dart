@@ -39,9 +39,8 @@ class SehriIftarScheduleCard extends StatelessWidget {
           gapH16,
           CountdownProgressBar(
             theme: theme,
-            title: 'Sehri',
+            progress: 50,
             remainingTime: '4:27:23',
-            progress: 100,
           ),
         ],
       ),

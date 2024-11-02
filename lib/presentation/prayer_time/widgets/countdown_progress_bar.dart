@@ -56,13 +56,11 @@ class CountdownProgressBar extends StatelessWidget {
               ),
             ),
             AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 500), // Smooth animation
               height: ninePx,
-              width: progress,
-              decoration: BoxDecoration(
-                color: context.color.primaryColor900,
-                borderRadius: radius10,
-              ),
+              width: MediaQuery.sizeOf(context).width *
+                  ((100 - progress!) / 100), // Reverse progress
+              color: context.color.primaryColor900,
             ),
           ],
         ),
