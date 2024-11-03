@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:get_it/get_it.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
-import 'package:qibla_and_prayer_times/data/datasources/prayer_time_datasource.dart';
+import 'package:qibla_and_prayer_times/data/datasources/remote/prayer_time_datasource.dart';
 import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
