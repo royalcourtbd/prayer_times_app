@@ -4,28 +4,38 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
+import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/models/prayer_tracker.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
+
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_ui_state.dart';
 
 class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   final GetPrayerTimesUseCase _getPrayerTimesUseCase;
+  final GetActiveWaqtUseCase _getActiveWaqtUseCase;
+  final GetRemainingTimeUseCase _getRemainingTimeUseCase;
   final TimeService _timeService;
 
-  PrayerTimePresenter(this._getPrayerTimesUseCase, this._timeService);
-  final Obs<PrayerTimeUiState> uiState = Obs(PrayerTimeUiState.empty());
+  PrayerTimePresenter(
+    this._getPrayerTimesUseCase,
+    this._getActiveWaqtUseCase,
+    this._getRemainingTimeUseCase,
+    this._timeService,
+  );
 
+  final Obs<PrayerTimeUiState> uiState = Obs(PrayerTimeUiState.empty());
   PrayerTimeUiState get currentUiState => uiState.value;
   Timer? _timer;
 
   @override
   void onInit() {
     super.onInit();
-
     getPrayerTimes().then((_) {
       _initializePrayerTracker();
     });
@@ -35,14 +45,13 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   @override
   void onClose() {
     _timer?.cancel();
-
     super.onClose();
   }
 
-  // Prayer Time Related Methods
   Future<void> getPrayerTimes() async {
     const double latitude = 23.8103;
     const double longitude = 90.4125;
+
     await executeTaskWithLoading(() async {
       await parseDataFromEitherWithUserMessage<PrayerTimeEntity>(
         task: () => _getPrayerTimesUseCase.execute(
@@ -50,12 +59,8 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
           longitude: longitude,
         ),
         onDataLoaded: (PrayerTimeEntity data) {
-          uiState.value = currentUiState.copyWith(
-            prayerTime: data,
-          );
-          _updateActiveWaqt();
-          _updateRemainingTime();
-          _updateFastingState();
+          uiState.value = currentUiState.copyWith(prayerTime: data);
+          _updateAllStates();
         },
       );
     });
@@ -67,55 +72,40 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
     for (final type in WaqtType.values) {
       final DateTime? prayerTime = _getWaqtTime(type);
-
       final bool isSelectable = prayerTime != null && prayerTime.isBefore(now);
 
       trackers.add(PrayerTrackerModel(
+        id: type.toString(),
+        createdAt: now,
+        updatedAt: now,
         type: type,
         isSelectable: isSelectable,
       ));
     }
 
-    uiState.value = currentUiState.copyWith(
-      prayerTrackers: trackers,
-    );
+    uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
   }
 
   void togglePrayerStatus(WaqtType type) {
-    print('togglePrayerStatus called for: $type');
-    if (!currentUiState.prayerTrackers[type.index].isSelectable) {
-      print('Prayer is not selectable');
-      return;
-    }
+    if (!currentUiState.prayerTrackers[type.index].isSelectable) return;
 
     final List<PrayerTrackerModel> trackers =
         List<PrayerTrackerModel>.from(currentUiState.prayerTrackers);
     final currentStatus = trackers[type.index].status;
 
-    print('Current status: $currentStatus');
-
     final newStatus = currentStatus == PrayerStatus.none
         ? PrayerStatus.completed
         : PrayerStatus.none;
 
-    print('New status: $newStatus');
-
-    trackers[type.index] = trackers[type.index].copyWith(
-      status: newStatus,
-    );
-
-    uiState.value = currentUiState.copyWith(
-      prayerTrackers: trackers,
-    );
-
-    print('Updated trackers: ${uiState.value.prayerTrackers}');
+    trackers[type.index] = trackers[type.index].copyWith(status: newStatus);
+    uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
   }
 
   DateTime _getCurrentDateTime() =>
       currentUiState.nowTime ?? _timeService.getCurrentTime();
 
   DateTime? _getWaqtTime(WaqtType type) {
-    final PrayerTimeEntity? prayerTime = currentUiState.prayerTime;
+    final prayerTime = currentUiState.prayerTime;
     if (prayerTime == null) return null;
 
     switch (type) {
@@ -132,99 +122,60 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     }
   }
 
-  // Active Waqt Management
-  void _updateActiveWaqt() {
-    final DateTime now = _getCurrentDateTime();
-    WaqtType? activeType;
-    WaqtType? nextType;
+  Future<void> _updateActiveWaqt() async {
+    if (currentUiState.prayerTime == null) return;
 
-    // Get all prayer times for today and tomorrow
-    final List<MapEntry<WaqtType, DateTime?>> prayers = [];
-
-    // Add today's prayers
-    prayers.addAll(WaqtType.values
-        .map((WaqtType type) => MapEntry(type, _getWaqtTime(type)))
-        .where((MapEntry<WaqtType, DateTime?> entry) => entry.value != null));
-
-    // Add tomorrow's Fajr
-    final DateTime? tomorrowFajr =
-        _getWaqtTime(WaqtType.fajr)?.add(const Duration(days: 1));
-    if (tomorrowFajr != null) {
-      prayers.add(MapEntry(WaqtType.fajr, tomorrowFajr));
-    }
-
-    // Sort prayers by time
-    prayers.sort(
-        (MapEntry<WaqtType, DateTime?> a, MapEntry<WaqtType, DateTime?> b) =>
-            a.value!.compareTo(b.value!));
-
-    // Find current and next prayer
-    for (int i = 0; i < prayers.length; i++) {
-      if (now.isBefore(prayers[i].value!)) {
-        activeType = i > 0 ? prayers[i - 1].key : prayers.last.key;
-        nextType = prayers[i].key;
-        break;
-      }
-    }
-
-    // Update state
-    if (activeType != currentUiState.activeWaqtType ||
-        nextType != currentUiState.nextWaqtType) {
-      uiState.value = currentUiState.copyWith(
-        activeWaqtType: activeType,
-        nextWaqtType: nextType,
-      );
-    }
+    await parseDataFromEitherWithUserMessage(
+      task: () => _getActiveWaqtUseCase.execute(
+        prayerTime: currentUiState.prayerTime!,
+      ),
+      onDataLoaded: (result) {
+        if (result.activeWaqt != currentUiState.activeWaqtType ||
+            result.nextWaqt != currentUiState.nextWaqtType) {
+          uiState.value = currentUiState.copyWith(
+            activeWaqtType: result.activeWaqt,
+            nextWaqtType: result.nextWaqt,
+          );
+        }
+      },
+    );
   }
 
-  // Remaining Time Management
-  void _updateRemainingTime() {
+  Future<void> _updateRemainingTime() async {
     if (currentUiState.activeWaqtType == null ||
         currentUiState.nextWaqtType == null) {
-      uiState.value = currentUiState.copyWith(
-        remainingDuration: const Duration(),
-        totalDuration: const Duration(),
-        remainingTimeProgress: 0,
-      );
+      _resetRemainingTime();
       return;
     }
 
-    final DateTime? currentWaqtTime =
-        _getWaqtTime(currentUiState.activeWaqtType!);
-    final DateTime? nextWaqtTime = _getWaqtTime(currentUiState.nextWaqtType!);
-    final DateTime now = _getCurrentDateTime();
+    final currentWaqtTime = _getWaqtTime(currentUiState.activeWaqtType!);
+    final nextWaqtTime = _getWaqtTime(currentUiState.nextWaqtType!);
 
     if (currentWaqtTime == null || nextWaqtTime == null) {
-      uiState.value = currentUiState.copyWith(
-        remainingDuration: const Duration(),
-        totalDuration: const Duration(),
-        remainingTimeProgress: 0,
-      );
+      _resetRemainingTime();
       return;
     }
 
-    // Handle case when next prayer is tomorrow
-    DateTime adjustedNextWaqtTime = nextWaqtTime;
-    if (nextWaqtTime.isBefore(now)) {
-      adjustedNextWaqtTime = nextWaqtTime.add(const Duration(days: 1));
-    }
+    await parseDataFromEitherWithUserMessage(
+      task: () => _getRemainingTimeUseCase.execute(
+        currentWaqtTime: currentWaqtTime,
+        nextWaqtTime: nextWaqtTime,
+      ),
+      onDataLoaded: (result) {
+        uiState.value = currentUiState.copyWith(
+          remainingDuration: result.remainingDuration,
+          totalDuration: result.totalDuration,
+          remainingTimeProgress: result.progress,
+        );
+      },
+    );
+  }
 
-    final Duration totalDuration =
-        adjustedNextWaqtTime.difference(currentWaqtTime);
-    final Duration remainingDuration = adjustedNextWaqtTime.difference(now);
-
-    // Ensure remaining duration is never negative
-    final Duration validRemainingDuration =
-        remainingDuration.isNegative ? const Duration() : remainingDuration;
-
-    // Calculate progress (100 means full, 0 means empty)
-    final double progress =
-        _calculateProgress(totalDuration, validRemainingDuration);
-
+  void _resetRemainingTime() {
     uiState.value = currentUiState.copyWith(
-      remainingDuration: validRemainingDuration,
-      totalDuration: totalDuration,
-      remainingTimeProgress: progress,
+      remainingDuration: const Duration(),
+      totalDuration: const Duration(),
+      remainingTimeProgress: 0,
     );
   }
 
