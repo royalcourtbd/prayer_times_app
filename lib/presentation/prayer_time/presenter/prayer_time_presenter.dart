@@ -11,6 +11,8 @@ import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_notification_settings_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/update_notification_settings_usecase.dart';
 
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
@@ -21,12 +23,16 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   final GetActiveWaqtUseCase _getActiveWaqtUseCase;
   final GetRemainingTimeUseCase _getRemainingTimeUseCase;
   final TimeService _timeService;
+  final GetNotificationSettingsUseCase _getNotificationSettingsUseCase;
+  final UpdateNotificationSettingsUseCase _updateNotificationSettingsUseCase;
 
   PrayerTimePresenter(
     this._getPrayerTimesUseCase,
     this._getActiveWaqtUseCase,
     this._getRemainingTimeUseCase,
     this._timeService,
+    this._getNotificationSettingsUseCase,
+    this._updateNotificationSettingsUseCase,
   );
 
   final Obs<PrayerTimeUiState> uiState = Obs(PrayerTimeUiState.empty());
@@ -36,6 +42,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   @override
   void onInit() {
     super.onInit();
+    _loadNotificationSettings();
     getPrayerTimes().then((_) {
       _initializePrayerTracker();
     });
@@ -309,9 +316,14 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   }
 
   // UI Helper Methods
-  void toggleNotifyMe(bool value) {
-    uiState.value = currentUiState.copyWith(notifyMe: value);
-    addUserMessage('Notify me every prayer time: $value');
+  void toggleNotifyMe(bool value) async {
+    await parseDataFromEitherWithUserMessage(
+      task: () => _updateNotificationSettingsUseCase.execute(isEnabled: value),
+      onDataLoaded: (_) {
+        uiState.value = currentUiState.copyWith(notifyMe: value);
+        addUserMessage('Notify me every prayer time: $value');
+      },
+    );
   }
 
   void updateContext(BuildContext context) {
@@ -329,5 +341,14 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   @override
   Future<void> toggleLoading({required bool loading}) async {
     uiState.value = currentUiState.copyWith(isLoading: loading);
+  }
+
+  Future<void> _loadNotificationSettings() async {
+    await parseDataFromEitherWithUserMessage(
+      task: () => _getNotificationSettingsUseCase.execute(),
+      onDataLoaded: (bool isEnabled) {
+        uiState.value = currentUiState.copyWith(notifyMe: isEnabled);
+      },
+    );
   }
 }

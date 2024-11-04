@@ -2,14 +2,19 @@ import 'dart:async';
 import 'package:get_it/get_it.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/data/datasources/remote/prayer_time_datasource.dart';
+import 'package:qibla_and_prayer_times/data/repositories/notification_settings_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/services/database/prayer_database.dart';
 import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/notification_settings_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
 import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_notification_settings_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/update_notification_settings_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 
@@ -76,15 +81,19 @@ class ServiceLocator {
   Future<void> _setUpAudioService() async {}
 
   Future<void> _setUpRepositories() async {
-    _serviceLocator.registerLazySingleton<PrayerTimeRepository>(
-        () => PrayerTimeRepositoryImpl(locate()));
+    _serviceLocator
+      ..registerLazySingleton<PrayerTimeRepository>(
+          () => PrayerTimeRepositoryImpl(locate()))
+      ..registerLazySingleton<NotificationSettingsRepository>(
+          () => NotificationSettingsRepositoryImpl(locate()));
   }
 
   Future<void> _setUpServices() async {
     _serviceLocator
       ..registerLazySingleton<ErrorMessageHandler>(
           () => ErrorMessageHandlerImpl())
-      ..registerLazySingleton(() => TimeService());
+      ..registerLazySingleton(() => TimeService())
+      ..registerLazySingleton(() => PrayerDatabase());
     await _setUpAudioService();
     await _setUpFirebaseServices();
   }
@@ -97,15 +106,17 @@ class ServiceLocator {
   Future<void> _setUpPresenters() async {
     _serviceLocator
       ..registerFactory(() => loadPresenter(MainPresenter()))
-      ..registerLazySingleton(() => loadPresenter(
-          PrayerTimePresenter(locate(), locate(), locate(), locate())));
+      ..registerLazySingleton(() => loadPresenter(PrayerTimePresenter(
+          locate(), locate(), locate(), locate(), locate(), locate())));
   }
 
   Future<void> _setUpUseCase() async {
     _serviceLocator
       ..registerLazySingleton(() => GetPrayerTimesUseCase(locate(), locate()))
       ..registerLazySingleton(() => GetActiveWaqtUseCase(locate(), locate()))
+      ..registerLazySingleton(() => GetRemainingTimeUseCase(locate(), locate()))
+      ..registerLazySingleton(() => GetNotificationSettingsUseCase(locate()))
       ..registerLazySingleton(
-          () => GetRemainingTimeUseCase(locate(), locate()));
+          () => UpdateNotificationSettingsUseCase(locate()));
   }
 }

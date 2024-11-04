@@ -53,6 +53,7 @@ dependencies:
   drift: ^2.21.0
   sqlite3_flutter_libs: ^0.5.26
   path: ^1.9.0
+  awesome_notifications: ^0.10.0
 
 dev_dependencies:
   flutter_test:
