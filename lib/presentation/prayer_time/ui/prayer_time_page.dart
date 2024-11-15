@@ -5,6 +5,7 @@ import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_bui
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_card.dart';
+import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/countdown_progress_bar.dart';
@@ -18,6 +19,7 @@ class PrayerTimePage extends StatelessWidget {
   PrayerTimePage({super.key});
   final PrayerTimePresenter _prayerTimePresenter =
       locate<PrayerTimePresenter>();
+  late final MainPresenter _mainPresenter = locate<MainPresenter>();
 
   @override
   Widget build(BuildContext context) {
@@ -98,9 +100,10 @@ class PrayerTimePage extends StatelessWidget {
                   PrayerTrackerWidget(
                     theme: theme,
                     trackers: currentUiState.prayerTrackers,
-                    onTap: (p0) {
-                      _prayerTimePresenter.togglePrayerStatus(p0);
-                    },
+                    onTap: (p0) => _prayerTimePresenter.togglePrayerStatus(p0),
+                    showCalendarIcon: true,
+                    onCalendarTap: () =>
+                        _mainPresenter.changeNavigationIndex(1),
                   ),
                 ],
               ),

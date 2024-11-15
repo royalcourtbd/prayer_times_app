@@ -11,12 +11,14 @@ class CircleIconWidget extends StatelessWidget {
     this.height,
     this.width,
     this.onTap,
+    this.iconColor,
   });
 
   final String icon;
   final double? height;
   final double? width;
   final VoidCallback? onTap;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class CircleIconWidget extends StatelessWidget {
         ),
         child: SvgImage(
           icon,
-          color: context.color.primaryColor900,
+          color: iconColor ?? context.color.primaryColor900,
         ),
       ),
     );

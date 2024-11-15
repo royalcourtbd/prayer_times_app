@@ -33,6 +33,7 @@ class PrayerTrackerPage extends StatelessWidget {
               trackers:
                   locate<PrayerTimePresenter>().currentUiState.prayerTrackers,
               onTap: (p0) {},
+              showNavigationArrow: true,
             ),
           ],
         ),

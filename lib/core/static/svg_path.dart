@@ -25,4 +25,5 @@ class SvgPath {
   static const String icIshaOutline = 'assets/svg/ic_isha_outline.svg';
   static const String icIshaFill = 'assets/svg/ic_isha_fill.svg';
   static const String icCrown = 'assets/svg/ic_crown.svg';
+  static const String icArrowRight = 'assets/svg/ic_arrow_right.svg';
 }
