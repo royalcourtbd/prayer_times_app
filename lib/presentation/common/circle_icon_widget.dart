@@ -10,23 +10,31 @@ class CircleIconWidget extends StatelessWidget {
     required this.icon,
     this.height,
     this.width,
+    this.onTap,
   });
 
   final String icon;
   final double? height;
   final double? width;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding10,
-      width: width ?? fiftyPx,
-      height: height ?? fiftyPx,
-      decoration: BoxDecoration(
-        color: context.color.primaryColor25,
-        shape: BoxShape.circle,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: padding10,
+        width: width ?? fiftyPx,
+        height: height ?? fiftyPx,
+        decoration: BoxDecoration(
+          color: context.color.primaryColor25,
+          shape: BoxShape.circle,
+        ),
+        child: SvgImage(
+          icon,
+          color: context.color.primaryColor900,
+        ),
       ),
-      child: SvgImage(icon, color: context.color.primaryColor900),
     );
   }
 }

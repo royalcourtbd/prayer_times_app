@@ -68,7 +68,7 @@ class PrayerTimeAppScreen {
     if (_width! < 10 || _height! < 10) {
       logErrorStatic(
         'PrayerTimeAppScreen size not initialized. Please initialize PrayerTimeAppScreen and try again.',
-        "Tutor_screen",
+        "PrayerTimeApp",
       );
       _width = null;
       _height = null;

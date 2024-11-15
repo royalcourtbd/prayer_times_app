@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
@@ -8,6 +9,7 @@ import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
 import 'package:qibla_and_prayer_times/presentation/common/circle_icon_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_card.dart';
+import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 
@@ -45,6 +47,7 @@ class PrayerTrackerWidget extends StatelessWidget {
                 height: fortyPx,
                 width: fortyPx,
                 icon: SvgPath.icCalenderOutline2,
+                onTap: () => locate<MainPresenter>().changeNavigationIndex(1),
               ),
             ],
           ),
