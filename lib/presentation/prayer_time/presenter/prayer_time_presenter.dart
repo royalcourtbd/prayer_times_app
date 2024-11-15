@@ -94,13 +94,16 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   }
 
   void togglePrayerStatus(WaqtType type) {
-    if (!currentUiState.prayerTrackers[type.index].isSelectable) return;
+    if (!currentUiState.prayerTrackers[type.index].isSelectable) {
+      addUserMessage('Prayer time is not yet reached');
+      return;
+    }
 
     final List<PrayerTrackerModel> trackers =
         List<PrayerTrackerModel>.from(currentUiState.prayerTrackers);
-    final currentStatus = trackers[type.index].status;
+    final PrayerStatus currentStatus = trackers[type.index].status;
 
-    final newStatus = currentStatus == PrayerStatus.none
+    final PrayerStatus newStatus = currentStatus == PrayerStatus.none
         ? PrayerStatus.completed
         : PrayerStatus.none;
 
@@ -112,7 +115,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
       currentUiState.nowTime ?? _timeService.getCurrentTime();
 
   DateTime? _getWaqtTime(WaqtType type) {
-    final prayerTime = currentUiState.prayerTime;
+    final PrayerTimeEntity? prayerTime = currentUiState.prayerTime;
     if (prayerTime == null) return null;
 
     switch (type) {
@@ -155,8 +158,9 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
       return;
     }
 
-    final currentWaqtTime = _getWaqtTime(currentUiState.activeWaqtType!);
-    final nextWaqtTime = _getWaqtTime(currentUiState.nextWaqtType!);
+    final DateTime? currentWaqtTime =
+        _getWaqtTime(currentUiState.activeWaqtType!);
+    final DateTime? nextWaqtTime = _getWaqtTime(currentUiState.nextWaqtType!);
 
     if (currentWaqtTime == null || nextWaqtTime == null) {
       _resetRemainingTime();
