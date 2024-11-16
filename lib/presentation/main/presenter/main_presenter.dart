@@ -1,10 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_ui_state.dart';
 
 class MainPresenter extends BasePresenter<MainUiState> {
+  final TimeService _timeService;
+
+  MainPresenter(this._timeService);
+
   final Obs<MainUiState> uiState = Obs(MainUiState.empty());
 
   MainUiState get currentUiState => uiState.value;
@@ -19,11 +26,12 @@ class MainPresenter extends BasePresenter<MainUiState> {
       return;
     }
 
-    final DateTime now = DateTime.now();
-    final DateTime lastPressed =
-        currentUiState.lastBackPressTime ?? DateTime.now();
+    final DateTime now = _timeService.currentTime;
+    log('now: $now');
+    log('_timeService.currentTime: ${_timeService.currentTime}');
+    final DateTime lastPressed = currentUiState.lastBackPressTime ?? now;
 
-    if (now.difference(lastPressed) > const Duration(seconds: 2)) {
+    if (now.difference(lastPressed) > const Duration(microseconds: 2000)) {
       updateLastBackPressTime(now);
       addUserMessage('Press back again to exit');
       return;

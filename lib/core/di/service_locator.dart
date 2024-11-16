@@ -106,7 +106,7 @@ class ServiceLocator {
 
   Future<void> _setUpPresenters() async {
     _serviceLocator
-      ..registerFactory(() => loadPresenter(MainPresenter()))
+      ..registerFactory(() => loadPresenter(MainPresenter(locate())))
       ..registerLazySingleton(() => loadPresenter(PrayerTimePresenter(
             locate(),
             locate(),

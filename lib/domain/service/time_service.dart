@@ -1,13 +1,36 @@
 // lib/domain/service/time_service.dart
 
+import 'dart:async';
+import 'package:rxdart/rxdart.dart';
+
 class TimeService {
-  DateTime getCurrentTime() {
-    return DateTime.now();
+  final BehaviorSubject<DateTime> _currentTime = BehaviorSubject<DateTime>();
+
+  Stream<DateTime> get currentTimeStream => _currentTime.stream;
+  DateTime get currentTime => DateTime.now();
+
+  TimeService() {
+    _initializeTime();
+  }
+
+  void _initializeTime() {
+    _currentTime.add(DateTime.now());
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      _currentTime.add(DateTime.now());
+    });
+  }
+
+  void dispose() {
+    _currentTime.close();
   }
 
   DateTime getCurrentDate() {
-    final DateTime now = DateTime.now();
+    final DateTime now = currentTime;
     return DateTime(now.year, now.month, now.day);
+  }
+
+  DateTime getCurrentTime() {
+    return currentTime;
   }
 
   DateTime getStartOfDay(DateTime date) {
@@ -19,7 +42,7 @@ class TimeService {
   }
 
   bool isToday(DateTime date) {
-    final DateTime now = DateTime.now();
+    final DateTime now = currentTime;
     return date.year == now.year &&
         date.month == now.month &&
         date.day == now.day;

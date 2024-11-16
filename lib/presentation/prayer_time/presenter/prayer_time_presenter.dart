@@ -25,6 +25,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   final TimeService _timeService;
   final GetNotificationSettingsUseCase _getNotificationSettingsUseCase;
   final UpdateNotificationSettingsUseCase _updateNotificationSettingsUseCase;
+  StreamSubscription<DateTime>? _timeSubscription;
 
   PrayerTimePresenter(
     this._getPrayerTimesUseCase,
@@ -37,7 +38,6 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
   final Obs<PrayerTimeUiState> uiState = Obs(PrayerTimeUiState.empty());
   PrayerTimeUiState get currentUiState => uiState.value;
-  Timer? _timer;
 
   @override
   void onInit() {
@@ -51,7 +51,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
   @override
   void onClose() {
-    _timer?.cancel();
+    _timeSubscription?.cancel();
     super.onClose();
   }
 
@@ -256,8 +256,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      final DateTime now = _timeService.getCurrentTime();
+    _timeSubscription = _timeService.currentTimeStream.listen((now) {
       uiState.value = currentUiState.copyWith(
         nowTime: now,
         hijriDate: _getHijriDate(now),
