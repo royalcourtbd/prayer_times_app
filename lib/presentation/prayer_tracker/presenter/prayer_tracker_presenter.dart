@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_traker/presenter/prayer_tracker_ui_state.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_ui_state.dart';
 
 class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
   final Obs<PrayerTrackerUiState> uiState = Obs(PrayerTrackerUiState.empty());

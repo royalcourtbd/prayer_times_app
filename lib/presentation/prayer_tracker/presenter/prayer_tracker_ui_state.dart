@@ -9,6 +9,8 @@ class PrayerTrackerUiState extends BaseUiState {
     this.context,
   });
 
+  final BuildContext? context;
+
   factory PrayerTrackerUiState.empty() {
     return const PrayerTrackerUiState(
       isLoading: false,
@@ -16,8 +18,6 @@ class PrayerTrackerUiState extends BaseUiState {
       context: null,
     );
   }
-
-  final BuildContext? context;
 
   @override
   List<Object?> get props => [

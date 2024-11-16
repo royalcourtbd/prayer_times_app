@@ -23,6 +23,7 @@ class PrayerTimeUiState extends BaseUiState {
     required this.fastingProgress,
     required this.fastingState,
     required this.prayerTrackers,
+    required this.hijriDate,
     this.context,
   });
 
@@ -44,6 +45,7 @@ class PrayerTimeUiState extends BaseUiState {
       fastingProgress: 0,
       fastingState: FastingState.none,
       prayerTrackers: const [],
+      hijriDate: '',
     );
   }
 
@@ -64,6 +66,8 @@ class PrayerTimeUiState extends BaseUiState {
   final double fastingProgress;
   final FastingState fastingState;
 
+  final String hijriDate;
+
   @override
   List<Object?> get props => [
         isLoading,
@@ -82,6 +86,7 @@ class PrayerTimeUiState extends BaseUiState {
         fastingState,
         prayerTrackers,
         context,
+        hijriDate,
       ];
 
   PrayerTimeUiState copyWith({
@@ -101,6 +106,7 @@ class PrayerTimeUiState extends BaseUiState {
     double? fastingProgress,
     FastingState? fastingState,
     List<PrayerTrackerModel>? prayerTrackers,
+    String? hijriDate,
   }) {
     return PrayerTimeUiState(
       isLoading: isLoading ?? this.isLoading,
@@ -121,6 +127,7 @@ class PrayerTimeUiState extends BaseUiState {
       fastingProgress: fastingProgress ?? this.fastingProgress,
       fastingState: fastingState ?? this.fastingState,
       prayerTrackers: prayerTrackers ?? this.prayerTrackers,
+      hijriDate: hijriDate ?? this.hijriDate,
     );
   }
 }

@@ -6,7 +6,7 @@ import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presente
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/main/widgets/main_navigation_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/ui/prayer_time_page.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_traker/ui/prayer_tracker_page.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_tracker/ui/prayer_tracker_page.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -14,7 +14,7 @@ class MainPage extends StatelessWidget {
 
   final List<Widget> _pages = <Widget>[
     PrayerTimePage(),
-    const PrayerTrackerPage(),
+    PrayerTrackerPage(),
   ];
 
   @override

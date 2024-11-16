@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
@@ -13,7 +14,6 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_notification_settings_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/update_notification_settings_usecase.dart';
-
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_ui_state.dart';
@@ -257,11 +257,19 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      final DateTime now = _timeService.getCurrentTime();
       uiState.value = currentUiState.copyWith(
-        nowTime: _timeService.getCurrentTime(),
+        nowTime: now,
+        hijriDate: _getHijriDate(now),
       );
       _updateAllStates();
     });
+  }
+
+  String _getHijriDate(DateTime date) {
+    final HijriCalendar hijri = HijriCalendar.fromDate(date);
+
+    return '${hijri.format(hijri.hYear, hijri.hMonth, hijri.hDay, 'dd MMMM yyyy')} H';
   }
 
   // Waqt List Generation

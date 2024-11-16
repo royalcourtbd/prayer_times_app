@@ -47,7 +47,7 @@ class PrayerTimePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '28 Rabiu Awal, 1445 H',
+                          currentUiState.hijriDate,
                           style: theme.textTheme.bodyMedium!.copyWith(
                             color: context.color.titleColor,
                             fontSize: fourteenPx,
