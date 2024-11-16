@@ -10,6 +10,8 @@ class SvgPath {
   static const String icMusicOutlin = 'assets/svg/ic_music_outline.svg';
   static const String icMusicFill = 'assets/svg/ic_music_fill.svg';
   static const String icSettingsOutline = 'assets/svg/ic_setting_outline.svg';
+  static const String icProfileOutline = 'assets/svg/ic_profile_outline.svg';
+  static const String icProfileFill = 'assets/svg/ic_profile_fill.svg';
   static const String icSettingsFill = 'assets/svg/ic_settings_fill.svg';
   static const String icNotificationOutline =
       'assets/svg/ic_notification_outline.svg';

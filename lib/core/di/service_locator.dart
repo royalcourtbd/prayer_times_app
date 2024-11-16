@@ -18,6 +18,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/update_notification_setti
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/profile/presenter/profile_page_presenter.dart';
 
 // Implementation Note:
 //
@@ -115,7 +116,8 @@ class ServiceLocator {
             locate(),
             locate(),
           )))
-      ..registerLazySingleton(() => PrayerTrackerPresenter());
+      ..registerLazySingleton(() => PrayerTrackerPresenter())
+      ..registerLazySingleton(() => ProfilePagePresenter());
   }
 
   Future<void> _setUpUseCase() async {

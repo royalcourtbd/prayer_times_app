@@ -55,9 +55,9 @@ class MainNavigationBar extends StatelessWidget {
           NavDestinationItem(
             index: 4,
             selectedIndex: selectedIndex,
-            outlineIcon: SvgPath.icSettingsOutline,
-            fillIcon: SvgPath.icSettingsFill,
-            label: 'Settings',
+            outlineIcon: SvgPath.icProfileOutline,
+            fillIcon: SvgPath.icProfileFill,
+            label: 'Profile',
           ),
         ],
       ),

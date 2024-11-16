@@ -8,6 +8,7 @@ import 'package:qibla_and_prayer_times/presentation/main/widgets/double_tap_back
 import 'package:qibla_and_prayer_times/presentation/main/widgets/main_navigation_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/ui/prayer_time_page.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/ui/prayer_tracker_page.dart';
+import 'package:qibla_and_prayer_times/presentation/profile/ui/profile_page.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -16,6 +17,9 @@ class MainPage extends StatelessWidget {
   final List<Widget> _pages = <Widget>[
     PrayerTimePage(),
     PrayerTrackerPage(),
+    const ProfilePage(),
+    const ProfilePage(),
+    const ProfilePage(),
   ];
 
   @override
@@ -35,7 +39,7 @@ class MainPage extends StatelessWidget {
             bottomNavigationBar: MainNavigationBar(
               selectedIndex: state.selectedBottomNavIndex,
               onDestinationSelected: (index) {
-                if (index >= 2) {
+                if (index >= 2 && index < 4) {
                   showMessage(
                     context: context,
                     message: 'Coming soon',
