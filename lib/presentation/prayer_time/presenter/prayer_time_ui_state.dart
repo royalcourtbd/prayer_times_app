@@ -66,7 +66,7 @@ class PrayerTimeUiState extends BaseUiState {
   final double fastingProgress;
   final FastingState fastingState;
 
-  final String hijriDate;
+  final String? hijriDate;
 
   @override
   List<Object?> get props => [

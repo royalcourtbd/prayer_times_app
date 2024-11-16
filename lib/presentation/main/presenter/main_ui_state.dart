@@ -7,19 +7,22 @@ class MainUiState extends BaseUiState {
     required super.userMessage,
     required this.selectedBottomNavIndex,
     this.context,
+    this.lastBackPressTime,
   });
 
   factory MainUiState.empty() {
-    return const MainUiState(
+    return MainUiState(
       isLoading: false,
       userMessage: '',
       selectedBottomNavIndex: 0,
       context: null,
+      lastBackPressTime: DateTime.now(),
     );
   }
 
   final int selectedBottomNavIndex;
   final BuildContext? context;
+  final DateTime? lastBackPressTime;
 
   @override
   List<Object?> get props => [
@@ -27,6 +30,7 @@ class MainUiState extends BaseUiState {
         userMessage,
         selectedBottomNavIndex,
         context,
+        lastBackPressTime,
       ];
 
   MainUiState copyWith({
@@ -34,6 +38,7 @@ class MainUiState extends BaseUiState {
     String? userMessage,
     int? selectedBottomNavIndex,
     BuildContext? context,
+    DateTime? lastBackPressTime,
   }) {
     return MainUiState(
       isLoading: isLoading ?? this.isLoading,
@@ -41,6 +46,7 @@ class MainUiState extends BaseUiState {
       selectedBottomNavIndex:
           selectedBottomNavIndex ?? this.selectedBottomNavIndex,
       context: context ?? this.context,
+      lastBackPressTime: lastBackPressTime ?? this.lastBackPressTime,
     );
   }
 }
