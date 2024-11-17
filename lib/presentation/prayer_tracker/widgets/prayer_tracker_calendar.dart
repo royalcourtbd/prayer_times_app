@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/presentation/common/circle_icon_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_card.dart';
 import 'package:intl/intl.dart';
 
@@ -43,25 +45,30 @@ class PrayerTrackerCalendar extends StatelessWidget {
                     style: theme.textTheme.titleMedium!.copyWith(
                       color: context.color.titleColor,
                       fontWeight: FontWeight.w600,
+                      fontSize: eighteenPx,
                     ),
                   ),
                   gapH4,
                   Text(
                     DateFormat('MMMM, yyyy').format(selectedDate),
                     style: theme.textTheme.bodyMedium!.copyWith(
-                      color: context.color.subTitleColor,
+                      color: context.color.titleColor,
+                      fontSize: fourteenPx,
                     ),
                   ),
                 ],
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.calendar_today_outlined),
-                color: context.color.primaryColor,
+              CircleIconWidget(
+                size: fortyPx,
+                icon: SvgPath.icCalenderOutline2,
               ),
             ],
           ),
-          gapH16,
+          Divider(
+            color: context.color.primaryColor100,
+            height: thirtyTwoPx,
+          ),
+          // gapH16,
           WeekViewCalendar(
             theme: theme,
             selectedDate: selectedDate,
@@ -102,9 +109,10 @@ class WeekViewCalendar extends StatelessWidget {
                     day,
                     style: theme.textTheme.bodyMedium!.copyWith(
                       color: day == 'Fri' || day == 'Sat'
-                          ? context.color.primaryColor
+                          ? context.color.errorColor
                           : context.color.titleColor,
                       fontWeight: FontWeight.w500,
+                      fontSize: fourteenPx,
                     ),
                   ))
               .toList(),
@@ -137,15 +145,17 @@ class WeekViewCalendar extends StatelessWidget {
       final HijriCalendar hijri = HijriCalendar.fromDate(date);
       final bool isSelected =
           date.day == selectedDate.day && date.month == selectedDate.month;
-      final bool isWeekend = date.weekday >= 6;
+      final bool isWeekend = date.weekday == 5 || date.weekday == 6;
 
-      return DateCell(
-        date: date,
-        hijriDay: hijri.hDay,
-        isSelected: isSelected,
-        isWeekend: isWeekend,
-        theme: theme,
-        onTap: onDateSelected,
+      return Expanded(
+        child: DateCell(
+          date: date,
+          hijriDay: hijri.hDay,
+          isSelected: isSelected,
+          isWeekend: isWeekend,
+          theme: theme,
+          onTap: onDateSelected,
+        ),
       );
     });
   }
@@ -174,36 +184,48 @@ class DateCell extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(date),
       child: Container(
-        width: 32,
-        height: 45,
+        padding: padding5,
         decoration: BoxDecoration(
-          color: isSelected
-              ? context.color.primaryColor.withOpacity(0.2)
-              : Colors.transparent,
-          border:
-              isSelected ? Border.all(color: context.color.primaryColor) : null,
-          borderRadius: radius8,
+          color:
+              isSelected ? context.color.primaryColor100 : Colors.transparent,
+          borderRadius: radius15,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              date.day.toString(),
-              style: theme.textTheme.bodyMedium!.copyWith(
+            Container(
+              alignment: Alignment.center,
+              height: 7.percentWidth,
+              decoration: BoxDecoration(
                 color: isSelected
-                    ? context.color.primaryColor
-                    : isWeekend
-                        ? context.color.primaryColor
-                        : context.color.titleColor,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                    ? context.color.primaryColor900
+                    : Colors.transparent,
+                borderRadius: radius15,
+              ),
+              child: Text(
+                hijriDay.toString(),
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  color: isSelected
+                      ? context.color.whiteColor
+                      : isWeekend
+                          ? context.color.errorColor
+                          : context.color.titleColor,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                  fontSize: fourteenPx,
+                ),
               ),
             ),
-            gapH2,
+            gapH4,
             Text(
-              hijriDay.toString(),
+              date.day.toString(),
               style: theme.textTheme.bodySmall!.copyWith(
-                color: context.color.subTitleColor,
-                fontSize: tenPx,
+                color: isSelected
+                    ? context.color.primaryColor900
+                    : isWeekend
+                        ? context.color.errorColor
+                        : context.color.primaryColor400,
+                fontSize: twelvePx,
+                fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
               ),
             ),
           ],

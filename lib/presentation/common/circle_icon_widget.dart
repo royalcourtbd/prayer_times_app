@@ -8,26 +8,26 @@ class CircleIconWidget extends StatelessWidget {
   const CircleIconWidget({
     super.key,
     required this.icon,
-    this.height,
-    this.width,
+    this.size,
     this.onTap,
     this.iconColor,
   });
 
   final String icon;
-  final double? height;
-  final double? width;
+  final double? size;
   final VoidCallback? onTap;
   final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
+    final double containerSize = size ?? fiftyPx;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: padding10,
-        width: width ?? fiftyPx,
-        height: height ?? fiftyPx,
+        width: containerSize,
+        height: containerSize,
         decoration: BoxDecoration(
           color: context.color.primaryColor25,
           shape: BoxShape.circle,

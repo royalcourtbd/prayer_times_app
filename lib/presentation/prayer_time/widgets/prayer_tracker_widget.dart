@@ -52,8 +52,7 @@ class PrayerTrackerWidget extends StatelessWidget {
               const Spacer(),
               if (showCalendarIcon)
                 CircleIconWidget(
-                  height: fortyPx,
-                  width: fortyPx,
+                  size: fortyPx,
                   icon: SvgPath.icCalenderOutline2,
                   onTap: onCalendarTap,
                 ),
@@ -61,16 +60,14 @@ class PrayerTrackerWidget extends StatelessWidget {
                 RotatedBox(
                   quarterTurns: 2,
                   child: CircleIconWidget(
-                    height: fortyPx,
-                    width: fortyPx,
+                    size: fortyPx,
                     icon: SvgPath.icArrowRight,
                     onTap: onPreviousTap,
                   ),
                 ),
                 gapW16,
                 CircleIconWidget(
-                  height: fortyPx,
-                  width: fortyPx,
+                  size: fortyPx,
                   icon: SvgPath.icArrowRight,
                   onTap: onNextTap,
                 ),

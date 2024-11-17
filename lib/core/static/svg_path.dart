@@ -23,6 +23,7 @@ class SvgPath {
   static const String icAsrFill = 'assets/svg/ic_asr_fill.svg';
   static const String icAsrOutline = 'assets/svg/ic_asr_outline.svg';
   static const String icMaghribOutline = 'assets/svg/ic_magrib_outline.svg';
+  static const String icShare = 'assets/svg/ic_share.svg';
   static const String icMaghribFill = 'assets/svg/ic_magrib_fill.svg';
   static const String icIshaOutline = 'assets/svg/ic_isha_outline.svg';
   static const String icIshaFill = 'assets/svg/ic_isha_fill.svg';
