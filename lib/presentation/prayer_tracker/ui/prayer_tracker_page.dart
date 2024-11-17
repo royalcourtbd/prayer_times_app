@@ -8,6 +8,7 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/prayer_tracker_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_calendar.dart';
 
 class PrayerTrackerPage extends StatelessWidget {
   PrayerTrackerPage({super.key});
@@ -21,6 +22,7 @@ class PrayerTrackerPage extends StatelessWidget {
       presenter: _presenter,
       builder: () {
         // final currentUiState = _presenter.currentUiState;
+        _presenter.updateContext(context);
 
         return Scaffold(
           appBar: AppBar(
@@ -36,18 +38,29 @@ class PrayerTrackerPage extends StatelessWidget {
           ),
           body: Padding(
             padding: padding15,
-            child: Column(
-              children: [
-                // gapH16,
-                PrayerTrackerWidget(
-                  theme: theme,
-                  trackers: locate<PrayerTimePresenter>()
-                      .currentUiState
-                      .prayerTrackers,
-                  onTap: (p0) {},
-                  showNavigationArrow: true,
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  PrayerTrackerCalendar(
+                    theme: theme,
+                    onDateSelected: _presenter.onDateSelected,
+                    selectedDate: _presenter.currentUiState.selectedDate,
+                    onPreviousWeek: _presenter.onPreviousWeek,
+                    onNextWeek: _presenter.onNextWeek,
+                  ),
+                  gapH16,
+                  PrayerTrackerWidget(
+                    theme: theme,
+                    trackers: locate<PrayerTimePresenter>()
+                        .currentUiState
+                        .prayerTrackers,
+                    onTap: (p0) {},
+                    showNavigationArrow: true,
+                    onNextTap: () => _presenter.onNextDate(),
+                    onPreviousTap: () => _presenter.onPreviousDate(),
+                  ),
+                ],
+              ),
             ),
           ),
         );
