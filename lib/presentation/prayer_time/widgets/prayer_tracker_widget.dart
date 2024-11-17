@@ -72,7 +72,6 @@ class PrayerTrackerWidget extends StatelessWidget {
                   height: fortyPx,
                   width: fortyPx,
                   icon: SvgPath.icArrowRight,
-                  iconColor: context.color.primaryColor500,
                   onTap: onNextTap,
                 ),
               ]
