@@ -13,6 +13,7 @@ import 'package:qibla_and_prayer_times/core/utility/number_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_times.dart';
 import 'package:responsive_sizer/responsive_sizer.dart' as rs;
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 bool get isMobile => rs.Device.screenType == rs.ScreenType.mobile;
@@ -134,7 +135,7 @@ Future<void> copyText({required String text}) async {
 }
 
 Future<void> shareText({required String text}) async {
-  // await catchFutureOrVoid(() async => Share.share(text));
+  await catchFutureOrVoid(() async => Share.share(text));
 }
 
 /// Displays a message asynchronously.
@@ -381,7 +382,7 @@ Future<void> openUrl({
       final bool validFallbackUri = fallbackUri != null;
       final bool validUri = uri != null;
 
-      const String errorMessage = "দুঃখিত। লোড করা সম্ভব হয়নি।";
+      const String errorMessage = "Failed to open the URL";
 
       try {
         final bool canLaunch =
@@ -398,29 +399,26 @@ Future<void> openUrl({
 
         if (!validUri) {
           await showMessage(
-              // ignore: use_build_context_synchronously
-              message: errorMessage,
-              // ignore: use_build_context_synchronously
-              context: PrayerTimes.globalContext);
+            message: errorMessage,
+            context: PrayerTimes.globalContext,
+          );
           return;
         }
 
         validFallbackUri
             ? await launchUrl(fallbackUri, mode: LaunchMode.externalApplication)
             : await showMessage(
-                // ignore: use_build_context_synchronously
                 message: errorMessage,
-                // ignore: use_build_context_synchronously
-                context: PrayerTimes.globalContext);
+                context: PrayerTimes.globalContext,
+              );
       } catch (e) {
         logErrorStatic(e, _fileName);
         validFallbackUri
             ? await launchUrl(fallbackUri)
             : await showMessage(
-                // ignore: use_build_context_synchronously
                 message: errorMessage,
-                // ignore: use_build_context_synchronously
-                context: PrayerTimes.globalContext);
+                context: PrayerTimes.globalContext,
+              );
       }
     });
   });

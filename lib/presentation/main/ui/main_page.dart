@@ -17,9 +17,9 @@ class MainPage extends StatelessWidget {
   final List<Widget> _pages = <Widget>[
     PrayerTimePage(),
     PrayerTrackerPage(),
-    const ProfilePage(),
-    const ProfilePage(),
-    const ProfilePage(),
+    ProfilePage(),
+    ProfilePage(),
+    ProfilePage(),
   ];
 
   @override

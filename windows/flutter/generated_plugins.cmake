@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   awesome_notifications
   connectivity_plus
   geolocator_windows
+  share_plus
   sqlite3_flutter_libs
   url_launcher_windows
 )
