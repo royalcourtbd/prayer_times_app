@@ -29,11 +29,11 @@ class PrayerTimeDataSourceImpl implements PrayerTimeDataSource {
     );
 
     return PrayerTimeEntity(
-      fajr: prayerTimes.fajr,
-      dhuhr: prayerTimes.dhuhr,
-      asr: prayerTimes.asr,
-      maghrib: prayerTimes.maghrib,
-      isha: prayerTimes.isha,
+      startFajr: prayerTimes.fajr,
+      startDhuhr: prayerTimes.dhuhr,
+      startAsr: prayerTimes.asr,
+      startMaghrib: prayerTimes.maghrib,
+      startIsha: prayerTimes.isha,
     );
   }
 }

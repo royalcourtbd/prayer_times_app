@@ -25,7 +25,7 @@ class GetActiveWaqtUseCase {
 
       // Add tomorrow's Fajr
       final DateTime tomorrowFajr =
-          prayerTime.fajr.add(const Duration(days: 1));
+          prayerTime.startFajr.add(const Duration(days: 1));
       prayers.add(MapEntry(WaqtType.fajr, tomorrowFajr));
 
       // Sort prayers by time
@@ -54,11 +54,11 @@ class GetActiveWaqtUseCase {
     PrayerTimeEntity prayerTime,
   ) {
     return [
-      MapEntry(WaqtType.fajr, prayerTime.fajr),
-      MapEntry(WaqtType.dhuhr, prayerTime.dhuhr),
-      MapEntry(WaqtType.asr, prayerTime.asr),
-      MapEntry(WaqtType.maghrib, prayerTime.maghrib),
-      MapEntry(WaqtType.isha, prayerTime.isha),
+      MapEntry(WaqtType.fajr, prayerTime.startFajr),
+      MapEntry(WaqtType.dhuhr, prayerTime.startDhuhr),
+      MapEntry(WaqtType.asr, prayerTime.startAsr),
+      MapEntry(WaqtType.maghrib, prayerTime.startMaghrib),
+      MapEntry(WaqtType.isha, prayerTime.startIsha),
     ];
   }
 }

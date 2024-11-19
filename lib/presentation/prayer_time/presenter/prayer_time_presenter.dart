@@ -120,15 +120,15 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
     switch (type) {
       case WaqtType.fajr:
-        return prayerTime.fajr;
+        return prayerTime.startFajr;
       case WaqtType.dhuhr:
-        return prayerTime.dhuhr;
+        return prayerTime.startDhuhr;
       case WaqtType.asr:
-        return prayerTime.asr;
+        return prayerTime.startAsr;
       case WaqtType.maghrib:
-        return prayerTime.maghrib;
+        return prayerTime.startMaghrib;
       case WaqtType.isha:
-        return prayerTime.isha;
+        return prayerTime.startIsha;
     }
   }
 
@@ -203,8 +203,8 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     }
 
     final DateTime now = currentUiState.nowTime!;
-    final DateTime sehri = currentUiState.prayerTime!.fajr;
-    final DateTime iftar = currentUiState.prayerTime!.maghrib;
+    final DateTime sehri = currentUiState.prayerTime!.startFajr;
+    final DateTime iftar = currentUiState.prayerTime!.startMaghrib;
 
     Duration remainingDuration;
     Duration totalDuration;
@@ -318,8 +318,10 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   }
 
   // Utility Methods
-  String getSehriTime() => getFormattedTime(currentUiState.prayerTime?.fajr);
-  String getIftarTime() => getFormattedTime(currentUiState.prayerTime?.maghrib);
+  String getSehriTime() =>
+      getFormattedTime(currentUiState.prayerTime?.startFajr);
+  String getIftarTime() =>
+      getFormattedTime(currentUiState.prayerTime?.startMaghrib);
 
   String getCurrentTime() {
     final DateTime now = _getCurrentDateTime();
