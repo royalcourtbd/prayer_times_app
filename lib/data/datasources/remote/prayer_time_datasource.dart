@@ -30,10 +30,17 @@ class PrayerTimeDataSourceImpl implements PrayerTimeDataSource {
 
     return PrayerTimeEntity(
       startFajr: prayerTimes.fajr,
+      fajrEnd: prayerTimes.sunrise,
+      duhaStart: prayerTimes.sunrise,
+      duhaEnd: prayerTimes.dhuhr,
       startDhuhr: prayerTimes.dhuhr,
+      dhuhrEnd: prayerTimes.asr,
       startAsr: prayerTimes.asr,
+      asrEnd: prayerTimes.maghrib,
       startMaghrib: prayerTimes.maghrib,
+      maghribEnd: prayerTimes.isha,
       startIsha: prayerTimes.isha,
+      ishaEnd: prayerTimes.fajr.add(const Duration(days: 1)),
     );
   }
 }
