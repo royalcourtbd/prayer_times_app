@@ -6,10 +6,12 @@ import 'package:qibla_and_prayer_times/data/repositories/notification_settings_r
 import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/services/database/prayer_database.dart';
 import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.dart';
+import 'package:qibla_and_prayer_times/data/services/waqt_calculation_service_impl.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/notification_settings_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
 import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
+import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_notification_settings_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
@@ -94,6 +96,8 @@ class ServiceLocator {
     _serviceLocator
       ..registerLazySingleton<ErrorMessageHandler>(
           () => ErrorMessageHandlerImpl())
+      ..registerLazySingleton<WaqtCalculationService>(
+          () => WaqtCalculationServiceImpl())
       ..registerLazySingleton(() => TimeService())
       ..registerLazySingleton(() => PrayerDatabase());
     await _setUpAudioService();
@@ -109,6 +113,7 @@ class ServiceLocator {
     _serviceLocator
       ..registerFactory(() => loadPresenter(MainPresenter(locate())))
       ..registerLazySingleton(() => loadPresenter(PrayerTimePresenter(
+            locate(),
             locate(),
             locate(),
             locate(),

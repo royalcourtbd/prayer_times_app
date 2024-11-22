@@ -29,7 +29,7 @@ class PrayerTimePage extends StatelessWidget {
       builder: () {
         final PrayerTimeUiState currentUiState =
             _prayerTimePresenter.currentUiState;
-        _prayerTimePresenter.updateContext(context);
+        _prayerTimePresenter.updateContext(context: context);
 
         return Scaffold(
           appBar: HomePageAppBar(
@@ -81,7 +81,7 @@ class PrayerTimePage extends StatelessWidget {
                           theme: theme,
                           notifyMe: currentUiState.notifyMe,
                           onChanged: (value) =>
-                              _prayerTimePresenter.toggleNotifyMe(value),
+                              _prayerTimePresenter.toggleNotifyMe(value: value),
                         ),
                       ],
                     ),
@@ -100,7 +100,8 @@ class PrayerTimePage extends StatelessWidget {
                   PrayerTrackerWidget(
                     theme: theme,
                     trackers: currentUiState.prayerTrackers,
-                    onTap: (p0) => _prayerTimePresenter.togglePrayerStatus(p0),
+                    onTap: (type) =>
+                        _prayerTimePresenter.togglePrayerStatus(type: type),
                     showCalendarIcon: true,
                     onCalendarTap: () =>
                         _mainPresenter.changeNavigationIndex(1),

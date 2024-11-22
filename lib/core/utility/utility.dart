@@ -108,24 +108,6 @@ extension ThemeContextExtension on BuildContext {
 isDarkMode(BuildContext context) =>
     Theme.of(context).brightness == Brightness.dark;
 
-// final ThemeService themeService = locate();
-// Widget buildIcon({
-//   double twentyPx = 20,
-//   required int index,
-//   required String svgPath,
-//   required BuildContext context,
-
-//   // required bool isDark,
-// }) =>
-//     SvgPicture.asset(
-//       svgPath,
-//       colorFilter: themeService.isDarkMode
-//           ? buildColorFilter(index == index
-//               ? Theme.of(context).colorScheme.scrim
-//               : const Color(0xff30394A))
-//           : buildColorFilter(Theme.of(context).primaryColor),
-//     );
-
 Future<void> copyText({required String text}) async {
   await catchFutureOrVoid(() async {
     if (text.isEmpty) return;
@@ -137,38 +119,6 @@ Future<void> copyText({required String text}) async {
 Future<void> shareText({required String text}) async {
   await catchFutureOrVoid(() async => Share.share(text));
 }
-
-/// Displays a message asynchronously.
-///
-///
-/// Example usage:
-///
-/// ```dart
-/// showMessage(message: 'Error occurred!');
-/// ```
-///
-/// Rationale:
-///
-/// - provides a convenient way to display short messages to the user
-/// as toast notifications within your Flutter application.
-/// - encapsulates the logic of showing the message with a specified duration,
-/// toast position, and styling.
-
-// Future<void> showComingSoonMessage({BuildContext? context}) async {
-//   try {
-//     final ThemeData themeData = (context ?? PrayerTimeApp.globalContext).theme;
-//     await Fluttertoast.showToast(
-//       msg: "শীঘ্রই আসছে ইন-শা-আল্লাহ",
-//       toastLength: Toast.LENGTH_LONG,
-//       gravity: ToastGravity.BOTTOM,
-//       backgroundColor: themeData.colorScheme.scrim.withOpacity(0.9),
-//       textColor: themeData.colorScheme.onPrimary,
-//       fontSize: sixteenPx,
-//     );
-//   } catch (e) {
-//     logErrorStatic(e, _fileName);
-//   }
-// }
 
 /// Checks the internet connection asynchronously.
 ///
@@ -304,23 +254,6 @@ Future<void> shareText({required String text}) async {
 //       : 'https://m.me/$facebookId';
 
 //   await openUrl(url: fbProtocolUrl, fallbackUrl: facebookPageUrl);
-// }
-
-// String getAudioPathForSurah(int surahNumber, Reciter reciter) {
-//   String directoryPath = p.join('audio', reciter.name);
-//   String fileName = '$surahNumber.mp3';
-//   return p.join(directoryPath, fileName);
-// }
-
-// /// Formats the given [duration] into a string representation.
-// ///
-// /// The [duration] parameter represents the duration to be formatted.
-// /// Returns a string representation of the formatted duration.
-// String formatDuration(Duration duration) {
-//   String twoDigits(int n) => n.toString().padLeft(2, '0');
-//   String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-//   String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-//   return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
 // }
 
 // /// Returns the file path for the given [fileName] in the specified [directoryPath].
@@ -498,102 +431,6 @@ void closeKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 // extension DateTimeExtension on DateTime {
 //   int get toTimestamp => millisecondsSinceEpoch;
 // }
-
-// InputDecoration inputDecorateBottomSheet({
-//   required BuildContext context,
-//   required String hintText,
-//   required BorderRadius borderRadius,
-//   bool enabled = true,
-//   String? suffixIconPath,
-//   String? prefixIconPath,
-//   EdgeInsetsGeometry? contentPadding,
-//   Color? prefixIconColor,
-//   double? borderWidth,
-//   Color? borderColor,
-//   Color? fillColor,
-// }) {
-//   // final MoreMenuUiState uiState = _presenter.currentUiState;
-//   final ThemeData theme = Theme.of(context);
-//   final TextTheme textTheme = theme.textTheme;
-//   final ColorScheme colorScheme = theme.colorScheme;
-//   final Color scrimColor = colorScheme.scrim;
-
-//   return InputDecoration(
-//     enabled: enabled,
-//     border: _outlineInputBorder(
-//       context: context,
-//       borderRadius: borderRadius,
-//       borderWidth: borderWidth ?? 0.8,
-//       borderColor: borderColor ?? Colors.transparent,
-//     ),
-//     focusedBorder: _outlineInputBorder(
-//       context: context,
-//       borderRadius: borderRadius,
-//       borderWidth: borderWidth ?? 0.8,
-//       borderColor: borderColor ?? Colors.transparent,
-//     ),
-//     enabledBorder: _outlineInputBorder(
-//       context: context,
-//       borderRadius: borderRadius,
-//       borderWidth: borderWidth ?? 0.8,
-//       borderColor: borderColor ?? Colors.transparent,
-//     ),
-//     disabledBorder: _outlineInputBorder(
-//       context: context,
-//       borderRadius: borderRadius,
-//       borderWidth: borderWidth ?? 0.8,
-//       borderColor: borderColor ?? Colors.transparent,
-//     ),
-//     contentPadding: contentPadding ?? padding5,
-//     hintText: hintText,
-//     filled: true,
-//     fillColor: fillColor ?? scrimColor.withOpacity(0.1),
-//     hintStyle: textTheme.bodyMedium?.copyWith(
-//       fontWeight: FontWeight.w400,
-//       fontSize: isMobile ? thirteenPx : eightPx,
-//       color: themeService.isDarkMode ? scrimColor.withOpacity(0.5) : scrimColor,
-//     ),
-//     suffixIcon: suffixIconPath != null
-//         ? SvgImage(
-//             suffixIconPath,
-//             fit: BoxFit.scaleDown,
-//             color: scrimColor,
-//           )
-//         : null,
-//     prefixIcon: prefixIconPath != null
-//         ? Padding(
-//             padding: padding5,
-//             child: SvgImage(
-//               prefixIconPath,
-//               fit: BoxFit.scaleDown,
-//               color: prefixIconColor ?? scrimColor,
-//             ),
-//           )
-//         : null,
-//   );
-// }
-
-// OutlineInputBorder _outlineInputBorder(
-//     {required BuildContext context,
-//     required BorderRadius borderRadius,
-//     double? borderWidth,
-//     Color? borderColor}) {
-//   return OutlineInputBorder(
-//     borderRadius: borderRadius,
-//     borderSide: BorderSide(
-//       width: borderWidth ?? 0.8,
-//       color: borderColor ?? Colors.transparent,
-//     ), // BorderSide
-//   );
-// }
-// // Future<void> changeThemeForLegacy({required bool nightMode}) async {
-// //   try {
-// //     final ThemeMode themeMode = nightMode ? ThemeMode.dark : ThemeMode.light;
-// //     get_x_legacy.Get.changeThemeMode(themeMode);
-// //   } catch (e) {
-// //     logErrorStatic(e, _fileName);
-// //   }
-// // }
 
 String getFormattedCurrentDate() {
   return DateFormat('MMM dd, yyyy - EEEE').format(DateTime.now());

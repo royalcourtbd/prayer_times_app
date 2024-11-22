@@ -184,7 +184,7 @@ class DateCell extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(date),
       child: Container(
-        padding: padding5,
+        padding: padding3,
         decoration: BoxDecoration(
           color:
               isSelected ? context.color.primaryColor100 : Colors.transparent,

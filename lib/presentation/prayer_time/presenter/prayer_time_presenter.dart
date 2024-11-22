@@ -1,4 +1,4 @@
-// prayer_time_presenter.dart
+// lib/presentation/prayer_time/presenter/prayer_time_presenter.dart
 
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
+import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
@@ -23,6 +24,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   final GetActiveWaqtUseCase _getActiveWaqtUseCase;
   final GetRemainingTimeUseCase _getRemainingTimeUseCase;
   final TimeService _timeService;
+  final WaqtCalculationService _waqtCalculationService;
   final GetNotificationSettingsUseCase _getNotificationSettingsUseCase;
   final UpdateNotificationSettingsUseCase _updateNotificationSettingsUseCase;
   StreamSubscription<DateTime>? _timeSubscription;
@@ -32,6 +34,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     this._getActiveWaqtUseCase,
     this._getRemainingTimeUseCase,
     this._timeService,
+    this._waqtCalculationService,
     this._getNotificationSettingsUseCase,
     this._updateNotificationSettingsUseCase,
   );
@@ -78,7 +81,10 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     final List<PrayerTrackerModel> trackers = [];
 
     for (final type in WaqtType.values) {
-      final DateTime? prayerTime = _getWaqtTime(type);
+      final DateTime? prayerTime = _waqtCalculationService.getWaqtTime(
+        type,
+        currentUiState.prayerTime!,
+      );
       final bool isSelectable = prayerTime != null && prayerTime.isBefore(now);
 
       trackers.add(PrayerTrackerModel(
@@ -93,7 +99,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
   }
 
-  void togglePrayerStatus(WaqtType type) {
+  void togglePrayerStatus({required WaqtType type}) {
     if (!currentUiState.prayerTrackers[type.index].isSelectable) {
       addUserMessage('Prayer time is not yet reached');
       return;
@@ -107,30 +113,16 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
         ? PrayerStatus.completed
         : PrayerStatus.none;
 
-    trackers[type.index] = trackers[type.index].copyWith(status: newStatus);
+    trackers[type.index] = trackers[type.index].copyWith(
+      status: newStatus,
+      updatedAt: _getCurrentDateTime(),
+    );
+
     uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
   }
 
   DateTime _getCurrentDateTime() =>
       currentUiState.nowTime ?? _timeService.getCurrentTime();
-
-  DateTime? _getWaqtTime(WaqtType type) {
-    final PrayerTimeEntity? prayerTime = currentUiState.prayerTime;
-    if (prayerTime == null) return null;
-
-    switch (type) {
-      case WaqtType.fajr:
-        return prayerTime.startFajr;
-      case WaqtType.dhuhr:
-        return prayerTime.startDhuhr;
-      case WaqtType.asr:
-        return prayerTime.startAsr;
-      case WaqtType.maghrib:
-        return prayerTime.startMaghrib;
-      case WaqtType.isha:
-        return prayerTime.startIsha;
-    }
-  }
 
   Future<void> _updateActiveWaqt() async {
     if (currentUiState.prayerTime == null) return;
@@ -138,6 +130,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     await parseDataFromEitherWithUserMessage(
       task: () => _getActiveWaqtUseCase.execute(
         prayerTime: currentUiState.prayerTime!,
+        currentTime: _getCurrentDateTime(),
       ),
       onDataLoaded: (result) {
         if (result.activeWaqt != currentUiState.activeWaqtType ||
@@ -158,9 +151,14 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
       return;
     }
 
-    final DateTime? currentWaqtTime =
-        _getWaqtTime(currentUiState.activeWaqtType!);
-    final DateTime? nextWaqtTime = _getWaqtTime(currentUiState.nextWaqtType!);
+    final DateTime? currentWaqtTime = _waqtCalculationService.getWaqtTime(
+      currentUiState.activeWaqtType!,
+      currentUiState.prayerTime!,
+    );
+    final DateTime? nextWaqtTime = _waqtCalculationService.getWaqtTime(
+      currentUiState.nextWaqtType!,
+      currentUiState.prayerTime!,
+    );
 
     if (currentWaqtTime == null || nextWaqtTime == null) {
       _resetRemainingTime();
@@ -171,6 +169,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
       task: () => _getRemainingTimeUseCase.execute(
         currentWaqtTime: currentWaqtTime,
         nextWaqtTime: nextWaqtTime,
+        currentTime: _getCurrentDateTime(),
       ),
       onDataLoaded: (result) {
         uiState.value = currentUiState.copyWith(
@@ -190,7 +189,6 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     );
   }
 
-  // Fasting State Management
   void _updateFastingState() {
     if (currentUiState.prayerTime == null || currentUiState.nowTime == null) {
       uiState.value = currentUiState.copyWith(
@@ -210,24 +208,20 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     Duration totalDuration;
     FastingState state;
 
-    // During fasting (between Sehri and Iftar)
     if (now.isAfter(sehri) && now.isBefore(iftar)) {
       remainingDuration = iftar.difference(now);
       totalDuration = iftar.difference(sehri);
       state = FastingState.fasting;
-    }
-    // After Iftar, waiting for next Sehri
-    else if (now.isAfter(iftar)) {
+    } else if (now.isAfter(iftar)) {
       final DateTime nextSehri = sehri.add(const Duration(days: 1));
       remainingDuration = nextSehri.difference(now);
       totalDuration = nextSehri.difference(iftar);
       state = FastingState.sehri;
-    }
-    // Before Sehri
-    else {
+    } else {
       remainingDuration = sehri.difference(now);
-      totalDuration =
-          sehri.difference(sehri.subtract(const Duration(hours: 8)));
+      totalDuration = sehri.difference(
+        sehri.subtract(const Duration(hours: 8)),
+      );
       state = FastingState.sehri;
     }
 
@@ -247,8 +241,6 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
         .clamp(0, 100);
   }
 
-  // Timer Management
-
   void _updateAllStates() {
     _updateActiveWaqt();
     _updateRemainingTime();
@@ -267,18 +259,20 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
   String _getHijriDate(DateTime date) {
     final HijriCalendar hijri = HijriCalendar.fromDate(date);
-
     return '${hijri.format(hijri.hYear, hijri.hMonth, hijri.hDay, 'dd MMMM yyyy')} H';
   }
 
-  // Waqt List Generation
   List<WaqtViewModel> get waqtList {
     final List<WaqtViewModel> list = [];
+    if (currentUiState.prayerTime == null) return list;
 
     for (final type in WaqtType.values) {
       list.add(WaqtViewModel(
         type: type,
-        time: _getWaqtTime(type),
+        time: _waqtCalculationService.getWaqtTime(
+          type,
+          currentUiState.prayerTime!,
+        ),
         isActive: type == currentUiState.activeWaqtType,
       ));
     }
@@ -296,7 +290,6 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
-  // Formatted Time Getters
   String getFormattedRemainingTime() =>
       _formatDuration(currentUiState.remainingDuration);
 
@@ -305,31 +298,22 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     return currentUiState.activeWaqtType?.displayName ?? '';
   }
 
-  // Fasting Time Getters
   String getFormattedFastingRemainingTime() =>
       _formatDuration(currentUiState.fastingRemainingDuration);
 
-  String getFastingTitle() {
-    return currentUiState.fastingState.displayName;
-  }
+  String getFastingTitle() => currentUiState.fastingState.displayName;
 
-  double getFastingProgress() {
-    return currentUiState.fastingProgress;
-  }
+  double getFastingProgress() => currentUiState.fastingProgress;
 
-  // Utility Methods
   String getSehriTime() =>
       getFormattedTime(currentUiState.prayerTime?.startFajr);
+
   String getIftarTime() =>
       getFormattedTime(currentUiState.prayerTime?.startMaghrib);
 
-  String getCurrentTime() {
-    final DateTime now = _getCurrentDateTime();
-    return getFormattedTime(now);
-  }
+  String getCurrentTime() => getFormattedTime(_getCurrentDateTime());
 
-  // UI Helper Methods
-  void toggleNotifyMe(bool value) async {
+  void toggleNotifyMe({required bool value}) async {
     await parseDataFromEitherWithUserMessage(
       task: () => _updateNotificationSettingsUseCase.execute(isEnabled: value),
       onDataLoaded: (_) {
@@ -339,16 +323,19 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     );
   }
 
-  void updateContext(BuildContext context) {
+  void updateContext({required BuildContext context}) {
     uiState.value = currentUiState.copyWith(context: context);
   }
 
-  // Base Presenter Overrides
   @override
   Future<void> addUserMessage(String message) async {
     uiState.value = currentUiState.copyWith(userMessage: message);
-    showMessage(
-        message: currentUiState.userMessage, context: currentUiState.context);
+    if (currentUiState.context != null) {
+      showMessage(
+        message: currentUiState.userMessage,
+        context: currentUiState.context!,
+      );
+    }
   }
 
   @override
