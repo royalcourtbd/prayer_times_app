@@ -306,10 +306,10 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   double getFastingProgress() => currentUiState.fastingProgress;
 
   String getSehriTime() =>
-      getFormattedTime(currentUiState.prayerTime?.startFajr);
+      getFormattedTimeForFasting(currentUiState.prayerTime?.startFajr);
 
   String getIftarTime() =>
-      getFormattedTime(currentUiState.prayerTime?.startMaghrib);
+      getFormattedTimeForFasting(currentUiState.prayerTime?.startMaghrib);
 
   String getCurrentTime() => getFormattedTime(_getCurrentDateTime());
 

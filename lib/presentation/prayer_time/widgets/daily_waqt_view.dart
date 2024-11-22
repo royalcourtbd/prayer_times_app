@@ -57,9 +57,11 @@ class DailyWaqtView extends StatelessWidget {
                   gapH12,
                   Text(
                     waqt.formattedTime,
+                    textAlign: TextAlign.center,
                     style: theme.textTheme.bodyMedium!.copyWith(
                       color: context.color.titleColor,
                       fontSize: fourteenPx,
+                      height: 1.3,
                       fontWeight:
                           waqt.isActive ? FontWeight.w600 : FontWeight.w500,
                     ),

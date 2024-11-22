@@ -54,5 +54,5 @@ class WaqtViewModel {
 
   String get displayName => type.displayName;
   String get icon => type.icon;
-  String get formattedTime => getFormattedTime(time);
+  String get formattedTime => getFormattedTimeForWaqtView(time);
 }

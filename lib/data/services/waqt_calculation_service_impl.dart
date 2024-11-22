@@ -14,6 +14,13 @@ class WaqtCalculationServiceImpl implements WaqtCalculationService {
   }) {
     try {
       final List<MapEntry<WaqtType, DateTime>> prayers = [];
+      final DateTime today =
+          DateTime(currentTime.year, currentTime.month, currentTime.day);
+
+      // Add yesterday's Isha
+      final DateTime yesterdayIsha =
+          prayerTime.startIsha.subtract(const Duration(days: 1));
+      prayers.add(MapEntry(WaqtType.isha, yesterdayIsha));
 
       // Add today's prayers
       prayers.addAll(_getTodaysPrayers(prayerTime));
@@ -23,17 +30,32 @@ class WaqtCalculationServiceImpl implements WaqtCalculationService {
           prayerTime.startFajr.add(const Duration(days: 1));
       prayers.add(MapEntry(WaqtType.fajr, tomorrowFajr));
 
+      // Calculate Isha End Time correctly
+      final DateTime ishaEndTime = prayerTime.startFajr;
+
+      if (currentTime.isAfter(ishaEndTime.subtract(const Duration(days: 1))) &&
+          currentTime.isBefore(prayerTime.startFajr)) {
+        prayers.add(MapEntry(WaqtType.isha, ishaEndTime));
+      }
+
       // Sort prayers by time
       prayers.sort((a, b) => a.value.compareTo(b.value));
 
       WaqtType? activeType;
       WaqtType? nextType;
 
-      for (int i = 0; i < prayers.length; i++) {
-        if (currentTime.isBefore(prayers[i].value)) {
-          activeType = i > 0 ? prayers[i - 1].key : prayers.last.key;
-          nextType = prayers[i].key;
-          break;
+      // Special handling for time between midnight and Fajr
+      if (currentTime.isAfter(today) &&
+          currentTime.isBefore(prayerTime.startFajr)) {
+        activeType = WaqtType.isha;
+        nextType = WaqtType.fajr;
+      } else {
+        for (int i = 0; i < prayers.length; i++) {
+          if (currentTime.isBefore(prayers[i].value)) {
+            activeType = i > 0 ? prayers[i - 1].key : prayers.last.key;
+            nextType = prayers[i].key;
+            break;
+          }
         }
       }
 
@@ -53,7 +75,7 @@ class WaqtCalculationServiceImpl implements WaqtCalculationService {
       ({
         Duration remainingDuration,
         Duration totalDuration,
-        double progress,
+        double progress
       })> calculateRemainingTime({
     required DateTime currentWaqtTime,
     required DateTime nextWaqtTime,
@@ -61,12 +83,23 @@ class WaqtCalculationServiceImpl implements WaqtCalculationService {
   }) {
     try {
       DateTime adjustedNextWaqtTime = nextWaqtTime;
+      DateTime adjustedCurrentWaqtTime = currentWaqtTime;
+
+      // Handle midnight to Fajr period
       if (nextWaqtTime.isBefore(currentTime)) {
         adjustedNextWaqtTime = nextWaqtTime.add(const Duration(days: 1));
       }
 
+      // For Isha prayer specially
+      if (nextWaqtTime.hour < currentWaqtTime.hour &&
+          currentTime.hour >= 0 &&
+          currentTime.hour < 6) {
+        adjustedCurrentWaqtTime =
+            currentWaqtTime.subtract(const Duration(days: 1));
+      }
+
       final Duration totalDuration =
-          adjustedNextWaqtTime.difference(currentWaqtTime);
+          adjustedNextWaqtTime.difference(adjustedCurrentWaqtTime);
       final Duration remainingDuration =
           adjustedNextWaqtTime.difference(currentTime);
 

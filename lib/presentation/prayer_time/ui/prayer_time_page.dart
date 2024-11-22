@@ -14,6 +14,7 @@ import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/notifica
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/prayer_time_page_app_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/prayer_tracker_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/sehri_and_iftar_schedule_card.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/show_current_time_widget.dart';
 
 class PrayerTimePage extends StatelessWidget {
   PrayerTimePage({super.key});
@@ -24,6 +25,7 @@ class PrayerTimePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return PresentableWidgetBuilder(
       presenter: _prayerTimePresenter,
       builder: () {
@@ -55,14 +57,19 @@ class PrayerTimePage extends StatelessWidget {
                           ),
                         ),
                         gapH5,
-                        Text(
-                          _prayerTimePresenter.getCurrentTime(),
-                          style: theme.textTheme.bodyMedium!.copyWith(
-                            color: context.color.titleColor,
-                            fontSize: thirtyNinePx,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        ShowCurrentTimeWidget(
+                          theme: theme,
+                          currentTime: _prayerTimePresenter.getCurrentTime(),
                         ),
+                        // Text(
+                        //   // _prayerTimePresenter.getCurrentTime(),
+                        //   '$time $meridiem',
+                        //   style: theme.textTheme.bodyMedium!.copyWith(
+                        //     color: context.color.titleColor,
+                        //     fontSize: thirtyNinePx,
+                        //     fontWeight: FontWeight.w600,
+                        //   ),
+                        // ),
                         gapH16,
                         CountdownProgressBar(
                           theme: theme,

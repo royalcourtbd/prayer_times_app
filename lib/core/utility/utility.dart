@@ -437,7 +437,15 @@ String getFormattedCurrentDate() {
 }
 
 String getFormattedTime(DateTime? time) {
-  return time != null ? DateFormat('HH:mm').format(time) : '--:--';
+  return time != null ? DateFormat('hh:mm:ss a').format(time) : '--:--:--';
+}
+
+String getFormattedTimeForWaqtView(DateTime? time) {
+  return time != null ? DateFormat('hh:mm\na').format(time) : '--:--';
+}
+
+String getFormattedTimeForFasting(DateTime? time) {
+  return time != null ? DateFormat('hh:mm a').format(time) : '--:--';
 }
 
 String getFormattedDate(DateTime? date, {String format = 'dd MMM yyyy'}) {
