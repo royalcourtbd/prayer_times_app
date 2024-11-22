@@ -49,6 +49,19 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
   final Color blackColor50;
   final Color blackColor25;
 
+  // Error Color Properties
+  final Color errorColor900;
+  final Color errorColor800;
+  final Color errorColor700;
+  final Color errorColor600;
+  final Color errorColor500;
+  final Color errorColor400;
+  final Color errorColor300;
+  final Color errorColor200;
+  final Color errorColor100;
+  final Color errorColor50;
+  final Color errorColor25;
+
   const PrayerTimeThemeColor({
     // Existing required properties
     required this.scaffoldBachgroundColor,
@@ -96,6 +109,19 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     required this.blackColor100,
     required this.blackColor50,
     required this.blackColor25,
+
+    // Error Color required properties
+    required this.errorColor900,
+    required this.errorColor800,
+    required this.errorColor700,
+    required this.errorColor600,
+    required this.errorColor500,
+    required this.errorColor400,
+    required this.errorColor300,
+    required this.errorColor200,
+    required this.errorColor100,
+    required this.errorColor50,
+    required this.errorColor25,
   });
 
   @override
@@ -146,6 +172,19 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     Color? blackColor100,
     Color? blackColor50,
     Color? blackColor25,
+
+    // Error Color properties
+    Color? errorColor900,
+    Color? errorColor800,
+    Color? errorColor700,
+    Color? errorColor600,
+    Color? errorColor500,
+    Color? errorColor400,
+    Color? errorColor300,
+    Color? errorColor200,
+    Color? errorColor100,
+    Color? errorColor50,
+    Color? errorColor25,
   }) {
     return PrayerTimeThemeColor(
       // Existing properties
@@ -195,6 +234,19 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       blackColor100: blackColor100 ?? this.blackColor100,
       blackColor50: blackColor50 ?? this.blackColor50,
       blackColor25: blackColor25 ?? this.blackColor25,
+
+      // Error Color properties
+      errorColor900: errorColor900 ?? this.errorColor900,
+      errorColor800: errorColor800 ?? this.errorColor800,
+      errorColor700: errorColor700 ?? this.errorColor700,
+      errorColor600: errorColor600 ?? this.errorColor600,
+      errorColor500: errorColor500 ?? this.errorColor500,
+      errorColor400: errorColor400 ?? this.errorColor400,
+      errorColor300: errorColor300 ?? this.errorColor300,
+      errorColor200: errorColor200 ?? this.errorColor200,
+      errorColor100: errorColor100 ?? this.errorColor100,
+      errorColor50: errorColor50 ?? this.errorColor50,
+      errorColor25: errorColor25 ?? this.errorColor25,
     );
   }
 
@@ -253,6 +305,19 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       blackColor100: Color.lerp(blackColor100, other.blackColor100, t)!,
       blackColor50: Color.lerp(blackColor50, other.blackColor50, t)!,
       blackColor25: Color.lerp(blackColor25, other.blackColor25, t)!,
+
+      // Error Color properties
+      errorColor900: Color.lerp(errorColor900, other.errorColor900, t)!,
+      errorColor800: Color.lerp(errorColor800, other.errorColor800, t)!,
+      errorColor700: Color.lerp(errorColor700, other.errorColor700, t)!,
+      errorColor600: Color.lerp(errorColor600, other.errorColor600, t)!,
+      errorColor500: Color.lerp(errorColor500, other.errorColor500, t)!,
+      errorColor400: Color.lerp(errorColor400, other.errorColor400, t)!,
+      errorColor300: Color.lerp(errorColor300, other.errorColor300, t)!,
+      errorColor200: Color.lerp(errorColor200, other.errorColor200, t)!,
+      errorColor100: Color.lerp(errorColor100, other.errorColor100, t)!,
+      errorColor50: Color.lerp(errorColor50, other.errorColor50, t)!,
+      errorColor25: Color.lerp(errorColor25, other.errorColor25, t)!,
     );
   }
 
@@ -304,5 +369,18 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     blackColor100: PrayerTimeAppColor.blackColor100,
     blackColor50: PrayerTimeAppColor.blackColor50,
     blackColor25: PrayerTimeAppColor.blackColor25,
+
+    // Error Color properties
+    errorColor900: PrayerTimeAppColor.errorColor900,
+    errorColor800: PrayerTimeAppColor.errorColor800,
+    errorColor700: PrayerTimeAppColor.errorColor700,
+    errorColor600: PrayerTimeAppColor.errorColor600,
+    errorColor500: PrayerTimeAppColor.errorColor500,
+    errorColor400: PrayerTimeAppColor.errorColor400,
+    errorColor300: PrayerTimeAppColor.errorColor300,
+    errorColor200: PrayerTimeAppColor.errorColor200,
+    errorColor100: PrayerTimeAppColor.errorColor100,
+    errorColor50: PrayerTimeAppColor.errorColor50,
+    errorColor25: PrayerTimeAppColor.errorColor25,
   );
 }

@@ -20,6 +20,7 @@ class PrayerTimeTheme {
     scaffoldBackgroundColor: PrayerTimeAppColor.scaffoldBachgroundColor,
     primaryColor: PrayerTimeAppColor.primaryColor,
     colorScheme: const ColorScheme.light(
+      brightness: Brightness.light,
       primary: PrayerTimeAppColor.primaryColor,
       error: PrayerTimeAppColor.errorColor,
     ),

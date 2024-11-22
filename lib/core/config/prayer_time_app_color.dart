@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
 
 class PrayerTimeAppColor {
+  // Error Color Palette (From Image)
+  static const Color errorColor25 = Color(0xFFFFFBFA);
+  static const Color errorColor50 = Color(0xFFFEF3F2);
+  static const Color errorColor100 = Color(0xFFFEE4E2);
+  static const Color errorColor200 = Color(0xFFFECDCA);
+  static const Color errorColor300 = Color(0xFFFDA29B);
+  static const Color errorColor400 = Color(0xFFF97066);
+  static const Color errorColor500 = Color(0xFFF04438);
+  static const Color errorColor600 = Color(0xFFD92D20);
+  static const Color errorColor700 = Color(0xFFB42318);
+  static const Color errorColor800 = Color(0xFF912018);
+  static const Color errorColor900 = Color(0xFF7A271A);
+
   // Black Color Palette
   static const Color blackColor25 = Color(0xFFFCFCFD); // Lightest
   static const Color blackColor50 = Color(0xFFF9FAFB);
@@ -46,5 +59,6 @@ class PrayerTimeAppColor {
   static const Color disableColor = Color(0xFFBDBDBD);
   static const Color successColor = Color(0xFF039855);
   static const Color warningColor = Color(0xFFDC6803);
-  static const Color errorColor = Color(0xFFD92D20);
+  static const Color errorColor =
+      Color(0xFFD92D20); // This is same as errorColor600
 }
