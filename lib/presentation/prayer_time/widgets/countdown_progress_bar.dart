@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 
 class CountdownProgressBar extends StatelessWidget {
   const CountdownProgressBar({
@@ -10,12 +11,14 @@ class CountdownProgressBar extends StatelessWidget {
     this.remainingTime,
     this.progress,
     this.title,
+    this.activeWaqtType,
   });
 
   final ThemeData theme;
   final String? remainingTime;
   final String? title;
   final double? progress;
+  final WaqtType? activeWaqtType;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +54,9 @@ class CountdownProgressBar extends StatelessWidget {
               height: ninePx,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: context.color.primaryColor25,
+                color: activeWaqtType == WaqtType.sunrise
+                    ? context.color.errorColor100
+                    : context.color.primaryColor25,
                 borderRadius: radius10,
               ),
             ),
@@ -61,7 +66,7 @@ class CountdownProgressBar extends StatelessWidget {
               width: MediaQuery.sizeOf(context).width *
                   ((100 - progress!) / 100), // Reverse progress
               decoration: BoxDecoration(
-                color: context.color.primaryColor900,
+                color: _getProgressBarColor(context),
                 borderRadius: radius10,
               ),
             ),
@@ -69,5 +74,12 @@ class CountdownProgressBar extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Color _getProgressBarColor(BuildContext context) {
+    if (activeWaqtType == WaqtType.sunrise) {
+      return context.color.errorColor;
+    }
+    return context.color.primaryColor900;
   }
 }

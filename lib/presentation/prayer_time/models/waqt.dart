@@ -5,6 +5,8 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 
 enum WaqtType {
   fajr,
+  sunrise, // Add new type
+  duha, // Add new type
   dhuhr,
   asr,
   maghrib,
@@ -14,6 +16,10 @@ enum WaqtType {
     switch (this) {
       case WaqtType.fajr:
         return 'Fajr';
+      case WaqtType.sunrise:
+        return 'Prohibited times';
+      case WaqtType.duha:
+        return 'Ṣlat Aḍ-Ḍuḥā';
       case WaqtType.dhuhr:
         return 'Dhuhr';
       case WaqtType.asr:
@@ -29,6 +35,10 @@ enum WaqtType {
     switch (this) {
       case WaqtType.fajr:
         return SvgPath.icFazrFill;
+      case WaqtType.sunrise:
+        return SvgPath.icAsrFill; // Need to add this icon
+      case WaqtType.duha:
+        return SvgPath.icDhuhrFill; // Need to add this icon
       case WaqtType.dhuhr:
         return SvgPath.icDhuhrFill;
       case WaqtType.asr:
@@ -38,6 +48,10 @@ enum WaqtType {
       case WaqtType.isha:
         return SvgPath.icIshaFill;
     }
+  }
+
+  bool get shouldShowInTracker {
+    return this != WaqtType.sunrise && this != WaqtType.duha;
   }
 }
 

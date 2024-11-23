@@ -22,6 +22,9 @@ class DailyWaqtView extends StatelessWidget {
         waqtList.length,
         (index) {
           final WaqtViewModel waqt = waqtList[index];
+          if (!waqt.type.shouldShowInTracker) {
+            return const SizedBox.shrink();
+          }
           return Expanded(
             child: Container(
               padding:

@@ -61,15 +61,6 @@ class PrayerTimePage extends StatelessWidget {
                           theme: theme,
                           currentTime: _prayerTimePresenter.getCurrentTime(),
                         ),
-                        // Text(
-                        //   // _prayerTimePresenter.getCurrentTime(),
-                        //   '$time $meridiem',
-                        //   style: theme.textTheme.bodyMedium!.copyWith(
-                        //     color: context.color.titleColor,
-                        //     fontSize: thirtyNinePx,
-                        //     fontWeight: FontWeight.w600,
-                        //   ),
-                        // ),
                         gapH16,
                         CountdownProgressBar(
                           theme: theme,
@@ -77,6 +68,7 @@ class PrayerTimePage extends StatelessWidget {
                           remainingTime:
                               _prayerTimePresenter.getFormattedRemainingTime(),
                           title: _prayerTimePresenter.getRemainingTimeText(),
+                          activeWaqtType: currentUiState.activeWaqtType,
                         ),
                         gapH25,
                         DailyWaqtView(

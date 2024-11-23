@@ -1,13 +1,12 @@
-// lib/domain/entities/prayer_time_entity.dart
-
 import 'package:qibla_and_prayer_times/core/base/base_entity.dart';
 
 class PrayerTimeEntity extends BaseEntity {
   final DateTime startFajr;
   final DateTime fajrEnd;
+  final DateTime sunrise; // Modified - previously fajrEnd
+  final DateTime duhaStart; // New
+  final DateTime duhaEnd; // New
   final DateTime startDhuhr;
-  final DateTime duhaStart;
-  final DateTime duhaEnd;
   final DateTime dhuhrEnd;
   final DateTime startAsr;
   final DateTime asrEnd;
@@ -19,9 +18,10 @@ class PrayerTimeEntity extends BaseEntity {
   const PrayerTimeEntity({
     required this.startFajr,
     required this.fajrEnd,
+    required this.sunrise, // Modified
+    required this.duhaStart, // New
+    required this.duhaEnd, // New
     required this.startDhuhr,
-    required this.duhaStart,
-    required this.duhaEnd,
     required this.dhuhrEnd,
     required this.startAsr,
     required this.asrEnd,
@@ -34,10 +34,10 @@ class PrayerTimeEntity extends BaseEntity {
   @override
   List<Object?> get props => [
         startFajr,
-        fajrEnd,
-        startDhuhr,
+        sunrise,
         duhaStart,
         duhaEnd,
+        startDhuhr,
         dhuhrEnd,
         startAsr,
         asrEnd,

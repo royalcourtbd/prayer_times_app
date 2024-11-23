@@ -124,6 +124,10 @@ class WaqtCalculationServiceImpl implements WaqtCalculationService {
     switch (type) {
       case WaqtType.fajr:
         return prayerTime.startFajr;
+      case WaqtType.sunrise:
+        return prayerTime.sunrise;
+      case WaqtType.duha:
+        return prayerTime.duhaStart;
       case WaqtType.dhuhr:
         return prayerTime.startDhuhr;
       case WaqtType.asr:
@@ -139,6 +143,8 @@ class WaqtCalculationServiceImpl implements WaqtCalculationService {
       PrayerTimeEntity prayerTime) {
     return [
       MapEntry(WaqtType.fajr, prayerTime.startFajr),
+      MapEntry(WaqtType.sunrise, prayerTime.sunrise),
+      MapEntry(WaqtType.duha, prayerTime.duhaStart),
       MapEntry(WaqtType.dhuhr, prayerTime.startDhuhr),
       MapEntry(WaqtType.asr, prayerTime.startAsr),
       MapEntry(WaqtType.maghrib, prayerTime.startMaghrib),

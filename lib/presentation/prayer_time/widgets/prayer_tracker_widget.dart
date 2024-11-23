@@ -81,7 +81,11 @@ class PrayerTrackerWidget extends StatelessWidget {
               children: List.generate(
                 trackers.length,
                 (index) {
-                  final tracker = trackers[index];
+                  final PrayerTrackerModel tracker = trackers[index];
+
+                  if (!tracker.type.shouldShowInTracker) {
+                    return const SizedBox.shrink();
+                  }
                   return Expanded(
                     child: GestureDetector(
                       onTap: () => onTap(tracker.type),
