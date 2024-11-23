@@ -38,8 +38,7 @@ class PrayerTrackerPage extends StatelessWidget {
                     theme: theme,
                     onDateSelected: _presenter.onDateSelected,
                     selectedDate: _presenter.currentUiState.selectedDate,
-                    onPreviousWeek: _presenter.onPreviousWeek,
-                    onNextWeek: _presenter.onNextWeek,
+                    presenter: _presenter,
                   ),
                   gapH16,
                   PrayerTrackerWidget(

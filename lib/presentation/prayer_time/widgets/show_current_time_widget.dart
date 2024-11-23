@@ -22,9 +22,7 @@ class ShowCurrentTimeWidget extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         Container(
-          constraints: BoxConstraints(
-            minWidth: 37.percentWidth,
-          ),
+          constraints: BoxConstraints(minWidth: 36.percentWidth),
           child: Text(
             time,
             style: theme.textTheme.bodyMedium!.copyWith(

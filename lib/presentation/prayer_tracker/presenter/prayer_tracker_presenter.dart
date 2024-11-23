@@ -26,6 +26,14 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     uiState.value = currentUiState.copyWith(selectedDate: newDate);
   }
 
+  void handleSwipe(DragEndDetails details) {
+    if (details.primaryVelocity! > 0) {
+      onPreviousWeek();
+    } else if (details.primaryVelocity! < 0) {
+      onNextWeek();
+    }
+  }
+
   void updateContext(BuildContext context) {
     uiState.value = currentUiState.copyWith(context: context);
   }
