@@ -29,4 +29,7 @@ class SvgPath {
   static const String icIshaFill = 'assets/svg/ic_isha_fill.svg';
   static const String icCrown = 'assets/svg/ic_crown.svg';
   static const String icArrowRight = 'assets/svg/ic_arrow_right.svg';
+  static const String icBack = 'assets/svg/ic_back.svg';
+  static const String icLocation = 'assets/svg/ic_location.svg';
+  static const String icClock = 'assets/svg/ic_clock.svg';
 }

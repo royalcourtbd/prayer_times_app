@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:qibla_and_prayer_times/core/static/font_family.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/circle_icon_widget.dart';
@@ -8,12 +9,14 @@ class ProfileMenuItem extends StatelessWidget {
   const ProfileMenuItem({
     required this.icon,
     required this.title,
+    this.subtitle,
     this.onTap,
     super.key,
   });
 
   final String icon;
   final String title;
+  final String? subtitle;
   final VoidCallback? onTap;
 
   @override
@@ -29,12 +32,29 @@ class ProfileMenuItem extends StatelessWidget {
             size: fortyPx,
           ),
           gapW15,
-          Text(
-            title,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w400,
-              fontSize: sixteenPx,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: sixteenPx,
+                ),
+              ),
+              if (subtitle != null) ...[
+                gapH2,
+                Text(
+                  subtitle ?? '',
+                  style: theme.textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: fourteenPx,
+                    fontFamily: FontFamily.inter,
+                    color: context.color.subTitleColor,
+                  ),
+                ),
+              ],
+            ],
           ),
         ],
       ),
