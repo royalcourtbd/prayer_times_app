@@ -7,6 +7,7 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
 import 'package:qibla_and_prayer_times/presentation/common/circle_icon_widget.dart';
+import 'package:qibla_and_prayer_times/presentation/common/circle_status_indicator.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_card.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 
@@ -97,33 +98,10 @@ class PrayerTrackerWidget extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  width: 8.percentWidth,
-                                  height: 8.percentWidth,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color:
-                                          (tracker.status != PrayerStatus.none)
-                                              ? context.color.primaryColor900
-                                              : context.color.primaryColor500,
-                                      width: 2,
-                                    ),
-                                  ),
-                                ),
-                                if (tracker.status != PrayerStatus.none)
-                                  Container(
-                                    width: 3.percentWidth,
-                                    height: 3.percentWidth,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: context.color.primaryColor900,
-                                    ),
-                                  ),
-                              ],
+                            CircleStatusIndicator(
+                              isSelected: tracker.status != PrayerStatus.none,
+                              size: 8.percentWidth,
+                              innerCircleSize: 3.percentWidth,
                             ),
                             gapH12,
                             Text(
