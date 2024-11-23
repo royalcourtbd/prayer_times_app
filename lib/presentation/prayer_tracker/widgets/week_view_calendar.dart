@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_tracker/model/calendar_date_cell_view_model.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/calendar_date_cell.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/day_name_list.dart';
@@ -26,7 +27,8 @@ class WeekViewCalendar extends StatelessWidget {
         DayNameList(theme: theme),
         gapH16,
         GestureDetector(
-          onHorizontalDragEnd: (details) => presenter.handleSwipe(details),
+          onHorizontalDragEnd: (DragEndDetails details) =>
+              presenter.handleSwipe(details),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: _buildWeekDays(context),
@@ -50,12 +52,15 @@ class WeekViewCalendar extends StatelessWidget {
 
       return Expanded(
         child: CalendarDateCell(
-          date: date,
-          hijriDay: hijri.hDay,
-          isSelected: isSelected,
-          isWeekend: isWeekend,
+          viewModel: CalendarDateCellViewModel(
+            date: date,
+            hijriDay: hijri.hDay,
+            isSelected: isSelected,
+            isWeekend: isWeekend,
+          ),
           theme: theme,
           onTap: onDateSelected,
+          presenter: presenter,
         ),
       );
     });

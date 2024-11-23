@@ -3,10 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/common/circle_icon_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_card.dart';
 import 'package:intl/intl.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
@@ -58,10 +56,11 @@ class PrayerTrackerCalendar extends StatelessWidget {
                   ),
                 ],
               ),
-              CircleIconWidget(
-                size: fortyPx,
-                icon: SvgPath.icCalenderOutline2,
-              ),
+              // TODO: Add this feature later
+              // CircleIconWidget(
+              //   size: fortyPx,
+              //   icon: SvgPath.icCalenderOutline2,
+              // ),
             ],
           ),
           Divider(

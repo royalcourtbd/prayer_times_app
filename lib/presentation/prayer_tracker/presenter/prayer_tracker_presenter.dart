@@ -12,8 +12,6 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     uiState.value = currentUiState.copyWith(selectedDate: date);
   }
 
-  // lib/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart
-
   void onPreviousWeek() {
     final DateTime newDate =
         currentUiState.selectedDate.subtract(const Duration(days: 7));
@@ -32,6 +30,38 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     } else if (details.primaryVelocity! < 0) {
       onNextWeek();
     }
+  }
+
+  Color getDateTextColor({
+    required bool isSelected,
+    required bool isWeekend,
+    required BuildContext context,
+  }) {
+    if (isSelected && isWeekend) {
+      return context.color.errorColor;
+    }
+    if (isWeekend) {
+      return context.color.errorColor;
+    }
+    return context.color.primaryColor400;
+  }
+
+  Color getHijriTextColor({
+    required bool isSelected,
+    required bool isWeekend,
+    required BuildContext context,
+  }) {
+    if (isSelected && isWeekend) {
+      return context.color.errorColor;
+    }
+    if (isSelected) {
+      return context.color.whiteColor;
+    }
+    if (isWeekend) {
+      return context.color.errorColor;
+    }
+
+    return context.color.titleColor;
   }
 
   void updateContext(BuildContext context) {
