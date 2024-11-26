@@ -14,7 +14,7 @@ class MainUiState extends BaseUiState {
     return MainUiState(
       isLoading: false,
       userMessage: '',
-      selectedBottomNavIndex: 4,
+      selectedBottomNavIndex: 0,
       context: null,
       lastBackPressTime: DateTime.now(),
     );

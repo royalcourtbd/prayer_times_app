@@ -18,6 +18,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/update_notification_settings_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/profile/presenter/profile_page_presenter.dart';
@@ -124,7 +125,8 @@ class ServiceLocator {
           )))
       ..registerLazySingleton(() => PrayerTrackerPresenter())
       ..registerLazySingleton(() => ProfilePagePresenter())
-      ..registerLazySingleton(() => SettingsPagePresenter());
+      ..registerLazySingleton(() => SettingsPagePresenter())
+      ..registerLazySingleton(() => OnboardingPresenter());
   }
 
   Future<void> _setUpUseCase() async {
