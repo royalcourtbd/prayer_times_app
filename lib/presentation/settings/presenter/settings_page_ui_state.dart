@@ -7,15 +7,18 @@ class SettingsPageUiState extends BaseUiState {
     required super.isLoading,
     required super.userMessage,
     this.context,
+    required this.selectedJuristicMethod,
   });
 
   final BuildContext? context;
+  final String selectedJuristicMethod;
 
   factory SettingsPageUiState.empty() {
     return const SettingsPageUiState(
       isLoading: false,
       userMessage: '',
       context: null,
+      selectedJuristicMethod: 'Shafi',
     );
   }
 
@@ -24,17 +27,21 @@ class SettingsPageUiState extends BaseUiState {
         isLoading,
         userMessage,
         context,
+        selectedJuristicMethod,
       ];
 
   SettingsPageUiState copyWith({
     bool? isLoading,
     String? userMessage,
     BuildContext? context,
+    String? selectedJuristicMethod,
   }) {
     return SettingsPageUiState(
       isLoading: isLoading ?? this.isLoading,
       userMessage: userMessage ?? this.userMessage,
       context: context ?? this.context,
+      selectedJuristicMethod:
+          selectedJuristicMethod ?? this.selectedJuristicMethod,
     );
   }
 }
