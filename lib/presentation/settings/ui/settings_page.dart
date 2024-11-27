@@ -11,17 +11,17 @@ import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});
-  final SettingsPagePresenter presenter = locate<SettingsPagePresenter>();
+  final SettingsPagePresenter _presenter = locate<SettingsPagePresenter>();
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
     return PresentableWidgetBuilder(
-        presenter: presenter,
+        presenter: _presenter,
         builder: () {
-          presenter.updateContext(context);
-          final SettingsPageUiState currentUiState = presenter.currentUiState;
+          _presenter.updateContext(context);
+          final SettingsPageUiState currentUiState = _presenter.currentUiState;
           return Scaffold(
             appBar: CustomAppBar(
               title: 'Settings',
@@ -43,7 +43,7 @@ class SettingsPage extends StatelessWidget {
                       icon: SvgPath.icClock,
                       title: 'Juristic Method',
                       subtitle: currentUiState.selectedJuristicMethod,
-                      onTap: () => presenter.showJuristicMethodBottomSheet(),
+                      onTap: () => _presenter.showJuristicMethodBottomSheet(),
                     ),
                   ],
                 ),

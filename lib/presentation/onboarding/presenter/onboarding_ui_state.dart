@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
-import 'package:qibla_and_prayer_times/domain/entities/onboarding_content.dart';
+import 'package:qibla_and_prayer_times/domain/entities/onboarding_content_entity.dart';
 
 class OnboardingUiState extends BaseUiState {
   const OnboardingUiState({
@@ -46,22 +46,22 @@ class OnboardingUiState extends BaseUiState {
   }
 }
 
-final List<OnboardingContent> onboardingPages = [
-  const OnboardingContent(
+final List<OnboardingContentEntity> onboardingPages = [
+  const OnboardingContentEntity(
     title: 'Accurate Salat Times, Anywhere',
     description:
         'Precise prayer times based on your location, with customizable reminders for every prayer.',
     image: SvgPath.icOnboarding1,
     index: 0,
   ),
-  const OnboardingContent(
+  const OnboardingContentEntity(
     title: 'Track Your Daily Prayers',
     description:
         'Keep track of your daily prayers and build consistency in your worship.',
     image: SvgPath.icOnboarding2,
     index: 1,
   ),
-  const OnboardingContent(
+  const OnboardingContentEntity(
     title: 'Enable Location for Prayer Times',
     description: 'Get accurate prayer times and Qibla direction',
     image: SvgPath.icOnboarding3,

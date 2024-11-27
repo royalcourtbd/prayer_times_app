@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/domain/entities/onboarding_content.dart';
+import 'package:qibla_and_prayer_times/domain/entities/onboarding_content_entity.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/widgets/custom_page_indicator.dart';
 
@@ -13,7 +13,7 @@ class OnboardingContentWidget extends StatelessWidget {
     required this.theme,
   });
 
-  final OnboardingContent content;
+  final OnboardingContentEntity content;
   final ThemeData theme;
 
   @override
