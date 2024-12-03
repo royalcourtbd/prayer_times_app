@@ -18,7 +18,7 @@ class SettingsPageUiState extends BaseUiState {
       isLoading: false,
       userMessage: '',
       context: null,
-      selectedJuristicMethod: 'Shafi',
+      selectedJuristicMethod: '',
     );
   }
 

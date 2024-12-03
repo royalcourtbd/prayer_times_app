@@ -8,6 +8,7 @@ import 'package:qibla_and_prayer_times/presentation/common/custom_card.dart';
 import 'package:qibla_and_prayer_times/presentation/profile/widgets/profile_menu_item.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_ui_state.dart';
+import 'package:qibla_and_prayer_times/presentation/settings/widgets/juristic_method_bottom_sheet.dart';
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});
@@ -19,6 +20,7 @@ class SettingsPage extends StatelessWidget {
 
     return PresentableWidgetBuilder(
         presenter: _presenter,
+        onInit: () => _presenter.onInit(),
         builder: () {
           _presenter.updateContext(context);
           final SettingsPageUiState currentUiState = _presenter.currentUiState;
@@ -43,7 +45,10 @@ class SettingsPage extends StatelessWidget {
                       icon: SvgPath.icClock,
                       title: 'Juristic Method',
                       subtitle: currentUiState.selectedJuristicMethod,
-                      onTap: () => _presenter.showJuristicMethodBottomSheet(),
+                      onTap: () => JuristicMethodBottomSheet.show(
+                        context: context,
+                        presenter: _presenter,
+                      ),
                     ),
                   ],
                 ),

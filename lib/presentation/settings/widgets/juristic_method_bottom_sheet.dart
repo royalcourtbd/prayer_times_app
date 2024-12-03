@@ -28,53 +28,53 @@ class JuristicMethodBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return PresentableWidgetBuilder(
-        presenter: presenter,
-        builder: () {
-          return Container(
-            decoration: BoxDecoration(
-              color: context.color.backgroundColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(twentyPx),
-                topRight: Radius.circular(twentyPx),
-              ),
+      presenter: presenter,
+      builder: () {
+        return Container(
+          decoration: BoxDecoration(
+            color: context.color.backgroundColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(twentyPx),
+              topRight: Radius.circular(twentyPx),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(twentyPx),
-                  child: Center(
-                    child: Text(
-                      'Juristic Method',
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        fontSize: sixteenPx,
-                        fontWeight: FontWeight.w600,
-                        color: context.color.titleColor,
-                      ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(twentyPx),
+                child: Center(
+                  child: Text(
+                    'Juristic Method',
+                    style: theme.textTheme.bodyMedium!.copyWith(
+                      fontSize: sixteenPx,
+                      fontWeight: FontWeight.w600,
+                      color: context.color.titleColor,
                     ),
                   ),
                 ),
-                JuristicMethodRadioItem(
-                  title: 'Hanafi',
-                  subtitle: 'Late Asr Prayer',
-                  isSelected: presenter.currentUiState.selectedJuristicMethod ==
-                      'Hanafi',
-                  onTap: () =>
-                      presenter.onJuristicMethodChanged(method: 'Hanafi'),
-                ),
-                JuristicMethodRadioItem(
-                  title: 'Shafi, Maliki, Hanbali',
-                  subtitle: 'Earlier Asr Prayer',
-                  isSelected: presenter.currentUiState.selectedJuristicMethod ==
-                      'Shafi',
-                  onTap: () =>
-                      presenter.onJuristicMethodChanged(method: 'Shafi'),
-                ),
-                gapH20,
-              ],
-            ),
-          );
-        });
+              ),
+              JuristicMethodRadioItem(
+                title: 'Hanafi',
+                subtitle: 'Late Asr Prayer',
+                isSelected:
+                    presenter.currentUiState.selectedJuristicMethod == 'Hanafi',
+                onTap: () =>
+                    presenter.onJuristicMethodChanged(method: 'Hanafi'),
+              ),
+              JuristicMethodRadioItem(
+                title: 'Shafi, Maliki, Hanbali',
+                subtitle: 'Earlier Asr Prayer',
+                isSelected:
+                    presenter.currentUiState.selectedJuristicMethod == 'Shafi',
+                onTap: () => presenter.onJuristicMethodChanged(method: 'Shafi'),
+              ),
+              gapH20,
+            ],
+          ),
+        );
+      },
+    );
   }
 }
