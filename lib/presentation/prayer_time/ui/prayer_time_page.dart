@@ -12,7 +12,7 @@ import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/countdow
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/daily_waqt_view.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/notification_permission_section.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/prayer_time_page_app_bar.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/prayer_tracker_widget.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/sehri_and_iftar_schedule_card.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/show_current_time_widget.dart';
 

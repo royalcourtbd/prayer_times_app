@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/config/themes.dart';
+import 'package:qibla_and_prayer_times/presentation/main/ui/main_page.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/ui/onboarding_page.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -26,7 +27,8 @@ class PrayerTimes extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: PrayerTimeTheme.lightTheme,
           title: 'Prayer Times',
-          home: OnboardingPage(),
+          // home: OnboardingPage(),
+          home: MainPage(),
         );
       },
     );
