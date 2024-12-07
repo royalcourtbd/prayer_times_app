@@ -2,11 +2,70 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
+import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
+import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
+import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
+import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_ui_state.dart';
 
 class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
+  final WaqtCalculationService _waqtCalculationService;
+  final TimeService _timeService;
+
+  PrayerTrackerPresenter(
+    this._waqtCalculationService,
+    this._timeService,
+  );
+
   final Obs<PrayerTrackerUiState> uiState = Obs(PrayerTrackerUiState.empty());
   PrayerTrackerUiState get currentUiState => uiState.value;
+
+  void togglePrayerStatus({required WaqtType type}) {
+    if (!currentUiState.prayerTrackers[type.index].isSelectable) {
+      addUserMessage('Prayer time is not yet reached');
+      return;
+    }
+
+    final List<PrayerTrackerModel> trackers =
+        List<PrayerTrackerModel>.from(currentUiState.prayerTrackers);
+    final PrayerStatus currentStatus = trackers[type.index].status;
+
+    final PrayerStatus newStatus = currentStatus == PrayerStatus.none
+        ? PrayerStatus.completed
+        : PrayerStatus.none;
+
+    trackers[type.index] = trackers[type.index].copyWith(
+      status: newStatus,
+      updatedAt: _timeService.getCurrentTime(),
+    );
+
+    uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
+  }
+
+  void initializePrayerTracker({required PrayerTimeEntity prayerTimeEntity}) {
+    final DateTime now = _timeService.getCurrentTime();
+    final List<PrayerTrackerModel> trackers = [];
+
+    for (final type in WaqtType.values) {
+      final DateTime? waqtTime = _waqtCalculationService.getWaqtTime(
+        type,
+        prayerTimeEntity,
+      );
+      final bool isSelectable = waqtTime != null && waqtTime.isBefore(now);
+
+      trackers.add(PrayerTrackerModel(
+        id: type.toString(),
+        createdAt: now,
+        updatedAt: now,
+        type: type,
+        isSelectable: isSelectable,
+      ));
+    }
+
+    uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
+  }
 
   void onDateSelected(DateTime date) {
     uiState.value = currentUiState.copyWith(selectedDate: date);

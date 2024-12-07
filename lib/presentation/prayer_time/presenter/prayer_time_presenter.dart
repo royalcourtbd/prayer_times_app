@@ -4,10 +4,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
+import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
-import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
@@ -18,6 +17,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/update_notification_setti
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_ui_state.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 
 class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   final GetPrayerTimesUseCase _getPrayerTimesUseCase;
@@ -41,14 +41,14 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
   final Obs<PrayerTimeUiState> uiState = Obs(PrayerTimeUiState.empty());
   PrayerTimeUiState get currentUiState => uiState.value;
+  late final PrayerTrackerPresenter _prayerTrackerPresenter =
+      locate<PrayerTrackerPresenter>();
 
   @override
   void onInit() {
     super.onInit();
     _loadNotificationSettings();
-    getPrayerTimes().then((_) {
-      _initializePrayerTracker();
-    });
+    getPrayerTimes();
     _startTimer();
   }
 
@@ -71,54 +71,121 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
         onDataLoaded: (PrayerTimeEntity data) {
           uiState.value = currentUiState.copyWith(prayerTime: data);
           _updateAllStates();
+          initializeTracker();
         },
       );
     });
   }
 
-  void _initializePrayerTracker() {
-    final DateTime now = _getCurrentDateTime();
-    final List<PrayerTrackerModel> trackers = [];
+  void _updateAllStates() {
+    _updateActiveWaqt();
+    _updateRemainingTime();
+    _updateFastingState();
+  }
+
+  void _startTimer() {
+    _timeSubscription = _timeService.currentTimeStream.listen((now) {
+      uiState.value = currentUiState.copyWith(
+        nowTime: now,
+        hijriDate: _getHijriDate(now),
+      );
+      _updateAllStates();
+    });
+  }
+
+  String _getHijriDate(DateTime date) {
+    final HijriCalendar hijri = HijriCalendar.fromDate(date);
+    return '${hijri.format(hijri.hYear, hijri.hMonth, hijri.hDay, 'dd MMMM yyyy')} H';
+  }
+
+  List<WaqtViewModel> get waqtList {
+    final List<WaqtViewModel> list = [];
+    if (currentUiState.prayerTime == null) return list;
 
     for (final type in WaqtType.values) {
-      final DateTime? prayerTime = _waqtCalculationService.getWaqtTime(
-        type,
-        currentUiState.prayerTime!,
-      );
-      final bool isSelectable = prayerTime != null && prayerTime.isBefore(now);
-
-      trackers.add(PrayerTrackerModel(
-        id: type.toString(),
-        createdAt: now,
-        updatedAt: now,
+      list.add(WaqtViewModel(
         type: type,
-        isSelectable: isSelectable,
+        time: _waqtCalculationService.getWaqtTime(
+          type,
+          currentUiState.prayerTime!,
+        ),
+        isActive: type == currentUiState.activeWaqtType,
       ));
     }
 
-    uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
+    return list;
   }
 
-  void togglePrayerStatus({required WaqtType type}) {
-    if (!currentUiState.prayerTrackers[type.index].isSelectable) {
-      addUserMessage('Prayer time is not yet reached');
-      return;
-    }
+  String _formatDuration(Duration duration) {
+    if (duration == Duration.zero) return '--:--:--';
 
-    final List<PrayerTrackerModel> trackers =
-        List<PrayerTrackerModel>.from(currentUiState.prayerTrackers);
-    final PrayerStatus currentStatus = trackers[type.index].status;
+    final int hours = duration.inHours;
+    final int minutes = duration.inMinutes.remainder(60);
+    final int seconds = duration.inSeconds.remainder(60);
 
-    final PrayerStatus newStatus = currentStatus == PrayerStatus.none
-        ? PrayerStatus.completed
-        : PrayerStatus.none;
+    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
 
-    trackers[type.index] = trackers[type.index].copyWith(
-      status: newStatus,
-      updatedAt: _getCurrentDateTime(),
+  String getFormattedRemainingTime() =>
+      _formatDuration(currentUiState.remainingDuration);
+
+  String getRemainingTimeText() {
+    if (currentUiState.activeWaqtType == null) return '';
+    return currentUiState.activeWaqtType?.displayName ?? '';
+  }
+
+  String getFormattedFastingRemainingTime() =>
+      _formatDuration(currentUiState.fastingRemainingDuration);
+
+  String getFastingTitle() => currentUiState.fastingState.displayName;
+
+  double getFastingProgress() => currentUiState.fastingProgress;
+
+  String getSehriTime() =>
+      getFormattedTimeForFasting(currentUiState.prayerTime?.startFajr);
+
+  String getIftarTime() =>
+      getFormattedTimeForFasting(currentUiState.prayerTime?.startMaghrib);
+
+  String getCurrentTime() => getFormattedTime(_getCurrentDateTime());
+
+  void toggleNotifyMe({required bool value}) async {
+    await parseDataFromEitherWithUserMessage(
+      task: () => _updateNotificationSettingsUseCase.execute(isEnabled: value),
+      onDataLoaded: (_) {
+        uiState.value = currentUiState.copyWith(notifyMe: value);
+        addUserMessage('Notify me every prayer time: $value');
+      },
     );
+  }
 
-    uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
+  void updateContext({required BuildContext context}) {
+    uiState.value = currentUiState.copyWith(context: context);
+  }
+
+  @override
+  Future<void> addUserMessage(String message) async {
+    uiState.value = currentUiState.copyWith(userMessage: message);
+    if (currentUiState.context != null) {
+      showMessage(
+        message: currentUiState.userMessage,
+        context: currentUiState.context!,
+      );
+    }
+  }
+
+  @override
+  Future<void> toggleLoading({required bool loading}) async {
+    uiState.value = currentUiState.copyWith(isLoading: loading);
+  }
+
+  Future<void> _loadNotificationSettings() async {
+    await parseDataFromEitherWithUserMessage(
+      task: () => _getNotificationSettingsUseCase.execute(),
+      onDataLoaded: (bool isEnabled) {
+        uiState.value = currentUiState.copyWith(notifyMe: isEnabled);
+      },
+    );
   }
 
   DateTime _getCurrentDateTime() =>
@@ -241,114 +308,11 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
         .clamp(0, 100);
   }
 
-  void _updateAllStates() {
-    _updateActiveWaqt();
-    _updateRemainingTime();
-    _updateFastingState();
-  }
-
-  void _startTimer() {
-    _timeSubscription = _timeService.currentTimeStream.listen((now) {
-      uiState.value = currentUiState.copyWith(
-        nowTime: now,
-        hijriDate: _getHijriDate(now),
-      );
-      _updateAllStates();
-    });
-  }
-
-  String _getHijriDate(DateTime date) {
-    final HijriCalendar hijri = HijriCalendar.fromDate(date);
-    return '${hijri.format(hijri.hYear, hijri.hMonth, hijri.hDay, 'dd MMMM yyyy')} H';
-  }
-
-  List<WaqtViewModel> get waqtList {
-    final List<WaqtViewModel> list = [];
-    if (currentUiState.prayerTime == null) return list;
-
-    for (final type in WaqtType.values) {
-      list.add(WaqtViewModel(
-        type: type,
-        time: _waqtCalculationService.getWaqtTime(
-          type,
-          currentUiState.prayerTime!,
-        ),
-        isActive: type == currentUiState.activeWaqtType,
-      ));
-    }
-
-    return list;
-  }
-
-  String _formatDuration(Duration duration) {
-    if (duration == Duration.zero) return '--:--:--';
-
-    final int hours = duration.inHours;
-    final int minutes = duration.inMinutes.remainder(60);
-    final int seconds = duration.inSeconds.remainder(60);
-
-    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-  }
-
-  String getFormattedRemainingTime() =>
-      _formatDuration(currentUiState.remainingDuration);
-
-  String getRemainingTimeText() {
-    if (currentUiState.activeWaqtType == null) return '';
-    return currentUiState.activeWaqtType?.displayName ?? '';
-  }
-
-  String getFormattedFastingRemainingTime() =>
-      _formatDuration(currentUiState.fastingRemainingDuration);
-
-  String getFastingTitle() => currentUiState.fastingState.displayName;
-
-  double getFastingProgress() => currentUiState.fastingProgress;
-
-  String getSehriTime() =>
-      getFormattedTimeForFasting(currentUiState.prayerTime?.startFajr);
-
-  String getIftarTime() =>
-      getFormattedTimeForFasting(currentUiState.prayerTime?.startMaghrib);
-
-  String getCurrentTime() => getFormattedTime(_getCurrentDateTime());
-
-  void toggleNotifyMe({required bool value}) async {
-    await parseDataFromEitherWithUserMessage(
-      task: () => _updateNotificationSettingsUseCase.execute(isEnabled: value),
-      onDataLoaded: (_) {
-        uiState.value = currentUiState.copyWith(notifyMe: value);
-        addUserMessage('Notify me every prayer time: $value');
-      },
-    );
-  }
-
-  void updateContext({required BuildContext context}) {
-    uiState.value = currentUiState.copyWith(context: context);
-  }
-
-  @override
-  Future<void> addUserMessage(String message) async {
-    uiState.value = currentUiState.copyWith(userMessage: message);
-    if (currentUiState.context != null) {
-      showMessage(
-        message: currentUiState.userMessage,
-        context: currentUiState.context!,
+  void initializeTracker() {
+    if (currentUiState.prayerTime != null) {
+      _prayerTrackerPresenter.initializePrayerTracker(
+        prayerTimeEntity: currentUiState.prayerTime!,
       );
     }
-  }
-
-  @override
-  Future<void> toggleLoading({required bool loading}) async {
-    uiState.value = currentUiState.copyWith(isLoading: loading);
-  }
-
-  Future<void> _loadNotificationSettings() async {
-    await parseDataFromEitherWithUserMessage(
-      task: () => _getNotificationSettingsUseCase.execute(),
-      onDataLoaded: (bool isEnabled) {
-        uiState.value = currentUiState.copyWith(notifyMe: isEnabled);
-      },
-    );
   }
 }

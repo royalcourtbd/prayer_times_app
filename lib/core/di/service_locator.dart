@@ -129,7 +129,7 @@ class ServiceLocator {
             locate(),
             locate(),
           )))
-      ..registerLazySingleton(() => PrayerTrackerPresenter())
+      ..registerLazySingleton(() => PrayerTrackerPresenter(locate(), locate()))
       ..registerLazySingleton(() => ProfilePagePresenter())
       ..registerLazySingleton(() => SettingsPagePresenter(
             locate(),

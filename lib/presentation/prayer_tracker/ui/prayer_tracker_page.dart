@@ -6,7 +6,6 @@ import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar_title.
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/islamic_event_card.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_calendar.dart';
 
@@ -21,7 +20,7 @@ class PrayerTrackerPage extends StatelessWidget {
     return PresentableWidgetBuilder(
       presenter: _presenter,
       builder: () {
-        final PrayerTrackerUiState currentUiState = _presenter.currentUiState;
+        // final PrayerTrackerUiState currentUiState = _presenter.currentUiState;
         _presenter.updateContext(context);
 
         return Scaffold(
