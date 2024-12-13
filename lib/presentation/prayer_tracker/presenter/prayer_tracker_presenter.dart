@@ -33,7 +33,6 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
   @override
   void onInit() {
     super.onInit();
-    // Load initial data on init
     _loadPrayerTrackerData();
   }
 

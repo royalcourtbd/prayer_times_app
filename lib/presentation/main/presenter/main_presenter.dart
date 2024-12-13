@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
@@ -31,8 +29,6 @@ class MainPresenter extends BasePresenter<MainUiState> {
     }
 
     final DateTime now = _timeService.currentTime;
-    log('now: $now');
-    log('_timeService.currentTime: ${_timeService.currentTime}');
     final DateTime lastPressed = currentUiState.lastBackPressTime ?? now;
 
     if (now.difference(lastPressed) > const Duration(seconds: 2)) {
