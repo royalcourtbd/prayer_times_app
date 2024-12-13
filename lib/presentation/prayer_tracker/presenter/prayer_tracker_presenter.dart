@@ -30,6 +30,13 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
   final Obs<PrayerTrackerUiState> uiState = Obs(PrayerTrackerUiState.empty());
   PrayerTrackerUiState get currentUiState => uiState.value;
 
+  @override
+  void onInit() {
+    super.onInit();
+    // Load initial data on init
+    _loadPrayerTrackerData();
+  }
+
   void togglePrayerStatus({required WaqtType type}) {
     if (!currentUiState.prayerTrackers[type.index].isSelectable) {
       addUserMessage('Prayer time is not yet reached');
@@ -142,22 +149,6 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     return context.color.titleColor;
   }
 
-  void updateContext({required BuildContext context}) {
-    uiState.value = currentUiState.copyWith(context: context);
-  }
-
-  @override
-  Future<void> addUserMessage(String message) async {
-    uiState.value = currentUiState.copyWith(userMessage: message);
-    showMessage(
-        message: currentUiState.userMessage, context: currentUiState.context);
-  }
-
-  @override
-  Future<void> toggleLoading({required bool loading}) async {
-    uiState.value = currentUiState.copyWith(isLoading: loading);
-  }
-
   void _savePrayerTrackerData() async {
     await parseDataFromEitherWithUserMessage(
       task: () => _savePrayerTrackerUseCase.execute(
@@ -179,6 +170,9 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
       onDataLoaded: (result) {
         if (result == null) {
           log('No tracker data found for selected date');
+          uiState.value = currentUiState.copyWith(
+              prayerTrackers: _getInitialTrackers(currentUiState.selectedDate));
+
           return;
         }
 
@@ -188,6 +182,24 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
         uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
       },
     );
+  }
+
+  List<PrayerTrackerModel> _getInitialTrackers(DateTime selectedDate) {
+    final DateTime now = _timeService.getCurrentTime();
+    final List<PrayerTrackerModel> trackers = [];
+
+    for (final type in WaqtType.values) {
+      final bool isSelectable =
+          _timeService.getStartOfDay(selectedDate).isBefore(now);
+      trackers.add(PrayerTrackerModel(
+        id: type.toString(),
+        createdAt: now,
+        updatedAt: now,
+        type: type,
+        isSelectable: isSelectable,
+      ));
+    }
+    return trackers;
   }
 
   void onPreviousDate() {
@@ -209,5 +221,21 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     final DateTime nextDate =
         currentUiState.selectedDate.add(const Duration(days: 1));
     return !nextDate.isAfter(now);
+  }
+
+  void updateContext({required BuildContext context}) {
+    uiState.value = currentUiState.copyWith(context: context);
+  }
+
+  @override
+  Future<void> addUserMessage(String message) async {
+    uiState.value = currentUiState.copyWith(userMessage: message);
+    showMessage(
+        message: currentUiState.userMessage, context: currentUiState.context);
+  }
+
+  @override
+  Future<void> toggleLoading({required bool loading}) async {
+    uiState.value = currentUiState.copyWith(isLoading: loading);
   }
 }
