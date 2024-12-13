@@ -8,17 +8,22 @@ class SettingsPageUiState extends BaseUiState {
     required super.userMessage,
     this.context,
     required this.selectedJuristicMethod,
+    required this.selectedCountry,
+    required this.isManualLocationSelected,
   });
 
   final BuildContext? context;
   final String selectedJuristicMethod;
-
+  final String selectedCountry;
+  final bool isManualLocationSelected;
   factory SettingsPageUiState.empty() {
     return const SettingsPageUiState(
       isLoading: false,
       userMessage: '',
       context: null,
       selectedJuristicMethod: '',
+      selectedCountry: '',
+      isManualLocationSelected: false,
     );
   }
 
@@ -28,6 +33,8 @@ class SettingsPageUiState extends BaseUiState {
         userMessage,
         context,
         selectedJuristicMethod,
+        selectedCountry,
+        isManualLocationSelected,
       ];
 
   SettingsPageUiState copyWith({
@@ -35,6 +42,8 @@ class SettingsPageUiState extends BaseUiState {
     String? userMessage,
     BuildContext? context,
     String? selectedJuristicMethod,
+    String? selectedCountry,
+    bool? isManualLocationSelected,
   }) {
     return SettingsPageUiState(
       isLoading: isLoading ?? this.isLoading,
@@ -42,6 +51,9 @@ class SettingsPageUiState extends BaseUiState {
       context: context ?? this.context,
       selectedJuristicMethod:
           selectedJuristicMethod ?? this.selectedJuristicMethod,
+      selectedCountry: selectedCountry ?? this.selectedCountry,
+      isManualLocationSelected:
+          isManualLocationSelected ?? this.isManualLocationSelected,
     );
   }
 }

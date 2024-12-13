@@ -35,10 +35,11 @@ class SettingsPage extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const ProfileMenuItem(
+                    ProfileMenuItem(
                       icon: SvgPath.icLocation,
                       title: 'Set Location',
-                      subtitle: 'Dhaka, Bangladesh',
+                      subtitle: currentUiState.selectedCountry,
+                      onTap: () => _presenter.showSelectLocationBottomSheet(),
                     ),
                     gapH20,
                     ProfileMenuItem(

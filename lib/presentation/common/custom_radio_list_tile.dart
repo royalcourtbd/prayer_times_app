@@ -4,17 +4,17 @@ import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/circle_status_indicator.dart';
 
-class JuristicMethodRadioItem extends StatelessWidget {
-  const JuristicMethodRadioItem({
+class CustomRadioListTile extends StatelessWidget {
+  const CustomRadioListTile({
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.isSelected,
     required this.onTap,
     super.key,
   });
 
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -25,8 +25,7 @@ class JuristicMethodRadioItem extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: twentyPx,
-          vertical: twelvePx,
+          vertical: tenPx,
         ),
         child: Row(
           children: [
@@ -48,15 +47,17 @@ class JuristicMethodRadioItem extends StatelessWidget {
                       color: context.color.titleColor,
                     ),
                   ),
-                  gapH2,
-                  Text(
-                    subtitle,
-                    style: theme.textTheme.bodyMedium!.copyWith(
-                      fontSize: fourteenPx,
-                      fontWeight: FontWeight.w400,
-                      color: context.color.subTitleColor,
+                  if (subtitle != null && subtitle!.isNotEmpty) ...[
+                    gapH2,
+                    Text(
+                      subtitle!,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        fontSize: fourteenPx,
+                        fontWeight: FontWeight.w400,
+                        color: context.color.subTitleColor,
+                      ),
                     ),
-                  ),
+                  ]
                 ],
               ),
             ),

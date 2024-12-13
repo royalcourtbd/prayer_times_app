@@ -8,6 +8,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/update_juristic_method_us
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/widgets/juristic_method_bottom_sheet.dart';
+import 'package:qibla_and_prayer_times/presentation/settings/widgets/select_location_bottomsheet.dart';
 
 class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
   final GetJuristicMethodUseCase _getJuristicMethodUseCase;
@@ -62,6 +63,17 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
       context: currentUiState.context!,
       presenter: this,
     );
+  }
+
+  void showSelectLocationBottomSheet() {
+    SelectLocationBottomsheet.show(
+      context: currentUiState.context!,
+    );
+  }
+
+  void onManualLocationSelected({required bool isManualLocationSelected}) {
+    uiState.value = currentUiState.copyWith(
+        isManualLocationSelected: isManualLocationSelected);
   }
 
   void updateContext(BuildContext context) {

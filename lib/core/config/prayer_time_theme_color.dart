@@ -34,6 +34,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
   final Color primaryColor300;
   final Color primaryColor200;
   final Color primaryColor100;
+  final Color primaryColor50;
   final Color primaryColor25;
 
   // Black Color Properties
@@ -95,6 +96,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     required this.primaryColor300,
     required this.primaryColor200,
     required this.primaryColor100,
+    required this.primaryColor50,
     required this.primaryColor25,
 
     // Black Color required properties
@@ -158,6 +160,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     Color? primaryColor300,
     Color? primaryColor200,
     Color? primaryColor100,
+    Color? primaryColor50,
     Color? primaryColor25,
 
     // Black Color properties
@@ -220,6 +223,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       primaryColor300: primaryColor300 ?? this.primaryColor300,
       primaryColor200: primaryColor200 ?? this.primaryColor200,
       primaryColor100: primaryColor100 ?? this.primaryColor100,
+      primaryColor50: primaryColor50 ?? this.primaryColor50,
       primaryColor25: primaryColor25 ?? this.primaryColor25,
 
       // Black Color properties
@@ -291,6 +295,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       primaryColor300: Color.lerp(primaryColor300, other.primaryColor300, t)!,
       primaryColor200: Color.lerp(primaryColor200, other.primaryColor200, t)!,
       primaryColor100: Color.lerp(primaryColor100, other.primaryColor100, t)!,
+      primaryColor50: Color.lerp(primaryColor50, other.primaryColor50, t)!,
       primaryColor25: Color.lerp(primaryColor25, other.primaryColor25, t)!,
 
       // Black Color properties
@@ -355,6 +360,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     primaryColor300: PrayerTimeAppColor.primaryColor300,
     primaryColor200: PrayerTimeAppColor.primaryColor200,
     primaryColor100: PrayerTimeAppColor.primaryColor100,
+    primaryColor50: PrayerTimeAppColor.primaryColor50,
     primaryColor25: PrayerTimeAppColor.primaryColor25,
 
     // Black Color properties

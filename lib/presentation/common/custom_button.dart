@@ -7,19 +7,21 @@ class CustomButton extends StatelessWidget {
     required this.title,
     required this.onPressed,
     this.isPrimary = true,
+    this.horizontalPadding,
     super.key,
   });
 
   final String title;
   final VoidCallback onPressed;
   final bool isPrimary;
+  final double? horizontalPadding;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: twentyPx),
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding ?? twentyPx),
       child: GestureDetector(
         onTap: onPressed,
         child: Container(

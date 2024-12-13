@@ -37,6 +37,7 @@ class PrayerTimeAppColor {
   static const Color primaryColor300 = Color(0xFFBBCEC2);
   static const Color primaryColor200 = Color(0xFFCEDDD1);
   static const Color primaryColor100 = Color(0xFFE1EBE1);
+  static const Color primaryColor50 = Color(0xFFEBF2E8);
   static const Color primaryColor25 = Color(0xFFF2F9EF); // Lightest
 
   // Existing Colors
