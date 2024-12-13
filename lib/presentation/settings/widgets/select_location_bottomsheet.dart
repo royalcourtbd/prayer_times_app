@@ -32,57 +32,63 @@ class SelectLocationBottomsheet extends StatelessWidget {
     return PresentableWidgetBuilder(
       presenter: presenter,
       builder: () {
-        return CustomModalSheet(
-          theme: theme,
-          bottomSheetTitle: 'Set Your Location',
-          children: [
-            CustomRadioListTile(
-              title: 'Use Current Location',
-              subtitle: 'Dhaka, Bangladesh',
-              isSelected: !presenter.currentUiState.isManualLocationSelected,
-              onTap: () {
-                presenter.onManualLocationSelected(
-                    isManualLocationSelected: false);
-              },
-            ),
-            gapH25,
-            CustomRadioListTile(
-              title: 'Select Location Manually',
-              isSelected: presenter.currentUiState.isManualLocationSelected,
-              onTap: () {
-                presenter.onManualLocationSelected(
-                    isManualLocationSelected: true);
-              },
-            ),
-            if (presenter.currentUiState.isManualLocationSelected) ...[
-              gapH10,
-              SlideInUp(
-                delay: const Duration(milliseconds: 50),
-                child: CustomTextInputField(
-                  theme: theme,
-                  title: 'Select Country',
-                  controller: TextEditingController(),
-                  hintText: 'Country Name',
-                ),
+        return AnimatedPadding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          duration: const Duration(milliseconds: 200),
+          child: CustomModalSheet(
+            theme: theme,
+            bottomSheetTitle: 'Set Your Location',
+            children: [
+              CustomRadioListTile(
+                title: 'Use Current Location',
+                subtitle: 'Dhaka, Bangladesh',
+                isSelected: !presenter.currentUiState.isManualLocationSelected,
+                onTap: () {
+                  presenter.onManualLocationSelected(
+                      isManualLocationSelected: false);
+                },
               ),
               gapH25,
-              SlideInUp(
-                delay: const Duration(milliseconds: 50),
-                child: CustomTextInputField(
-                  theme: theme,
-                  title: 'Select City',
-                  controller: TextEditingController(),
-                  hintText: 'City Name',
+              CustomRadioListTile(
+                title: 'Select Location Manually',
+                isSelected: presenter.currentUiState.isManualLocationSelected,
+                onTap: () {
+                  presenter.onManualLocationSelected(
+                      isManualLocationSelected: true);
+                },
+              ),
+              if (presenter.currentUiState.isManualLocationSelected) ...[
+                gapH10,
+                SlideInUp(
+                  delay: const Duration(milliseconds: 50),
+                  child: CustomTextInputField(
+                    theme: theme,
+                    title: 'Select Country',
+                    controller: TextEditingController(),
+                    hintText: 'Country Name',
+                  ),
                 ),
+                gapH25,
+                SlideInUp(
+                  delay: const Duration(milliseconds: 50),
+                  child: CustomTextInputField(
+                    theme: theme,
+                    title: 'Select City',
+                    controller: TextEditingController(),
+                    hintText: 'City Name',
+                  ),
+                ),
+              ],
+              gapH25,
+              CustomButton(
+                title: 'Save',
+                onPressed: () {},
+                horizontalPadding: 0,
               ),
             ],
-            gapH25,
-            CustomButton(
-              title: 'Save',
-              onPressed: () {},
-              horizontalPadding: 0,
-            ),
-          ],
+          ),
         );
       },
     );

@@ -29,6 +29,7 @@ class SettingsPage extends StatelessWidget {
               title: 'Settings',
               theme: theme,
             ),
+            resizeToAvoidBottomInset: true,
             body: Padding(
               padding: padding15,
               child: CustomCard(

@@ -64,9 +64,10 @@ extension ContextExtensions on BuildContext {
     if (!mounted) return null;
     final T? result = await showModalBottomSheet<T>(
       context: context,
-      builder: (_) => bottomSheet,
+      builder: (context) => bottomSheet,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
+      useSafeArea: true,
       enableDrag: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(

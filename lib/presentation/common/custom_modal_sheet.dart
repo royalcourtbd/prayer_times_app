@@ -34,7 +34,6 @@ class CustomModalSheet extends StatelessWidget {
       child: Wrap(
         children: [
           Column(
-            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               showPadding ? const SizedBox.shrink() : gapH20,
