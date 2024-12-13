@@ -35,7 +35,7 @@ class MainPresenter extends BasePresenter<MainUiState> {
     log('_timeService.currentTime: ${_timeService.currentTime}');
     final DateTime lastPressed = currentUiState.lastBackPressTime ?? now;
 
-    if (now.difference(lastPressed) > const Duration(microseconds: 2000)) {
+    if (now.difference(lastPressed) > const Duration(seconds: 2)) {
       updateLastBackPressTime(now);
       addUserMessage('Press back again to exit');
       return;
