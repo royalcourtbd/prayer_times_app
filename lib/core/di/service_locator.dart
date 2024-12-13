@@ -5,12 +5,14 @@ import 'package:qibla_and_prayer_times/data/datasources/remote/prayer_time_datas
 import 'package:qibla_and_prayer_times/data/repositories/juristic_method_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/notification_settings_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/repositories/prayer_tracker_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/services/database/prayer_database.dart';
 import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.dart';
 import 'package:qibla_and_prayer_times/data/services/waqt_calculation_service_impl.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/juristic_method_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/notification_settings_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/prayer_tracker_repository.dart';
 import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
@@ -18,7 +20,9 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.d
 import 'package:qibla_and_prayer_times/domain/usecases/get_juristic_method_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_notification_settings_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/update_juristic_method_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/update_notification_settings_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
@@ -97,7 +101,9 @@ class ServiceLocator {
       ..registerLazySingleton<NotificationSettingsRepository>(
           () => NotificationSettingsRepositoryImpl(locate()))
       ..registerLazySingleton<JuristicMethodRepository>(
-          () => JuristicMethodRepositoryImpl(locate()));
+          () => JuristicMethodRepositoryImpl(locate()))
+      ..registerLazySingleton<PrayerTrackerRepository>(
+          () => PrayerTrackerRepositoryImpl(locate()));
   }
 
   Future<void> _setUpServices() async {
@@ -129,7 +135,8 @@ class ServiceLocator {
             locate(),
             locate(),
           )))
-      ..registerLazySingleton(() => PrayerTrackerPresenter(locate(), locate()))
+      ..registerLazySingleton(
+          () => PrayerTrackerPresenter(locate(), locate(), locate(), locate()))
       ..registerLazySingleton(() => ProfilePagePresenter())
       ..registerLazySingleton(() => SettingsPagePresenter(
             locate(),
@@ -146,6 +153,10 @@ class ServiceLocator {
       ..registerLazySingleton(() => GetNotificationSettingsUseCase(locate()))
       ..registerLazySingleton(() => UpdateNotificationSettingsUseCase(locate()))
       ..registerLazySingleton(() => GetJuristicMethodUseCase(locate()))
-      ..registerLazySingleton(() => UpdateJuristicMethodUseCase(locate()));
+      ..registerLazySingleton(() => UpdateJuristicMethodUseCase(locate()))
+      ..registerLazySingleton(
+          () => SavePrayerTrackerUseCase(locate(), locate()))
+      ..registerLazySingleton(
+          () => GetPrayerTrackerDataUseCase(locate(), locate()));
   }
 }

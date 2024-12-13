@@ -20,7 +20,7 @@ class PrayerTrackerPage extends StatelessWidget {
       presenter: _presenter,
       builder: () {
         // final PrayerTrackerUiState currentUiState = _presenter.currentUiState;
-        _presenter.updateContext(context);
+        _presenter.updateContext(context: context);
 
         return Scaffold(
           appBar: AppBar(

@@ -5,10 +5,14 @@ import 'package:drift/drift.dart';
 import 'package:qibla_and_prayer_times/data/services/database/table/notification_settings_table.dart';
 import 'package:qibla_and_prayer_times/data/services/database/table/juristic_method_table.dart';
 import 'package:qibla_and_prayer_times/data/services/database_loader.dart';
-
+import 'package:qibla_and_prayer_times/data/services/database/table/prayer_tracker_table.dart';
 part 'prayer_database.g.dart';
 
-@DriftDatabase(tables: [NotificationSettingsTable, JuristicMethodTable])
+@DriftDatabase(tables: [
+  NotificationSettingsTable,
+  JuristicMethodTable,
+  PrayerTrackerTable
+])
 class PrayerDatabase extends _$PrayerDatabase {
   PrayerDatabase({QueryExecutor? queryExecutor})
       : super(queryExecutor ?? loadDatabase());
@@ -48,5 +52,34 @@ class PrayerDatabase extends _$PrayerDatabase {
         updatedAt: DateTime.now(),
       ),
     );
+  }
+
+  Future<void> insertOrUpdatePrayerTrackerData(
+      DateTime date, String trackerData) async {
+    final existingEntry = await (select(prayerTrackerTable)
+          ..where((tbl) => tbl.date.equals(date)))
+        .getSingleOrNull();
+
+    if (existingEntry != null) {
+      await update(prayerTrackerTable).replace(existingEntry.copyWith(
+          trackerData: trackerData, updatedAt: DateTime.now()));
+    } else {
+      await into(prayerTrackerTable).insert(
+        PrayerTrackerTableCompanion.insert(
+          date: date,
+          trackerData: trackerData,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+      );
+    }
+  }
+
+  Future<String?> getPrayerTrackerData(DateTime date) async {
+    final result = await (select(prayerTrackerTable)
+          ..where((tbl) => tbl.date.equals(date)))
+        .getSingleOrNull();
+
+    return result?.trackerData;
   }
 }

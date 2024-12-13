@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
@@ -7,16 +9,22 @@ import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_ui_state.dart';
 
 class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
   final WaqtCalculationService _waqtCalculationService;
   final TimeService _timeService;
+  final SavePrayerTrackerUseCase _savePrayerTrackerUseCase;
+  final GetPrayerTrackerDataUseCase _getPrayerTrackerDataUseCase;
 
   PrayerTrackerPresenter(
     this._waqtCalculationService,
     this._timeService,
+    this._savePrayerTrackerUseCase,
+    this._getPrayerTrackerDataUseCase,
   );
 
   final Obs<PrayerTrackerUiState> uiState = Obs(PrayerTrackerUiState.empty());
@@ -42,6 +50,13 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     );
 
     uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
+    if (newStatus == PrayerStatus.completed) {
+      addUserMessage("✅  ${type.displayName} prayer completed. Alhamdulillah!");
+    } else {
+      addUserMessage('❌  ${type.displayName} prayer not completed.');
+    }
+
+    _savePrayerTrackerData();
   }
 
   void initializePrayerTracker({required PrayerTimeEntity prayerTimeEntity}) {
@@ -65,22 +80,26 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     }
 
     uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
+    _loadPrayerTrackerData();
   }
 
   void onDateSelected(DateTime date) {
     uiState.value = currentUiState.copyWith(selectedDate: date);
+    _loadPrayerTrackerData();
   }
 
   void onPreviousWeek() {
     final DateTime newDate =
         currentUiState.selectedDate.subtract(const Duration(days: 7));
     uiState.value = currentUiState.copyWith(selectedDate: newDate);
+    _loadPrayerTrackerData();
   }
 
   void onNextWeek() {
     final DateTime newDate =
         currentUiState.selectedDate.add(const Duration(days: 7));
     uiState.value = currentUiState.copyWith(selectedDate: newDate);
+    _loadPrayerTrackerData();
   }
 
   void handleSwipe(DragEndDetails details) {
@@ -111,7 +130,7 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     required BuildContext context,
   }) {
     if (isSelected && isWeekend) {
-      return context.color.errorColor;
+      return Colors.white;
     }
     if (isSelected) {
       return context.color.whiteColor;
@@ -123,7 +142,7 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     return context.color.titleColor;
   }
 
-  void updateContext(BuildContext context) {
+  void updateContext({required BuildContext context}) {
     uiState.value = currentUiState.copyWith(context: context);
   }
 
@@ -139,16 +158,50 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     uiState.value = currentUiState.copyWith(isLoading: loading);
   }
 
+  void _savePrayerTrackerData() async {
+    await parseDataFromEitherWithUserMessage(
+      task: () => _savePrayerTrackerUseCase.execute(
+        date: _timeService.getStartOfDay(currentUiState.selectedDate),
+        trackerData: jsonEncode(
+            currentUiState.prayerTrackers.map((e) => e.toJson()).toList()),
+      ),
+      onDataLoaded: (result) {
+        addUserMessage('Prayer tracker data saved successfully');
+      },
+    );
+  }
+
+  Future<void> _loadPrayerTrackerData() async {
+    await parseDataFromEitherWithUserMessage(
+      task: () => _getPrayerTrackerDataUseCase.execute(
+        date: _timeService.getStartOfDay(currentUiState.selectedDate),
+      ),
+      onDataLoaded: (result) {
+        if (result == null) {
+          log('No tracker data found for selected date');
+          return;
+        }
+
+        final List<dynamic> decodedData = jsonDecode(result);
+        final List<PrayerTrackerModel> trackers =
+            decodedData.map((e) => PrayerTrackerModel.fromJson(e)).toList();
+        uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
+      },
+    );
+  }
+
   void onPreviousDate() {
     final DateTime newDate =
         currentUiState.selectedDate.subtract(const Duration(days: 1));
     uiState.value = currentUiState.copyWith(selectedDate: newDate);
+    _loadPrayerTrackerData();
   }
 
   void onNextDate() {
     final DateTime newDate =
         currentUiState.selectedDate.add(const Duration(days: 1));
     uiState.value = currentUiState.copyWith(selectedDate: newDate);
+    _loadPrayerTrackerData();
   }
 
   bool canSelectNextDate() {
