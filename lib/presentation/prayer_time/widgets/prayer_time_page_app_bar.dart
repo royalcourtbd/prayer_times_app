@@ -40,9 +40,11 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
                 const SvgImage(
                   SvgPath.icGpsOutline,
                 ),
-                gapW12,
+                gapW10,
                 Text(
                   presenter.currentUiState.location?.placeName ?? '',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.bodyMedium!.copyWith(
                     fontSize: fourteenPx,
                     fontWeight: FontWeight.w500,
