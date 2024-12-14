@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
@@ -168,7 +167,6 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
       ),
       onDataLoaded: (result) {
         if (result == null) {
-          log('No tracker data found for selected date');
           uiState.value = currentUiState.copyWith(
               prayerTrackers: _getInitialTrackers(currentUiState.selectedDate));
 

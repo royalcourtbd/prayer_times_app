@@ -6,10 +6,12 @@ import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_notification_settings_usecase.dart';
@@ -20,6 +22,7 @@ import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 
 class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
+  final GetLocationUseCase _getLocationUseCase;
   final GetPrayerTimesUseCase _getPrayerTimesUseCase;
   final GetActiveWaqtUseCase _getActiveWaqtUseCase;
   final GetRemainingTimeUseCase _getRemainingTimeUseCase;
@@ -37,6 +40,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     this._waqtCalculationService,
     this._getNotificationSettingsUseCase,
     this._updateNotificationSettingsUseCase,
+    this._getLocationUseCase,
   );
 
   final Obs<PrayerTimeUiState> uiState = Obs(PrayerTimeUiState.empty());
@@ -48,7 +52,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   void onInit() {
     super.onInit();
     _loadNotificationSettings();
-    getPrayerTimes();
+
     _startTimer();
   }
 
@@ -58,23 +62,40 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     super.onClose();
   }
 
-  Future<void> getPrayerTimes() async {
-    const double latitude = 23.8103;
-    const double longitude = 90.4125;
+  Future<void> loadLocationAndPrayerTimes() async {
+    await _fetchLocationAndPrayerTimes();
+  }
 
+  Future<void> _fetchLocationAndPrayerTimes() async {
+    await executeTaskWithLoading(() async {
+      await parseDataFromEitherWithUserMessage<LocationEntity>(
+          task: () => _getLocationUseCase.execute(),
+          onDataLoaded: (LocationEntity location) async {
+            await getPrayerTimes(location: location);
+          });
+    });
+  }
+
+  Future<void> getPrayerTimes({required LocationEntity location}) async {
     await executeTaskWithLoading(() async {
       await parseDataFromEitherWithUserMessage<PrayerTimeEntity>(
         task: () => _getPrayerTimesUseCase.execute(
-          latitude: latitude,
-          longitude: longitude,
+          latitude: location.latitude,
+          longitude: location.longitude,
         ),
         onDataLoaded: (PrayerTimeEntity data) {
-          uiState.value = currentUiState.copyWith(prayerTime: data);
+          uiState.value =
+              currentUiState.copyWith(prayerTime: data, location: location);
+
           _updateAllStates();
           initializeTracker();
         },
       );
     });
+  }
+
+  Future<void> refreshLocationAndPrayerTimes() async {
+    await _fetchLocationAndPrayerTimes();
   }
 
   void _updateAllStates() {

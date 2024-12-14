@@ -2,6 +2,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
+import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
@@ -24,6 +25,7 @@ class PrayerTimeUiState extends BaseUiState {
     required this.fastingState,
     required this.prayerTrackers,
     required this.hijriDate,
+    required this.location,
     this.context,
   });
 
@@ -46,6 +48,7 @@ class PrayerTimeUiState extends BaseUiState {
       fastingState: FastingState.none,
       prayerTrackers: const [],
       hijriDate: '',
+      location: null,
     );
   }
 
@@ -65,7 +68,7 @@ class PrayerTimeUiState extends BaseUiState {
   final Duration fastingTotalDuration;
   final double fastingProgress;
   final FastingState fastingState;
-
+  final LocationEntity? location;
   final String? hijriDate;
 
   @override
@@ -87,6 +90,7 @@ class PrayerTimeUiState extends BaseUiState {
         prayerTrackers,
         context,
         hijriDate,
+        location,
       ];
 
   PrayerTimeUiState copyWith({
@@ -107,6 +111,7 @@ class PrayerTimeUiState extends BaseUiState {
     FastingState? fastingState,
     List<PrayerTrackerModel>? prayerTrackers,
     String? hijriDate,
+    LocationEntity? location,
   }) {
     return PrayerTimeUiState(
       isLoading: isLoading ?? this.isLoading,
@@ -128,6 +133,7 @@ class PrayerTimeUiState extends BaseUiState {
       fastingState: fastingState ?? this.fastingState,
       prayerTrackers: prayerTrackers ?? this.prayerTrackers,
       hijriDate: hijriDate ?? this.hijriDate,
+      location: location ?? this.location,
     );
   }
 }

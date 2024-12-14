@@ -40,6 +40,9 @@ class PrayerTimePage extends StatelessWidget {
         return Scaffold(
           appBar: HomePageAppBar(
             theme: theme,
+            presenter: _prayerTimePresenter,
+            onTapRefresh: () =>
+                _prayerTimePresenter.refreshLocationAndPrayerTimes(),
             onTapNotification: () =>
                 showMessage(context: context, message: 'Notification'),
           ),

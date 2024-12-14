@@ -26,11 +26,11 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
     this._searchCountriesUseCase,
   );
 
-  final PrayerTimePresenter _prayerTimePresenter =
-      locate<PrayerTimePresenter>();
-
   final Obs<SettingsPageUiState> uiState = Obs(SettingsPageUiState.empty());
   SettingsPageUiState get currentUiState => uiState.value;
+
+  final PrayerTimePresenter _prayerTimePresenter =
+      locate<PrayerTimePresenter>();
 
   final TextEditingController countryController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
@@ -56,17 +56,24 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
     });
   }
 
-  Future<void> onJuristicMethodChanged({required String method}) async {
+  Future<void> onJuristicMethodChanged({
+    required String method,
+    VoidCallback? onPrayerTimeUpdateRequired,
+  }) async {
     await executeTaskWithLoading(() async {
       await parseDataFromEitherWithUserMessage(
         task: () => _updateJuristicMethodUseCase.execute(method: method),
         onDataLoaded: (_) async {
           uiState.value =
               currentUiState.copyWith(selectedJuristicMethod: method);
-          await _prayerTimePresenter.getPrayerTimes();
+          onPrayerTimeUpdateRequired?.call();
         },
       );
     });
+  }
+
+  String showLocationName() {
+    return _prayerTimePresenter.currentUiState.location?.placeName ?? '';
   }
 
   void showJuristicMethodBottomSheet() {
@@ -85,6 +92,15 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
   void onManualLocationSelected({required bool isManualLocationSelected}) {
     uiState.value = currentUiState.copyWith(
         isManualLocationSelected: isManualLocationSelected);
+  }
+
+  void onUseCurrentLocationSelected() async {
+    onManualLocationSelected(isManualLocationSelected: false);
+    await _prayerTimePresenter.loadLocationAndPrayerTimes();
+  }
+
+  void onSaveLocationSelected() {
+    currentUiState.context!.navigatorPop();
   }
 
   Future<void> _loadCountries() async {

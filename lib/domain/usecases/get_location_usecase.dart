@@ -1,0 +1,25 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:qibla_and_prayer_times/core/base/base_use_case.dart';
+import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/location_repository.dart';
+import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
+
+class GetLocationUseCase extends BaseUseCase<LocationEntity> {
+  final LocationRepository _repository;
+
+  GetLocationUseCase(
+    this._repository,
+    ErrorMessageHandler errorMessageHandler,
+  ) : super(errorMessageHandler);
+
+  Future<Either<String, LocationEntity>> execute() async {
+    return mapResultToEither(() async {
+      final Either<String, LocationEntity> result =
+          await _repository.getLocation();
+      return result.fold(
+        (l) => throw Exception(l),
+        (r) => r,
+      );
+    });
+  }
+}

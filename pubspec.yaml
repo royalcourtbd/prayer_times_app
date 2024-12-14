@@ -48,7 +48,7 @@ dependencies:
   rxdart: ^0.28.0
   path_provider: ^2.1.5
   url_launcher: ^6.3.1
-  geolocator: ^13.0.1
+  geolocator: ^13.0.2
   adhan: ^2.0.0+1
   drift: ^2.21.0
   sqlite3_flutter_libs: ^0.5.26
@@ -57,6 +57,9 @@ dependencies:
   hijri: ^3.0.0
   table_calendar: ^3.0.9
   share_plus: ^10.1.2
+  geocoding: ^3.0.0
+  http: ^1.2.2
+  logger: ^2.5.0
 
 dev_dependencies:
   flutter_test:
