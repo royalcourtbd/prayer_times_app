@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import '../../../domain/entities/country.dart';
+import '../../../domain/entities/country_entity.dart';
 
 class CountryLocalDataSource {
-  Future<List<Country>> getAllCountries() async {
+  Future<List<CountryNameEntity>> getAllCountries() async {
     final String response =
         await rootBundle.loadString('assets/db/country.json');
     final List<dynamic> data = json.decode(response);
     return data.map((e) => _mapJsonToCountry(e)).toList();
   }
 
-  Country _mapJsonToCountry(Map<String, dynamic> json) {
-    return Country(
+  CountryNameEntity _mapJsonToCountry(Map<String, dynamic> json) {
+    return CountryNameEntity(
       name: json['name'],
       timezone: json['timezone'],
       code: json['code'] ?? '',
@@ -24,8 +24,8 @@ class CountryLocalDataSource {
     );
   }
 
-  City _mapJsonToCity(Map<String, dynamic> json) {
-    return City(
+  CityNameEntity _mapJsonToCity(Map<String, dynamic> json) {
+    return CityNameEntity(
       name: json['name'],
       timezone: json['timezone'],
       latitude: (json['latitude'] as num).toDouble(),

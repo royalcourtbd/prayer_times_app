@@ -1,7 +1,7 @@
 // prayer_time_ui_state.dart
 import 'package:flutter/widgets.dart';
 import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
-import 'package:qibla_and_prayer_times/domain/entities/country.dart';
+import 'package:qibla_and_prayer_times/domain/entities/country_entity.dart';
 
 class SettingsPageUiState extends BaseUiState {
   const SettingsPageUiState({
@@ -21,8 +21,8 @@ class SettingsPageUiState extends BaseUiState {
   final String selectedCountry;
   final String selectedCity;
   final bool isManualLocationSelected;
-  final List<Country> countries;
-  final List<City> selectedCountryCities;
+  final List<CountryNameEntity> countries;
+  final List<CityNameEntity> selectedCountryCities;
 
   factory SettingsPageUiState.empty() {
     return const SettingsPageUiState(
@@ -59,8 +59,8 @@ class SettingsPageUiState extends BaseUiState {
     String? selectedCountry,
     String? selectedCity,
     bool? isManualLocationSelected,
-    List<Country>? countries,
-    List<City>? selectedCountryCities,
+    List<CountryNameEntity>? countries,
+    List<CityNameEntity>? selectedCountryCities,
   }) {
     return SettingsPageUiState(
       isLoading: isLoading ?? this.isLoading,

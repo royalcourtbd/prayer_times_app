@@ -2,10 +2,10 @@ import 'package:fpdart/fpdart.dart';
 import 'package:qibla_and_prayer_times/core/base/base_use_case.dart';
 import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
 
-import '../entities/country.dart';
+import '../entities/country_entity.dart';
 import '../repositories/country_repository.dart';
 
-class GetCountriesUseCase extends BaseUseCase<List<Country>> {
+class GetCountriesUseCase extends BaseUseCase<List<CountryNameEntity>> {
   final CountryRepository repository;
 
   GetCountriesUseCase(
@@ -13,9 +13,9 @@ class GetCountriesUseCase extends BaseUseCase<List<Country>> {
     ErrorMessageHandler errorMessageHandler,
   ) : super(errorMessageHandler);
 
-  Future<Either<String, List<Country>>> execute() async {
+  Future<Either<String, List<CountryNameEntity>>> execute() async {
     return mapResultToEither(() async {
-      final List<Country> result = await repository.getAllCountries();
+      final List<CountryNameEntity> result = await repository.getAllCountries();
       return result;
     });
   }

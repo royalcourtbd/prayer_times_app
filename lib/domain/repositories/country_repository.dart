@@ -1,6 +1,6 @@
-import '../entities/country.dart';
+import '../entities/country_entity.dart';
 
 abstract class CountryRepository {
-  Future<List<Country>> getAllCountries();
-  Future<List<Country>> searchCountries(String query);
+  Future<List<CountryNameEntity>> getAllCountries();
+  Future<List<CountryNameEntity>> searchCountries(String query);
 }

@@ -1,12 +1,12 @@
-class Country {
+class CountryNameEntity {
   final String name;
   final String timezone;
   final String code;
   final double latitude;
   final double longitude;
-  final List<City> cities;
+  final List<CityNameEntity> cities;
 
-  Country({
+  CountryNameEntity({
     required this.name,
     required this.timezone,
     required this.code,
@@ -16,13 +16,13 @@ class Country {
   });
 }
 
-class City {
+class CityNameEntity {
   final String name;
   final String timezone;
   final double latitude;
   final double longitude;
 
-  City({
+  CityNameEntity({
     required this.name,
     required this.timezone,
     required this.latitude,

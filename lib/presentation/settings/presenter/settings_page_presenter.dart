@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/domain/entities/country.dart';
+import 'package:qibla_and_prayer_times/domain/entities/country_entity.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_juristic_method_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/search_countries_usecase.dart';
@@ -107,7 +107,7 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
     await executeTaskWithLoading(() async {
       await parseDataFromEitherWithUserMessage(
         task: () => _getCountriesUseCase.execute(),
-        onDataLoaded: (List<Country> countries) {
+        onDataLoaded: (List<CountryNameEntity> countries) {
           uiState.value = currentUiState.copyWith(countries: countries);
         },
       );
@@ -118,14 +118,14 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
     await executeTaskWithLoading(() async {
       await parseDataFromEitherWithUserMessage(
         task: () => _searchCountriesUseCase.execute(searchQuery: searchQuery),
-        onDataLoaded: (List<Country> countries) {
+        onDataLoaded: (List<CountryNameEntity> countries) {
           uiState.value = currentUiState.copyWith(countries: countries);
         },
       );
     });
   }
 
-  void onCountrySelected({required Country country}) {
+  void onCountrySelected({required CountryNameEntity country}) {
     uiState.value = currentUiState.copyWith(
       selectedCountry: country.name,
       selectedCountryCities: country.cities,
@@ -134,7 +134,7 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
     countryController.text = country.name;
   }
 
-  void onCitySelected({required City city}) {
+  void onCitySelected({required CityNameEntity city}) {
     uiState.value = currentUiState.copyWith(
       selectedCity: city.name,
       selectedCountryCities: [],
