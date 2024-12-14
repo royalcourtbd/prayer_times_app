@@ -69,7 +69,7 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     final DateTime now = _timeService.getCurrentTime();
     final List<PrayerTrackerModel> trackers = [];
 
-    for (final type in WaqtType.values) {
+    for (final WaqtType type in WaqtType.values) {
       final DateTime? waqtTime = _waqtCalculationService.getWaqtTime(
         type,
         prayerTimeEntity,

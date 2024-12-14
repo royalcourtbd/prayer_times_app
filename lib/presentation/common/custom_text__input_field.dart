@@ -10,11 +10,13 @@ class CustomTextInputField extends StatelessWidget {
     this.title,
     required this.controller,
     required this.hintText,
+    this.onChanged,
   });
   final ThemeData theme;
   final String? title;
   final TextEditingController controller;
   final String hintText;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class CustomTextInputField extends StatelessWidget {
         ],
         TextField(
           controller: controller,
+          onChanged: onChanged,
           style: theme.textTheme.bodyMedium!.copyWith(
             fontSize: fourteenPx,
             fontWeight: FontWeight.w400,

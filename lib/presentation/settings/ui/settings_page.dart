@@ -39,7 +39,9 @@ class SettingsPage extends StatelessWidget {
                     ProfileMenuItem(
                       icon: SvgPath.icLocation,
                       title: 'Set Location',
-                      subtitle: currentUiState.selectedCountry,
+                      subtitle: currentUiState.selectedCity.isNotEmpty
+                          ? '${currentUiState.selectedCity}, ${currentUiState.selectedCountry}'
+                          : currentUiState.selectedCountry,
                       onTap: () => _presenter.showSelectLocationBottomSheet(),
                     ),
                     gapH20,
