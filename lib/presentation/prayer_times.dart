@@ -27,8 +27,8 @@ class PrayerTimes extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: PrayerTimeTheme.lightTheme,
           title: 'Prayer Times',
-          // home: OnboardingPage(),
-          home: MainPage(),
+          home: OnboardingPage(),
+          // home: MainPage(),
         );
       },
     );

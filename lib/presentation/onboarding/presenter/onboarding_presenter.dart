@@ -26,9 +26,12 @@ class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
   }
 
   void onSkipTap() {
-    Future.microtask(() {
-      currentUiState.context!.navigatorPushReplacement(MainPage());
-    });
+    // Animate to the last page
+    pageController.animateToPage(
+      onboardingPages.length - 1,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
   }
 
   void onNextTap() {
