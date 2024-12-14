@@ -8,10 +8,12 @@ class OnboardingUiState extends BaseUiState {
     required super.isLoading,
     required super.userMessage,
     required this.currentPage,
+    required this.isFirstTime,
     this.context,
   });
 
   final int currentPage;
+  final bool isFirstTime;
   final BuildContext? context;
 
   factory OnboardingUiState.empty() {
@@ -19,6 +21,7 @@ class OnboardingUiState extends BaseUiState {
       isLoading: false,
       userMessage: '',
       currentPage: 0,
+      isFirstTime: false,
       context: null,
     );
   }
@@ -29,6 +32,7 @@ class OnboardingUiState extends BaseUiState {
         userMessage,
         currentPage,
         context,
+        isFirstTime,
       ];
 
   OnboardingUiState copyWith({
@@ -36,12 +40,14 @@ class OnboardingUiState extends BaseUiState {
     String? userMessage,
     int? currentPage,
     BuildContext? context,
+    bool? isFirstTime,
   }) {
     return OnboardingUiState(
       isLoading: isLoading ?? this.isLoading,
       userMessage: userMessage ?? this.userMessage,
       currentPage: currentPage ?? this.currentPage,
       context: context ?? this.context,
+      isFirstTime: isFirstTime ?? this.isFirstTime,
     );
   }
 }

@@ -26,6 +26,7 @@ class OnboardingPage extends StatelessWidget {
     );
     return PresentableWidgetBuilder(
       presenter: _presenter,
+      onInit: () => _presenter.fetchAndListenToData(context),
       builder: () {
         _presenter.updateContext(context);
         final currentUiState = _presenter.currentUiState;

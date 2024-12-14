@@ -8,7 +8,9 @@ import 'package:qibla_and_prayer_times/presentation/onboarding/ui/onboarding_pag
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PrayerTimes extends StatelessWidget {
-  const PrayerTimes({super.key});
+  const PrayerTimes({super.key, required this.isFirstRun});
+
+  final bool isFirstRun;
 
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();
@@ -27,7 +29,7 @@ class PrayerTimes extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: PrayerTimeTheme.lightTheme,
           title: 'Prayer Times',
-          home: OnboardingPage(),
+          home: isFirstRun ? OnboardingPage() : MainPage(),
           // home: MainPage(),
         );
       },

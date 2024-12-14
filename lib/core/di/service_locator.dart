@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/data/datasources/local/country_local_data_source.dart';
 import 'package:qibla_and_prayer_times/data/datasources/local/location_local_data_source.dart';
+import 'package:qibla_and_prayer_times/data/datasources/local/user_data_local_data_source.dart';
 import 'package:qibla_and_prayer_times/data/datasources/remote/location_remote_data_source.dart';
 import 'package:qibla_and_prayer_times/data/datasources/remote/prayer_time_datasource.dart';
 import 'package:qibla_and_prayer_times/data/repositories/country_repository_impl.dart';
@@ -11,8 +12,10 @@ import 'package:qibla_and_prayer_times/data/repositories/location_repository_imp
 import 'package:qibla_and_prayer_times/data/repositories/notification_settings_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/prayer_tracker_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/repositories/user_data_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/services/database/prayer_database.dart';
 import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.dart';
+import 'package:qibla_and_prayer_times/data/services/local_cache_service.dart';
 import 'package:qibla_and_prayer_times/data/services/location_service.dart';
 import 'package:qibla_and_prayer_times/data/services/waqt_calculation_service_impl.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/country_repository.dart';
@@ -21,9 +24,11 @@ import 'package:qibla_and_prayer_times/domain/repositories/location_repository.d
 import 'package:qibla_and_prayer_times/domain/repositories/notification_settings_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_tracker_repository.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/user_data_repository.dart';
 import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/determine_first_run_use_case.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_juristic_method_usecase.dart';
@@ -32,6 +37,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_notification_settings
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/save_first_time_use_case.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/search_countries_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/update_juristic_method_usecase.dart';
@@ -118,7 +124,9 @@ class ServiceLocator {
       ..registerLazySingleton<CountryRepository>(
           () => CountryRepositoryImpl(locate()))
       ..registerLazySingleton<LocationRepository>(
-          () => LocationRepositoryImpl(locate(), locate(), locate()));
+          () => LocationRepositoryImpl(locate(), locate(), locate()))
+      ..registerLazySingleton<UserDataRepository>(
+          () => UserDataRepositoryImpl(locate()));
   }
 
   Future<void> _setUpServices() async {
@@ -129,7 +137,9 @@ class ServiceLocator {
           () => WaqtCalculationServiceImpl())
       ..registerLazySingleton(() => TimeService())
       ..registerLazySingleton(() => PrayerDatabase())
-      ..registerLazySingleton(() => LocationService());
+      ..registerLazySingleton(() => LocationService())
+      ..registerLazySingleton(() => LocalCacheService());
+    await LocalCacheService.setUp();
     await _setUpAudioService();
     await _setUpFirebaseServices();
   }
@@ -142,7 +152,8 @@ class ServiceLocator {
       ..registerLazySingleton<LocationLocalDataSource>(
           () => LocationLocalDataSourceImpl())
       ..registerLazySingleton<LocationRemoteDataSource>(
-          () => LocationRemoteDataSourceImpl());
+          () => LocationRemoteDataSourceImpl())
+      ..registerLazySingleton(() => UserDataLocalDataSource(locate()));
   }
 
   Future<void> _setUpPresenters() async {
@@ -167,7 +178,7 @@ class ServiceLocator {
             locate(),
             locate(),
           ))
-      ..registerLazySingleton(() => OnboardingPresenter());
+      ..registerLazySingleton(() => OnboardingPresenter(locate(), locate()));
   }
 
   Future<void> _setUpUseCase() async {
@@ -185,6 +196,9 @@ class ServiceLocator {
           () => GetPrayerTrackerDataUseCase(locate(), locate()))
       ..registerLazySingleton(() => GetCountriesUseCase(locate(), locate()))
       ..registerLazySingleton(() => SearchCountriesUseCase(locate(), locate()))
-      ..registerLazySingleton(() => GetLocationUseCase(locate(), locate()));
+      ..registerLazySingleton(() => GetLocationUseCase(locate(), locate()))
+      ..registerLazySingleton(
+          () => DetermineFirstRunUseCase(locate(), locate()))
+      ..registerLazySingleton(() => SaveFirstTimeUseCase(locate(), locate()));
   }
 }
