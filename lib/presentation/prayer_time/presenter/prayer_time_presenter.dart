@@ -52,7 +52,6 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   void onInit() {
     super.onInit();
     _loadNotificationSettings();
-
     _startTimer();
   }
 
@@ -67,13 +66,15 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   }
 
   Future<void> _fetchLocationAndPrayerTimes() async {
-    await executeTaskWithLoading(() async {
-      await parseDataFromEitherWithUserMessage<LocationEntity>(
-          task: () => _getLocationUseCase.execute(),
-          onDataLoaded: (LocationEntity location) async {
-            await getPrayerTimes(location: location);
-          });
-    });
+    await executeTaskWithLoading(
+      () async {
+        await parseDataFromEitherWithUserMessage<LocationEntity>(
+            task: () => _getLocationUseCase.execute(),
+            onDataLoaded: (LocationEntity location) async {
+              await getPrayerTimes(location: location);
+            });
+      },
+    );
   }
 
   Future<void> getPrayerTimes({required LocationEntity location}) async {

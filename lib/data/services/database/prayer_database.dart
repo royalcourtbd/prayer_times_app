@@ -4,7 +4,7 @@ import 'package:drift/drift.dart';
 
 import 'package:qibla_and_prayer_times/data/services/database/table/notification_settings_table.dart';
 import 'package:qibla_and_prayer_times/data/services/database/table/juristic_method_table.dart';
-import 'package:qibla_and_prayer_times/data/services/database_loader.dart';
+import 'package:qibla_and_prayer_times/data/services/database/database_loader.dart';
 import 'package:qibla_and_prayer_times/data/services/database/table/prayer_tracker_table.dart';
 part 'prayer_database.g.dart';
 

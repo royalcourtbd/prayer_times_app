@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:qibla_and_prayer_times/data/datasources/local/location_local_data_source.dart';
 import 'package:qibla_and_prayer_times/data/datasources/remote/location_remote_data_source.dart';
 import 'package:qibla_and_prayer_times/data/services/location_service.dart';
@@ -15,13 +16,15 @@ class LocationRepositoryImpl implements LocationRepository {
   @override
   Future<Either<String, LocationEntity>> getLocation() async {
     try {
-      final cachedLocation = await _localDataSource.getCachedLocation();
+      final LocationEntity? cachedLocation =
+          await _localDataSource.getCachedLocation();
       if (cachedLocation != null) {
         return right(cachedLocation);
       }
-      final position = await _locationService.getCurrentPosition();
-      final location = await _remoteDataSource.getPlaceNameFromCoordinates(
-          latitude: position.latitude, longitude: position.longitude);
+      final Position position = await _locationService.getCurrentPosition();
+      final LocationEntity location =
+          await _remoteDataSource.getPlaceNameFromCoordinates(
+              latitude: position.latitude, longitude: position.longitude);
       await _localDataSource.cacheLocation(location);
       return right(location);
     } catch (e) {

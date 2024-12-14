@@ -6,7 +6,7 @@ class ErrorMessageHandlerImpl implements ErrorMessageHandler {
   @override
   String generateErrorMessage(Object error) {
     if (error is FormatException) {
-      return 'ডেটা ফরম্যাট সঠিক নয়';
+      return 'Data format is not correct';
     }
 
     return error.toString();

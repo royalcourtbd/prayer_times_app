@@ -517,6 +517,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  hive:
+    dependency: "direct main"
+    description:
+      name: hive
+      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.3"
   http:
     dependency: "direct main"
     description:
@@ -557,6 +565,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  isolate_helper:
+    dependency: "direct main"
+    description:
+      name: isolate_helper
+      sha256: d786f9cfd232d094c346accfef1fbe3161dc19c406e93af1efb9694ff5d9f162
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
+  isolate_manager:
+    dependency: transitive
+    description:
+      name: isolate_manager
+      sha256: acbfd1bc06fbc6ef23ef8b0c1f5279321cee71bd2f6c97e3be6260df6cfa2186
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.7.0+1"
+  isolates_helper:
+    dependency: "direct main"
+    description:
+      name: isolates_helper
+      sha256: af34e284d2d74e527a62071d80105873bb5ca39966ff7f881d62af4bea44728e
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.2"
   js:
     dependency: transitive
     description:

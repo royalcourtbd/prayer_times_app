@@ -31,6 +31,7 @@ class PrayerTimePage extends StatelessWidget {
 
     return PresentableWidgetBuilder(
       presenter: _prayerTimePresenter,
+      onInit: () => _prayerTimePresenter.loadLocationAndPrayerTimes(),
       builder: () {
         final PrayerTimeUiState currentUiState =
             _prayerTimePresenter.currentUiState;
