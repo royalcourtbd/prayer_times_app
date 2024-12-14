@@ -150,7 +150,7 @@ class ServiceLocator {
           () => PrayerTimeDataSourceImpl(locate()))
       ..registerLazySingleton(() => CountryLocalDataSource())
       ..registerLazySingleton<LocationLocalDataSource>(
-          () => LocationLocalDataSourceImpl())
+          () => LocationLocalDataSourceImpl(locate()))
       ..registerLazySingleton<LocationRemoteDataSource>(
           () => LocationRemoteDataSourceImpl())
       ..registerLazySingleton(() => UserDataLocalDataSource(locate()));

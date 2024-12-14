@@ -115,4 +115,5 @@ class CacheKeys {
   static const String lastSyncDate = "last_sync_date_key";
   static const String firstTime = "first_time_key";
   static const String launchCount = "launch_count_key";
+  static const String location = "location_key";
 }
