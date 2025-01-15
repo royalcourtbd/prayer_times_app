@@ -13,13 +13,16 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
 
   @override
   Future<void> cacheLocation(LocationEntity location) async {
-    await _localCacheService.saveData(key: CacheKeys.location, value: location);
+    await _localCacheService.saveData(
+      key: CacheKeys.location,
+      value: location,
+    );
   }
 
   @override
   Future<LocationEntity?> getCachedLocation() async {
     final LocationEntity? cachedLocation =
-        _localCacheService.getData<LocationEntity>(key: CacheKeys.location);
+        _localCacheService.getData(key: CacheKeys.location);
     if (cachedLocation == null) {
       return null;
     }

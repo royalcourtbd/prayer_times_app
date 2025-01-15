@@ -8,8 +8,9 @@ class UserDataLocalDataSource {
   final LocalCacheService _localCacheService;
 
   Future<bool> determineFirstRun() async {
-    final bool? firstTime =
-        _localCacheService.getData(key: CacheKeys.firstTime);
+    final bool? firstTime = _localCacheService.getData(
+      key: CacheKeys.firstTime,
+    );
     return firstTime ?? true;
   }
 
