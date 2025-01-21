@@ -21,7 +21,7 @@ function show_loading() {
   done
 
   # Display success or failure icon based on the process exit status
-  if [ $? -eq 0 ]; then
+  if wait $process_id; then
     echo -e "\b\033[32m✓\033[0m "
   else
     echo -e "\b\033[31m𐄂\033[0m "
@@ -31,31 +31,23 @@ function show_loading() {
 # Main script logic
 if [ "$1" == "build" ]; then
   echo -e "Building APK...\n"
-  
-  # Get the current date for the APK name in the format DD_MMM_YYYY
-  current_date=$(date +"%d_%b_%Y" | tr '[:upper:]' '[:lower:]')
-  
-  # Define the custom APK name
-  custom_apk_name="quran_mazid_${current_date}.apk"
-  
-  # Build Flutter APK in release mode with obfuscation
+  (flutter clean >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Cleaning project...                                   " $PID
+
+  (flutter pub get >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Getting dependencies...                              " $PID
+
+  (flutter pub run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Generating build files...                            " $PID
+
   (flutter build apk --release --obfuscate --target-platform android-arm64 --split-debug-info=./ >/dev/null 2>&1) &
   PID=$!
-  show_loading "Building APK...                                            " $PID
-  
-  # Rename the APK file
-  default_apk_path="build/app/outputs/flutter-apk/app-release.apk"
-  custom_apk_path="build/app/outputs/flutter-apk/$custom_apk_name"
-  
-  if [ -f "$default_apk_path" ]; then
-    mv "$default_apk_path" "$custom_apk_path"
-    show_loading "Renaming APK to $custom_apk_name...                        " $!
-    echo -e "\nAPK built and renamed successfully: $custom_apk_name"
-  else
-    echo -e "\nError: Default APK file not found at $default_apk_path"
-  fi
-  
-  # Open the directory containing the APK
+  show_loading "Building APK...                                      " $PID
+
+  # Open the APK directory
   if [[ "$OSTYPE" == "darwin"* ]]; then
     open build/app/outputs/flutter-apk/
   elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -67,60 +59,13 @@ if [ "$1" == "build" ]; then
   fi
 
 elif [ "$1" == "db" ]; then
-  echo -e "Executing build_runner...  \n"
-  # Run build_runner to generate Dart code
+  echo -e "Executing build_runner...\n"
   (flutter pub run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
   PID=$!
-  show_loading "Running build_runner     " $PID
+  show_loading "Running build_runner                                  " $PID
 
 elif [ "$1" == "cleanup" ]; then
-  echo -e "Cleaning up project...     \n"
-
-  # Apply Dart fixes
-  (dart fix --apply >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Fixing code                                           " $PID
-
-  # Format Dart code
-  (dart format --fix . >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Following dart guidelines                             " $PID
-
-  # Convert relative import paths to absolute
-  (flutter pub run import_path_converter:main >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Converting import paths from relative to absolute     " $PID
-
-  # Upgrade dependencies
-  (flutter pub upgrade --major-versions >/dev/null 2>&1 && flutter pub upgrade >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Upgrading the dependencies                            " $PID
-
-  echo -e "\n\033[32m✓  All cleaning tasks finished.  \033[0m"
-
-elif [ "$1" == "setup" ]; then
-  echo -e "Setting up project...  \n"
-  # Get dependencies and generate build files
-  (flutter pub get >/dev/null 2>&1 && flutter pub run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Generating build files     " $PID
-  # Generate splash screen
-  (flutter pub run flutter_native_splash:create >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Generating splash screen     " $PID
-
-  (flutter pub run flutter_launcher_icons >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Generating launcher icons     " $PID
-
-elif [ "$1" == "unused" ]; then
-  echo -e "Finding unused files...  \n"
-  # Check for unused code and files
-  (flutter pub run dart_code_metrics:metrics check-unused-code lib && flutter pub run dart_code_metrics:metrics check-unused-files lib)
-
-elif [ "$1" == "full-setup" ]; then
-  echo -e "Performing full setup...  \n"
-
+  echo -e "Cleaning up project...\n"
   (flutter clean >/dev/null 2>&1) &
   PID=$!
   show_loading "Cleaning project                                      " $PID
@@ -129,19 +74,52 @@ elif [ "$1" == "full-setup" ]; then
   PID=$!
   show_loading "Getting dependencies                                  " $PID
 
+elif [ "$1" == "setup" ]; then
+  echo -e "Setting up project...\n"
+  (flutter pub get >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Getting dependencies                                  " $PID
+
   (flutter pub run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
   PID=$!
-  show_loading "Running build_runner                                  " $PID
+  show_loading "Generating build files                                " $PID
 
-  (flutter gen-l10n >/dev/null 2>&1) &
+elif [ "$1" == "unused" ]; then
+  echo -e "Finding unused files...\n"
+  flutter analyze
+
+elif [ "$1" == "aab" ]; then
+  echo -e "Building AAB...\n"
+
+  (flutter clean >/dev/null 2>&1) &
   PID=$!
-  show_loading "Generating localizations                              " $PID
+  show_loading "Cleaning project...                                   " $PID
 
-  echo -e "\n\033[32m✓  Full setup completed successfully.  \033[0m"
+  (flutter pub get >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Getting dependencies...                              " $PID
+
+  (flutter pub run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Generating build files...                            " $PID
+
+  (flutter build appbundle --release >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Building AAB file...                                 " $PID
+
+  # Open the AAB directory
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    open build/app/outputs/bundle/release/
+  elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    xdg-open build/app/outputs/bundle/release/
+  elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+    start build/app/outputs/bundle/release/
+  else
+    echo "Cannot open directory automatically. Please check: build/app/outputs/bundle/release/"
+  fi
 
 else
-  # Display usage information if an invalid argument is provided
   echo "Invalid argument: $1"
-  echo "Usage: ./script.sh [build|cleanup|setup|unused]"
+  echo "Usage: ./script.sh [build|db|cleanup|setup|unused|aab]"
   exit 1
 fi
