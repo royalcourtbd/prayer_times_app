@@ -12,6 +12,10 @@ Future<void> main() async {
 
 Future<void> _init() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Add this to filter out Mesa logs
+  debugPrint = (String? message, {int? wrapWidth}) {
+    if (message?.contains('exportSyncFdForQSRILocked') == false) return;
+  };
   await ServiceLocator.setUp();
 
   FlutterError.onError = (FlutterErrorDetails details) {

@@ -1,7 +1,6 @@
 // lib/presentation/prayer_time/presenter/prayer_time_presenter.dart
 
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
@@ -185,7 +184,6 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
   void updateContext({required BuildContext context}) {
     uiState.value = currentUiState.copyWith(context: context);
-    log('context updated');
   }
 
   @override

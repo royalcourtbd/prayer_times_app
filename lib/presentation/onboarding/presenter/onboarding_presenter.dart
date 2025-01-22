@@ -99,6 +99,20 @@ class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
   void onLocationAccessTap() async {
     try {
       await toggleLoading(loading: true);
+
+      // First check if location service is enabled
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        await toggleLoading(loading: false);
+        await addUserMessage('Please enable location services to continue');
+        bool openSettings = await Geolocator.openLocationSettings();
+        if (!openSettings) {
+          await addUserMessage('Failed to open location settings');
+        }
+        return;
+      }
+
+      // If service is enabled, proceed with location access
       await prayerTimePresenter.loadLocationAndPrayerTimes();
       await addUserMessage('Location access granted');
       await toggleLoading(loading: false);
