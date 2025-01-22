@@ -19,7 +19,7 @@ enum WaqtType {
       case WaqtType.sunrise:
         return 'Prohibited times';
       case WaqtType.duha:
-        return 'Ṣlat Aḍ-Ḍuḥā';
+        return 'Salat Ad-Duha';
       case WaqtType.dhuhr:
         return 'Dhuhr';
       case WaqtType.asr:
