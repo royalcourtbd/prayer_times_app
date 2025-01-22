@@ -106,20 +106,16 @@ extension ThemeContextExtension on BuildContext {
   }
 }
 
+/// Helper extension that allows to use color with opacity like:
+/// `context.color.primary.withOpacityInt(0.1)`
+extension ColorOpacityExtension on Color {
+  Color withOpacityInt(double opacity) {
+    return withAlpha((opacity * 255).toInt());
+  }
+}
+
 isDarkMode(BuildContext context) =>
     Theme.of(context).brightness == Brightness.dark;
-
-Future<void> copyText({required String text}) async {
-  await catchFutureOrVoid(() async {
-    if (text.isEmpty) return;
-    final ClipboardData clipboardData = ClipboardData(text: text);
-    await Clipboard.setData(clipboardData);
-  });
-}
-
-Future<void> shareText({required String text}) async {
-  await catchFutureOrVoid(() async => Share.share(text));
-}
 
 /// Checks the internet connection asynchronously.
 ///
@@ -142,17 +138,30 @@ Future<void> shareText({required String text}) async {
 /// a lookup for a well-known URL, it checks if the device can successfully resolve the URL's
 /// IP address, indicating an active internet connection.
 ///
-// Future<bool> checkInternetConnection() async {
-//   final bool? isConnected = await catchAndReturnFuture(() async {
-//     const String kLookUpUrl = 'www.cloudflare.com';
-//     final List<InternetAddress> result =
-//         await InternetAddress.lookup(kLookUpUrl);
-//     if (result.isEmpty) return false;
-//     if (result.first.rawAddress.isEmpty) return false;
-//     return true;
-//   });
-//   return isConnected ?? false;
-// }
+
+Future<bool> checkInternetConnection() async {
+  final bool? isConnected = await catchAndReturnFuture(() async {
+    const String kLookUpUrl = 'www.cloudflare.com';
+    final List<InternetAddress> result =
+        await InternetAddress.lookup(kLookUpUrl);
+    if (result.isEmpty) return false;
+    if (result.first.rawAddress.isEmpty) return false;
+    return true;
+  });
+  return isConnected ?? false;
+}
+
+Future<void> copyText({required String text}) async {
+  await catchFutureOrVoid(() async {
+    if (text.isEmpty) return;
+    final ClipboardData clipboardData = ClipboardData(text: text);
+    await Clipboard.setData(clipboardData);
+  });
+}
+
+Future<void> shareText({required String text}) async {
+  await catchFutureOrVoid(() async => Share.share(text));
+}
 
 // const String reportEmailAddress = 'report.irdfoundation@gmail.com';
 // const String donationUrl = 'https://irdfoundation.com/sadaqa-jaria.html';

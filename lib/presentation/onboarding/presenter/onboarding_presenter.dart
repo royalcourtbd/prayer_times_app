@@ -100,6 +100,15 @@ class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
     try {
       await toggleLoading(loading: true);
 
+      // First check internet connection
+      bool isConnected = await checkInternetConnection();
+      if (!isConnected) {
+        await toggleLoading(loading: false);
+        await addUserMessage(
+            'Please check your internet connection and try again');
+        return;
+      }
+
       // First check if location service is enabled
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {

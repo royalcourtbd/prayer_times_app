@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/onboarding_content_entity.dart';
+import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/widgets/custom_page_indicator.dart';
 
 class OnboardingContentWidget extends StatelessWidget {
-  const OnboardingContentWidget({
+  OnboardingContentWidget({
     super.key,
     required this.content,
     required this.theme,
@@ -15,6 +17,7 @@ class OnboardingContentWidget extends StatelessWidget {
 
   final OnboardingContentEntity content;
   final ThemeData theme;
+  late final OnboardingPresenter presenter = locate<OnboardingPresenter>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +29,16 @@ class OnboardingContentWidget extends StatelessWidget {
           height: 105.percentWidth,
         ),
         gapH30,
-        CustomPageIndicator(
-          currentIndex: content.index,
-          itemCount: onboardingPages.length,
-          activeWidth: thirtyPx,
-          inactiveWidth: eightPx,
-          height: eightPx,
-          spacing: eightPx,
-        ),
+        presenter.currentUiState.isLoading
+            ? const CircularProgressIndicator()
+            : CustomPageIndicator(
+                currentIndex: content.index,
+                itemCount: onboardingPages.length,
+                activeWidth: thirtyPx,
+                inactiveWidth: eightPx,
+                height: eightPx,
+                spacing: eightPx,
+              ),
         gapH40,
         Padding(
           padding: EdgeInsets.symmetric(horizontal: twentyFourPx),
