@@ -18,6 +18,7 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    _presenter.updateContext(context);
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -28,7 +29,6 @@ class OnboardingPage extends StatelessWidget {
       presenter: _presenter,
       onInit: () => _presenter.fetchAndListenToData(context),
       builder: () {
-        _presenter.updateContext(context);
         final currentUiState = _presenter.currentUiState;
 
         return Scaffold(

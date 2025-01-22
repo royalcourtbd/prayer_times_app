@@ -27,7 +27,7 @@ class PrayerTimePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final ThemeData theme = Theme.of(context);
 
     return PresentableWidgetBuilder(
       presenter: _prayerTimePresenter,

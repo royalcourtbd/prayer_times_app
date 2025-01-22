@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/throttle_service.dart';
@@ -96,12 +97,36 @@ class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
   }
 
   void onLocationAccessTap() async {
-    await prayerTimePresenter.loadLocationAndPrayerTimes();
+    try {
+      await toggleLoading(loading: true);
+      await prayerTimePresenter.loadLocationAndPrayerTimes();
+      await addUserMessage('Location access granted');
+      await toggleLoading(loading: false);
 
-    Future.microtask(() async {
-      currentUiState.context!.navigatorPushReplacement(MainPage());
-      await doneWithFirstTime();
-    });
+      Future.microtask(() async {
+        currentUiState.context!.navigatorPushReplacement(MainPage());
+        await doneWithFirstTime();
+      });
+    } catch (error) {
+      await toggleLoading(loading: false);
+      if (currentUiState.context != null && currentUiState.context!.mounted) {
+        await addUserMessage(error.toString());
+
+        if (error.toString().contains('Location permissions are denied')) {
+          bool openSettings = await Geolocator.openLocationSettings();
+          if (!openSettings) {
+            await addUserMessage('Failed to open location settings');
+          }
+        }
+
+        if (error.toString().contains('Permanently denied')) {
+          bool openSettings = await Geolocator.openLocationSettings();
+          if (!openSettings) {
+            await addUserMessage('Failed to open location settings');
+          }
+        }
+      }
+    }
   }
 
   void onManualLocationTap() {

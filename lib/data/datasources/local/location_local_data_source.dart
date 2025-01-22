@@ -29,6 +29,7 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
     return LocationEntity(
       latitude: cachedLocation.latitude,
       longitude: cachedLocation.longitude,
+      placeName: cachedLocation.placeName,
     );
   }
 }

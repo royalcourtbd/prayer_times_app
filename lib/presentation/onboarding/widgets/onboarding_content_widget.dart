@@ -35,12 +35,15 @@ class OnboardingContentWidget extends StatelessWidget {
           spacing: eightPx,
         ),
         gapH40,
-        Text(
-          content.title,
-          textAlign: TextAlign.center,
-          style: theme.textTheme.headlineSmall!.copyWith(
-            fontWeight: FontWeight.w600,
-            fontSize: twentyFourPx,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: twentyFourPx),
+          child: Text(
+            content.title,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: twentyFourPx,
+            ),
           ),
         ),
         gapH16,

@@ -26,6 +26,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: InkWell(
         onTap: onTapRefresh,
+        borderRadius: BorderRadius.circular(twentyFourPx),
         child: Container(
           decoration: BoxDecoration(
             color: context.color.whiteColor,
@@ -37,9 +38,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SvgImage(
-                  SvgPath.icGpsOutline,
-                ),
+                const SvgImage(SvgPath.icGpsOutline),
                 gapW10,
                 Text(
                   presenter.currentUiState.location?.placeName ?? '',
