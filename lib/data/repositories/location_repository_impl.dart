@@ -4,6 +4,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:qibla_and_prayer_times/data/datasources/local/location_local_data_source.dart';
 import 'package:qibla_and_prayer_times/data/datasources/remote/location_remote_data_source.dart';
+import 'package:qibla_and_prayer_times/data/models/location_model.dart';
 import 'package:qibla_and_prayer_times/data/services/location_service.dart';
 import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/location_repository.dart';
@@ -40,7 +41,7 @@ class LocationRepositoryImpl implements LocationRepository {
         // If location service fails, check if we have cached data as fallback
         if (cachedLocation != null) {
           log('using cached location after location service error');
-          return right(cachedLocation);
+          return right(LocationModel.fromEntity(cachedLocation));
         }
         // If no cached data available, propagate the error
         if (locationError.toString().contains('UNAVAILABLE')) {

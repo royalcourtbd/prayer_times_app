@@ -35,7 +35,7 @@ class CustomPageIndicator extends StatelessWidget {
           decoration: BoxDecoration(
             color: currentIndex == index
                 ? context.color.primaryColor
-                : context.color.primaryColor.withOpacity(0.3),
+                : context.color.primaryColor.withOpacityInt(0.3),
             borderRadius: BorderRadius.circular(radius ?? fivePx),
           ),
         ),

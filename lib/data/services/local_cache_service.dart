@@ -4,7 +4,6 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
-import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
 
 const String _secretVaultName = "local_cache";
 
@@ -12,13 +11,8 @@ class LocalCacheService {
   static Future<void> setUp() async {
     final Directory directory = await getApplicationDocumentsDirectory();
     final String documentPath = directory.path;
-    Hive
-      ..init(documentPath)
-      ..registerAdapter(LocationEntityAdapter());
-
-    if (!Hive.isBoxOpen(_storageFileName)) {
-      await Hive.openBox<dynamic>(_storageFileName);
-    }
+    Hive.init(documentPath);
+    await Hive.openBox<dynamic>(_storageFileName);
   }
 
   static String get _storageFileName => '${_secretVaultName}_239090';
@@ -67,11 +61,8 @@ class LocalCacheService {
   /// and accessible within the scope of this function.
   T? getData<T>({required String key}) {
     try {
-      final dynamic result = _hiveBox.get(key);
-      if (result is T) {
-        return result;
-      }
-      return null;
+      final T? result = _hiveBox.get(key) as T?;
+      return result;
     } catch (e) {
       logError("getData: key: $key\nerror: $e");
       return null;

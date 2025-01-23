@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:qibla_and_prayer_times/data/models/location_model.dart';
 import 'package:qibla_and_prayer_times/data/services/local_cache_service.dart';
 import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
 
@@ -13,23 +16,29 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
 
   @override
   Future<void> cacheLocation(LocationEntity location) async {
+    final LocationModel locationModel = LocationModel.fromEntity(location);
+    final String jsonString = jsonEncode(locationModel.toJson());
+
     await _localCacheService.saveData(
       key: CacheKeys.location,
-      value: location,
+      value: jsonString,
     );
   }
 
   @override
   Future<LocationEntity?> getCachedLocation() async {
-    final LocationEntity? cachedLocation =
+    final String? jsonString =
         _localCacheService.getData(key: CacheKeys.location);
-    if (cachedLocation == null) {
+    if (jsonString == null) {
       return null;
     }
-    return LocationEntity(
-      latitude: cachedLocation.latitude,
-      longitude: cachedLocation.longitude,
-      placeName: cachedLocation.placeName,
-    );
+
+    try {
+      final Map<String, dynamic> json = jsonDecode(jsonString);
+      final LocationModel locationModel = LocationModel.fromJson(json);
+      return locationModel;
+    } catch (e) {
+      return null;
+    }
   }
 }
