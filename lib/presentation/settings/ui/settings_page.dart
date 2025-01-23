@@ -36,6 +36,7 @@ class SettingsPage extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    const Text(""),
                     ProfileMenuItem(
                       icon: SvgPath.icLocation,
                       title: 'Set Location',

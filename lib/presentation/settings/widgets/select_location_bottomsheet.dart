@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/animate_do/slides.dart';
@@ -7,9 +5,9 @@ import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_bui
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_button.dart';
+import 'package:qibla_and_prayer_times/presentation/common/custom_dropdown_field.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_modal_sheet.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_radio_list_tile.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_text__input_field.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
 
 class SelectLocationBottomsheet extends StatelessWidget {
@@ -47,9 +45,7 @@ class SelectLocationBottomsheet extends StatelessWidget {
                 title: 'Use Current Location',
                 subtitle: presenter.showLocationName(),
                 isSelected: !presenter.currentUiState.isManualLocationSelected,
-                onTap: () {
-                  presenter.onUseCurrentLocationSelected();
-                },
+                onTap: () => presenter.onUseCurrentLocationSelected(),
               ),
               gapH25,
               CustomRadioListTile(
@@ -64,70 +60,21 @@ class SelectLocationBottomsheet extends StatelessWidget {
                 gapH10,
                 SlideInUp(
                   delay: const Duration(milliseconds: 50),
-                  child: CustomTextInputField(
-                    theme: theme,
+                  child: CustomDropdownField(
                     title: 'Select Country',
-                    controller: presenter.countryController,
-                    hintText: 'Country Name',
-                    onChanged: (value) {
-                      presenter.onSearchQueryChanged(searchQuery: value);
-                    },
+                    value: 'Country Name',
+                    onTap: () {},
                   ),
                 ),
-                if (presenter.currentUiState.countries.isNotEmpty) ...[
-                  SizedBox(
-                    height: 200,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: presenter.currentUiState.countries.length,
-                      itemBuilder: (context, index) {
-                        final country =
-                            presenter.currentUiState.countries[index];
-                        return ListTile(
-                          title: Text(
-                              presenter.currentUiState.countries[index].name),
-                          onTap: () {
-                            presenter.onCountrySelected(country: country);
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
                 gapH25,
                 SlideInUp(
                   delay: const Duration(milliseconds: 50),
-                  child: CustomTextInputField(
-                    theme: theme,
+                  child: CustomDropdownField(
                     title: 'Select City',
-                    controller: presenter.cityController,
-                    hintText: 'City Name',
-                    onChanged: (value) {
-                      presenter.onSearchQueryChanged(searchQuery: value);
-                    },
+                    value: 'City Name',
+                    onTap: () {},
                   ),
                 ),
-                if (presenter.currentUiState.selectedCountry.isNotEmpty) ...[
-                  SizedBox(
-                    height: 200,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount:
-                          presenter.currentUiState.selectedCountryCities.length,
-                      itemBuilder: (context, index) {
-                        final city = presenter
-                            .currentUiState.selectedCountryCities[index];
-                        return ListTile(
-                          title: Text(city.name),
-                          onTap: () {
-                            presenter.onCitySelected(city: city);
-                            log('Latitude: ${city.latitude}, Longitude: ${city.longitude}');
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
               ],
               gapH25,
               CustomButton(
