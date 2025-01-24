@@ -101,7 +101,15 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
 
   void onSaveLocationSelected() {
     currentUiState.context!.navigatorPop();
+    clearControllers();
   }
+
+  void clearControllers() {
+    countryController.clear();
+    cityController.clear();
+  }
+
+  Future<void> get loadCountries => _loadCountries();
 
   Future<void> _loadCountries() async {
     await executeTaskWithLoading(() async {
@@ -115,6 +123,13 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
   }
 
   Future<void> onSearchQueryChanged({required String searchQuery}) async {
+    countryController.text = searchQuery;
+
+    if (searchQuery.isEmpty) {
+      await _loadCountries();
+      return;
+    }
+
     await executeTaskWithLoading(() async {
       await parseDataFromEitherWithUserMessage(
         task: () => _searchCountriesUseCase.execute(searchQuery: searchQuery),
@@ -125,21 +140,41 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
     });
   }
 
+  Future<void> onCitySearchQueryChanged({required String searchQuery}) async {
+    cityController.text = searchQuery;
+
+    if (searchQuery.isEmpty) {
+      uiState.value = currentUiState.copyWith(
+        selectedCountryCities: currentUiState.selectedCountryCities,
+      );
+      return;
+    }
+
+    final filteredCities = currentUiState.selectedCountryCities
+        .where((city) =>
+            city.name.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList();
+
+    uiState.value = currentUiState.copyWith(
+      selectedCountryCities: filteredCities,
+    );
+  }
+
   void onCountrySelected({required CountryNameEntity country}) {
+    clearControllers();
     uiState.value = currentUiState.copyWith(
       selectedCountry: country.name,
       selectedCountryCities: country.cities,
-      countries: [],
+      selectedCity: '',
     );
     countryController.text = country.name;
   }
 
   void onCitySelected({required CityNameEntity city}) {
+    clearControllers();
     uiState.value = currentUiState.copyWith(
       selectedCity: city.name,
-      selectedCountryCities: [],
     );
-    cityController.text = city.name;
   }
 
   void updateContext(BuildContext context) {

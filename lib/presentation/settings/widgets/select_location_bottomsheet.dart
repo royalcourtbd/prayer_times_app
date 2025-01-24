@@ -9,6 +9,7 @@ import 'package:qibla_and_prayer_times/presentation/common/custom_dropdown_field
 import 'package:qibla_and_prayer_times/presentation/common/custom_modal_sheet.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_radio_list_tile.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/settings/widgets/choose_country_or_city_bottom_sheet.dart';
 
 class SelectLocationBottomsheet extends StatelessWidget {
   SelectLocationBottomsheet({super.key});
@@ -32,58 +33,81 @@ class SelectLocationBottomsheet extends StatelessWidget {
     return PresentableWidgetBuilder(
       presenter: presenter,
       builder: () {
-        return AnimatedPadding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          duration: const Duration(milliseconds: 200),
-          child: CustomModalSheet(
-            theme: theme,
-            bottomSheetTitle: 'Set Your Location',
-            children: [
-              CustomRadioListTile(
-                title: 'Use Current Location',
-                subtitle: presenter.showLocationName(),
-                isSelected: !presenter.currentUiState.isManualLocationSelected,
-                onTap: () => presenter.onUseCurrentLocationSelected(),
+        return CustomModalSheet(
+          theme: theme,
+          bottomSheetTitle: 'Set Your Location',
+          children: [
+            CustomRadioListTile(
+              title: 'Use Current Location',
+              subtitle: presenter.showLocationName(),
+              isSelected: !presenter.currentUiState.isManualLocationSelected,
+              onTap: () => presenter.onUseCurrentLocationSelected(),
+            ),
+            gapH25,
+            CustomRadioListTile(
+              title: 'Select Location Manually',
+              isSelected: presenter.currentUiState.isManualLocationSelected,
+              onTap: () {
+                presenter.onManualLocationSelected(
+                    isManualLocationSelected: true);
+              },
+            ),
+            if (presenter.currentUiState.isManualLocationSelected) ...[
+              gapH10,
+              SlideInUp(
+                delay: const Duration(milliseconds: 50),
+                child: CustomDropdownField(
+                  title: 'Select Country',
+                  value: presenter.currentUiState.selectedCountry.isEmpty
+                      ? 'Select Country'
+                      : presenter.currentUiState.selectedCountry,
+                  onTap: () {
+                    ChooseCountryOrCityBottomSheet.show(
+                      context: context,
+                      isCountrySelection: true,
+                    );
+                  },
+                ),
               ),
               gapH25,
-              CustomRadioListTile(
-                title: 'Select Location Manually',
-                isSelected: presenter.currentUiState.isManualLocationSelected,
-                onTap: () {
-                  presenter.onManualLocationSelected(
-                      isManualLocationSelected: true);
-                },
-              ),
-              if (presenter.currentUiState.isManualLocationSelected) ...[
-                gapH10,
-                SlideInUp(
-                  delay: const Duration(milliseconds: 50),
-                  child: CustomDropdownField(
-                    title: 'Select Country',
-                    value: 'Country Name',
-                    onTap: () {},
-                  ),
+              SlideInUp(
+                delay: const Duration(milliseconds: 50),
+                child: CustomDropdownField(
+                  title: 'Select City',
+                  value: presenter.currentUiState.selectedCity.isEmpty
+                      ? 'Select City'
+                      : presenter.currentUiState.selectedCity,
+                  onTap: () {
+                    if (presenter.currentUiState.selectedCountry.isEmpty) {
+                      showMessage(
+                        message: 'Please select a country first',
+                        context: context,
+                      );
+                      return;
+                    }
+                    if (presenter
+                        .currentUiState.selectedCountryCities.isEmpty) {
+                      showMessage(
+                        message: 'No cities found for this country',
+                        context: context,
+                      );
+                      return;
+                    }
+                    ChooseCountryOrCityBottomSheet.show(
+                      context: context,
+                      isCountrySelection: false,
+                    );
+                  },
                 ),
-                gapH25,
-                SlideInUp(
-                  delay: const Duration(milliseconds: 50),
-                  child: CustomDropdownField(
-                    title: 'Select City',
-                    value: 'City Name',
-                    onTap: () {},
-                  ),
-                ),
-              ],
-              gapH25,
-              CustomButton(
-                title: 'Save',
-                onPressed: () => presenter.onSaveLocationSelected(),
-                horizontalPadding: 0,
               ),
             ],
-          ),
+            gapH25,
+            CustomButton(
+              title: 'Save',
+              onPressed: () => presenter.onSaveLocationSelected(),
+              horizontalPadding: 0,
+            ),
+          ],
         );
       },
     );
