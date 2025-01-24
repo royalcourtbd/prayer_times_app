@@ -9,7 +9,6 @@ import 'package:qibla_and_prayer_times/data/datasources/remote/prayer_time_datas
 import 'package:qibla_and_prayer_times/data/repositories/country_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/juristic_method_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/location_repository_impl.dart';
-import 'package:qibla_and_prayer_times/data/repositories/notification_settings_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/prayer_tracker_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/user_data_repository_impl.dart';
@@ -21,7 +20,6 @@ import 'package:qibla_and_prayer_times/data/services/waqt_calculation_service_im
 import 'package:qibla_and_prayer_times/domain/repositories/country_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/juristic_method_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/location_repository.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/notification_settings_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_tracker_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/user_data_repository.dart';
@@ -33,7 +31,6 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.d
 import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_juristic_method_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_notification_settings_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
@@ -41,7 +38,6 @@ import 'package:qibla_and_prayer_times/domain/usecases/save_first_time_use_case.
 import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/search_countries_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/update_juristic_method_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/update_notification_settings_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
@@ -115,8 +111,6 @@ class ServiceLocator {
     _serviceLocator
       ..registerLazySingleton<PrayerTimeRepository>(
           () => PrayerTimeRepositoryImpl(locate()))
-      ..registerLazySingleton<NotificationSettingsRepository>(
-          () => NotificationSettingsRepositoryImpl(locate()))
       ..registerLazySingleton<JuristicMethodRepository>(
           () => JuristicMethodRepositoryImpl(locate()))
       ..registerLazySingleton<PrayerTrackerRepository>(
@@ -166,8 +160,6 @@ class ServiceLocator {
             locate(),
             locate(),
             locate(),
-            locate(),
-            locate(),
           )))
       ..registerLazySingleton(
           () => PrayerTrackerPresenter(locate(), locate(), locate(), locate()))
@@ -186,8 +178,6 @@ class ServiceLocator {
       ..registerLazySingleton(() => GetPrayerTimesUseCase(locate(), locate()))
       ..registerLazySingleton(() => GetActiveWaqtUseCase(locate(), locate()))
       ..registerLazySingleton(() => GetRemainingTimeUseCase(locate(), locate()))
-      ..registerLazySingleton(() => GetNotificationSettingsUseCase(locate()))
-      ..registerLazySingleton(() => UpdateNotificationSettingsUseCase(locate()))
       ..registerLazySingleton(() => GetJuristicMethodUseCase(locate()))
       ..registerLazySingleton(() => UpdateJuristicMethodUseCase(locate()))
       ..registerLazySingleton(
