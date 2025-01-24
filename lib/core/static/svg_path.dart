@@ -35,4 +35,5 @@ class SvgPath {
   static const String icOnboarding1 = 'assets/svg/onboarding1.png';
   static const String icOnboarding2 = 'assets/svg/onboarding2.png';
   static const String icOnboarding3 = 'assets/svg/onboarding3.png';
+  static const String icLovely = 'assets/svg/ic_lovely.svg';
 }

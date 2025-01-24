@@ -57,7 +57,7 @@ class ProfilePage extends StatelessWidget {
               ProfileMenuItem(
                 icon: SvgPath.icSettingsOutline,
                 title: 'Notification',
-                onTap: () => context.navigatorPush(const NotificationPage()),
+                onTap: () => context.navigatorPush(NotificationPage()),
               ),
               gapH20,
               ProfileMenuItem(

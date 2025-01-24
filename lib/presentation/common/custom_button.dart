@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
+import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 
 class CustomButton extends StatelessWidget {
@@ -8,6 +10,7 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.isPrimary = true,
     this.horizontalPadding,
+    this.iconPath,
     super.key,
   });
 
@@ -15,6 +18,7 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isPrimary;
   final double? horizontalPadding;
+  final String? iconPath;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +39,24 @@ class CustomButton extends StatelessWidget {
                 : Border.all(color: context.color.primaryColor300),
             borderRadius: BorderRadius.circular(twentySevenPx),
           ),
-          child: Text(
-            title,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w500,
-              fontSize: fourteenPx,
-              color: isPrimary
-                  ? context.color.buttonColor
-                  : context.color.buttonBgColor,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (iconPath != null) ...[
+                SvgImage(iconPath!),
+                gapW10,
+              ],
+              Text(
+                title,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w500,
+                  fontSize: fourteenPx,
+                  color: isPrimary
+                      ? context.color.buttonColor
+                      : context.color.buttonBgColor,
+                ),
+              ),
+            ],
           ),
         ),
       ),

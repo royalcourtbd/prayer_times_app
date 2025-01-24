@@ -26,6 +26,7 @@ SizedBox gapW5 = SizedBox(width: fivePx);
 SizedBox gapW8 = SizedBox(width: eightPx);
 SizedBox gapW10 = SizedBox(width: tenPx);
 SizedBox gapW12 = SizedBox(width: twelvePx);
+SizedBox gapW14 = SizedBox(width: fourteenPx);
 SizedBox gapW15 = SizedBox(width: fifteenPx);
 SizedBox gapW16 = SizedBox(width: sixteenPx);
 SizedBox gapW18 = SizedBox(width: eighteenPx);

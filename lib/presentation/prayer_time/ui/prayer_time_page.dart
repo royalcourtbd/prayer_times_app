@@ -46,8 +46,7 @@ class PrayerTimePage extends StatelessWidget {
             presenter: _prayerTimePresenter,
             onTapRefresh: () =>
                 _prayerTimePresenter.refreshLocationAndPrayerTimes(),
-            onTapNotification: () =>
-                context.navigatorPush(const NotificationPage()),
+            onTapNotification: () => context.navigatorPush(NotificationPage()),
           ),
           body: SingleChildScrollView(
             child: Padding(
