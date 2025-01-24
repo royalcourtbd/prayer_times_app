@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
+import 'package:qibla_and_prayer_times/core/external_libs/flutter_toast/debouncer.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/country_entity.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
@@ -34,6 +35,8 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
 
   final TextEditingController countryController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
+  // Add to SettingsPagePresenter class
+  final _searchDebouncer = Debouncer(milliseconds: 500);
 
   @override
   void onInit() {
@@ -123,41 +126,39 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
   }
 
   Future<void> onSearchQueryChanged({required String searchQuery}) async {
-    countryController.text = searchQuery;
+    _searchDebouncer.run(() async {
+      countryController.text = searchQuery;
 
-    if (searchQuery.isEmpty) {
-      await _loadCountries();
-      return;
-    }
+      if (searchQuery.isEmpty) {
+        await _loadCountries();
+        return;
+      }
 
-    await executeTaskWithLoading(() async {
-      await parseDataFromEitherWithUserMessage(
-        task: () => _searchCountriesUseCase.execute(searchQuery: searchQuery),
-        onDataLoaded: (List<CountryNameEntity> countries) {
-          uiState.value = currentUiState.copyWith(countries: countries);
-        },
-      );
+      await executeTaskWithLoading(() async {
+        await parseDataFromEitherWithUserMessage(
+          task: () => _searchCountriesUseCase.execute(searchQuery: searchQuery),
+          onDataLoaded: (List<CountryNameEntity> countries) {
+            uiState.value = currentUiState.copyWith(countries: countries);
+          },
+        );
+      });
     });
   }
 
+  // In settings_page_presenter.dart - Update onCitySearchQueryChanged
   Future<void> onCitySearchQueryChanged({required String searchQuery}) async {
-    cityController.text = searchQuery;
+    _searchDebouncer.run(() {
+      cityController.text = searchQuery;
 
-    if (searchQuery.isEmpty) {
+      final filteredCities = currentUiState.selectedCountryCities
+          .where((city) =>
+              city.name.toLowerCase().contains(searchQuery.toLowerCase()))
+          .toList();
+
       uiState.value = currentUiState.copyWith(
-        selectedCountryCities: currentUiState.selectedCountryCities,
+        selectedCountryCities: filteredCities,
       );
-      return;
-    }
-
-    final filteredCities = currentUiState.selectedCountryCities
-        .where((city) =>
-            city.name.toLowerCase().contains(searchQuery.toLowerCase()))
-        .toList();
-
-    uiState.value = currentUiState.copyWith(
-      selectedCountryCities: filteredCities,
-    );
+    });
   }
 
   void onCountrySelected({required CountryNameEntity country}) {
