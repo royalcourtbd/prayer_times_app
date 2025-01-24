@@ -10,15 +10,15 @@ import 'package:qibla_and_prayer_times/presentation/profile/widgets/profile_menu
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
-  final ProfilePagePresenter presenter = locate<ProfilePagePresenter>();
+  final ProfilePagePresenter profilePresenter = locate<ProfilePagePresenter>();
 
   @override
   Widget build(BuildContext context) {
     // final ThemeData theme = Theme.of(context);
+    profilePresenter.updateContext(context);
     return PresentableWidgetBuilder(
-        presenter: presenter,
+        presenter: profilePresenter,
         builder: () {
-          presenter.updateContext(context);
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -35,13 +35,43 @@ class ProfilePage extends StatelessWidget {
                     ProfileMenuItem(
                       icon: SvgPath.icSettingsOutline,
                       title: 'Settings',
-                      onTap: () => presenter.onSettingsTap(),
+                      onTap: () => profilePresenter.onSettingsTap(),
+                    ),
+                    gapH20,
+                    ProfileMenuItem(
+                      icon: SvgPath.icSettingsOutline,
+                      title: 'About This App',
+                      onTap: () {},
+                    ),
+                    gapH20,
+                    ProfileMenuItem(
+                      icon: SvgPath.icSettingsOutline,
+                      title: 'Contact Us',
+                      onTap: () {},
+                    ),
+                    gapH20,
+                    ProfileMenuItem(
+                      icon: SvgPath.icSettingsOutline,
+                      title: 'Report a Bug',
+                      onTap: () {},
+                    ),
+                    gapH20,
+                    ProfileMenuItem(
+                      icon: SvgPath.icSettingsOutline,
+                      title: 'Notification',
+                      onTap: () {},
+                    ),
+                    gapH20,
+                    ProfileMenuItem(
+                      icon: SvgPath.icSettingsOutline,
+                      title: 'Rate This App',
+                      onTap: () {},
                     ),
                     gapH20,
                     ProfileMenuItem(
                       icon: SvgPath.icShare,
                       title: 'Share',
-                      onTap: presenter.onShareAppTap,
+                      onTap: profilePresenter.onShareAppTap,
                     ),
                   ],
                 ),
