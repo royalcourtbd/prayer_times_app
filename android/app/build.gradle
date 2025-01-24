@@ -33,7 +33,7 @@ android {
         minSdk = 23
         targetSdk = 35
         multiDexEnabled = true
-        versionCode = 3
+        versionCode = 4
         versionName = "1.0.1"
     }
 
@@ -47,6 +47,9 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled = true
+            debuggable = false
+            shrinkResources = true
             signingConfig = signingConfigs.release
         }
     }
