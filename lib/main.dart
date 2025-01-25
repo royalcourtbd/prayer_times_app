@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/determine_first_run_use_case.dart';
 import 'package:qibla_and_prayer_times/firebase_options.dart';
-import 'package:qibla_and_prayer_times/presentation/common/widgets/error_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_times.dart';
 
 Future<void> main() async {
@@ -17,12 +18,15 @@ Future<void> _init() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await ServiceLocator.setUp();
-
   FlutterError.onError = (FlutterErrorDetails details) {
-    FlutterError.dumpErrorToConsole(details);
-    runApp(ErrorWidgetClass(errorDetails: details));
+    FirebaseCrashlytics.instance.recordFlutterFatalError(details);
   };
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+  await ServiceLocator.setUp();
 }
 
 Future<bool> _checkFirstRun() async {
