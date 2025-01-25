@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
+import 'package:qibla_and_prayer_times/core/static/constants.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/social_link_entity.dart';
@@ -17,44 +18,47 @@ class ContactUsPresenter extends BasePresenter<ContactUsUiState> {
 
   void _loadSocialLinks() {
     final List<SocialLinkEntity> links = [
-      const SocialLinkEntity(
+      SocialLinkEntity(
         title: 'Official Page',
         icon: SvgPath.icFacebook,
-        url: 'https://facebook.com/royalcourtbd',
+        onLinkClick: () => launchFacebookPage(),
       ),
-      const SocialLinkEntity(
+      SocialLinkEntity(
         title: 'User Group',
         icon: SvgPath.icUserProfile,
-        url: 'https://facebook.com/groups/royalcourtbd',
+        onLinkClick: () => launchFacebookGroup(),
       ),
-      const SocialLinkEntity(
+      SocialLinkEntity(
         title: 'Twitter (X)',
         icon: SvgPath.icTwitter,
-        url: 'https://twitter.com/royalcourtbd',
+        onLinkClick: () => launchTwitter(),
       ),
-      const SocialLinkEntity(
+      SocialLinkEntity(
         title: 'Youtube',
         icon: SvgPath.icCategoryFill,
-        url: 'https://youtube.com/@royalcourtbd',
+        onLinkClick: () => launchYoutube(),
       ),
-      const SocialLinkEntity(
+      SocialLinkEntity(
         title: 'Linkedin',
         icon: SvgPath.icLinkedin,
-        url: 'https://linkedin.com/company/royalcourtbd',
+        onLinkClick: () => launchLinkedInProfile(),
       ),
-      const SocialLinkEntity(
+      SocialLinkEntity(
         title: 'Website',
         icon: SvgPath.icGlobalSearch,
-        url: 'https://royalcourtbd.com',
+        onLinkClick: () => openUrl(
+          url: websiteUrl,
+          context: currentUiState.context!,
+        ),
       ),
     ];
 
     uiState.value = currentUiState.copyWith(socialLinks: links);
   }
 
-  Future<void> onSocialLinkTap(String url) async {
-    await openUrl(url: url, context: currentUiState.context!);
-  }
+  // Future<void> onSocialLinkTap(String url) async {
+  //   await openUrl(url: url, context: currentUiState.context!);
+  // }
 
   void updateContext(BuildContext context) {
     uiState.value = currentUiState.copyWith(context: context);

@@ -30,7 +30,7 @@ class PrayerTimes extends StatelessWidget {
           theme: PrayerTimeTheme.lightTheme,
           title: 'Prayer Times',
           home: isFirstRun ? OnboardingPage() : MainPage(),
-          // home: ContactUsPage(),
+          // home: const SupportUsPage(),
         );
       },
     );

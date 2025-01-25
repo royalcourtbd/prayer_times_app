@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_theme_color.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/flutter_toast/toast_utility.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/throttle_service.dart';
+import 'package:qibla_and_prayer_times/core/static/constants.dart';
 import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/number_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
@@ -231,40 +233,68 @@ Future<void> shareText({required String text}) async {
 // ///
 // /// If the URL can be launched, it opens the Facebook page in the Facebook app,
 // /// otherwise, it opens the fallback URL in a browser.
-// Future<void> launchFacebookPage() async {
-//   final String fbProtocolUrl = Platform.isIOS
-//       ? 'fb://profile/436269339900162'
-//       : 'fb://page/436269339900162';
-//   await openUrl(url: fbProtocolUrl, fallbackUrl: facebookPageUrl);
-// }
+Future<void> launchFacebookPage() async {
+  final String fbProtocolUrl = Platform.isIOS
+      ? 'fb://profile/153267368647572'
+      : 'fb://page/153267368647572';
+  await openUrl(
+    url: fbProtocolUrl,
+    fallbackUrl: facebookPageUrl,
+    context: PrayerTimes.globalContext,
+  );
+}
 
-// Future<void> launchFacebookGroup() async {
-//   const String fbProtocolUrl = 'fb://group/irdofficial';
-//   await openUrl(url: fbProtocolUrl, fallbackUrl: facebookGroupUrl);
-// }
+Future<void> launchFacebookGroup() async {
+  const String fbProtocolUrl = 'fb://group/irdofficial';
+  await openUrl(
+    url: fbProtocolUrl,
+    fallbackUrl: facebookGroupUrl,
+    context: PrayerTimes.globalContext,
+  );
+}
 
-// Future<void> launchYoutube() async {
-//   const String channelId = 'UCnVaqAxLkEz9uCqkvJlPK8A';
-//   final String youtubeProtocolUrl = Platform.isIOS
-//       ? 'youtube://channel/$channelId'
-//       : 'https://www.youtube.com/channel/$channelId';
-//   const String fallbackUrl = 'https://www.youtube.com/channel/$channelId';
-//   await openUrl(url: youtubeProtocolUrl, fallbackUrl: fallbackUrl);
-// }
+Future<void> launchYoutube() async {
+  const String channelId = 'UCnVaqAxLkEz9uCqkvJlPK8A';
+  final String youtubeProtocolUrl = Platform.isIOS
+      ? 'youtube://channel/$channelId'
+      : 'https://www.youtube.com/channel/$channelId';
+  const String fallbackUrl = 'https://www.youtube.com/channel/$channelId';
+  await openUrl(
+    url: youtubeProtocolUrl,
+    fallbackUrl: fallbackUrl,
+    context: PrayerTimes.globalContext,
+  );
+}
 
-// Future<void> launchTwitter() async {
-//   await launchUrl(Uri.parse(twitterUrl));
-// }
+Future<void> launchTwitter() async {
+  await launchUrl(Uri.parse(twitterUrl));
+}
 
-// Future<void> launchMessenger() async {
-//   const String facebookId = "436269339900162";
+Future<void> launchLinkedInProfile() async {
+  const String userId = "md-abu-sayed-938334257";
+  const String linkedInProtocolUrl = 'linkedin://profile/$userId';
+  const String fallbackUrl = 'https://www.linkedin.com/in/$userId/';
 
-//   final String fbProtocolUrl = Platform.isAndroid
-//       ? 'fb-messenger://user/$facebookId'
-//       : 'https://m.me/$facebookId';
+  await openUrl(
+    url: linkedInProtocolUrl,
+    fallbackUrl: fallbackUrl,
+    context: PrayerTimes.globalContext,
+  );
+}
 
-//   await openUrl(url: fbProtocolUrl, fallbackUrl: facebookPageUrl);
-// }
+Future<void> launchMessenger() async {
+  const String facebookId = "153267368647572";
+
+  final String fbProtocolUrl = Platform.isAndroid
+      ? 'fb-messenger://user/$facebookId'
+      : 'https://m.me/$facebookId';
+
+  await openUrl(
+    url: fbProtocolUrl,
+    fallbackUrl: facebookPageUrl,
+    context: PrayerTimes.globalContext,
+  );
+}
 
 // /// Returns the file path for the given [fileName] in the specified [directoryPath].
 // ///
@@ -277,11 +307,11 @@ Future<void> shareText({required String text}) async {
 // }
 
 // /// get application directory path
-// Future<String> getApplicationDirectoryPath() async {
-//   final Directory directory = await getApplicationDocumentsDirectory();
+Future<String> getApplicationDirectoryPath() async {
+  final Directory directory = await getApplicationDocumentsDirectory();
 
-//   return directory.path;
-// }
+  return directory.path;
+}
 
 // Future<String> getDatabaseFilePath(String fileName) async {
 //   final directoryPath = await getApplicationDirectoryPath();

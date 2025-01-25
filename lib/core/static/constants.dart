@@ -28,6 +28,14 @@ const String websiteUrl = "https://royalcourtbd.com";
 const String officeName = "Royal Court It Limited";
 const String officeLocation = "Rosulbag, Tongi, Gazipur";
 
+//==============================================//
+const String reportEmailAddress = 'report.irdfoundation@gmail.com';
+const String donationUrl = 'https://irdfoundation.com/sadaqa-jaria.html';
+const String messengerUrl = "https://m.me/ihadis.official";
+const String twitterUrl = "https://twitter.com/irdofficial";
+const String facebookGroupUrl = "https://www.facebook.com/groups/irdofficial";
+const String facebookPageUrl = "https://www.facebook.com/RoyalCourtBD/";
+
 const Duration defaultPageTransitionDuration = Duration(milliseconds: 370);
 
 const String image =
