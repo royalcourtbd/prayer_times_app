@@ -40,5 +40,11 @@ class SvgPath {
   static const String icGlobalSearch = 'assets/svg/ic_global_search.svg';
   static const String icLinkedin = 'assets/svg/ic_linkedin.svg';
   static const String icTwitter = 'assets/svg/ic_twitter.svg';
+  static const String icCopy = 'assets/svg/ic_copy.svg';
   static const String icUserProfile = 'assets/svg/ic_user_profile.svg';
+  static const String imgCurrency = 'assets/svg/img_currency.svg';
+  static const String bkash = 'assets/svg/bkash.svg';
+  static const String nagad = 'assets/svg/nagad.svg';
+  static const String rocket = 'assets/svg/rocket.svg';
+  static const String upay = 'assets/svg/upay.svg';
 }
