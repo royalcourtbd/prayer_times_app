@@ -9,6 +9,7 @@ import 'package:qibla_and_prayer_times/presentation/contact_us/ui/contact_us_pag
 import 'package:qibla_and_prayer_times/presentation/notification/ui/notification_page.dart';
 import 'package:qibla_and_prayer_times/presentation/profile/presenter/profile_page_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/profile/widgets/profile_menu_item.dart';
+import 'package:qibla_and_prayer_times/presentation/support_us/ui/support_us_page.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
@@ -50,6 +51,12 @@ class ProfilePage extends StatelessWidget {
                 icon: SvgPath.icSettingsOutline,
                 title: 'Contact Us',
                 onTap: () => context.navigatorPush(ContactUsPage()),
+              ),
+              gapH20,
+              ProfileMenuItem(
+                icon: SvgPath.icGpsOutline,
+                title: 'Support Us',
+                onTap: () => context.navigatorPush(SupportUsPage()),
               ),
               gapH20,
               ProfileMenuItem(

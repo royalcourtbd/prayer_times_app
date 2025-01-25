@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
@@ -7,10 +8,13 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/payment_entity.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_container.dart';
+import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support_us_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/support_us/widgets/mobile_payment_card_item.dart';
 
 class SupportUsPage extends StatelessWidget {
-  const SupportUsPage({super.key});
+  SupportUsPage({super.key});
+
+  final SupportUsPresenter _supportUsPresenter = locate<SupportUsPresenter>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,8 @@ class SupportUsPage extends StatelessWidget {
                     ),
                     GridView.builder(
                       padding: EdgeInsets.zero,
-                      itemCount: mobilePayments.length,
+                      itemCount: _supportUsPresenter
+                          .currentUiState.mobilePayments.length,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -57,7 +62,8 @@ class SupportUsPage extends StatelessWidget {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         final MobilePaymentEntity mobilePaymentEntity =
-                            mobilePayments[index];
+                            _supportUsPresenter
+                                .currentUiState.mobilePayments[index];
 
                         return MobilePaymentCardItem(
                           theme: theme,
@@ -74,13 +80,15 @@ class SupportUsPage extends StatelessWidget {
                       ),
                     ),
                     ListView.builder(
-                      itemCount: bankPayments.length,
+                      itemCount: _supportUsPresenter
+                          .currentUiState.bankPayments.length,
                       padding: EdgeInsets.zero,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         final BankPaymentEntity bankPaymentEntity =
-                            bankPayments[index];
+                            _supportUsPresenter
+                                .currentUiState.bankPayments[index];
 
                         return BankPaymentCardItem(
                           theme: theme,
@@ -116,14 +124,15 @@ class BankPaymentCardItem extends StatelessWidget {
       color: bankPaymentEntity.cardColor!.withOpacityInt(0.07),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: thirteenPx,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image.asset(
                 SvgPath.logoIbbl,
-                width: 50,
-                height: 50,
+                width: fiftyFivePx,
+                height: fiftyFivePx,
               ),
               SvgImage(
                 SvgPath.icCopy,
@@ -131,52 +140,58 @@ class BankPaymentCardItem extends StatelessWidget {
               )
             ],
           ),
-          gapH20,
-          Text(bankPaymentEntity.accountNumber),
-          gapH20,
-          Text(bankPaymentEntity.accountHolderName),
-          gapH20,
-          Text(bankPaymentEntity.branchName),
-          gapH20,
-          Text(bankPaymentEntity.routingNumber!),
-          gapH20,
-          Text(bankPaymentEntity.swiftCode!),
+          _buildLabelValueText(
+            label: 'Account Name: ',
+            value: bankPaymentEntity.accountHolderName,
+          ),
+          _buildLabelValueText(
+            label: 'Account Number: ',
+            value: bankPaymentEntity.accountNumber,
+          ),
+          _buildLabelValueText(
+            label: 'Bank Name: ',
+            value: bankPaymentEntity.bankName,
+          ),
+          _buildLabelValueText(
+            label: 'Branch Name: ',
+            value: bankPaymentEntity.branchName,
+          ),
+          _buildLabelValueText(
+            label: 'Routing Number: ',
+            value: bankPaymentEntity.routingNumber!,
+          ),
+          _buildLabelValueText(
+            label: 'Swift Code: ',
+            value: bankPaymentEntity.swiftCode!,
+          ),
+        ],
+      ),
+    );
+  }
+
+  RichText _buildLabelValueText({
+    required String label,
+    required String value,
+  }) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: label,
+            style: theme.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.normal,
+              fontSize: thirteenPx,
+            ),
+          ),
+          TextSpan(
+            text: value,
+            style: theme.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: fourteenPx,
+            ),
+          ),
         ],
       ),
     );
   }
 }
-
-final List<BankPaymentEntity> bankPayments = [
-  const BankPaymentEntity(
-    bankName: 'Bank Asia',
-    iconPath: SvgPath.bkash,
-    accountNumber: '1234567890',
-    accountHolderName: 'John Doe',
-    branchName: 'Dhaka',
-    routingNumber: '1234567890',
-    swiftCode: '1234567890',
-    cardColor: Colors.blue,
-  ),
-];
-
-final List<MobilePaymentEntity> mobilePayments = [
-  const MobilePaymentEntity(
-    bankName: 'bKash',
-    iconPath: SvgPath.bkash,
-    mobileNumber: '+8801749247855',
-    cardColor: Colors.blue,
-  ),
-  const MobilePaymentEntity(
-    bankName: 'Rocket',
-    iconPath: SvgPath.rocket,
-    mobileNumber: '+8801749247855',
-    cardColor: Colors.red,
-  ),
-  const MobilePaymentEntity(
-    bankName: 'Nagad',
-    iconPath: SvgPath.nagad,
-    mobileNumber: '+8801749247855',
-    cardColor: Colors.green,
-  ),
-];

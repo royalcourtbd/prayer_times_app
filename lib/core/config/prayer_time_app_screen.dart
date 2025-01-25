@@ -359,6 +359,13 @@ double get fiftyPx {
   return _fiftyPx!;
 }
 
+double? _fiftyFivePx;
+
+double get fiftyFivePx {
+  _fiftyFivePx ??= 55.px;
+  return _fiftyFivePx!;
+}
+
 double? _sixtyFivePx;
 
 double get sixtyFivePx {
