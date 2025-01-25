@@ -6,16 +6,20 @@ class CustomContainer extends StatelessWidget {
   const CustomContainer({
     super.key,
     this.child,
+    this.padding,
+    this.color,
   });
   final Widget? child;
+  final EdgeInsets? padding;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding12,
+      padding: padding ?? padding12,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: context.color.whiteColor,
+        color: color ?? context.color.whiteColor,
         borderRadius: radius18,
       ),
       child: child,

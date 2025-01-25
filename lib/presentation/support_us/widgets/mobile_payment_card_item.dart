@@ -5,6 +5,7 @@ import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/payment_entity.dart';
+import 'package:qibla_and_prayer_times/presentation/common/custom_container.dart';
 
 class MobilePaymentCardItem extends StatelessWidget {
   const MobilePaymentCardItem({
@@ -18,12 +19,9 @@ class MobilePaymentCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return CustomContainer(
       padding: padding15,
-      decoration: BoxDecoration(
-        color: mobilePaymentEntity.cardColor!.withOpacityInt(0.07),
-        borderRadius: radius15,
-      ),
+      color: mobilePaymentEntity.cardColor!.withOpacityInt(0.07),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,8 +30,8 @@ class MobilePaymentCardItem extends StatelessWidget {
             children: [
               SvgImage(
                 mobilePaymentEntity.iconPath,
-                width: 30,
-                height: 30,
+                width: thirtyTwoPx,
+                height: thirtyTwoPx,
               ),
               SvgImage(
                 SvgPath.icCopy,

@@ -47,4 +47,5 @@ class SvgPath {
   static const String nagad = 'assets/svg/nagad.svg';
   static const String rocket = 'assets/svg/rocket.svg';
   static const String upay = 'assets/svg/upay.svg';
+  static const String logoIbbl = 'assets/svg/logo_ibbl.png';
 }

@@ -31,6 +31,7 @@ class BankPaymentEntity extends BaseEntity {
   final String branchName;
   final String? routingNumber;
   final String? swiftCode;
+  final Color? cardColor;
 
   const BankPaymentEntity({
     required this.bankName,
@@ -40,6 +41,7 @@ class BankPaymentEntity extends BaseEntity {
     required this.branchName,
     required this.routingNumber,
     required this.swiftCode,
+    this.cardColor,
   });
 
   @override
@@ -51,5 +53,6 @@ class BankPaymentEntity extends BaseEntity {
         branchName,
         routingNumber,
         swiftCode,
+        cardColor,
       ];
 }

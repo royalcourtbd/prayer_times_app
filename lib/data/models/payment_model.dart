@@ -50,6 +50,7 @@ class BankPaymentModel extends BankPaymentEntity {
     required super.branchName,
     super.routingNumber,
     super.swiftCode,
+    super.cardColor,
   });
 
   factory BankPaymentModel.fromJson(Map<String, dynamic> json) {
@@ -61,6 +62,7 @@ class BankPaymentModel extends BankPaymentEntity {
       branchName: json['branchName'] as String,
       routingNumber: json['routingNumber'] as String,
       swiftCode: json['swiftCode'] as String,
+      cardColor: json['cardColor'] as Color?,
     );
   }
 
@@ -73,6 +75,7 @@ class BankPaymentModel extends BankPaymentEntity {
         branchName,
         routingNumber,
         swiftCode,
+        cardColor,
       ];
 
   BankPaymentModel copyWith({
@@ -83,6 +86,7 @@ class BankPaymentModel extends BankPaymentEntity {
     String? branchName,
     String? routingNumber,
     String? swiftCode,
+    Color? cardColor,
   }) {
     return BankPaymentModel(
       bankName: bankName ?? this.bankName,
@@ -92,6 +96,7 @@ class BankPaymentModel extends BankPaymentEntity {
       branchName: branchName ?? this.branchName,
       routingNumber: routingNumber ?? this.routingNumber,
       swiftCode: swiftCode ?? this.swiftCode,
+      cardColor: cardColor ?? this.cardColor,
     );
   }
 }
