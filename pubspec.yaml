@@ -68,6 +68,10 @@ dependencies:
   isolate_helper: ^0.2.0
   isolates_helper: ^0.5.2
   hive: ^2.2.3
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.13.6
+  firebase_storage: ^11.5.6
+  firebase_messaging: ^14.7.9
 
 dev_dependencies:
   flutter_test:

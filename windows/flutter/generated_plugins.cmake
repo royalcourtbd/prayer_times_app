@@ -4,7 +4,10 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   awesome_notifications
+  cloud_firestore
   connectivity_plus
+  firebase_core
+  firebase_storage
   geolocator_windows
   share_plus
   sqlite3_flutter_libs
