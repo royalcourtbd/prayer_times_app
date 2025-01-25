@@ -36,4 +36,9 @@ class SvgPath {
   static const String icOnboarding2 = 'assets/svg/onboarding2.png';
   static const String icOnboarding3 = 'assets/svg/onboarding3.png';
   static const String icLovely = 'assets/svg/ic_lovely.svg';
+  static const String icFacebook = 'assets/svg/ic_facebook.svg';
+  static const String icGlobalSearch = 'assets/svg/ic_global_search.svg';
+  static const String icLinkedin = 'assets/svg/ic_linkedin.svg';
+  static const String icTwitter = 'assets/svg/ic_twitter.svg';
+  static const String icUserProfile = 'assets/svg/ic_user_profile.svg';
 }

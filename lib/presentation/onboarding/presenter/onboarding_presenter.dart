@@ -104,8 +104,7 @@ class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
       bool isConnected = await checkInternetConnection();
       if (!isConnected) {
         await toggleLoading(loading: false);
-        await addUserMessage(
-            'Please check your internet connection and try again');
+        await addUserMessage('No Internet Connection');
         return;
       }
 

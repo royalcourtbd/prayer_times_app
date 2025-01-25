@@ -141,7 +141,7 @@ isDarkMode(BuildContext context) =>
 
 Future<bool> checkInternetConnection() async {
   final bool? isConnected = await catchAndReturnFuture(() async {
-    const String kLookUpUrl = 'www.cloudflare.com';
+    const String kLookUpUrl = 'www.google.com';
     final List<InternetAddress> result =
         await InternetAddress.lookup(kLookUpUrl);
     if (result.isEmpty) return false;
@@ -312,6 +312,7 @@ Future<void> shareText({required String text}) async {
 // ///
 Future<void> openUrl({
   required String? url,
+  required BuildContext context,
   String fallbackUrl = "",
 }) async {
   Throttle.throttle("openUrlThrottle", 1.inSeconds, () async {
@@ -343,7 +344,7 @@ Future<void> openUrl({
         if (!validUri) {
           await showMessage(
             message: errorMessage,
-            context: PrayerTimes.globalContext,
+            context: context,
           );
           return;
         }
@@ -352,7 +353,7 @@ Future<void> openUrl({
             ? await launchUrl(fallbackUri, mode: LaunchMode.externalApplication)
             : await showMessage(
                 message: errorMessage,
-                context: PrayerTimes.globalContext,
+                context: context,
               );
       } catch (e) {
         logErrorStatic(e, _fileName);
@@ -360,7 +361,7 @@ Future<void> openUrl({
             ? await launchUrl(fallbackUri)
             : await showMessage(
                 message: errorMessage,
-                context: PrayerTimes.globalContext,
+                context: context,
               );
       }
     });
