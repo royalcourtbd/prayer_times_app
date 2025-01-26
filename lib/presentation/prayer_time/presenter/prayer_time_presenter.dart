@@ -57,20 +57,22 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   }
 
   Future<void> loadLocationAndPrayerTimes() async {
-    await _fetchLocationAndPrayerTimes();
+    await _fetchLocationAndPrayerTimes(forceRemote: false);
   }
 
-  Future<void> _fetchLocationAndPrayerTimes() async {
-    await executeTaskWithLoading(
-      () async {
-        await parseDataFromEitherWithUserMessage<LocationEntity>(
-          task: () => _getLocationUseCase.execute(),
-          onDataLoaded: (LocationEntity location) async {
-            await getPrayerTimes(location: location);
-          },
-        );
-      },
-    );
+  Future<void> refreshLocationAndPrayerTimes() async {
+    await _fetchLocationAndPrayerTimes(forceRemote: true);
+  }
+
+  Future<void> _fetchLocationAndPrayerTimes({required bool forceRemote}) async {
+    await executeTaskWithLoading(() async {
+      await parseDataFromEitherWithUserMessage<LocationEntity>(
+        task: () => _getLocationUseCase.execute(forceRemote: forceRemote),
+        onDataLoaded: (LocationEntity location) async {
+          await getPrayerTimes(location: location);
+        },
+      );
+    });
   }
 
   Future<void> getPrayerTimes({required LocationEntity location}) async {
@@ -86,21 +88,6 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
           _updateAllStates();
           initializeTracker();
-        },
-      );
-    });
-  }
-
-  Future<void> refreshLocationAndPrayerTimes() async {
-    await _fetchLocationAndPrayerTimes();
-  }
-
-  Future<void> onLocationNameTap() async {
-    await executeTaskWithLoading(() async {
-      await parseDataFromEitherWithUserMessage<LocationEntity>(
-        task: () => _getLocationUseCase.execute(),
-        onDataLoaded: (LocationEntity location) async {
-          await getPrayerTimes(location: location);
         },
       );
     });

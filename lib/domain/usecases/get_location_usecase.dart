@@ -12,10 +12,11 @@ class GetLocationUseCase extends BaseUseCase<LocationEntity> {
     ErrorMessageHandler errorMessageHandler,
   ) : super(errorMessageHandler);
 
-  Future<Either<String, LocationEntity>> execute() async {
+  Future<Either<String, LocationEntity>> execute(
+      {bool forceRemote = false}) async {
     return mapResultToEither(() async {
       final Either<String, LocationEntity> result =
-          await _repository.getLocation();
+          await _repository.getLocation(forceRemote: forceRemote);
       return result.fold(
         (l) => throw Exception(l),
         (r) => r,
