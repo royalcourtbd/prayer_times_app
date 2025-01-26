@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -8,29 +9,57 @@ import 'package:qibla_and_prayer_times/firebase_options.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_times.dart';
 
 Future<void> main() async {
-  await _init();
-  final bool isFirstRun = await _checkFirstRun();
-  runApp(PrayerTimes(isFirstRun: isFirstRun));
+  runZonedGuarded<Future<void>>(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      await _initializeApp();
+      runApp(PrayerTimes(isFirstRun: await _checkFirstRun()));
+    },
+    (error, stackTrace) => _reportError(error, stackTrace, fatal: true),
+  );
 }
 
-Future<void> _init() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  FlutterError.onError = (FlutterErrorDetails details) {
+Future<void> _initializeApp() async {
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    _setupErrorHandling();
+    await ServiceLocator.setUp();
+  } catch (error, stackTrace) {
+    _reportError(error, stackTrace);
+    rethrow;
+  }
+}
+
+void _setupErrorHandling() {
+  FlutterError.onError = (details) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(details);
   };
 
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+  PlatformDispatcher.instance.onError = (error, stackTrace) {
+    FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true);
     return true;
   };
-  await ServiceLocator.setUp();
 }
 
-Future<bool> _checkFirstRun() async {
-  final DetermineFirstRunUseCase determineFirstRunUseCase =
-      locate<DetermineFirstRunUseCase>();
-  return await determineFirstRunUseCase.execute();
+Future<bool> _checkFirstRun() {
+  return locate<DetermineFirstRunUseCase>().execute();
+}
+
+Future<void> _reportError(
+  dynamic error,
+  StackTrace stackTrace, {
+  bool fatal = false,
+}) async {
+  print('Error: $error, StackTrace: $stackTrace');
+
+  if (Firebase.apps.isNotEmpty) {
+    if (fatal) {
+      await FirebaseCrashlytics.instance
+          .recordError(error, stackTrace, fatal: true);
+    } else {
+      await FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    }
+  }
 }

@@ -21,11 +21,17 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource {
       );
       if (placemarks.isNotEmpty) {
         final Placemark place = placemarks.first;
+        final List<String> addressParts = [
+          if (place.subLocality?.isNotEmpty == true) place.subLocality!,
+          if (place.locality?.isNotEmpty == true) place.locality!,
+          if (place.country?.isNotEmpty == true) place.country!,
+        ];
+
         return LocationEntity(
-            latitude: latitude,
-            longitude: longitude,
-            placeName:
-                "${place.subLocality}, ${place.locality}, ${place.country}");
+          latitude: latitude,
+          longitude: longitude,
+          placeName: addressParts.join(', '),
+        );
       } else {
         return LocationEntity(latitude: latitude, longitude: longitude);
       }

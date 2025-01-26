@@ -49,6 +49,7 @@ import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/pra
 import 'package:qibla_and_prayer_times/presentation/profile/presenter/profile_page_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/contact_us/presenter/contact_us_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support_us_presenter.dart';
 
 // Implementation Note:
 //
@@ -181,7 +182,8 @@ class ServiceLocator {
           () => loadPresenter(OnboardingPresenter(locate(), locate())))
       ..registerLazySingleton(
           () => loadPresenter(NotificationPresenter(locate())))
-      ..registerLazySingleton(() => loadPresenter(ContactUsPresenter()));
+      ..registerLazySingleton(() => loadPresenter(ContactUsPresenter()))
+      ..registerLazySingleton(() => loadPresenter(SupportUsPresenter()));
   }
 
   Future<void> _setUpUseCase() async {

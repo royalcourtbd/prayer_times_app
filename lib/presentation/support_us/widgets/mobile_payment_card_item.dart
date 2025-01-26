@@ -12,10 +12,12 @@ class MobilePaymentCardItem extends StatelessWidget {
     super.key,
     required this.theme,
     required this.mobilePaymentEntity,
+    this.onCopy,
   });
 
   final ThemeData theme;
   final MobilePaymentEntity mobilePaymentEntity;
+  final Function(MobilePaymentEntity)? onCopy;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +35,14 @@ class MobilePaymentCardItem extends StatelessWidget {
                 width: thirtyTwoPx,
                 height: thirtyTwoPx,
               ),
-              SvgImage(
-                SvgPath.icCopy,
-                color: mobilePaymentEntity.cardColor,
+              InkWell(
+                onTap: () {
+                  onCopy?.call(mobilePaymentEntity);
+                },
+                child: SvgImage(
+                  SvgPath.icCopy,
+                  color: mobilePaymentEntity.cardColor,
+                ),
               )
             ],
           ),

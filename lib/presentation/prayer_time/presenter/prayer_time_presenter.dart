@@ -95,6 +95,17 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     await _fetchLocationAndPrayerTimes();
   }
 
+  Future<void> onLocationNameTap() async {
+    await executeTaskWithLoading(() async {
+      await parseDataFromEitherWithUserMessage<LocationEntity>(
+        task: () => _getLocationUseCase.execute(),
+        onDataLoaded: (LocationEntity location) async {
+          await getPrayerTimes(location: location);
+        },
+      );
+    });
+  }
+
   void _updateAllStates() {
     _updateActiveWaqt();
     _updateRemainingTime();

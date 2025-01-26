@@ -9,6 +9,39 @@ class SupportUsPresenter extends BasePresenter<SupportUsUiState> {
   final Obs<SupportUsUiState> uiState = Obs(SupportUsUiState.empty());
   SupportUsUiState get currentUiState => uiState.value;
 
+  @override
+  void onInit() {
+    loadPayments();
+    super.onInit();
+  }
+
+  void loadPayments() {
+    uiState.value = currentUiState.copyWith(
+      bankPayments: bankPayments,
+      mobilePayments: mobilePayments,
+    );
+  }
+
+  Future<void> copyBankInfo({required BankPaymentEntity bankPayment}) async {
+    final String bankInfo = '''
+Account Name: ${bankPayment.accountHolderName}
+Account Number: ${bankPayment.accountNumber}
+Bank Name: ${bankPayment.bankName}
+Branch Name: ${bankPayment.branchName}
+Routing Number: ${bankPayment.routingNumber}
+Swift Code: ${bankPayment.swiftCode}
+''';
+
+    await copyText(text: bankInfo);
+    addUserMessage('Bank information copied to clipboard');
+  }
+
+  Future<void> copyMobilePaymentInfo(
+      {required MobilePaymentEntity mobilePayment}) async {
+    await copyText(text: mobilePayment.mobileNumber);
+    addUserMessage('Mobile number copied to clipboard');
+  }
+
   final List<BankPaymentEntity> bankPayments = [
     const BankPaymentEntity(
       bankName: 'Bank Asia',
@@ -32,13 +65,13 @@ class SupportUsPresenter extends BasePresenter<SupportUsUiState> {
     const MobilePaymentEntity(
       bankName: 'Rocket',
       iconPath: SvgPath.rocket,
-      mobileNumber: '+8801749247855',
+      mobileNumber: '+88016422943211',
       cardColor: Colors.red,
     ),
     const MobilePaymentEntity(
       bankName: 'Nagad',
       iconPath: SvgPath.nagad,
-      mobileNumber: '+8801749247855',
+      mobileNumber: '+8801842081997',
       cardColor: Colors.green,
     ),
   ];
