@@ -20,6 +20,7 @@ class SupportUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    _supportUsPresenter.updateBuildContext(context);
     return PresentableWidgetBuilder(
         presenter: _supportUsPresenter,
         builder: () {

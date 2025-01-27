@@ -16,9 +16,12 @@ class ToastUtility {
     double xOffset = 0.0,
     double yOffset = 50.0,
   }) {
-    _debouncer.run(() {
-      final overlay = Overlay.of(context);
+    if (!context.mounted) return;
 
+    final OverlayState? overlay = Overlay.maybeOf(context);
+    if (overlay == null) return;
+
+    _debouncer.run(() {
       final overlayEntry = OverlayEntry(
         builder: (context) => CustomToast(
           message: message,

@@ -92,8 +92,16 @@ Future<void> showMessage({
   required BuildContext? context,
 }) async {
   if (message == null || message.isEmpty) return;
+
+  final BuildContext finalContext = context ?? PrayerTimes.globalContext;
+  if (!finalContext.mounted) return;
+
+  // Ensure we have a valid overlay
+  final NavigatorState? navigator = Navigator.maybeOf(finalContext);
+  if (navigator == null) return;
+
   ToastUtility.showCustomToast(
-    context: context ?? PrayerTimes.globalContext,
+    context: finalContext,
     message: message,
     yOffset: 100.0,
     duration: const Duration(milliseconds: 1500),
@@ -272,7 +280,7 @@ Future<void> launchTwitter() async {
 
 Future<void> launchLinkedInProfile() async {
   const String userId = "md-abu-sayed-938334257";
-  const String linkedInProtocolUrl = 'linkedin://profile/$userId';
+  const String linkedInProtocolUrl = 'linkedin://in/$userId';
   const String fallbackUrl = 'https://www.linkedin.com/in/$userId/';
 
   await openUrl(
