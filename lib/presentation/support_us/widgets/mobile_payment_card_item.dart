@@ -21,47 +21,45 @@ class MobilePaymentCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-      padding: padding15,
-      color: mobilePaymentEntity.cardColor!.withOpacityInt(0.07),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SvgImage(
-                mobilePaymentEntity.iconPath,
-                width: thirtyTwoPx,
-                height: thirtyTwoPx,
-              ),
-              InkWell(
-                onTap: () {
-                  onCopy?.call(mobilePaymentEntity);
-                },
-                child: SvgImage(
+    return InkWell(
+      onTap: () => onCopy?.call(mobilePaymentEntity),
+      child: CustomContainer(
+        padding: padding15,
+        color: mobilePaymentEntity.cardColor!.withOpacityInt(0.07),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SvgImage(
+                  mobilePaymentEntity.iconPath,
+                  width: thirtyTwoPx,
+                  height: thirtyTwoPx,
+                ),
+                SvgImage(
                   SvgPath.icCopy,
                   color: mobilePaymentEntity.cardColor,
-                ),
-              )
-            ],
-          ),
-          gapH22,
-          Text(
-            mobilePaymentEntity.bankName,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.normal,
-              fontSize: thirteenPx,
+                )
+              ],
             ),
-          ),
-          Text(
-            mobilePaymentEntity.mobileNumber,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w600,
-              fontSize: fifteenPx,
+            gapH22,
+            Text(
+              mobilePaymentEntity.bankName,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.normal,
+                fontSize: thirteenPx,
+              ),
             ),
-          ),
-        ],
+            Text(
+              mobilePaymentEntity.mobileNumber,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w600,
+                fontSize: fifteenPx,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
