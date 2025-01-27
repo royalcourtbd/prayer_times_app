@@ -4,7 +4,6 @@ import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/config/themes.dart';
 import 'package:qibla_and_prayer_times/presentation/main/ui/main_page.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/ui/onboarding_page.dart';
-import 'package:qibla_and_prayer_times/presentation/support_us/ui/support_us_page.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PrayerTimes extends StatelessWidget {
@@ -24,6 +23,11 @@ class PrayerTimes extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return GetMaterialApp(
           navigatorKey: navigatorKey,
+          builder: (context, child) {
+            return Overlay(
+              initialEntries: [OverlayEntry(builder: (context) => child!)],
+            );
+          },
           onInit: () => PrayerTimeAppScreen.setUp(context),
           onReady: () => PrayerTimeAppScreen.setUp(context),
           debugShowCheckedModeBanner: false,

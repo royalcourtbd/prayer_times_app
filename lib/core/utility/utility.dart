@@ -88,20 +88,13 @@ extension ContextExtensions on BuildContext {
 }
 
 Future<void> showMessage({
-  required String? message,
-  required BuildContext? context,
+  String? message,
+  BuildContext? context,
 }) async {
   if (message == null || message.isEmpty) return;
 
-  final BuildContext finalContext = context ?? PrayerTimes.globalContext;
-  if (!finalContext.mounted) return;
-
-  // Ensure we have a valid overlay
-  final NavigatorState? navigator = Navigator.maybeOf(finalContext);
-  if (navigator == null) return;
-
   ToastUtility.showCustomToast(
-    context: finalContext,
+    context: context ?? PrayerTimes.globalContext,
     message: message,
     yOffset: 100.0,
     duration: const Duration(milliseconds: 1500),
