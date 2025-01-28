@@ -9,59 +9,6 @@ class NotificationRepositoryImpl extends NotificationRepository {
   Future<Either<String, List<NotificationEntity>>> getNotifications() async {
     try {
       // ডেমো ডাটা তৈরি
-      final List<NotificationModel> notifications = [
-        NotificationModel(
-          id: '1',
-          title: 'নামাজের সময় হয়েছে',
-          description:
-              'ফজরের নামাজের সময় হয়েছে। আল্লাহর ইবাদত করার জন্য প্রস্তুত হোন।',
-          timestamp: DateTime.now().subtract(const Duration(hours: 1)),
-          type: 'prayer_time',
-          actionButtonCallback: () {},
-          isRead: false,
-          actionUrl: 'https://www.google.com',
-          imageUrl: SvgPath.icLovely,
-        ),
-        NotificationModel(
-          id: '2',
-          title: 'সেহরির সময়',
-          description: 'সেহরির সময় শুরু হয়েছে। রোজা রাখার নিয়ত করুন।',
-          timestamp: DateTime.now(),
-          type: 'sehri_time',
-          isRead: true,
-          imageUrl: SvgPath.icNotificationOutline,
-        ),
-        NotificationModel(
-          id: '3',
-          title: 'ইফতারের সময়',
-          description:
-              'ইফতারের সময় হয়েছে। আল্লাহর রহমতে রোজা ভাঙ্গার সময় এসেছে।',
-          timestamp: DateTime.now().subtract(const Duration(days: 1)),
-          type: 'iftar_time',
-          isRead: false,
-          imageUrl: SvgPath.icMusicFill,
-        ),
-        NotificationModel(
-          id: '4',
-          title: 'ইফতারের সময়',
-          description:
-              "ইফতারের সময় হয়েছে। আল্লাহর রহমতে রোজা ভাঙ্গার সময় এসেছে।",
-          timestamp: DateTime.now().subtract(const Duration(days: 1)),
-          type: 'iftar_time',
-          isRead: false,
-          imageUrl: SvgPath.icCategoryFill,
-        ),
-        NotificationModel(
-          id: '5',
-          title: 'ইফতারের সময়',
-          description:
-              "ইফতারের সময় হয়েছে। আল্লাহর রহমতে রোজা ভাঙ্গার সময় এসেছে।",
-          timestamp: DateTime.now().subtract(const Duration(days: 1)),
-          type: 'iftar_time',
-          isRead: false,
-          imageUrl: SvgPath.icCrown,
-        ),
-      ];
 
       return right(notifications);
     } catch (e) {
@@ -89,3 +36,54 @@ class NotificationRepositoryImpl extends NotificationRepository {
     }
   }
 }
+
+final List<NotificationModel> notifications = [
+  NotificationModel(
+    id: '1',
+    title: 'নামাজের সময় হয়েছে',
+    description:
+        'ফজরের নামাজের সময় হয়েছে। আল্লাহর ইবাদত করার জন্য প্রস্তুত হোন।',
+    timestamp: DateTime.now().subtract(const Duration(hours: 1)),
+    type: 'prayer_time',
+    actionButtonCallback: () {},
+    isRead: false,
+    actionUrl: 'https://www.google.com',
+    imageUrl: SvgPath.icLovely,
+  ),
+  NotificationModel(
+    id: '2',
+    title: 'সেহরির সময়',
+    description: 'সেহরির সময় শুরু হয়েছে। রোজা রাখার নিয়ত করুন।',
+    timestamp: DateTime.now(),
+    type: 'sehri_time',
+    isRead: true,
+    imageUrl: SvgPath.icNotificationOutline,
+  ),
+  NotificationModel(
+    id: '3',
+    title: 'ইফতারের সময়',
+    description: 'ইফতারের সময় হয়েছে। আল্লাহর রহমতে রোজা ভাঙ্গার সময় এসেছে।',
+    timestamp: DateTime.now().subtract(const Duration(days: 1)),
+    type: 'iftar_time',
+    isRead: false,
+    imageUrl: SvgPath.icMusicFill,
+  ),
+  NotificationModel(
+    id: '4',
+    title: 'ইফতারের সময়',
+    description: "ইফতারের সময় হয়েছে। আল্লাহর রহমতে রোজা ভাঙ্গার সময় এসেছে।",
+    timestamp: DateTime.now().subtract(const Duration(days: 1)),
+    type: 'iftar_time',
+    isRead: false,
+    imageUrl: SvgPath.icCategoryFill,
+  ),
+  NotificationModel(
+    id: '5',
+    title: 'ইফতারের সময়',
+    description: "ইফতারের সময় হয়েছে। আল্লাহর রহমতে রোজা ভাঙ্গার সময় এসেছে।",
+    timestamp: DateTime.now().subtract(const Duration(days: 1)),
+    type: 'iftar_time',
+    isRead: false,
+    imageUrl: SvgPath.icCrown,
+  ),
+];
