@@ -128,7 +128,7 @@ class ServiceLocator {
       ..registerLazySingleton<LocationRepository>(
           () => LocationRepositoryImpl(locate(), locate(), locate()))
       ..registerLazySingleton<UserDataRepository>(
-          () => UserDataRepositoryImpl(locate()))
+          () => UserDataRepositoryImpl(locate(), locate()))
       ..registerLazySingleton<NotificationRepository>(
           () => NotificationRepositoryImpl());
   }
