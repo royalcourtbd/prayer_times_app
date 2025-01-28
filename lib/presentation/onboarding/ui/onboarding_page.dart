@@ -78,10 +78,12 @@ class OnboardingPage extends StatelessWidget {
                   ],
                 ],
               ),
-              SkipButtonWidget(
-                onTap: _presenter.onSkipTap,
-                theme: theme,
-              ),
+              if (currentUiState.currentPage < onboardingPages.length - 1) ...[
+                SkipButtonWidget(
+                  onTap: _presenter.onSkipTap,
+                  theme: theme,
+                ),
+              ],
             ],
           ),
         );

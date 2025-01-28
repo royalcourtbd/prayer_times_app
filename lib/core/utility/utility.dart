@@ -21,6 +21,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 bool get isMobile => rs.Device.screenType == rs.ScreenType.mobile;
+const String _fileName = "utility.dart";
 
 ColorFilter buildColorFilterToChangeColor(Color? color) =>
     ColorFilter.mode(color ?? Colors.black, BlendMode.srcATop);
@@ -406,8 +407,6 @@ Future<String> get currentAppVersion async {
 
 String get suitableAppStoreUrl =>
     Platform.isAndroid ? playStoreUrl : appStoreUrl;
-
-const String _fileName = "utility.dart";
 
 // String get suitableAppStoreUrl =>
 //     Platform.isAndroid ? playStoreUrl : appStoreUrl;
