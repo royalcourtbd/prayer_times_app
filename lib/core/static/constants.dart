@@ -23,7 +23,7 @@ const String packageName = "com.royalcourtbd.qibla_and_prayer_times";
 
 const String playStoreUrl =
     "https://play.google.com/store/apps/details?id=$packageName";
-// const String appStoreUrl = "https://apps.apple.com/sa/app/al-hadith/id$appStoreAppId";
+const String appStoreUrl = "https://apps.apple.com/sa/app/al-hadith/id";
 const String websiteUrl = "https://royalcourtbd.com";
 const String officeName = "Royal Court It Limited";
 const String officeLocation = "Rosulbag, Tongi, Gazipur";
@@ -37,6 +37,3 @@ const String facebookGroupUrl = "https://www.facebook.com/groups/irdofficial";
 const String facebookPageUrl = "https://www.facebook.com/RoyalCourtBD/";
 
 const Duration defaultPageTransitionDuration = Duration(milliseconds: 370);
-
-const String image =
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR-FJUufB-BON7aBczg_whwKZSGUW8hgRNiw&s';

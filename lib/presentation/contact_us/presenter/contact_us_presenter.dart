@@ -48,7 +48,6 @@ class ContactUsPresenter extends BasePresenter<ContactUsUiState> {
         icon: SvgPath.icGlobalSearch,
         onLinkClick: () => openUrl(
           url: websiteUrl,
-          context: currentUiState.context!,
         ),
       ),
     ];

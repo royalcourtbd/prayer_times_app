@@ -1,9 +1,11 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_theme_color.dart';
@@ -241,7 +243,6 @@ Future<void> launchFacebookPage() async {
   await openUrl(
     url: fbProtocolUrl,
     fallbackUrl: facebookPageUrl,
-    context: PrayerTimes.globalContext,
   );
 }
 
@@ -250,7 +251,6 @@ Future<void> launchFacebookGroup() async {
   await openUrl(
     url: fbProtocolUrl,
     fallbackUrl: facebookGroupUrl,
-    context: PrayerTimes.globalContext,
   );
 }
 
@@ -263,7 +263,6 @@ Future<void> launchYoutube() async {
   await openUrl(
     url: youtubeProtocolUrl,
     fallbackUrl: fallbackUrl,
-    context: PrayerTimes.globalContext,
   );
 }
 
@@ -279,7 +278,6 @@ Future<void> launchLinkedInProfile() async {
   await openUrl(
     url: linkedInProtocolUrl,
     fallbackUrl: fallbackUrl,
-    context: PrayerTimes.globalContext,
   );
 }
 
@@ -293,7 +291,6 @@ Future<void> launchMessenger() async {
   await openUrl(
     url: fbProtocolUrl,
     fallbackUrl: facebookPageUrl,
-    context: PrayerTimes.globalContext,
   );
 }
 
@@ -343,7 +340,6 @@ Future<String> getApplicationDirectoryPath() async {
 // ///
 Future<void> openUrl({
   required String? url,
-  required BuildContext context,
   String fallbackUrl = "",
 }) async {
   Throttle.throttle("openUrlThrottle", 1.inSeconds, () async {
@@ -375,7 +371,6 @@ Future<void> openUrl({
         if (!validUri) {
           await showMessage(
             message: errorMessage,
-            context: context,
           );
           return;
         }
@@ -384,7 +379,6 @@ Future<void> openUrl({
             ? await launchUrl(fallbackUri, mode: LaunchMode.externalApplication)
             : await showMessage(
                 message: errorMessage,
-                context: context,
               );
       } catch (e) {
         logErrorStatic(e, _fileName);
@@ -392,23 +386,26 @@ Future<void> openUrl({
             ? await launchUrl(fallbackUri)
             : await showMessage(
                 message: errorMessage,
-                context: context,
               );
       }
     });
   });
 }
 
-// String? _currentAppVersion;
+String? _currentAppVersion;
 
-// Future<String> get currentAppVersion async {
-//   if (_currentAppVersion == null) {
-//     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+Future<String> get currentAppVersion async {
+  if (_currentAppVersion == null) {
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-//     _currentAppVersion = packageInfo.version;
-//   }
-//   return _currentAppVersion!;
-// }
+    _currentAppVersion = packageInfo.version;
+  }
+  log('currentAppVersion: $_currentAppVersion');
+  return _currentAppVersion!;
+}
+
+String get suitableAppStoreUrl =>
+    Platform.isAndroid ? playStoreUrl : appStoreUrl;
 
 const String _fileName = "utility.dart";
 

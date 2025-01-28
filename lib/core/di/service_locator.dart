@@ -1,56 +1,3 @@
-import 'dart:async';
-import 'package:get_it/get_it.dart';
-import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
-import 'package:qibla_and_prayer_times/data/datasources/local/country_local_data_source.dart';
-import 'package:qibla_and_prayer_times/data/datasources/local/location_local_data_source.dart';
-import 'package:qibla_and_prayer_times/data/datasources/local/user_data_local_data_source.dart';
-import 'package:qibla_and_prayer_times/data/datasources/remote/location_remote_data_source.dart';
-import 'package:qibla_and_prayer_times/data/datasources/remote/prayer_time_datasource.dart';
-import 'package:qibla_and_prayer_times/data/repositories/country_repository_impl.dart';
-import 'package:qibla_and_prayer_times/data/repositories/juristic_method_repository_impl.dart';
-import 'package:qibla_and_prayer_times/data/repositories/location_repository_impl.dart';
-import 'package:qibla_and_prayer_times/data/repositories/notification_repository_impl.dart';
-import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_impl.dart';
-import 'package:qibla_and_prayer_times/data/repositories/prayer_tracker_repository_impl.dart';
-import 'package:qibla_and_prayer_times/data/repositories/user_data_repository_impl.dart';
-import 'package:qibla_and_prayer_times/data/services/database/prayer_database.dart';
-import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.dart';
-import 'package:qibla_and_prayer_times/data/services/local_cache_service.dart';
-import 'package:qibla_and_prayer_times/data/services/location_service.dart';
-import 'package:qibla_and_prayer_times/data/services/waqt_calculation_service_impl.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/country_repository.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/juristic_method_repository.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/location_repository.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/notification_repository.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/prayer_tracker_repository.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/user_data_repository.dart';
-import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
-import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
-import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/determine_first_run_use_case.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_juristic_method_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_notifications_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/save_first_time_use_case.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/search_countries_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/update_juristic_method_usecase.dart';
-import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_preenter.dart';
-import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/profile/presenter/profile_page_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/contact_us/presenter/contact_us_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support_us_presenter.dart';
-
 // Implementation Note:
 //
 // The app utilizes the **Service Locator Pattern** to manage dependencies.
@@ -67,6 +14,61 @@ import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support
 // Instead of modifying every object that relies on a particular dependency, we
 // only need to update the service locator itself. This centralization reduces
 // code changes and minimizes potential errors.
+import 'package:get_it/get_it.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
+import 'package:qibla_and_prayer_times/data/datasources/local/country_local_data_source.dart';
+import 'package:qibla_and_prayer_times/data/datasources/local/location_local_data_source.dart';
+import 'package:qibla_and_prayer_times/data/datasources/local/user_data_local_data_source.dart';
+import 'package:qibla_and_prayer_times/data/datasources/remote/location_remote_data_source.dart';
+import 'package:qibla_and_prayer_times/data/datasources/remote/prayer_time_datasource.dart';
+import 'package:qibla_and_prayer_times/data/repositories/country_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/repositories/juristic_method_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/repositories/location_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/repositories/notification_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/repositories/prayer_tracker_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/repositories/user_data_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/services/backend_as_a_service.dart';
+import 'package:qibla_and_prayer_times/data/services/database/prayer_database.dart';
+import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.dart';
+import 'package:qibla_and_prayer_times/data/services/local_cache_service.dart';
+import 'package:qibla_and_prayer_times/data/services/location_service.dart';
+import 'package:qibla_and_prayer_times/data/services/waqt_calculation_service_impl.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/country_repository.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/juristic_method_repository.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/location_repository.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/notification_repository.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/prayer_tracker_repository.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/user_data_repository.dart';
+import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
+import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
+import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
+
+import 'package:qibla_and_prayer_times/domain/usecases/determine_first_run_use_case.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_juristic_method_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_notifications_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/save_first_time_use_case.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/search_countries_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/update_juristic_method_usecase.dart';
+import 'package:qibla_and_prayer_times/presentation/contact_us/presenter/contact_us_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_preenter.dart';
+import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/profile/presenter/profile_page_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support_us_presenter.dart';
+
 final GetIt _serviceLocator = GetIt.instance;
 
 // This code implements a wrapper function around the `get` function from the
@@ -138,8 +140,10 @@ class ServiceLocator {
       ..registerLazySingleton<WaqtCalculationService>(
           () => WaqtCalculationServiceImpl())
       ..registerLazySingleton(() => TimeService())
+      ..registerLazySingleton(() => BackendAsAService())
       ..registerLazySingleton(() => PrayerDatabase())
       ..registerLazySingleton(() => LocationService())
+      ..registerLazySingleton(() => InAppReview.instance)
       ..registerLazySingleton(() => LocalCacheService());
     await LocalCacheService.setUp();
     await _setUpAudioService();
