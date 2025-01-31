@@ -45,7 +45,6 @@ final List<NotificationModel> notifications = [
         'ফজরের নামাজের সময় হয়েছে। আল্লাহর ইবাদত করার জন্য প্রস্তুত হোন।',
     timestamp: DateTime.now().subtract(const Duration(hours: 1)),
     type: 'prayer_time',
-    actionButtonCallback: () {},
     isRead: false,
     actionUrl: 'https://www.google.com',
     imageUrl: SvgPath.icLovely,

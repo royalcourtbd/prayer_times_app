@@ -133,7 +133,7 @@ class NotificationPage extends StatelessWidget {
                         ),
                       ),
                       gapH8,
-                      if (notification.actionButtonCallback != null) ...[
+                      if (notification.actionUrl != null) ...[
                         gapH8,
                         Align(
                           alignment: Alignment.centerLeft,
@@ -144,7 +144,7 @@ class NotificationPage extends StatelessWidget {
                               key: UniqueKey(),
                               horizontalPadding: 0,
                               title: 'Support Now',
-                              onPressed: notification.actionButtonCallback!,
+                              onPressed: () {},
                               iconPath: SvgPath.icLovely,
                             ),
                           ),

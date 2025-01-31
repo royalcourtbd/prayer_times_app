@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_entity.dart';
 
 class NotificationEntity extends BaseEntity {
@@ -10,7 +9,6 @@ class NotificationEntity extends BaseEntity {
   final bool isRead;
   final String? actionUrl;
   final String? imageUrl;
-  final VoidCallback? actionButtonCallback;
 
   const NotificationEntity({
     required this.id,
@@ -21,7 +19,6 @@ class NotificationEntity extends BaseEntity {
     required this.isRead,
     this.actionUrl,
     this.imageUrl,
-    this.actionButtonCallback,
   });
 
   @override
@@ -34,6 +31,5 @@ class NotificationEntity extends BaseEntity {
         isRead,
         actionUrl,
         imageUrl,
-        actionButtonCallback,
       ];
 }

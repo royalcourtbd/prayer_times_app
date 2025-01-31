@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/domain/entities/notification_entity.dart';
 
 class NotificationModel extends NotificationEntity {
@@ -9,7 +8,6 @@ class NotificationModel extends NotificationEntity {
     required super.timestamp,
     required super.type,
     required super.isRead,
-    super.actionButtonCallback,
     super.actionUrl,
     super.imageUrl,
   });
@@ -22,7 +20,6 @@ class NotificationModel extends NotificationEntity {
       timestamp: json['timestamp'],
       type: json['type'],
       isRead: json['isRead'],
-      actionButtonCallback: json['actionButtonCallback'],
       actionUrl: json['actionUrl'],
       imageUrl: json['imageUrl'],
     );
@@ -36,7 +33,6 @@ class NotificationModel extends NotificationEntity {
       'timestamp': timestamp,
       'type': type,
       'isRead': isRead,
-      'actionButtonCallback': actionButtonCallback,
       'actionUrl': actionUrl,
       'imageUrl': imageUrl,
     };
@@ -50,7 +46,6 @@ class NotificationModel extends NotificationEntity {
         timestamp,
         type,
         isRead,
-        actionButtonCallback,
         actionUrl,
         imageUrl,
       ];
@@ -62,7 +57,6 @@ class NotificationModel extends NotificationEntity {
     DateTime? timestamp,
     String? type,
     bool? isRead,
-    VoidCallback? actionButtonCallback,
     String? actionUrl,
     String? imageUrl,
   }) {
@@ -73,7 +67,6 @@ class NotificationModel extends NotificationEntity {
       timestamp: timestamp ?? this.timestamp,
       type: type ?? this.type,
       isRead: isRead ?? this.isRead,
-      actionButtonCallback: actionButtonCallback ?? this.actionButtonCallback,
       actionUrl: actionUrl ?? this.actionUrl,
       imageUrl: imageUrl ?? this.imageUrl,
     );
