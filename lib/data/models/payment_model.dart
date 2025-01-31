@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/domain/entities/payment_entity.dart';
 
-class MobilePaymentModel extends MobilePaymentModel {
+class MobilePaymentModel extends MobilePaymentEntity {
   const MobilePaymentModel({
     required super.bankName,
     required super.iconPath,
