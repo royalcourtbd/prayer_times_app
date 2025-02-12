@@ -19,8 +19,7 @@ class UiHelper {
     await doOnPageLoaded(() {
       try {
         subscription = uiStateStream.listen(
-          (uiState) =>
-              showMessage(message: uiState.userMessage, context: context),
+          (uiState) => showMessage(message: uiState.userMessage),
           onDone: () => subscription?.cancel(),
           onError: (e) => subscription?.cancel(),
           cancelOnError: true,

@@ -18,7 +18,7 @@ class NotificationPresenter extends BasePresenter<NotificationUiState> {
   @override
   Future<void> addUserMessage(String message) async {
     uiState.value = currentUiState.copyWith(userMessage: message);
-    showMessage(message: message, context: currentUiState.context);
+    showMessage(message: message);
   }
 
   @override

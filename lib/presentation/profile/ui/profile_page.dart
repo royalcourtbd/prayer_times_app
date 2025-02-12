@@ -43,7 +43,6 @@ class ProfilePage extends StatelessWidget {
                 title: 'About This App',
                 onTap: () => showMessage(
                   message: 'About Page Under Construction',
-                  context: context,
                 ),
               ),
               gapH20,
@@ -64,7 +63,6 @@ class ProfilePage extends StatelessWidget {
                 title: 'Report a Bug',
                 onTap: () => showMessage(
                   message: 'Report a Bug Page Under Construction',
-                  context: context,
                 ),
               ),
               gapH20,

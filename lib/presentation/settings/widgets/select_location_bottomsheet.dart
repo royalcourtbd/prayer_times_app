@@ -81,7 +81,6 @@ class SelectLocationBottomsheet extends StatelessWidget {
                     if (presenter.currentUiState.selectedCountry.isEmpty) {
                       showMessage(
                         message: 'Please select a country first',
-                        context: context,
                       );
                       return;
                     }
@@ -89,7 +88,6 @@ class SelectLocationBottomsheet extends StatelessWidget {
                         .currentUiState.selectedCountryCities.isEmpty) {
                       showMessage(
                         message: 'No cities found for this country',
-                        context: context,
                       );
                       return;
                     }

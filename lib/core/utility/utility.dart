@@ -15,7 +15,6 @@ import 'package:qibla_and_prayer_times/core/static/constants.dart';
 import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/number_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_times.dart';
 import 'package:responsive_sizer/responsive_sizer.dart' as rs;
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -92,15 +91,13 @@ extension ContextExtensions on BuildContext {
 
 Future<void> showMessage({
   String? message,
-  BuildContext? context,
 }) async {
   if (message == null || message.isEmpty) return;
 
   ToastUtility.showCustomToast(
-    context: context ?? PrayerTimes.globalContext,
     message: message,
     yOffset: 100.0,
-    duration: const Duration(milliseconds: 1500),
+    duration: const Duration(milliseconds: 1000),
   );
 }
 

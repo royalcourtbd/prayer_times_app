@@ -30,8 +30,7 @@ class ProfilePagePresenter extends BasePresenter<ProfilePageUiState> {
   @override
   Future<void> addUserMessage(String message) async {
     uiState.value = currentUiState.copyWith(userMessage: message);
-    showMessage(
-        message: currentUiState.userMessage, context: currentUiState.context);
+    showMessage(message: currentUiState.userMessage);
   }
 
   @override

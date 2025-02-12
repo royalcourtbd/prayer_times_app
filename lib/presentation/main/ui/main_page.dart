@@ -24,14 +24,12 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _mainPresenter.updateContext(context);
     return DoubleTapBackToExitApp(
       mainPresenter: _mainPresenter,
       child: PresentableWidgetBuilder(
         presenter: _mainPresenter,
         builder: () {
           final MainUiState state = _mainPresenter.currentUiState;
-          _mainPresenter.updateContext(context);
           return Scaffold(
             body: state.selectedBottomNavIndex < _pages.length
                 ? _pages[state.selectedBottomNavIndex]
@@ -41,7 +39,6 @@ class MainPage extends StatelessWidget {
               onDestinationSelected: (index) {
                 if (index >= 2 && index < 4) {
                   showMessage(
-                    context: context,
                     message: 'Coming soon',
                   );
                   return;

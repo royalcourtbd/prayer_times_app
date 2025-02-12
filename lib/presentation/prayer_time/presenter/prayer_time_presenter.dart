@@ -175,7 +175,6 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
     if (currentUiState.context != null) {
       showMessage(
         message: currentUiState.userMessage,
-        context: currentUiState.context!,
       );
     }
   }

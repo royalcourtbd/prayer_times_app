@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
 
 class MainUiState extends BaseUiState {
@@ -6,7 +5,6 @@ class MainUiState extends BaseUiState {
     required super.isLoading,
     required super.userMessage,
     required this.selectedBottomNavIndex,
-    this.context,
     this.lastBackPressTime,
   });
 
@@ -15,13 +13,11 @@ class MainUiState extends BaseUiState {
       isLoading: false,
       userMessage: '',
       selectedBottomNavIndex: 0,
-      context: null,
       lastBackPressTime: DateTime.now(),
     );
   }
 
   final int selectedBottomNavIndex;
-  final BuildContext? context;
   final DateTime? lastBackPressTime;
 
   @override
@@ -29,7 +25,7 @@ class MainUiState extends BaseUiState {
         isLoading,
         userMessage,
         selectedBottomNavIndex,
-        context,
+        lastBackPressTime,
         lastBackPressTime,
       ];
 
@@ -37,7 +33,6 @@ class MainUiState extends BaseUiState {
     bool? isLoading,
     String? userMessage,
     int? selectedBottomNavIndex,
-    BuildContext? context,
     DateTime? lastBackPressTime,
   }) {
     return MainUiState(
@@ -45,7 +40,6 @@ class MainUiState extends BaseUiState {
       userMessage: userMessage ?? this.userMessage,
       selectedBottomNavIndex:
           selectedBottomNavIndex ?? this.selectedBottomNavIndex,
-      context: context ?? this.context,
       lastBackPressTime: lastBackPressTime ?? this.lastBackPressTime,
     );
   }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
@@ -40,15 +39,10 @@ class MainPresenter extends BasePresenter<MainUiState> {
     await SystemNavigator.pop();
   }
 
-  void updateContext(BuildContext context) {
-    uiState.value = currentUiState.copyWith(context: context);
-  }
-
   @override
   Future<void> addUserMessage(String message) async {
     uiState.value = currentUiState.copyWith(userMessage: message);
-    showMessage(
-        message: currentUiState.userMessage, context: currentUiState.context);
+    showMessage(message: currentUiState.userMessage);
   }
 
   @override

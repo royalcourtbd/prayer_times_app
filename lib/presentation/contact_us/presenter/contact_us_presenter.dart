@@ -68,7 +68,6 @@ class ContactUsPresenter extends BasePresenter<ContactUsUiState> {
     uiState.value = currentUiState.copyWith(userMessage: message);
     showMessage(
       message: currentUiState.userMessage,
-      context: currentUiState.context,
     );
   }
 
