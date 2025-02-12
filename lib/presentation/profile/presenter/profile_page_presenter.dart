@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/static/constants.dart';
@@ -20,6 +21,10 @@ class ProfilePagePresenter extends BasePresenter<ProfilePageUiState> {
 
   void updateContext(BuildContext context) {
     uiState.value = currentUiState.copyWith(context: context);
+  }
+
+  Future<void> onRatingClicked() {
+    return openUrl(url: Platform.isIOS ? appStoreUrl : playStoreUrl);
   }
 
   @override

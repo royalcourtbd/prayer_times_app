@@ -77,10 +77,7 @@ class ProfilePage extends StatelessWidget {
               ProfileMenuItem(
                 icon: SvgPath.icCategoryOutline,
                 title: 'Rate This App',
-                onTap: () => showMessage(
-                  message: 'Rate This App Page Under Construction',
-                  context: context,
-                ),
+                onTap: profilePresenter.onRatingClicked,
               ),
               gapH20,
               ProfileMenuItem(

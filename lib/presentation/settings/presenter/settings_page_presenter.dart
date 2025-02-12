@@ -145,9 +145,6 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
     });
   }
 
-  // In settings_page_presenter.dart - Update onCitySearchQueryChanged
-
-  //
   Future<void> onCitySearchQueryChanged({required String searchQuery}) async {
     _searchDebouncer.run(() {
       cityController.text = searchQuery;

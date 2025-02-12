@@ -19,14 +19,13 @@ const List<Color> availableColors = [
 ];
 
 const String packageName = "com.royalcourtbd.qibla_and_prayer_times";
-// const String appStoreAppId = "1324615850";
+const String appStoreAppId = "1324615850";
 
 const String playStoreUrl =
     "https://play.google.com/store/apps/details?id=$packageName";
-const String appStoreUrl = "https://apps.apple.com/sa/app/al-hadith/id";
+const String appStoreUrl =
+    "https://apps.apple.com/sa/app/al-hadith/id$appStoreAppId";
 const String websiteUrl = "https://royalcourtbd.com";
-const String officeName = "Royal Court It Limited";
-const String officeLocation = "Rosulbag, Tongi, Gazipur";
 
 //==============================================//
 const String reportEmailAddress = 'report.irdfoundation@gmail.com';
