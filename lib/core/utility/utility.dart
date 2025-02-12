@@ -21,6 +21,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 bool get isMobile => rs.Device.screenType == rs.ScreenType.mobile;
 const String _fileName = "utility.dart";
+String? _currentAppVersion;
 
 ColorFilter buildColorFilterToChangeColor(Color? color) =>
     ColorFilter.mode(color ?? Colors.black, BlendMode.srcATop);
@@ -389,8 +390,6 @@ Future<void> openUrl({
     });
   });
 }
-
-String? _currentAppVersion;
 
 Future<String> get currentAppVersion async {
   if (_currentAppVersion == null) {
