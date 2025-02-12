@@ -16,6 +16,7 @@
         android:label="Qibla &amp; Prayer Times"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"

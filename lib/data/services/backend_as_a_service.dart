@@ -27,7 +27,7 @@ class BackendAsAService {
   void _initAnalytics() {
     _analytics
         .setAnalyticsCollectionEnabled(true)
-        .then((_) => _analytics.logAppOpen());
+        .then((_) => _analytics.logEvent(name: 'app_open'));
   }
 
   Future<void> logEvent(
