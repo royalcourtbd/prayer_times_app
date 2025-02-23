@@ -7,8 +7,9 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/appbar_icon_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 
-class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const HomePageAppBar({
+class PrayerTimePageAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const PrayerTimePageAppBar({
     super.key,
     required this.theme,
     this.onTapNotification,

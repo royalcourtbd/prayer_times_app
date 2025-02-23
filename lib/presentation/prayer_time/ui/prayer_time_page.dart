@@ -41,7 +41,7 @@ class PrayerTimePage extends StatelessWidget {
         _prayerTrackerPresenter.updateContext(context: context);
 
         return Scaffold(
-          appBar: HomePageAppBar(
+          appBar: PrayerTimePageAppBar(
             theme: theme,
             presenter: _prayerTimePresenter,
             onTapRefresh: () =>

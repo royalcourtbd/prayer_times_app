@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
+import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
+import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+
+class HomeAppBarActionButton extends StatelessWidget {
+  final String icon;
+  final VoidCallback? onTap;
+
+  const HomeAppBarActionButton({
+    required this.icon,
+    this.onTap,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: padding8,
+        width: fortyPx,
+        height: fortyPx,
+        decoration: BoxDecoration(
+          color: context.color.whiteColor,
+          borderRadius: BorderRadius.circular(fifteenPx),
+        ),
+        child: SvgImage(
+          icon,
+          width: twentyFourPx,
+          height: twentyFourPx,
+        ),
+      ),
+    );
+  }
+}

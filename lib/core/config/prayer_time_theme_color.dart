@@ -25,6 +25,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
   final Color errorColor;
 
   // Primary Color Properties
+  final Color primaryColor950;
   final Color primaryColor900;
   final Color primaryColor800;
   final Color primaryColor700;
@@ -34,10 +35,12 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
   final Color primaryColor300;
   final Color primaryColor200;
   final Color primaryColor100;
+  final Color primaryColor75;
   final Color primaryColor50;
   final Color primaryColor25;
 
   // Black Color Properties
+  final Color blackColor950;
   final Color blackColor900;
   final Color blackColor800;
   final Color blackColor700;
@@ -48,7 +51,6 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
   final Color blackColor200;
   final Color blackColor100;
   final Color blackColor50;
-  final Color blackColor25;
 
   // Error Color Properties
   final Color errorColor900;
@@ -87,6 +89,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     required this.errorColor,
 
     // Primary Color required properties
+    required this.primaryColor950,
     required this.primaryColor900,
     required this.primaryColor800,
     required this.primaryColor700,
@@ -96,10 +99,12 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     required this.primaryColor300,
     required this.primaryColor200,
     required this.primaryColor100,
+    required this.primaryColor75,
     required this.primaryColor50,
     required this.primaryColor25,
 
     // Black Color required properties
+    required this.blackColor950,
     required this.blackColor900,
     required this.blackColor800,
     required this.blackColor700,
@@ -110,7 +115,6 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     required this.blackColor200,
     required this.blackColor100,
     required this.blackColor50,
-    required this.blackColor25,
 
     // Error Color required properties
     required this.errorColor900,
@@ -151,6 +155,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     Color? errorColor,
 
     // Primary Color properties
+    Color? primaryColor950,
     Color? primaryColor900,
     Color? primaryColor800,
     Color? primaryColor700,
@@ -160,10 +165,12 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     Color? primaryColor300,
     Color? primaryColor200,
     Color? primaryColor100,
+    Color? primaryColor75,
     Color? primaryColor50,
     Color? primaryColor25,
 
     // Black Color properties
+    Color? blackColor950,
     Color? blackColor900,
     Color? blackColor800,
     Color? blackColor700,
@@ -174,7 +181,6 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     Color? blackColor200,
     Color? blackColor100,
     Color? blackColor50,
-    Color? blackColor25,
 
     // Error Color properties
     Color? errorColor900,
@@ -214,6 +220,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       errorColor: errorColor ?? this.errorColor,
 
       // Primary Color properties
+      primaryColor950: primaryColor950 ?? this.primaryColor950,
       primaryColor900: primaryColor900 ?? this.primaryColor900,
       primaryColor800: primaryColor800 ?? this.primaryColor800,
       primaryColor700: primaryColor700 ?? this.primaryColor700,
@@ -223,10 +230,12 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       primaryColor300: primaryColor300 ?? this.primaryColor300,
       primaryColor200: primaryColor200 ?? this.primaryColor200,
       primaryColor100: primaryColor100 ?? this.primaryColor100,
+      primaryColor75: primaryColor75 ?? this.primaryColor75,
       primaryColor50: primaryColor50 ?? this.primaryColor50,
       primaryColor25: primaryColor25 ?? this.primaryColor25,
 
       // Black Color properties
+      blackColor950: blackColor950 ?? this.blackColor950,
       blackColor900: blackColor900 ?? this.blackColor900,
       blackColor800: blackColor800 ?? this.blackColor800,
       blackColor700: blackColor700 ?? this.blackColor700,
@@ -237,7 +246,6 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       blackColor200: blackColor200 ?? this.blackColor200,
       blackColor100: blackColor100 ?? this.blackColor100,
       blackColor50: blackColor50 ?? this.blackColor50,
-      blackColor25: blackColor25 ?? this.blackColor25,
 
       // Error Color properties
       errorColor900: errorColor900 ?? this.errorColor900,
@@ -286,6 +294,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       errorColor: Color.lerp(errorColor, other.errorColor, t)!,
 
       // Primary Color properties
+      primaryColor950: Color.lerp(primaryColor950, other.primaryColor950, t)!,
       primaryColor900: Color.lerp(primaryColor900, other.primaryColor900, t)!,
       primaryColor800: Color.lerp(primaryColor800, other.primaryColor800, t)!,
       primaryColor700: Color.lerp(primaryColor700, other.primaryColor700, t)!,
@@ -295,10 +304,12 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       primaryColor300: Color.lerp(primaryColor300, other.primaryColor300, t)!,
       primaryColor200: Color.lerp(primaryColor200, other.primaryColor200, t)!,
       primaryColor100: Color.lerp(primaryColor100, other.primaryColor100, t)!,
+      primaryColor75: Color.lerp(primaryColor75, other.primaryColor75, t)!,
       primaryColor50: Color.lerp(primaryColor50, other.primaryColor50, t)!,
       primaryColor25: Color.lerp(primaryColor25, other.primaryColor25, t)!,
 
       // Black Color properties
+      blackColor950: Color.lerp(blackColor950, other.blackColor950, t)!,
       blackColor900: Color.lerp(blackColor900, other.blackColor900, t)!,
       blackColor800: Color.lerp(blackColor800, other.blackColor800, t)!,
       blackColor700: Color.lerp(blackColor700, other.blackColor700, t)!,
@@ -309,7 +320,6 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       blackColor200: Color.lerp(blackColor200, other.blackColor200, t)!,
       blackColor100: Color.lerp(blackColor100, other.blackColor100, t)!,
       blackColor50: Color.lerp(blackColor50, other.blackColor50, t)!,
-      blackColor25: Color.lerp(blackColor25, other.blackColor25, t)!,
 
       // Error Color properties
       errorColor900: Color.lerp(errorColor900, other.errorColor900, t)!,
@@ -338,7 +348,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     tabActiveColor: PrayerTimeAppColor.tabActiveColor,
     borderColor: PrayerTimeAppColor.borderColor,
     titleColor: PrayerTimeAppColor.titleColor,
-    subTitleColor: PrayerTimeAppColor.subTitleColor,
+    subTitleColor: PrayerTimeAppColor.blackColor600,
     bodyColor: PrayerTimeAppColor.bodyColor,
     placeHolderColor: PrayerTimeAppColor.placeHolderColor,
     linkColor: PrayerTimeAppColor.linkColor,
@@ -351,6 +361,7 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     errorColor: PrayerTimeAppColor.errorColor,
 
     // Primary Color properties
+    primaryColor950: PrayerTimeAppColor.primaryColor950,
     primaryColor900: PrayerTimeAppColor.primaryColor900,
     primaryColor800: PrayerTimeAppColor.primaryColor800,
     primaryColor700: PrayerTimeAppColor.primaryColor700,
@@ -360,10 +371,12 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     primaryColor300: PrayerTimeAppColor.primaryColor300,
     primaryColor200: PrayerTimeAppColor.primaryColor200,
     primaryColor100: PrayerTimeAppColor.primaryColor100,
+    primaryColor75: PrayerTimeAppColor.primaryColor75,
     primaryColor50: PrayerTimeAppColor.primaryColor50,
     primaryColor25: PrayerTimeAppColor.primaryColor25,
 
     // Black Color properties
+    blackColor950: PrayerTimeAppColor.blackColor950,
     blackColor900: PrayerTimeAppColor.blackColor900,
     blackColor800: PrayerTimeAppColor.blackColor800,
     blackColor700: PrayerTimeAppColor.blackColor700,
@@ -374,7 +387,6 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     blackColor200: PrayerTimeAppColor.blackColor200,
     blackColor100: PrayerTimeAppColor.blackColor100,
     blackColor50: PrayerTimeAppColor.blackColor50,
-    blackColor25: PrayerTimeAppColor.blackColor25,
 
     // Error Color properties
     errorColor900: PrayerTimeAppColor.errorColor900,
