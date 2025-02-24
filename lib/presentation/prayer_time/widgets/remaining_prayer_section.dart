@@ -23,10 +23,10 @@ class RemainingPrayerSection extends StatelessWidget {
       context: context,
       theme: theme,
       child: ArcProgressBar(
-        innerPadding: 5,
+        innerPadding: 4,
         foregroundColor: context.color.primaryColor,
         backgroundColor: context.color.primaryColor100,
-        percentage: 70,
+        percentage: 60,
         strokeCap: StrokeCap.round,
         handleWidget: Container(
           decoration: BoxDecoration(
@@ -38,14 +38,16 @@ class RemainingPrayerSection extends StatelessWidget {
             ),
           ),
         ),
-        arcThickness: 7,
-        handleSize: 15,
+        arcThickness: 6,
+        handleSize: 16,
         bottomCenterWidget: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              'Remaining Dhuhr',
+              'Remaining Maghrib',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodyMedium!.copyWith(
                 fontSize: twelvePx,
                 color: context.color.subTitleColor,
@@ -54,6 +56,8 @@ class RemainingPrayerSection extends StatelessWidget {
             ),
             Text(
               '00:30:52',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodyMedium!.copyWith(
                 fontSize: nineteenPx,
                 fontWeight: FontWeight.bold,

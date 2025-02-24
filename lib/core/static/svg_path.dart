@@ -51,5 +51,5 @@ class SvgPath {
   static const String appBg = 'assets/svg/app_bg.svg';
   static const String appBgJpg = 'assets/jpg/app_bg.jpg';
   static const String imgAppName = 'assets/jpg/img_app_name.png';
-  static const String imgClockBg = 'assets/jpg/img_clock_bg.png';
+  static const String imgClockBg = 'assets/svg/img_clock_bg.svg';
 }

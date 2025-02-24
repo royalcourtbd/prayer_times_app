@@ -24,11 +24,12 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: HomePageAppBar(theme: theme),
-        body: Column(
-          children: [
-            Padding(
-              padding: padding20,
-              child: Row(
+        body: Padding(
+          padding: padding20,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ClockSection(theme: theme),
@@ -52,8 +53,8 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -67,7 +68,7 @@ class HomePage extends StatelessWidget {
     return Container(
       padding: padding10,
       alignment: Alignment.center,
-      height: 93,
+      height: 98,
       width: double.infinity,
       decoration: BoxDecoration(
         color: context.color.whiteColor.withOpacityInt(0.5),

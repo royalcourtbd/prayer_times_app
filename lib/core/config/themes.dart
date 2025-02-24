@@ -16,7 +16,7 @@ class PrayerTimeTheme {
     extensions: const [
       PrayerTimeThemeColor.light,
     ],
-    fontFamily: FontFamily.generalSans,
+    fontFamily: FontFamily.poppins,
     scaffoldBackgroundColor: PrayerTimeAppColor.scaffoldBachgroundColor,
     primaryColor: PrayerTimeAppColor.primaryColor,
     colorScheme: const ColorScheme.light(
@@ -39,7 +39,7 @@ class PrayerTimeTheme {
     textTheme: const TextTheme(
       bodyMedium: TextStyle(
         color: PrayerTimeAppColor.titleColor,
-        fontFamily: FontFamily.generalSans,
+        fontFamily: FontFamily.poppins,
         height: 1.6,
       ),
     ),

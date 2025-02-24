@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/home_app_bar_action_button.dart';
@@ -18,6 +19,11 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark,
+      ),
       elevation: 0,
       centerTitle: true,
       backgroundColor: Colors.transparent,
@@ -31,7 +37,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           Image.asset(
             SvgPath.imgAppName,
-            width: 40.percentWidth,
+            width: 35.percentWidth,
           ),
           HomeAppBarActionButton(
             icon: SvgPath.icGpsOutline,

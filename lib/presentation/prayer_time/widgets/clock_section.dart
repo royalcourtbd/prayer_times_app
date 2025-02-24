@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 
@@ -20,10 +21,11 @@ class ClockSection extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           SizedBox(
-            height: 54.percentWidth,
-            child: Image.asset(
+            height: 57.percentWidth,
+            child: SvgImage(
               SvgPath.imgClockBg,
-              fit: BoxFit.cover,
+              width: 110.percentWidth,
+              height: 110.percentWidth,
             ),
           ),
           Column(
