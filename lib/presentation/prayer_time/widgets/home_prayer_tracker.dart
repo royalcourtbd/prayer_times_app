@@ -19,7 +19,7 @@ class HomePrayerTracker extends StatelessWidget {
       padding: padding15,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: context.color.primaryColor.withOpacityInt(0.07),
+        color: context.color.primaryColor.withOpacityInt(0.05),
         borderRadius: radius18,
         border: Border.all(
           color: context.color.primaryColor.withOpacityInt(0.1),

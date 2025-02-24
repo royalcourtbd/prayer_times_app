@@ -61,11 +61,16 @@ class HomePage extends StatelessWidget {
               PrayerTimeList(theme: theme),
               gapH20,
               _buildHomaPageBottomContainer(
-                context: context,
-                theme: theme,
                 children: [
                   HomePrayerTracker(theme: theme),
-                  gapH10,
+                  gapH12,
+                  Container(
+                    height: 300,
+                    decoration: BoxDecoration(
+                      color: context.color.primaryColor.withOpacityInt(0.05),
+                      borderRadius: radius18,
+                    ),
+                  )
                 ],
               )
             ],
@@ -76,18 +81,16 @@ class HomePage extends StatelessWidget {
   }
 
   Container _buildHomaPageBottomContainer({
-    required BuildContext context,
-    required ThemeData theme,
     required List<Widget> children,
   }) {
     return Container(
       width: double.infinity,
       padding: padding20,
       decoration: BoxDecoration(
-        color: context.color.whiteColor.withOpacityInt(0.5),
+        color: Colors.white.withOpacityInt(0.5),
         borderRadius: BorderRadius.vertical(top: Radius.circular(thirtyPx)),
         border: Border.all(
-          color: context.color.whiteColor,
+          color: Colors.white,
           width: 1,
         ),
       ),
