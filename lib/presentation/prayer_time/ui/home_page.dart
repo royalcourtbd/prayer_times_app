@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
@@ -56,7 +57,101 @@ class HomePage extends StatelessWidget {
               ),
             ),
             gapH10,
-            PrayerTimeList(theme: theme)
+            PrayerTimeList(theme: theme),
+            gapH20,
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                padding: padding20,
+                decoration: BoxDecoration(
+                  color: context.color.whiteColor.withOpacityInt(0.5),
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(thirtyPx)),
+                  border: Border.all(
+                    color: context.color.whiteColor,
+                    width: 1.5,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: padding15,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: context.color.primaryColor.withOpacityInt(0.07),
+                        borderRadius: radius18,
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Prayer Tracker',
+                                style: theme.textTheme.bodyMedium!.copyWith(
+                                  fontSize: fifteenPx,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                'See All',
+                                style: theme.textTheme.bodyMedium!.copyWith(
+                                  fontSize: thirteenPx,
+                                  fontWeight: FontWeight.normal,
+                                  color: context.color.subTitleColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          gapH10,
+                          Row(
+                            children: List.generate(
+                              5,
+                              (index) {
+                                return Expanded(
+                                  child: Container(
+                                    padding: padding4,
+                                    height: 22.percentWidth,
+                                    margin: EdgeInsets.only(right: fivePx),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: index == 1
+                                          ? context.color.primaryColor
+                                          : context.color.whiteColor
+                                              .withOpacityInt(0.5),
+                                      borderRadius: radius15,
+                                      border: Border.all(
+                                        color: context.color.whiteColor,
+                                        width: 1.5,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgImage(
+                                          index == 1
+                                              ? SvgPath.icCheckMark
+                                              : SvgPath.icUncheckMark,
+                                          width: twentyFivePx,
+                                          height: twentyFivePx,
+                                        ),
+                                        gapH15,
+                                        Text('Asr'),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
