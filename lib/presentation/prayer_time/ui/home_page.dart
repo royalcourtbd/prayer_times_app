@@ -6,6 +6,7 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/home_page_app_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/clock_section.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/location_section.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/prayer_time_list.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/remaining_prayer_section.dart';
 
 class HomePage extends StatelessWidget {
@@ -24,12 +25,12 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: HomePageAppBar(theme: theme),
-        body: Padding(
-          padding: padding20,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: padding20,
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ClockSection(theme: theme),
@@ -53,8 +54,10 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            gapH10,
+            PrayerTimeList(theme: theme)
+          ],
         ),
       ),
     );
