@@ -4,7 +4,6 @@ import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/config/themes.dart';
 import 'package:qibla_and_prayer_times/presentation/main/ui/main_page.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/ui/onboarding_page.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/ui/home_page.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PrayerTimes extends StatelessWidget {
@@ -34,8 +33,8 @@ class PrayerTimes extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: PrayerTimeTheme.lightTheme,
           title: 'Prayer Times',
-          // home: isFirstRun ? OnboardingPage() : MainPage(),
-          home: HomePage(),
+          home: isFirstRun ? OnboardingPage() : MainPage(),
+          // home: HomePage(),
           // home:  SupportUsPage(),
         );
       },

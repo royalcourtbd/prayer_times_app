@@ -61,6 +61,7 @@ class LocationSection extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
+          gapH3,
           Text(
             'July 20, 2025',
             maxLines: 1,

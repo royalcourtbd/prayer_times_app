@@ -18,7 +18,14 @@ class MainNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: sixteenPx),
-      color: context.color.backgroundColor,
+      decoration: BoxDecoration(
+        color: context.color.backgroundColor,
+        border: Border(
+          top: BorderSide(
+            color: context.color.blackColor200,
+          ),
+        ),
+      ),
       child: NavigationBar(
         backgroundColor: context.color.backgroundColor,
         selectedIndex: selectedIndex,

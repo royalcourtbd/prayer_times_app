@@ -318,14 +318,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.8"
-  dashed_progress_bar:
-    dependency: "direct main"
-    description:
-      name: dashed_progress_bar
-      sha256: bb7adcc5bb98cbca594fbef96f647e5758b86aeff5e8b5f0e8138269f32f8c99
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.1"
   dbus:
     dependency: transitive
     description:

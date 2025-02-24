@@ -78,7 +78,6 @@ dependencies:
   in_app_review: ^2.0.10
   flutter_html: ^3.0.0-beta.2
   google_fonts: ^6.2.1
-  dashed_progress_bar: ^0.0.1
   arc_progress_bar_new: ^1.0.4
 
 dev_dependencies:

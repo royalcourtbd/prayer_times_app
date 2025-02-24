@@ -45,7 +45,7 @@ class PrayerTimeTheme {
     ),
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: PrayerTimeAppColor.backgroundColor,
-      indicatorColor: PrayerTimeAppColor.primaryColor25,
+      indicatorColor: PrayerTimeAppColor.primaryColor50,
       height: 80,
       labelTextStyle: WidgetStateTextStyle.resolveWith(
         (states) => TextStyle(
