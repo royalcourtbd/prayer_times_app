@@ -28,7 +28,7 @@ class PrayerTimeListItem extends StatelessWidget {
         borderRadius: radius15,
         border: Border.all(
           color: context.color.whiteColor,
-          width: 1.5,
+          width: 1,
         ),
       ),
       child: Column(
