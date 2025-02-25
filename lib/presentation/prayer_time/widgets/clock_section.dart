@@ -40,7 +40,7 @@ class ClockSection extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                presenter.getFormattedRemainingTime(),
+                presenter.getCurrentTime(),
                 style: GoogleFonts.bigShouldersText(
                   fontSize: fiftyFivePx,
                   height: 1,
