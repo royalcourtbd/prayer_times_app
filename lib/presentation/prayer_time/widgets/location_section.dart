@@ -43,7 +43,7 @@ class LocationSection extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.bodyMedium!.copyWith(
-                    fontSize: thirteenPx,
+                    fontSize: twelvePx,
                     fontFamily: FontFamily.poppins,
                     fontWeight: FontWeight.w500,
                   ),
@@ -57,7 +57,7 @@ class LocationSection extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: theme.textTheme.bodyMedium!.copyWith(
-              fontSize: thirteenPx,
+              fontSize: twelvePx,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -67,7 +67,7 @@ class LocationSection extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: theme.textTheme.bodyMedium!.copyWith(
-              fontSize: thirteenPx,
+              fontSize: twelvePx,
               color: context.color.subTitleColor,
               fontWeight: FontWeight.normal,
             ),

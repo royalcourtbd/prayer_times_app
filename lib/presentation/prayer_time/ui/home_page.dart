@@ -34,7 +34,11 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: padding20,
+                padding: EdgeInsets.only(
+                  left: twentyPx,
+                  right: twentyPx,
+                  top: tenPx,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -60,9 +64,9 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              gapH10,
+              gapH5,
               PrayerTimeList(theme: theme),
-              gapH20,
+              gapH30,
               _buildHomaPageBottomContainer(
                 children: [
                   HomePrayerTracker(theme: theme),

@@ -26,6 +26,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       elevation: 0,
       centerTitle: true,
+      toolbarHeight: kToolbarHeight + eightPx,
       backgroundColor: Colors.transparent,
       title: Row(
         mainAxisSize: MainAxisSize.max,
@@ -49,5 +50,5 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight + eightPx);
 }

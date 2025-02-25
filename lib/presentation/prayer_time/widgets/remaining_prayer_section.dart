@@ -49,7 +49,7 @@ class RemainingPrayerSection extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodyMedium!.copyWith(
-                fontSize: twelvePx,
+                fontSize: tenPx,
                 color: context.color.subTitleColor,
                 fontWeight: FontWeight.normal,
               ),

@@ -55,27 +55,27 @@ class PrayerTimeListItem extends StatelessWidget {
                 ),
             ],
           ),
-          gapH16,
+          Spacer(),
           Text(
             'Maghrib',
             style: baseTextStyle.copyWith(
-              fontSize: fifteenPx,
-              fontWeight: FontWeight.normal,
+              fontSize: thirteenPx,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          gapH8,
+          gapH4,
           RichText(
             text: TextSpan(
               children: [
                 TextSpan(
                   text: '4:50',
                   style: baseTextStyle.copyWith(
-                    fontSize: fifteenPx,
+                    fontSize: thirteenPx,
                     fontWeight: FontWeight.normal,
                   ),
                 ),
                 TextSpan(
-                  text: '  AM',
+                  text: '  am',
                   style: baseTextStyle.copyWith(
                     fontSize: elevenPx,
                     color: context.color.subTitleColor,

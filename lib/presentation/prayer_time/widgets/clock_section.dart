@@ -34,7 +34,7 @@ class ClockSection extends StatelessWidget {
               Text(
                 '02:56',
                 style: GoogleFonts.bigShouldersText(
-                  fontSize: sixtyFivePx,
+                  fontSize: fiftyFivePx,
                   height: 1,
                 ),
               ),
