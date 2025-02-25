@@ -145,7 +145,7 @@ isDarkMode(BuildContext context) =>
 
 Future<bool> checkInternetConnection() async {
   final bool? isConnected = await catchAndReturnFuture(() async {
-    const String kLookUpUrl = 'www.google.com';
+    const String kLookUpUrl = 'www.cloudflare.com';
     final List<InternetAddress> result =
         await InternetAddress.lookup(kLookUpUrl);
     if (result.isEmpty) return false;
@@ -466,8 +466,12 @@ void closeKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 //   int get toTimestamp => millisecondsSinceEpoch;
 // }
 
-String getFormattedCurrentDate() {
+String getFormattedCurrentDateWithDate() {
   return DateFormat('MMM dd, yyyy - EEEE').format(DateTime.now());
+}
+
+String getFormattedCurrentDate() {
+  return DateFormat('MMM dd, yyyy').format(DateTime.now());
 }
 
 String getFormattedTime(DateTime? time) {

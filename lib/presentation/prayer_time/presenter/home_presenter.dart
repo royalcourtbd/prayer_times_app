@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
@@ -61,7 +62,23 @@ class HomePresenter extends BasePresenter<HomeUiState> {
   }
 
   Future<void> refreshLocationAndPrayerTimes() async {
-    await _fetchLocationAndPrayerTimes(forceRemote: true);
+    try {
+      await toggleLoading(loading: true);
+
+      bool isConnected = await checkInternetConnection();
+      if (!isConnected) {
+        await toggleLoading(loading: false);
+        showMessage(message: 'No internet connection');
+        return;
+      }
+
+      await _fetchLocationAndPrayerTimes(forceRemote: true);
+    } catch (e) {
+      log('error in refreshLocationAndPrayerTimes: $e');
+      await toggleLoading(loading: false);
+    } finally {
+      await toggleLoading(loading: false);
+    }
   }
 
   Future<void> _fetchLocationAndPrayerTimes({required bool forceRemote}) async {

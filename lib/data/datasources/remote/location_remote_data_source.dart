@@ -24,7 +24,7 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource {
         final List<String> addressParts = [
           if (place.subLocality?.isNotEmpty == true) place.subLocality!,
           if (place.locality?.isNotEmpty == true) place.locality!,
-          if (place.country?.isNotEmpty == true) place.country!,
+          // if (place.country?.isNotEmpty == true) place.country!,
         ];
 
         return LocationEntity(

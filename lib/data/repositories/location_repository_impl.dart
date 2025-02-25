@@ -29,7 +29,6 @@ class LocationRepositoryImpl implements LocationRepository {
       final LocationEntity? cachedLocation =
           await _localDataSource.getCachedLocation();
       if (cachedLocation != null) {
-        log('location from cache');
         return right(cachedLocation);
       }
 

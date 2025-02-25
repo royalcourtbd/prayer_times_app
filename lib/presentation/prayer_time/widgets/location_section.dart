@@ -66,7 +66,7 @@ class LocationSection extends StatelessWidget {
           ),
           gapH3,
           Text(
-            'July 20, 2025',
+            getFormattedCurrentDate(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: theme.textTheme.bodyMedium!.copyWith(
