@@ -189,7 +189,14 @@ class ServiceLocator {
           () => loadPresenter(NotificationPresenter(locate())))
       ..registerLazySingleton(() => loadPresenter(ContactUsPresenter()))
       ..registerLazySingleton(() => loadPresenter(SupportUsPresenter()))
-      ..registerLazySingleton(() => loadPresenter(HomePresenter()));
+      ..registerLazySingleton(() => loadPresenter(HomePresenter(
+            locate(),
+            locate(),
+            locate(),
+            locate(),
+            locate(),
+            locate(),
+          )));
   }
 
   Future<void> _setUpUseCase() async {

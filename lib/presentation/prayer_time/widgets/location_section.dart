@@ -5,15 +5,18 @@ import 'package:qibla_and_prayer_times/core/static/font_family.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/home_presenter.dart';
 
 class LocationSection extends StatelessWidget {
   const LocationSection({
     super.key,
     required this.theme,
     required this.onBuildContainer,
+    required this.presenter,
   });
 
   final ThemeData theme;
+  final HomePresenter presenter;
   final Widget Function({
     required BuildContext context,
     required ThemeData theme,
@@ -39,7 +42,7 @@ class LocationSection extends StatelessWidget {
               gapW5,
               Expanded(
                 child: Text(
-                  'Dhaka, Bangladesh',
+                  presenter.currentUiState.location?.placeName ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.bodyMedium!.copyWith(
@@ -53,7 +56,7 @@ class LocationSection extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            'Ramadan 17, 1444',
+            presenter.currentUiState.hijriDate ?? '',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: theme.textTheme.bodyMedium!.copyWith(

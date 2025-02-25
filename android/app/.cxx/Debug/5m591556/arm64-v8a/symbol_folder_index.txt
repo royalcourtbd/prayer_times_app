@@ -1,0 +1,1 @@
+/Users/sayed/Documents/GitHub/prayer_times_app/build/app/intermediates/cxx/Debug/5m591556/obj/arm64-v8a

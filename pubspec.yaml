@@ -58,7 +58,6 @@ dependencies:
   drift: ^2.24.0
   sqlite3_flutter_libs: ^0.5.29
   path: ^1.9.0
-  awesome_notifications: ^0.10.0
   hijri: ^3.0.0
   table_calendar: ^3.0.9
   share_plus: ^10.1.2

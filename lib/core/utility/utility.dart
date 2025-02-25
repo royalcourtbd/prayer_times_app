@@ -475,7 +475,7 @@ String getFormattedTime(DateTime? time) {
 }
 
 String getFormattedTimeForWaqtView(DateTime? time) {
-  return time != null ? DateFormat('hh:mm\na').format(time) : '--:--';
+  return time != null ? DateFormat('hh:mm').format(time) : '--:--';
 }
 
 String getFormattedTimeForFasting(DateTime? time) {

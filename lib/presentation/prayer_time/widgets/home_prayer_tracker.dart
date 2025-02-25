@@ -4,14 +4,21 @@ import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
+import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 
 class HomePrayerTracker extends StatelessWidget {
   const HomePrayerTracker({
     super.key,
     required this.theme,
+    required this.trackers,
+    required this.onTap,
   });
 
   final ThemeData theme;
+  final List<PrayerTrackerModel> trackers;
+  final Function(WaqtType) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -39,48 +46,54 @@ class HomePrayerTracker extends StatelessWidget {
   Row _buildTrackerItem(BuildContext context) {
     return Row(
       children: List.generate(
-        5,
+        trackers.length,
         (index) {
-          final bool isSpecialIndex = index == 1;
+          final PrayerTrackerModel tracker = trackers[index];
+          if (!tracker.type.shouldShowInTracker) {
+            return const SizedBox.shrink();
+          }
           return Expanded(
-            child: Container(
-              height: 22.percentWidth,
-              margin: EdgeInsets.only(right: fivePx),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: isSpecialIndex
-                    ? context.color.primaryColor
-                    : context.color.whiteColor.withOpacityInt(0.5),
-                borderRadius: radius15,
-                border: Border.all(
-                  color: isSpecialIndex
-                      ? Colors.transparent
-                      : context.color.whiteColor,
-                  width: 1,
+            child: InkWell(
+              onTap: () => onTap(tracker.type),
+              child: Container(
+                height: 22.percentWidth,
+                margin: EdgeInsets.only(right: fivePx),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: tracker.status != PrayerStatus.none
+                      ? context.color.primaryColor
+                      : context.color.whiteColor.withOpacityInt(0.5),
+                  borderRadius: radius15,
+                  border: Border.all(
+                    color: tracker.status != PrayerStatus.none
+                        ? Colors.transparent
+                        : context.color.whiteColor,
+                    width: 1,
+                  ),
                 ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgImage(
-                    isSpecialIndex
-                        ? SvgPath.icCheckMark
-                        : SvgPath.icUncheckMark,
-                    width: twentyFivePx,
-                    height: twentyFivePx,
-                  ),
-                  gapH15,
-                  Text(
-                    _getPrayerNames()[index],
-                    style: theme.textTheme.bodyMedium!.copyWith(
-                      fontSize: twelvePx,
-                      fontWeight: FontWeight.normal,
-                      color: isSpecialIndex
-                          ? context.color.whiteColor
-                          : context.color.titleColor,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgImage(
+                      tracker.status != PrayerStatus.none
+                          ? SvgPath.icCheckMark
+                          : SvgPath.icUncheckMark,
+                      width: twentyFivePx,
+                      height: twentyFivePx,
                     ),
-                  ),
-                ],
+                    gapH15,
+                    Text(
+                      tracker.type.displayName,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        fontSize: twelvePx,
+                        fontWeight: FontWeight.normal,
+                        color: tracker.status != PrayerStatus.none
+                            ? context.color.whiteColor
+                            : context.color.titleColor,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -111,14 +124,4 @@ class HomePrayerTracker extends StatelessWidget {
       ],
     );
   }
-}
-
-List<String> _getPrayerNames() {
-  return [
-    'Fajr',
-    'Dhuhr',
-    'Asr',
-    'Maghrib',
-    'Isha',
-  ];
 }

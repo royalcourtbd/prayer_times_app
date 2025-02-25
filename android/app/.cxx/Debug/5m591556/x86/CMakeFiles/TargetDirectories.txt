@@ -1,0 +1,2 @@
+/Users/sayed/Documents/GitHub/prayer_times_app/android/app/.cxx/Debug/5m591556/x86/CMakeFiles/edit_cache.dir
+/Users/sayed/Documents/GitHub/prayer_times_app/android/app/.cxx/Debug/5m591556/x86/CMakeFiles/rebuild_cache.dir

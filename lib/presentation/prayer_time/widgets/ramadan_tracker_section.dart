@@ -3,14 +3,17 @@ import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/dashed_progress_bar/dashed_progress_bar.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/home_presenter.dart';
 
 class RamadanTrackerSection extends StatelessWidget {
   const RamadanTrackerSection({
     super.key,
     required this.theme,
+    required this.homePresenter,
   });
 
   final ThemeData theme;
+  final HomePresenter homePresenter;
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +42,12 @@ class RamadanTrackerSection extends StatelessWidget {
         _buildTimeColumn(
           context: context,
           title: 'Suhoor',
-          time: '04:30 am',
+          time: homePresenter.getSehriTime(),
         ),
         _buildTimeColumn(
           context: context,
           title: 'Iftar',
-          time: '05:30 pm',
+          time: homePresenter.getIftarTime(),
         ),
       ],
     );
@@ -62,14 +65,14 @@ class RamadanTrackerSection extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Iftar',
+              title,
               style: theme.textTheme.bodyMedium!.copyWith(
                 color: context.color.subTitleColor,
                 fontSize: thirteenPx,
               ),
             ),
             Text(
-              '05:30 pm',
+              time,
               style: theme.textTheme.bodyMedium!.copyWith(
                 fontWeight: FontWeight.w600,
                 fontSize: fifteenPx,
@@ -84,7 +87,7 @@ class RamadanTrackerSection extends StatelessWidget {
   DashedCircularProgressBar _buildProgressBar(BuildContext context) {
     return DashedCircularProgressBar.aspectRatio(
       aspectRatio: 2, // width ÷ height
-      progress: 70,
+      progress: homePresenter.currentUiState.fastingProgress,
       startAngle: 270,
       sweepAngle: 180,
       circleCenterAlignment: Alignment.bottomCenter,
@@ -101,14 +104,14 @@ class RamadanTrackerSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            'Remaining Iftar',
+            'Remaining ${homePresenter.currentUiState.fastingState.displayName}',
             style: theme.textTheme.bodyMedium!.copyWith(
               color: context.color.subTitleColor,
               fontSize: thirteenPx,
             ),
           ),
           Text(
-            '03:15:00',
+            homePresenter.getFormattedFastingRemainingTime(),
             style: theme.textTheme.bodyMedium!.copyWith(
               fontSize: twentySevenPx,
               fontWeight: FontWeight.w600,

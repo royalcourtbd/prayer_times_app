@@ -2,15 +2,18 @@ import 'package:arc_progress_bar_new/arc_progress_bar_new.dart';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/home_presenter.dart';
 
 class RemainingPrayerSection extends StatelessWidget {
   const RemainingPrayerSection({
     super.key,
     required this.theme,
     required this.onBuildContainer,
+    required this.homePresenter,
   });
 
   final ThemeData theme;
+  final HomePresenter homePresenter;
   final Widget Function({
     required BuildContext context,
     required ThemeData theme,
@@ -26,7 +29,7 @@ class RemainingPrayerSection extends StatelessWidget {
         innerPadding: 4,
         foregroundColor: context.color.primaryColor,
         backgroundColor: context.color.primaryColor100,
-        percentage: 60,
+        percentage: homePresenter.currentUiState.remainingTimeProgress,
         strokeCap: StrokeCap.round,
         handleWidget: Container(
           decoration: BoxDecoration(
@@ -45,7 +48,7 @@ class RemainingPrayerSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              'Remaining Maghrib',
+              'Remaining ${homePresenter.getRemainingTimeText()}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodyMedium!.copyWith(
@@ -55,7 +58,7 @@ class RemainingPrayerSection extends StatelessWidget {
               ),
             ),
             Text(
-              '00:30:52',
+              homePresenter.getFormattedRemainingTime(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodyMedium!.copyWith(
