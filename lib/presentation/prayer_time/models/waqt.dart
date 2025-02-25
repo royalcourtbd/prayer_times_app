@@ -17,7 +17,8 @@ enum WaqtType {
       case WaqtType.fajr:
         return 'Fajr';
       case WaqtType.sunrise:
-        return 'Prohibited times';
+        // return 'Prohibited times';
+        return 'Sunrise';
       case WaqtType.duha:
         return 'Salat Ad-Duha';
       case WaqtType.dhuhr:

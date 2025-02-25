@@ -22,7 +22,7 @@ class PrayerTimeListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isSpecialIndex = waqt.type == WaqtType.maghrib;
+    final bool isSpecialIndex = waqt.type == WaqtType.sunrise;
     final TextStyle baseTextStyle = theme.textTheme.bodyMedium!;
     return Container(
       alignment: Alignment.center,
@@ -63,6 +63,9 @@ class PrayerTimeListItem extends StatelessWidget {
                   SvgPath.icVolumeHigh,
                   height: twentyFourPx,
                   width: twentyFourPx,
+                  color: waqt.isActive
+                      ? context.color.whiteColor
+                      : context.color.titleColor,
                 ),
             ],
           ),

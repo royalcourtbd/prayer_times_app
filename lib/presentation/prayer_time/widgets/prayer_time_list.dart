@@ -24,7 +24,7 @@ class PrayerTimeList extends StatelessWidget {
         padding: EdgeInsets.only(left: twentyPx),
         itemBuilder: (context, index) {
           final WaqtViewModel waqt = waqtList[index];
-          if (!waqt.type.shouldShowInTracker) {
+          if (waqt.type == WaqtType.duha) {
             return const SizedBox.shrink();
           }
           return PrayerTimeListItem(theme: theme, waqt: waqt);
