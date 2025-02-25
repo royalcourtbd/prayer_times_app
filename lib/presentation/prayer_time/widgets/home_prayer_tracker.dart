@@ -103,7 +103,7 @@ class HomePrayerTracker extends StatelessWidget {
         Text(
           'See All',
           style: theme.textTheme.bodyMedium!.copyWith(
-            fontSize: thirteenPx,
+            fontSize: twelvePx,
             fontWeight: FontWeight.normal,
             color: context.color.subTitleColor,
           ),

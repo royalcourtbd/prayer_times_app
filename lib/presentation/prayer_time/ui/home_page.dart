@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              gapH5,
+              gapH20,
               PrayerTimeList(theme: theme),
               gapH30,
               _buildHomaPageBottomContainer(

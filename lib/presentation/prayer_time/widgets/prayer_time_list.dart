@@ -13,7 +13,7 @@ class PrayerTimeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 32.percentWidth,
+      height: 30.percentWidth,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: 7,
