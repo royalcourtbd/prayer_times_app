@@ -23,8 +23,14 @@ class HomePage extends StatelessWidget {
     final theme = Theme.of(context);
     return PresentableWidgetBuilder(
         presenter: _homePresenter,
-        onInit: () => _homePresenter.loadLocationAndPrayerTimes(),
+        onInit: () {
+          _homePresenter.loadLocationAndPrayerTimes();
+        },
         builder: () {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _homePresenter.scrollToActiveWaqtWithDelay(context);
+          });
+
           return Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -84,6 +90,8 @@ class HomePage extends StatelessWidget {
                     PrayerTimeList(
                       theme: theme,
                       waqtList: _homePresenter.waqtList,
+                      scrollController:
+                          _homePresenter.prayerTimesScrollController,
                     ),
                     gapH30,
                     _buildHomaPageBottomContainer(

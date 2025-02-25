@@ -8,16 +8,20 @@ class PrayerTimeList extends StatelessWidget {
     super.key,
     required this.theme,
     required this.waqtList,
+    required this.scrollController,
   });
 
   final ThemeData theme;
   final List<WaqtViewModel> waqtList;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 29.percentWidth,
       child: ListView.builder(
+        controller: scrollController,
+        physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         itemCount: waqtList.length,
         scrollDirection: Axis.horizontal,
