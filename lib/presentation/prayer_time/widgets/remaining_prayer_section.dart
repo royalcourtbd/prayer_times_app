@@ -27,62 +27,65 @@ class RemainingPrayerSection extends StatelessWidget {
     return onBuildContainer(
       context: context,
       theme: theme,
-      child: ArcProgressBar(
-        innerPadding: 5,
-        foregroundColor: _getForegroundProgressBarColor(context),
-        backgroundColor: _getBackgroundColor(context),
-        percentage: homePresenter.currentUiState.remainingTimeProgress,
-        strokeCap: StrokeCap.round,
-        handleWidget: Container(
-          decoration: BoxDecoration(
-            color: _getForegroundProgressBarColor(context),
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: context.color.whiteColor,
-              width: 2,
+      child: RepaintBoundary(
+        key: Key('remaining_prayer_section'),
+        child: ArcProgressBar(
+          innerPadding: 7,
+          foregroundColor: _getForegroundProgressBarColor(context),
+          backgroundColor: _getBackgroundColor(context),
+          percentage: homePresenter.currentUiState.remainingTimeProgress,
+          strokeCap: StrokeCap.round,
+          handleWidget: Container(
+            decoration: BoxDecoration(
+              color: _getForegroundProgressBarColor(context),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: context.color.whiteColor,
+                width: 2,
+              ),
             ),
           ),
-        ),
-        arcThickness: 6,
-        handleSize: 16,
-        bottomCenterWidget: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'Remaining',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodyMedium!.copyWith(
-                fontSize: tenPx,
-                color: context.color.subTitleColor,
-                fontWeight: FontWeight.normal,
-                height: 1,
+          arcThickness: 6,
+          handleSize: 16,
+          bottomCenterWidget: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                'Remaining',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  fontSize: tenPx,
+                  color: context.color.subTitleColor,
+                  fontWeight: FontWeight.normal,
+                  height: 1,
+                ),
               ),
-            ),
-            Text(
-              homePresenter
-                  .getRemainingTimeText(), // দ্বিতীয় লাইনে বাকি টেক্সট
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodyMedium!.copyWith(
-                fontSize: tenPx,
-                // height: 1,
-                color: context.color.subTitleColor,
-                fontWeight: FontWeight.normal,
+              Text(
+                homePresenter
+                    .getRemainingTimeText(), // দ্বিতীয় লাইনে বাকি টেক্সট
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  fontSize: tenPx,
+                  // height: 1,
+                  color: context.color.subTitleColor,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
-            ),
-            gapH5,
-            Text(
-              homePresenter.getFormattedRemainingTime(),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodyMedium!.copyWith(
-                fontSize: nineteenPx,
-                fontWeight: FontWeight.bold,
-                height: 1,
+              gapH5,
+              Text(
+                homePresenter.getFormattedRemainingTime(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  fontSize: nineteenPx,
+                  fontWeight: FontWeight.bold,
+                  height: 1,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -92,13 +95,13 @@ class RemainingPrayerSection extends StatelessWidget {
     if (homePresenter.currentUiState.activeWaqtType == WaqtType.sunrise) {
       return context.color.errorColor;
     }
-    return context.color.primaryColor900;
+    return context.color.primaryColor;
   }
 
   Color _getBackgroundColor(BuildContext context) {
     if (homePresenter.currentUiState.activeWaqtType == WaqtType.sunrise) {
-      return context.color.errorColor100;
+      return context.color.errorColor200;
     }
-    return context.color.primaryColor100;
+    return context.color.primaryColor200;
   }
 }

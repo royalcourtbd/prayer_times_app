@@ -36,24 +36,27 @@ class ClockSection extends StatelessWidget {
               height: 110.percentWidth,
             ),
           ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                presenter.getCurrentTime(),
-                style: GoogleFonts.bigShouldersText(
-                  fontSize: fiftyFivePx,
-                  height: 1,
+          RepaintBoundary(
+            key: Key('clock_section'),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  presenter.getCurrentTime(),
+                  style: GoogleFonts.bigShouldersText(
+                    fontSize: fiftyFivePx,
+                    height: 1,
+                  ),
                 ),
-              ),
-              Text(
-                _getAmPm(),
-                style: theme.textTheme.bodyMedium!.copyWith(
-                  fontSize: fourteenPx,
-                  color: context.color.subTitleColor,
+                Text(
+                  _getAmPm(),
+                  style: theme.textTheme.bodyMedium!.copyWith(
+                    fontSize: fourteenPx,
+                    color: context.color.subTitleColor,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

@@ -24,90 +24,99 @@ class PrayerTimeListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isSpecialIndex = waqt.type == WaqtType.sunrise;
     final TextStyle baseTextStyle = theme.textTheme.bodyMedium!;
-    return Container(
-      alignment: Alignment.center,
-      width: isSpecialIndex ? 25.percentWidth : 43.percentWidth,
-      padding: padding15,
-      margin: EdgeInsets.only(right: twelvePx),
-      decoration: BoxDecoration(
-        color: waqt.isActive
-            ? context.color.primaryColor
-            : context.color.whiteColor.withOpacityInt(0.5),
-        borderRadius: radius15,
-        border: Border.all(
-          color: waqt.isActive ? Colors.transparent : context.color.whiteColor,
-          width: 1,
+    return RepaintBoundary(
+      key: Key(waqt.type.name),
+      child: Container(
+        alignment: Alignment.center,
+        width: isSpecialIndex ? 25.percentWidth : 43.percentWidth,
+        padding: EdgeInsets.only(
+          left: fifteenPx,
+          right: fifteenPx,
+          top: fifteenPx,
+          bottom: tenPx,
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: isSpecialIndex
-            ? CrossAxisAlignment.center
-            : CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: isSpecialIndex
-                ? MainAxisAlignment.center
-                : MainAxisAlignment.spaceBetween,
-            children: [
-              SvgImage(
-                waqt.icon,
-                height: twentyFourPx,
-                width: twentyFourPx,
-                color: waqt.isActive
-                    ? context.color.whiteColor
-                    : context.color.titleColor,
-              ),
-              if (!isSpecialIndex)
+        margin: EdgeInsets.only(right: twelvePx),
+        decoration: BoxDecoration(
+          color: waqt.isActive
+              ? context.color.primaryColor
+              : context.color.whiteColor.withOpacityInt(0.5),
+          borderRadius: radius15,
+          border: Border.all(
+            color:
+                waqt.isActive ? Colors.transparent : context.color.whiteColor,
+            width: 1,
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: isSpecialIndex
+              ? CrossAxisAlignment.center
+              : CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: isSpecialIndex
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.spaceBetween,
+              children: [
                 SvgImage(
-                  SvgPath.icVolumeHigh,
-                  height: twentyFourPx,
-                  width: twentyFourPx,
+                  waqt.icon,
+                  height: twentyPx,
+                  width: twentyPx,
                   color: waqt.isActive
                       ? context.color.whiteColor
                       : context.color.titleColor,
                 ),
-            ],
-          ),
-          Spacer(),
-          Text(
-            waqt.displayName,
-            style: baseTextStyle.copyWith(
-              fontSize: twelvePx,
-              fontWeight: waqt.isActive ? FontWeight.w600 : FontWeight.normal,
-              color: waqt.isActive
-                  ? context.color.whiteColor
-                  : context.color.titleColor,
-            ),
-          ),
-          gapH3,
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: waqt.formattedTime,
-                  style: baseTextStyle.copyWith(
-                    fontSize: fourteenPx,
-                    fontWeight: FontWeight.w600,
+                if (!isSpecialIndex)
+                  SvgImage(
+                    SvgPath.icVolumeHigh,
+                    height: twentyPx,
+                    width: twentyPx,
                     color: waqt.isActive
                         ? context.color.whiteColor
                         : context.color.titleColor,
                   ),
-                ),
-                TextSpan(
-                  text: ' ${_getAmPm()}',
-                  style: baseTextStyle.copyWith(
-                    fontSize: elevenPx,
-                    color: waqt.isActive
-                        ? context.color.whiteColor
-                        : context.color.subTitleColor,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
               ],
             ),
-          )
-        ],
+            Spacer(),
+            Text(
+              waqt.displayName,
+              style: baseTextStyle.copyWith(
+                fontSize: twelvePx,
+                fontWeight: waqt.isActive ? FontWeight.w600 : FontWeight.normal,
+                color: waqt.isActive
+                    ? context.color.whiteColor
+                    : context.color.titleColor,
+              ),
+            ),
+            gapH2,
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: waqt.formattedTime,
+                    style: baseTextStyle.copyWith(
+                      fontSize: fourteenPx,
+                      fontWeight: FontWeight.w600,
+                      color: waqt.isActive
+                          ? context.color.whiteColor
+                          : context.color.titleColor,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' ${_getAmPm()}',
+                    style: baseTextStyle.copyWith(
+                      fontSize: elevenPx,
+                      color: waqt.isActive
+                          ? context.color.whiteColor
+                          : context.color.subTitleColor,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
