@@ -7,7 +7,7 @@ class SvgPath {
   static const String icCategoryFill = 'assets/svg/ic_category_fill.svg';
   static const String icHomeOutline = 'assets/svg/ic_home_outline.svg';
   static const String icHomeFill = 'assets/svg/ic_home_fill.svg';
-  static const String icMusicOutlin = 'assets/svg/ic_music_outline.svg';
+  static const String icMusicOutline = 'assets/svg/ic_music_outline.svg';
   static const String icMusicFill = 'assets/svg/ic_music_fill.svg';
   static const String icSettingsOutline = 'assets/svg/ic_setting_outline.svg';
   static const String icProfileOutline = 'assets/svg/ic_profile_outline.svg';
@@ -35,6 +35,7 @@ class SvgPath {
   static const String icCheckMark = 'assets/svg/ic_check_mark.svg';
   static const String icUncheckMark = 'assets/svg/ic_uncheck_mark.svg';
   static const String icChart = 'assets/svg/ic_chart.svg';
+  static const String icChartFill = 'assets/svg/ic_chart_fill.svg';
   static const String icLocation = 'assets/svg/ic_location.svg';
   static const String icClock = 'assets/svg/ic_clock.svg';
   static const String icOnboarding1 = 'assets/svg/onboarding1.png';

@@ -42,7 +42,7 @@ class MainNavigationBar extends StatelessWidget {
             index: 1,
             selectedIndex: selectedIndex,
             outlineIcon: SvgPath.icChart,
-            fillIcon: SvgPath.icCategoryFill,
+            fillIcon: SvgPath.icChartFill,
             label: 'Tracker',
           ),
           NavDestinationItem(
@@ -55,7 +55,7 @@ class MainNavigationBar extends StatelessWidget {
           NavDestinationItem(
             index: 3,
             selectedIndex: selectedIndex,
-            outlineIcon: SvgPath.icMusicOutlin,
+            outlineIcon: SvgPath.icMusicOutline,
             fillIcon: SvgPath.icMusicFill,
             label: 'Audio',
           ),
