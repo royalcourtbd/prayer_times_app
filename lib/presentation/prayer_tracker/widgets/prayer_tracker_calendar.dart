@@ -56,11 +56,6 @@ class PrayerTrackerCalendar extends StatelessWidget {
                   ),
                 ],
               ),
-              // TODO: Add this feature later
-              // CircleIconWidget(
-              //   size: fortyPx,
-              //   icon: SvgPath.icCalenderOutline2,
-              // ),
             ],
           ),
           Divider(

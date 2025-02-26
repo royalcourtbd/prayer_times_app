@@ -4,7 +4,7 @@ import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/home_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
 
 class ClockSection extends StatelessWidget {
   const ClockSection({

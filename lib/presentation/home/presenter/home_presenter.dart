@@ -1,8 +1,9 @@
-// lib/presentation/prayer_time/presenter/prayer_time_presenter.dart
-
 import 'dart:async';
+import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
+import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
@@ -13,43 +14,55 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.d
 import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_ui_state.dart';
+import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/home/models/fasting_state.dart';
+import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
+import 'package:qibla_and_prayer_times/presentation/home/presenter/home_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 
-class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
+class HomePresenter extends BasePresenter<HomeUiState> {
   final GetLocationUseCase _getLocationUseCase;
   final GetPrayerTimesUseCase _getPrayerTimesUseCase;
   final GetActiveWaqtUseCase _getActiveWaqtUseCase;
   final GetRemainingTimeUseCase _getRemainingTimeUseCase;
   final TimeService _timeService;
   final WaqtCalculationService _waqtCalculationService;
-
   StreamSubscription<DateTime>? _timeSubscription;
 
-  PrayerTimePresenter(
+  final ScrollController prayerTimesScrollController = ScrollController();
+  // ইউজার ম্যানুয়ালি স্ক্রল করেছে কিনা তা ট্র্যাক করা
+  bool _userScrolled = false;
+
+  HomePresenter(
+    this._getLocationUseCase,
     this._getPrayerTimesUseCase,
     this._getActiveWaqtUseCase,
     this._getRemainingTimeUseCase,
     this._timeService,
     this._waqtCalculationService,
-    this._getLocationUseCase,
   );
 
-  final Obs<PrayerTimeUiState> uiState = Obs(PrayerTimeUiState.empty());
-  PrayerTimeUiState get currentUiState => uiState.value;
-  late final PrayerTrackerPresenter _prayerTrackerPresenter =
+  final Obs<HomeUiState> uiState = Obs<HomeUiState>(HomeUiState.empty());
+  HomeUiState get currentUiState => uiState.value;
+
+  late final PrayerTrackerPresenter prayerTrackerPresenter =
       locate<PrayerTrackerPresenter>();
+
+  late final MainPresenter mainPresenter = locate<MainPresenter>();
 
   @override
   void onInit() {
     super.onInit();
     _startTimer();
+
+    // স্ক্রোল কন্ট্রোলারে লিসেনার যোগ করছি ম্যানুয়াল স্ক্রোল ডিটেক্ট করার জন্য
+    prayerTimesScrollController.addListener(_onUserScroll);
   }
 
   @override
   void onClose() {
+    prayerTimesScrollController.removeListener(_onUserScroll);
+    prayerTimesScrollController.dispose();
     _timeSubscription?.cancel();
     super.onClose();
   }
@@ -59,7 +72,23 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   }
 
   Future<void> refreshLocationAndPrayerTimes() async {
-    await _fetchLocationAndPrayerTimes(forceRemote: true);
+    try {
+      await toggleLoading(loading: true);
+
+      bool isConnected = await checkInternetConnection();
+      if (!isConnected) {
+        await toggleLoading(loading: false);
+        showMessage(message: 'No internet connection');
+        return;
+      }
+
+      await _fetchLocationAndPrayerTimes(forceRemote: true);
+    } catch (e) {
+      log('error in refreshLocationAndPrayerTimes: $e');
+      await toggleLoading(loading: false);
+    } finally {
+      await toggleLoading(loading: false);
+    }
   }
 
   Future<void> _fetchLocationAndPrayerTimes({required bool forceRemote}) async {
@@ -131,7 +160,7 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   }
 
   String _formatDuration(Duration duration) {
-    if (duration == Duration.zero) return '--:--:--';
+    if (duration == Duration.zero) return '--:--';
 
     final int hours = duration.inHours;
     final int minutes = duration.inMinutes.remainder(60);
@@ -163,21 +192,10 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
   String getCurrentTime() => getFormattedTime(_getCurrentDateTime());
 
-  @override
-  Future<void> addUserMessage(String message) async {
-    uiState.value = currentUiState.copyWith(userMessage: message);
-
-    showMessage(message: currentUiState.userMessage);
-  }
-
-  @override
-  Future<void> toggleLoading({required bool loading}) async {
-    uiState.value = currentUiState.copyWith(isLoading: loading);
-  }
-
   DateTime _getCurrentDateTime() =>
       currentUiState.nowTime ?? _timeService.getCurrentTime();
 
+  /// প্রার্থনা সময় আপডেট করে, অ্যাক্টিভ প্রার্থনা কোনটি সেটি নির্ধারণ করতে
   Future<void> _updateActiveWaqt() async {
     if (currentUiState.prayerTime == null) return;
 
@@ -193,6 +211,9 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
             activeWaqtType: result.activeWaqt,
             nextWaqtType: result.nextWaqt,
           );
+
+          // অ্যাক্টিভ প্রার্থনা পরিবর্তন হয়েছে, সুতরাং forceScroll=true দিয়ে স্ক্রোল করা
+          scrollToActiveWaqt(null, true);
         }
       },
     );
@@ -291,15 +312,130 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
   }
 
   double _calculateProgress(Duration total, Duration remaining) {
-    return ((total.inSeconds - remaining.inSeconds) / total.inSeconds * 100)
-        .clamp(0, 100);
+    return (remaining.inSeconds / total.inSeconds * 100).clamp(0, 100);
   }
 
   void initializeTracker() {
     if (currentUiState.prayerTime != null) {
-      _prayerTrackerPresenter.initializePrayerTracker(
+      prayerTrackerPresenter.initializePrayerTracker(
         prayerTimeEntity: currentUiState.prayerTime!,
       );
     }
+  }
+
+  @override
+  Future<void> addUserMessage(String message) async {
+    uiState.value = currentUiState.copyWith(userMessage: message);
+    showMessage(message: currentUiState.userMessage);
+  }
+
+  @override
+  Future<void> toggleLoading({required bool loading}) async {
+    uiState.value = currentUiState.copyWith(isLoading: loading);
+  }
+
+  /// আ্যক্টিভ ওয়াক্ত স্ক্রিনের মাঝে আনার জন্য স্ক্রল করা
+  void scrollToActiveWaqt([BuildContext? context, bool forceScroll = false]) {
+    try {
+      // ইউজার ম্যানুয়ালি স্ক্রল করেছে এবং ফোর্স না করা হলে স্ক্রল করা হবে না
+      if (_userScrolled && !forceScroll) return;
+
+      if (waqtList.isEmpty || !prayerTimesScrollController.hasClients) return;
+
+      // আ্যক্টিভ ওয়াক্ত খুঁজে বের করা
+      int activeIndex = waqtList.indexWhere((waqt) => waqt.isActive);
+      if (activeIndex == -1) return;
+
+      // সত্যিকারের স্ক্রিন উইডথ নেওয়া
+      double screenWidth =
+          prayerTimesScrollController.position.viewportDimension;
+
+      // যদি BuildContext থাকে তবে সঠিক স্ক্রিন উইডথ নেওয়া
+      if (context != null) {
+        screenWidth = MediaQuery.of(context).size.width;
+      }
+
+      // প্রতিটি আইটেমের পজিশন তৈরি করি
+      double offset = 0;
+      double leftPadding = twentyPx; // ListView এর padding
+      double rightMargin = twelvePx; // আইটেমের right margin
+
+      // সকল আইটেমের প্রস্থ এবং পজিশন হিসাব করি
+      List<double> itemPositions = [];
+      List<double> itemWidths = [];
+
+      // পেডিং যোগ করি শুরুতে
+      offset += leftPadding;
+
+      // প্রতিটি আইটেমের পজিশন হিসাব করি
+      for (int i = 0; i < waqtList.length; i++) {
+        if (waqtList[i].type == WaqtType.duha) continue; // duha স্কিপ করা
+
+        bool isSpecial = waqtList[i].type == WaqtType.sunrise;
+        // সরাসরি ক্যালকুলেট করার পরিবর্তে percentWidth হিসেব করবো
+        double widthPercentage = isSpecial ? 25 : 43;
+        double width = (screenWidth * widthPercentage) / 100;
+
+        itemPositions.add(offset);
+        itemWidths.add(width);
+
+        offset += width + rightMargin;
+      }
+
+      // অ্যাক্টিভ আইটেমের ইনডেক্স চেক করি
+      int visibleActiveIndex = activeIndex;
+      // duha আইটেম সরিয়ে দেওয়ার কারণে কিছু ইনডেক্স বদলাতে পারে
+      for (int i = 0; i < activeIndex; i++) {
+        if (waqtList[i].type == WaqtType.duha) {
+          visibleActiveIndex--;
+        }
+      }
+
+      // অ্যাক্টিভ আইটেমের পজিশন
+      if (visibleActiveIndex >= itemPositions.length) return;
+
+      double activePosition = itemPositions[visibleActiveIndex];
+      double activeWidth = itemWidths[visibleActiveIndex];
+
+      // আইটেমকে সেন্টারে আনার জন্য স্ক্রোল পজিশন হিসাব করি
+      double scrollTo = activePosition - (screenWidth / 2) + (activeWidth / 2);
+
+      // স্ক্রোলের সীমা চেক করি
+      scrollTo = scrollTo.clamp(
+          0.0, prayerTimesScrollController.position.maxScrollExtent);
+
+      // স্মুথ অ্যানিমেশনে স্ক্রোল করি
+      prayerTimesScrollController.animateTo(
+        scrollTo,
+        duration: Duration(milliseconds: 800),
+        curve: Curves.easeOutCubic,
+      );
+    } catch (e) {
+      log('Error in scrollToActiveWaqt: $e');
+    }
+  }
+
+  // পেজে যাওয়ার পরে স্ক্রোল করার মেথড
+  void scrollToActiveWaqtWithDelay([BuildContext? context]) {
+    // প্রথম লোডে ম্যানুয়াল স্ক্রোল রিসেট করা
+    _userScrolled = false;
+
+    // UI রেন্ডার হওয়ার পরে স্ক্রোল করার জন্য ডিলে দেওয়া
+    Future.delayed(Duration(milliseconds: 500), () {
+      scrollToActiveWaqt(context);
+    });
+  }
+
+  // ইউজার যখন ম্যানুয়ালি স্ক্রোল করে তখন এই মেথড কল হবে
+  void _onUserScroll() {
+    // স্ক্রোল কন্ট্রোলার ইউজার ইন্টারঅ্যাকশন ডিটেক্ট করা
+    if (prayerTimesScrollController.position.isScrollingNotifier.value) {
+      _userScrolled = true;
+    }
+  }
+
+  // ইউজার যখন এই পেজে ফিরে আসবে তখন স্ক্রোল রিসেট করার মেথড
+  void resetUserScroll() {
+    _userScrolled = false;
   }
 }

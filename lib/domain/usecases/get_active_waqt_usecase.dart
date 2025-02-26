@@ -5,7 +5,7 @@ import '../entities/prayer_time_entity.dart';
 import '../service/waqt_calculation_service.dart';
 import '../service/error_message_handler.dart';
 import '../../core/base/base_use_case.dart';
-import '../../presentation/prayer_time/models/waqt.dart';
+import '../../presentation/home/models/waqt.dart';
 
 class GetActiveWaqtUseCase
     extends BaseUseCase<({WaqtType activeWaqt, WaqtType nextWaqt})> {

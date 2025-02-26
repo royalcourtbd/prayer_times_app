@@ -2,7 +2,7 @@
 
 import 'package:fpdart/fpdart.dart';
 import '../entities/prayer_time_entity.dart';
-import '../../presentation/prayer_time/models/waqt.dart';
+import '../../presentation/home/models/waqt.dart';
 
 abstract class WaqtCalculationService {
   Either<String, ({WaqtType activeWaqt, WaqtType nextWaqt})>

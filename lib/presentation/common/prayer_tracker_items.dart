@@ -6,7 +6,7 @@ import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
+import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
 
 class PrayerTrackerItems extends StatelessWidget {
   const PrayerTrackerItems({

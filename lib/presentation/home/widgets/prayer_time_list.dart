@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/prayer_time_list_item.dart';
+import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
+import 'package:qibla_and_prayer_times/presentation/home/widgets/prayer_time_list_item.dart';
 
 class PrayerTimeList extends StatelessWidget {
   const PrayerTimeList({

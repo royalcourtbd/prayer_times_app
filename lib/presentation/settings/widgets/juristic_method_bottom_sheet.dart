@@ -3,7 +3,7 @@ import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_builder.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_modal_sheet.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_radio_list_tile.dart';
 
@@ -25,8 +25,7 @@ class JuristicMethodBottomSheet extends StatelessWidget {
     }
   }
 
-  late final PrayerTimePresenter prayerTimePresenter =
-      locate<PrayerTimePresenter>();
+  late final HomePresenter homePresenter = locate<HomePresenter>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class JuristicMethodBottomSheet extends StatelessWidget {
               onTap: () => presenter.onJuristicMethodChanged(
                 method: 'Hanafi',
                 onPrayerTimeUpdateRequired: () =>
-                    prayerTimePresenter.refreshLocationAndPrayerTimes(),
+                    homePresenter.refreshLocationAndPrayerTimes(),
               ),
             ),
             CustomRadioListTile(
@@ -57,7 +56,7 @@ class JuristicMethodBottomSheet extends StatelessWidget {
               onTap: () => presenter.onJuristicMethodChanged(
                 method: 'Shafi',
                 onPrayerTimeUpdateRequired: () =>
-                    prayerTimePresenter.refreshLocationAndPrayerTimes(),
+                    homePresenter.refreshLocationAndPrayerTimes(),
               ),
             ),
           ],

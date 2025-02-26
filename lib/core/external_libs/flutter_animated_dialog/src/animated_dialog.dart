@@ -495,7 +495,7 @@ class CustomDialog extends StatelessWidget {
             child: Material(
               color: backgroundColor ??
                   dialogTheme.backgroundColor ??
-                  Theme.of(context).dialogBackgroundColor,
+                  Theme.of(context).disabledColor,
               elevation:
                   elevation ?? dialogTheme.elevation ?? _defaultElevation,
               shape: shape ?? dialogTheme.shape ?? _defaultDialogShape,

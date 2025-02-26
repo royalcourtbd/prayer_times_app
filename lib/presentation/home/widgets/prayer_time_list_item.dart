@@ -4,7 +4,7 @@ import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
+import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
 
 class PrayerTimeListItem extends StatelessWidget {
   const PrayerTimeListItem({

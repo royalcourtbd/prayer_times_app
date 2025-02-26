@@ -10,7 +10,7 @@ import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
+import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_ui_state.dart';
 
 class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {

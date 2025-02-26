@@ -63,8 +63,8 @@ import 'package:qibla_and_prayer_times/presentation/contact_us/presenter/contact
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_preenter.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/home_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
+
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/profile/presenter/profile_page_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
@@ -166,14 +166,6 @@ class ServiceLocator {
   Future<void> _setUpPresenters() async {
     _serviceLocator
       ..registerFactory(() => loadPresenter(MainPresenter(locate())))
-      ..registerLazySingleton(() => loadPresenter(PrayerTimePresenter(
-            locate(),
-            locate(),
-            locate(),
-            locate(),
-            locate(),
-            locate(),
-          )))
       ..registerLazySingleton(() => loadPresenter(
           PrayerTrackerPresenter(locate(), locate(), locate(), locate())))
       ..registerLazySingleton(() => loadPresenter(ProfilePagePresenter()))

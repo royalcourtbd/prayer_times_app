@@ -9,7 +9,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dar
 import 'package:qibla_and_prayer_times/domain/usecases/get_juristic_method_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/search_countries_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/update_juristic_method_usecase.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/widgets/juristic_method_bottom_sheet.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/widgets/select_location_bottomsheet.dart';
@@ -30,8 +30,7 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
   final Obs<SettingsPageUiState> uiState = Obs(SettingsPageUiState.empty());
   SettingsPageUiState get currentUiState => uiState.value;
 
-  final PrayerTimePresenter _prayerTimePresenter =
-      locate<PrayerTimePresenter>();
+  final HomePresenter _homePresenter = locate<HomePresenter>();
 
   final TextEditingController countryController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
@@ -76,7 +75,7 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
   }
 
   String showLocationName() {
-    return _prayerTimePresenter.currentUiState.location?.placeName ?? '';
+    return _homePresenter.currentUiState.location?.placeName ?? '';
   }
 
   void showJuristicMethodBottomSheet() {
@@ -99,7 +98,7 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
 
   void onUseCurrentLocationSelected() async {
     onManualLocationSelected(isManualLocationSelected: false);
-    await _prayerTimePresenter.loadLocationAndPrayerTimes();
+    await _homePresenter.loadLocationAndPrayerTimes();
   }
 
   void onSaveLocationSelected() {

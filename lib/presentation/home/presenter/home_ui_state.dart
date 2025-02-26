@@ -2,8 +2,8 @@ import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
+import 'package:qibla_and_prayer_times/presentation/home/models/fasting_state.dart';
+import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
 
 class HomeUiState extends BaseUiState {
   const HomeUiState({

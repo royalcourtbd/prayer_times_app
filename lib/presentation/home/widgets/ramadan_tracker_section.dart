@@ -3,7 +3,7 @@ import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/dashed_progress_bar/dashed_progress_bar.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/home_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
 
 class RamadanTrackerSection extends StatelessWidget {
   const RamadanTrackerSection({
@@ -96,7 +96,7 @@ class RamadanTrackerSection extends StatelessWidget {
       foregroundStrokeWidth: 2,
       backgroundStrokeWidth: 2,
       backgroundGapSize: 1,
-      seekColor: context.color.whiteColor,
+      seekColor: context.color.primaryColor,
       seekSize: 22,
       animation: true,
       foregroundGapSize: 1,

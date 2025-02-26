@@ -1,5 +1,5 @@
 import 'package:qibla_and_prayer_times/core/base/base_entity.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
+import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
 
 enum PrayerStatus {
   none,

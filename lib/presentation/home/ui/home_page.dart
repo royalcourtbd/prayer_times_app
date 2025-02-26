@@ -5,14 +5,14 @@ import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_bui
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/home_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/home_page_app_bar.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/clock_section.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/home_prayer_tracker.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/location_section.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/prayer_time_list.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/ramadan_tracker_section.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/remaining_prayer_section.dart';
+import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/home/widgets/home_page_app_bar.dart';
+import 'package:qibla_and_prayer_times/presentation/home/widgets/clock_section.dart';
+import 'package:qibla_and_prayer_times/presentation/home/widgets/home_prayer_tracker.dart';
+import 'package:qibla_and_prayer_times/presentation/home/widgets/location_section.dart';
+import 'package:qibla_and_prayer_times/presentation/home/widgets/prayer_time_list.dart';
+import 'package:qibla_and_prayer_times/presentation/home/widgets/ramadan_tracker_section.dart';
+import 'package:qibla_and_prayer_times/presentation/home/widgets/remaining_prayer_section.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});

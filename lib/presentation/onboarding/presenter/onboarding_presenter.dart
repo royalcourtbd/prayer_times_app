@@ -10,7 +10,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/save_first_time_use_case.
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/main/ui/main_page.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_ui_state.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
 
 class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
   final DetermineFirstRunUseCase _determineFirstRunUseCase;
@@ -24,7 +24,7 @@ class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
   final Obs<OnboardingUiState> uiState = Obs(OnboardingUiState.empty());
   OnboardingUiState get currentUiState => uiState.value;
   final MainPresenter mainPresenter = locate<MainPresenter>();
-  final PrayerTimePresenter prayerTimePresenter = locate<PrayerTimePresenter>();
+  final HomePresenter homePresenter = locate<HomePresenter>();
 
   final PageController pageController = PageController();
 
@@ -121,7 +121,7 @@ class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
       }
 
       // If service is enabled, proceed with location access
-      await prayerTimePresenter.loadLocationAndPrayerTimes();
+      await homePresenter.loadLocationAndPrayerTimes();
       await addUserMessage('Location access granted');
       await toggleLoading(loading: false);
 

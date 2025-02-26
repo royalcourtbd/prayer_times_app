@@ -3,7 +3,7 @@
 import 'package:fpdart/fpdart.dart';
 import '../../domain/service/waqt_calculation_service.dart';
 import '../../domain/entities/prayer_time_entity.dart';
-import '../../presentation/prayer_time/models/waqt.dart';
+import '../../presentation/home/models/waqt.dart';
 
 class WaqtCalculationServiceImpl implements WaqtCalculationService {
   @override
