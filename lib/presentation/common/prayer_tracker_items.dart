@@ -37,7 +37,7 @@ class PrayerTrackerItems extends StatelessWidget {
               onTap: () => onTap(tracker.type),
               overlayColor: WidgetStateProperty.all(Colors.transparent),
               child: Container(
-                height: itemHeight ?? 22.percentWidth,
+                height: itemHeight ?? 21.percentWidth,
                 margin: EdgeInsets.only(right: fivePx),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
