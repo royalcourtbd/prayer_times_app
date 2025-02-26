@@ -29,7 +29,7 @@ class CircleIconWidget extends StatelessWidget {
         width: containerSize,
         height: containerSize,
         decoration: BoxDecoration(
-          color: context.color.primaryColor25,
+          color: context.color.primaryColor.withOpacityInt(0.1),
           shape: BoxShape.circle,
         ),
         child: SvgImage(

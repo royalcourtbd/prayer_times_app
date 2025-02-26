@@ -1,14 +1,13 @@
-// prayer_time_ui_state.dart
 import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
 
-class ProfilePageUiState extends BaseUiState {
-  const ProfilePageUiState({
+class EventUiState extends BaseUiState {
+  const EventUiState({
     required super.isLoading,
     required super.userMessage,
   });
 
-  factory ProfilePageUiState.empty() {
-    return const ProfilePageUiState(
+  factory EventUiState.empty() {
+    return const EventUiState(
       isLoading: false,
       userMessage: '',
     );
@@ -20,11 +19,11 @@ class ProfilePageUiState extends BaseUiState {
         userMessage,
       ];
 
-  ProfilePageUiState copyWith({
+  EventUiState copyWith({
     bool? isLoading,
     String? userMessage,
   }) {
-    return ProfilePageUiState(
+    return EventUiState(
       isLoading: isLoading ?? this.isLoading,
       userMessage: userMessage ?? this.userMessage,
     );

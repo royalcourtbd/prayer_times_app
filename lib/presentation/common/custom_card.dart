@@ -7,9 +7,12 @@ class CustomCard extends StatelessWidget {
     super.key,
     required this.child,
     this.backgroundColor,
+    this.border,
   });
   final Widget child;
   final Color? backgroundColor;
+  final BoxBorder? border;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,10 +22,11 @@ class CustomCard extends StatelessWidget {
         color:
             backgroundColor ?? context.color.primaryColor.withOpacityInt(0.05),
         borderRadius: radius18,
-        border: Border.all(
-          color: context.color.primaryColor.withOpacityInt(0.1),
-          width: 1,
-        ),
+        border: border ??
+            Border.all(
+              color: context.color.primaryColor.withOpacityInt(0.1),
+              width: 1,
+            ),
       ),
       child: child,
     );

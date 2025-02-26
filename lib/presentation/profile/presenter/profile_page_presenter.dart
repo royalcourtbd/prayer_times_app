@@ -15,12 +15,8 @@ class ProfilePagePresenter extends BasePresenter<ProfilePageUiState> {
     await shareText(text: playStoreUrl);
   }
 
-  Future<void> onSettingsTap() async {
-    currentUiState.context!.navigatorPush(SettingsPage());
-  }
-
-  void updateContext(BuildContext context) {
-    uiState.value = currentUiState.copyWith(context: context);
+  Future<void> onSettingsTap(BuildContext context) async {
+    await context.navigatorPush(SettingsPage());
   }
 
   Future<void> onRatingClicked() {

@@ -17,8 +17,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final ThemeData theme = Theme.of(context);
-    profilePresenter.updateContext(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -35,7 +33,7 @@ class ProfilePage extends StatelessWidget {
               ProfileMenuItem(
                 icon: SvgPath.icSettingsOutline,
                 title: 'Settings',
-                onTap: () => profilePresenter.onSettingsTap(),
+                onTap: () => profilePresenter.onSettingsTap(context),
               ),
               gapH20,
               ProfileMenuItem(
