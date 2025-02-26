@@ -31,6 +31,9 @@ class CalendarDateCell extends StatelessWidget {
           color: viewModel.isSelected
               ? context.color.primaryColor100
               : Colors.transparent,
+          border: viewModel.isToday
+              ? Border.all(color: context.color.primaryColor, width: 1)
+              : null,
           borderRadius: radius15,
         ),
         child: Column(

@@ -11,10 +11,12 @@ class PrayerTrackerUiState extends BaseUiState {
     required super.userMessage,
     required this.selectedDate,
     required this.prayerTrackers,
+    this.dragOffset = 0.0,
   });
 
   final DateTime selectedDate;
   final List<PrayerTrackerModel> prayerTrackers;
+  final double dragOffset;
 
   factory PrayerTrackerUiState.empty() {
     return PrayerTrackerUiState(
@@ -31,6 +33,7 @@ class PrayerTrackerUiState extends BaseUiState {
         userMessage,
         selectedDate,
         prayerTrackers,
+        dragOffset,
       ];
 
   PrayerTrackerUiState copyWith({
@@ -38,12 +41,14 @@ class PrayerTrackerUiState extends BaseUiState {
     String? userMessage,
     DateTime? selectedDate,
     List<PrayerTrackerModel>? prayerTrackers,
+    double? dragOffset,
   }) {
     return PrayerTrackerUiState(
       isLoading: isLoading ?? this.isLoading,
       userMessage: userMessage ?? this.userMessage,
       selectedDate: selectedDate ?? this.selectedDate,
       prayerTrackers: prayerTrackers ?? this.prayerTrackers,
+      dragOffset: dragOffset ?? this.dragOffset,
     );
   }
 }

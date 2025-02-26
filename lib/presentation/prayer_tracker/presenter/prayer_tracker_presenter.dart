@@ -112,11 +112,62 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     _loadPrayerTrackerData();
   }
 
+  void handleHorizontalDrag(DragUpdateDetails details) {
+    // Screen width for normalization
+    const double screenWidthFactor = 300.0;
+
+    // Update dragOffset based on drag delta
+    final double newOffset = currentUiState.dragOffset + details.delta.dx;
+
+    // Limit dragOffset to a reasonable range
+    final double limitedOffset =
+        newOffset.clamp(-screenWidthFactor, screenWidthFactor);
+
+    uiState.value = currentUiState.copyWith(dragOffset: limitedOffset);
+  }
+
+  void resetDragOffset() {
+    uiState.value = currentUiState.copyWith(dragOffset: 0.0);
+  }
+
   void handleSwipe(DragEndDetails details) {
-    if (details.primaryVelocity! > 0) {
-      onPreviousWeek();
-    } else if (details.primaryVelocity! < 0) {
-      onNextWeek();
+    // Get current drag offset for the animation effect
+    final double offset = currentUiState.dragOffset;
+
+    // Reset the offset first
+    resetDragOffset();
+
+    // Swipe velocity threshold
+    const double velocityThreshold = 200.0;
+    // Strong swipe means changing multiple days
+    const int daysToShift = 3;
+
+    // Quick swipe - move multiple days
+    if (details.primaryVelocity != null) {
+      if (details.primaryVelocity! > velocityThreshold) {
+        // Strong right swipe - move back by multiple days
+        final DateTime newDate = currentUiState.selectedDate.subtract(
+          const Duration(days: daysToShift),
+        );
+        uiState.value = currentUiState.copyWith(selectedDate: newDate);
+        _loadPrayerTrackerData();
+      } else if (details.primaryVelocity! < -velocityThreshold) {
+        // Strong left swipe - move forward by multiple days
+        final DateTime newDate = currentUiState.selectedDate.add(
+          const Duration(days: daysToShift),
+        );
+        // Check if the date is in the future
+        if (!newDate.isAfter(DateTime.now())) {
+          uiState.value = currentUiState.copyWith(selectedDate: newDate);
+          _loadPrayerTrackerData();
+        }
+      } else if (offset > 50) {
+        // Gentle right swipe - move back by a day
+        onPreviousDate();
+      } else if (offset < -50) {
+        // Gentle left swipe - move forward by a day
+        onNextDate();
+      }
     }
   }
 
