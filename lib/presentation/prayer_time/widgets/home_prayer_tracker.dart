@@ -55,6 +55,7 @@ class HomePrayerTracker extends StatelessWidget {
           return Expanded(
             child: InkWell(
               onTap: () => onTap(tracker.type),
+              overlayColor: WidgetStateProperty.all(Colors.transparent),
               child: Container(
                 height: 22.percentWidth,
                 margin: EdgeInsets.only(right: fivePx),

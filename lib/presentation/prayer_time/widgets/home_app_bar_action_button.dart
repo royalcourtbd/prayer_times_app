@@ -18,6 +18,7 @@ class HomeAppBarActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
       child: Container(
         padding: padding8,
         width: fortyPx,

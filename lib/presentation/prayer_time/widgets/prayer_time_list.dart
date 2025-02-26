@@ -31,7 +31,11 @@ class PrayerTimeList extends StatelessWidget {
           if (waqt.type == WaqtType.duha) {
             return const SizedBox.shrink();
           }
-          return PrayerTimeListItem(theme: theme, waqt: waqt);
+          return PrayerTimeListItem(
+            theme: theme,
+            waqt: waqt,
+            isLastItem: index == waqtList.length - 1,
+          );
         },
       ),
     );

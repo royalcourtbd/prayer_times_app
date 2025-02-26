@@ -11,9 +11,11 @@ class PrayerTimeListItem extends StatelessWidget {
     super.key,
     required this.theme,
     required this.waqt,
+    this.isLastItem = false,
   });
 
   final ThemeData theme;
+  final bool isLastItem;
   final WaqtViewModel waqt;
   String _getAmPm() {
     if (waqt.time == null) return '';
@@ -35,7 +37,7 @@ class PrayerTimeListItem extends StatelessWidget {
           top: fifteenPx,
           bottom: tenPx,
         ),
-        margin: EdgeInsets.only(right: twelvePx),
+        margin: EdgeInsets.only(right: isLastItem ? twentyPx : twelvePx),
         decoration: BoxDecoration(
           color: waqt.isActive
               ? context.color.primaryColor
@@ -68,7 +70,7 @@ class PrayerTimeListItem extends StatelessWidget {
                 ),
                 if (!isSpecialIndex)
                   SvgImage(
-                    SvgPath.icVolumeHigh,
+                    SvgPath.icVolumeMute,
                     height: twentyPx,
                     width: twentyPx,
                     color: waqt.isActive
