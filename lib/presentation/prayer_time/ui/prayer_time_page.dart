@@ -5,14 +5,12 @@ import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_bui
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_card.dart';
-import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/notification/ui/notification_page.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/countdown_progress_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/daily_waqt_view.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/notification_permission_section.dart';
-
 import 'package:qibla_and_prayer_times/presentation/prayer_time/widgets/prayer_time_page_app_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_widget.dart';
@@ -22,7 +20,6 @@ class PrayerTimePage extends StatelessWidget {
   PrayerTimePage({super.key});
   final PrayerTimePresenter _prayerTimePresenter =
       locate<PrayerTimePresenter>();
-  late final MainPresenter _mainPresenter = locate<MainPresenter>();
   late final PrayerTrackerPresenter _prayerTrackerPresenter =
       locate<PrayerTrackerPresenter>();
 
@@ -109,9 +106,6 @@ class PrayerTimePage extends StatelessWidget {
                         _prayerTrackerPresenter.currentUiState.prayerTrackers,
                     onTap: (type) =>
                         _prayerTrackerPresenter.togglePrayerStatus(type: type),
-                    showCalendarIcon: true,
-                    onCalendarTap: () =>
-                        _mainPresenter.changeNavigationIndex(1),
                   ),
                 ],
               ),

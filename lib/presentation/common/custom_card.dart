@@ -16,8 +16,13 @@ class CustomCard extends StatelessWidget {
       padding: padding15,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: backgroundColor ?? context.color.backgroundColor,
-        borderRadius: radius12,
+        color:
+            backgroundColor ?? context.color.primaryColor.withOpacityInt(0.05),
+        borderRadius: radius18,
+        border: Border.all(
+          color: context.color.primaryColor.withOpacityInt(0.1),
+          width: 1,
+        ),
       ),
       child: child,
     );

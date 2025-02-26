@@ -44,7 +44,7 @@ class PrayerTimeAppColor {
   static const Color primaryColor950 = Color(0xFF1B2250); // 950
 
   // Existing Colors
-  static const Color scaffoldBachgroundColor = Color(0xFFF5F5F5);
+  static const Color scaffoldBachgroundColor = Color(0xFFFFFFFF);
   static const Color primaryColor = primaryColor500;
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color backgroundColor = Color(0xFFFFFFFF);
