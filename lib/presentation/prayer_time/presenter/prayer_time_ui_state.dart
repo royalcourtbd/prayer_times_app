@@ -1,5 +1,4 @@
 // prayer_time_ui_state.dart
-import 'package:flutter/widgets.dart';
 import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
@@ -26,7 +25,6 @@ class PrayerTimeUiState extends BaseUiState {
     required this.prayerTrackers,
     required this.hijriDate,
     required this.location,
-    this.context,
   });
 
   factory PrayerTimeUiState.empty() {
@@ -34,7 +32,6 @@ class PrayerTimeUiState extends BaseUiState {
       isLoading: false,
       userMessage: '',
       notifyMe: false,
-      context: null,
       prayerTime: null,
       nowTime: DateTime.now(),
       activeWaqtType: null,
@@ -55,7 +52,7 @@ class PrayerTimeUiState extends BaseUiState {
   final bool notifyMe;
   final DateTime? nowTime;
   final PrayerTimeEntity? prayerTime;
-  final BuildContext? context;
+
   final WaqtType? activeWaqtType;
   final WaqtType? nextWaqtType;
   final Duration remainingDuration;
@@ -88,7 +85,6 @@ class PrayerTimeUiState extends BaseUiState {
         fastingProgress,
         fastingState,
         prayerTrackers,
-        context,
         hijriDate,
         location,
       ];
@@ -97,7 +93,6 @@ class PrayerTimeUiState extends BaseUiState {
     bool? isLoading,
     String? userMessage,
     bool? notifyMe,
-    BuildContext? context,
     PrayerTimeEntity? prayerTime,
     DateTime? nowTime,
     WaqtType? activeWaqtType,
@@ -117,7 +112,6 @@ class PrayerTimeUiState extends BaseUiState {
       isLoading: isLoading ?? this.isLoading,
       userMessage: userMessage ?? this.userMessage,
       notifyMe: notifyMe ?? this.notifyMe,
-      context: context ?? this.context,
       prayerTime: prayerTime ?? this.prayerTime,
       nowTime: nowTime ?? this.nowTime,
       activeWaqtType: activeWaqtType ?? this.activeWaqtType,

@@ -1,7 +1,6 @@
 // lib/presentation/prayer_time/presenter/prayer_time_presenter.dart
 
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
@@ -14,7 +13,6 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.d
 import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
-
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/models/fasting_state.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_time/presenter/prayer_time_ui_state.dart';
@@ -165,18 +163,11 @@ class PrayerTimePresenter extends BasePresenter<PrayerTimeUiState> {
 
   String getCurrentTime() => getFormattedTime(_getCurrentDateTime());
 
-  void updateContext({required BuildContext context}) {
-    uiState.value = currentUiState.copyWith(context: context);
-  }
-
   @override
   Future<void> addUserMessage(String message) async {
     uiState.value = currentUiState.copyWith(userMessage: message);
-    if (currentUiState.context != null) {
-      showMessage(
-        message: currentUiState.userMessage,
-      );
-    }
+
+    showMessage(message: currentUiState.userMessage);
   }
 
   @override

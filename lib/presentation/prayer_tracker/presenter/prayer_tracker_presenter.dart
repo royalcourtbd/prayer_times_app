@@ -220,10 +220,6 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     return !nextDate.isAfter(now);
   }
 
-  void updateContext({required BuildContext context}) {
-    uiState.value = currentUiState.copyWith(context: context);
-  }
-
   @override
   Future<void> addUserMessage(String message) async {
     uiState.value = currentUiState.copyWith(userMessage: message);

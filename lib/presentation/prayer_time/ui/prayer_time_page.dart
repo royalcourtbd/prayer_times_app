@@ -33,8 +33,6 @@ class PrayerTimePage extends StatelessWidget {
       builder: () {
         final PrayerTimeUiState currentUiState =
             _prayerTimePresenter.currentUiState;
-        _prayerTimePresenter.updateContext(context: context);
-        _prayerTrackerPresenter.updateContext(context: context);
 
         return Scaffold(
           appBar: PrayerTimePageAppBar(
