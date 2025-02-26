@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/sayed/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/sayed/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/sayed/Documents/GitHub/prayer_times_app/android/app/.cxx/RelWithDebInfo/4a5o6n3t/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/sayed/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/sayed/Documents/GitHub/prayer_times_app/android/app/.cxx/RelWithDebInfo/4a5o6n3t/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

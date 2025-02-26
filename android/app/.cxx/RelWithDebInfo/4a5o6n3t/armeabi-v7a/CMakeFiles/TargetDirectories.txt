@@ -1,0 +1,2 @@
+/Users/sayed/Documents/GitHub/prayer_times_app/android/app/.cxx/RelWithDebInfo/4a5o6n3t/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/sayed/Documents/GitHub/prayer_times_app/android/app/.cxx/RelWithDebInfo/4a5o6n3t/armeabi-v7a/CMakeFiles/rebuild_cache.dir
