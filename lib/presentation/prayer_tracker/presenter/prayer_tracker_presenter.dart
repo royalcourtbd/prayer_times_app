@@ -35,6 +35,11 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     _loadPrayerTrackerData();
   }
 
+  void resetState() {
+    uiState.value = PrayerTrackerUiState.empty();
+    _loadPrayerTrackerData();
+  }
+
   void togglePrayerStatus({required WaqtType type}) {
     if (!currentUiState.prayerTrackers[type.index].isSelectable) {
       addUserMessage('Prayer time is not yet reached');

@@ -25,6 +25,7 @@ class HomePage extends StatelessWidget {
         presenter: _homePresenter,
         onInit: () {
           _homePresenter.loadLocationAndPrayerTimes();
+          _homePresenter.prayerTrackerPresenter.resetState();
         },
         builder: () {
           WidgetsBinding.instance.addPostFrameCallback((_) {

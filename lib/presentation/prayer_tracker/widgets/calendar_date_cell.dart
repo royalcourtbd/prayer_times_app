@@ -78,7 +78,7 @@ class _HijriDateContainer extends StatelessWidget {
       alignment: Alignment.center,
       height: 7.percentWidth,
       decoration: BoxDecoration(
-        color: isSelected ? context.color.primaryColor900 : Colors.transparent,
+        color: isSelected ? context.color.primaryColor : Colors.transparent,
         borderRadius: radius15,
       ),
       child: Text(
