@@ -7,7 +7,6 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/presentation/common/calendar_header_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar_title.dart';
-import 'package:qibla_and_prayer_times/presentation/common/loading_indicator.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_history_widget.dart';
@@ -66,16 +65,6 @@ class PrayerTrackerPage extends StatelessWidget {
                   FutureBuilder<Map<DateTime, List<PrayerTrackerModel>>>(
                     future: _presenter.getPrayerTrackerHistory(),
                     builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: LoadingIndicator(
-                            theme: theme,
-                            ringColor:
-                                context.color.primaryColor.withOpacityInt(0.5),
-                          ),
-                        );
-                      }
-
                       if (!snapshot.hasData ||
                           snapshot.data == null ||
                           snapshot.data!.isEmpty) {
