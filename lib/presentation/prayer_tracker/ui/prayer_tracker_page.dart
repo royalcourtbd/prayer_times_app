@@ -7,6 +7,7 @@ import 'package:qibla_and_prayer_times/presentation/common/calendar_header_widge
 import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar_title.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_history_widget.dart';
 
 class PrayerTrackerPage extends StatelessWidget {
   PrayerTrackerPage({super.key});
@@ -59,10 +60,10 @@ class PrayerTrackerPage extends StatelessWidget {
                     ),
                   ),
                   gapH10,
-                  // GovtHolidayList(
-                  //   theme: theme,
-                  //   events: _presenter.currentUiState.prayerTrackers,
-                  // )
+                  PrayerTrackerHistoryWidget(
+                    theme: theme,
+                    trackerHistory: _presenter.getPrayerTrackerHistory(),
+                  ),
                 ],
               ),
             ),

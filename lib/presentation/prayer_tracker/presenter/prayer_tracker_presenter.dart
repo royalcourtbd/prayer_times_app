@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
@@ -285,5 +286,44 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
   @override
   Future<void> toggleLoading({required bool loading}) async {
     uiState.value = currentUiState.copyWith(isLoading: loading);
+  }
+
+  Map<DateTime, List<PrayerTrackerModel>> getPrayerTrackerHistory() {
+    final Map<DateTime, List<PrayerTrackerModel>> history = {};
+    final DateTime today = _timeService.getStartOfDay(DateTime.now());
+
+    // গত 7 দিনের ট্র্যাকিং হিস্ট্রি লোড করা
+    for (int i = 0; i < 7; i++) {
+      final DateTime date = today.subtract(Duration(days: i));
+      final List<PrayerTrackerModel> trackers =
+          _loadPrayerTrackerDataForDate(date);
+      history[date] = trackers;
+    }
+
+    return history;
+  }
+
+  List<PrayerTrackerModel> _loadPrayerTrackerDataForDate(DateTime date) {
+    final List<PrayerTrackerModel> initialTrackers = _getInitialTrackers(date);
+
+    // সিম্পলি ডিফল্ট ট্র্যাকারগুলি ফেরত দিন, যেহেতু এটি একটি উদাহরণ
+    // রিয়েল কেসে আমাদের অবশ্যই সিঙ্ক্রোনাস লজিক ইমপ্লিমেন্ট করতে হবে
+    final dateString = _timeService.getStartOfDay(date).toIso8601String();
+    try {
+      // এই ফাংশন কল গুলো আমরা মক করব এবং আসল ইমপ্লিমেন্টেশন পরে করা হবে
+      // সেখানে সিঙ্ক্রোনাস স্টোরেজ API ব্যবহার করতে হবে
+      return initialTrackers.map((tracker) {
+        // বাংলাদেশে এখন সকাল ৯টা হলে, ফজর আর যোহর মার্ক করব
+        final bool isCompleted =
+            tracker.type == WaqtType.fajr || tracker.type == WaqtType.dhuhr;
+
+        return tracker.copyWith(
+          status: isCompleted ? PrayerStatus.completed : PrayerStatus.none,
+        );
+      }).toList();
+    } catch (e) {
+      log('Exception in _loadPrayerTrackerDataForDate: $e');
+      return initialTrackers;
+    }
   }
 }

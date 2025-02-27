@@ -60,6 +60,9 @@ class PrayerTrackerItems extends StatelessWidget {
                       tracker.status != PrayerStatus.none
                           ? SvgPath.icCheckMark
                           : SvgPath.icUncheckMark,
+                      color: tracker.status != PrayerStatus.none
+                          ? null
+                          : context.color.subTitleColor,
                       width: twentyFivePx,
                       height: twentyFivePx,
                     ),

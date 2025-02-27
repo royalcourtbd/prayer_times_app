@@ -33,6 +33,7 @@ class SvgPath {
   static const String icVolumeHigh = 'assets/svg/ic_volume_high.svg';
   static const String icVolumeMute = 'assets/svg/ic_volume_slash.svg';
   static const String icCheckMark = 'assets/svg/ic_check_mark.svg';
+  static const String icCheckMarkBlue = 'assets/svg/ic_check_mark_blue.svg';
   static const String icUncheckMark = 'assets/svg/ic_uncheck_mark.svg';
   static const String icChart = 'assets/svg/ic_chart.svg';
   static const String icChartFill = 'assets/svg/ic_chart_fill.svg';
