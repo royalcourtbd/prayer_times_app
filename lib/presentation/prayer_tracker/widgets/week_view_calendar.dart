@@ -62,20 +62,30 @@ class _ScrollableCalendarViewState extends State<_ScrollableCalendarView> {
   static const int daysBeforeSelected = 15;
   static const int daysAfterSelected = 30;
 
-  // প্রতিটি সেলের প্রস্থ
-  static const double cellWidth = 50.0;
-
   // স্ক্রোল কন্ট্রোলার
-  late final ScrollController _scrollController;
+  late final PageController _pageController;
+  late final int totalPages;
+  late final int initialPage;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
-    // সিলেক্টেড ডেট দেখানোর জন্য স্ক্রোল পজিশন সেট করা
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToSelectedDate();
-    });
+
+    // প্রতি পেজে 7 দিন থাকবে (একটি পূর্ণ সপ্তাহ)
+    totalPages = ((daysBeforeSelected + daysAfterSelected + 1) / 7).ceil();
+
+    // সিলেক্টেড ডেট যে পেজে আছে সেই পেজটি নির্ধারণ করা
+    final DateTime firstDate = _getFirstDate();
+    final int daysBetween = widget.selectedDate.difference(firstDate).inDays;
+    initialPage = daysBetween ~/ 7;
+
+    _pageController = PageController(initialPage: initialPage);
+  }
+
+  DateTime _getFirstDate() {
+    return widget.selectedDate.subtract(
+      const Duration(days: daysBeforeSelected),
+    );
   }
 
   @override
@@ -88,31 +98,23 @@ class _ScrollableCalendarViewState extends State<_ScrollableCalendarView> {
 
   void _scrollToSelectedDate() {
     // সিলেক্টেড ডেট থেকে প্রথম ডেট এর দূরত্ব নির্ণয়
-    final int daysBetween =
-        widget.selectedDate.difference(_getFirstDate()).inDays;
-
-    // স্ক্রোল পজিশন ক্যালকুলেট করা
-    final double offset = daysBetween * cellWidth;
+    final DateTime firstDate = _getFirstDate();
+    final int daysBetween = widget.selectedDate.difference(firstDate).inDays;
+    final int pageIndex = daysBetween ~/ 7;
 
     // স্ক্রোল করা (animate করে)
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        offset,
+    if (_pageController.hasClients) {
+      _pageController.animateToPage(
+        pageIndex,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
     }
   }
 
-  DateTime _getFirstDate() {
-    return widget.selectedDate.subtract(
-      const Duration(days: daysBeforeSelected),
-    );
-  }
-
   @override
   void dispose() {
-    _scrollController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -120,13 +122,9 @@ class _ScrollableCalendarViewState extends State<_ScrollableCalendarView> {
   Widget build(BuildContext context) {
     // ড্র্যাগ অফসেট পরিবর্তনের জন্য লিসেন করা
     return Obx(() {
-      final double dragOffset = widget.presenter.currentUiState.dragOffset;
-
       // প্রথম দিন ক্যালকুলেট
       final DateTime firstDate = _getFirstDate();
-
-      // সর্বমোট দিন
-      final int totalDays = daysBeforeSelected + daysAfterSelected + 1;
+      final double dragOffset = widget.presenter.currentUiState.dragOffset;
 
       return GestureDetector(
         onHorizontalDragUpdate: (DragUpdateDetails details) =>
@@ -137,19 +135,36 @@ class _ScrollableCalendarViewState extends State<_ScrollableCalendarView> {
           height: 15.percentWidth, // ক্যালেন্ডার সেলের উচ্চতা
           child: Transform.translate(
             offset: Offset(dragOffset, 0),
-            child: ListView.builder(
-              controller: _scrollController,
-              scrollDirection: Axis.horizontal,
-              itemCount: totalDays,
-              itemBuilder: (context, index) {
-                final DateTime date = firstDate.add(Duration(days: index));
-                return _buildDateCell(context, date);
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: totalPages,
+              itemBuilder: (context, pageIndex) {
+                // প্রতি পেজের শুরুর তারিখ ক্যালকুলেট
+                final DateTime pageStartDate =
+                    firstDate.add(Duration(days: pageIndex * 7));
+                // সেই তারিখ থেকে সপ্তাহের প্রথম দিন (রবিবার) নির্ণয়
+                final int daysToSubtract = pageStartDate.weekday % 7;
+                final DateTime weekStartDate =
+                    pageStartDate.subtract(Duration(days: daysToSubtract));
+                return _buildWeekRow(context, weekStartDate);
               },
             ),
           ),
         ),
       );
     });
+  }
+
+  Widget _buildWeekRow(BuildContext context, DateTime startOfWeek) {
+    // startOfWeek এখন অবশ্যই সপ্তাহের প্রথম দিন (রবিবার)
+    return Row(
+      children: List.generate(7, (dayIndex) {
+        final DateTime date = startOfWeek.add(Duration(days: dayIndex));
+        return Expanded(
+          child: _buildDateCell(context, date),
+        );
+      }),
+    );
   }
 
   Widget _buildDateCell(BuildContext context, DateTime date) {
@@ -162,20 +177,17 @@ class _ScrollableCalendarViewState extends State<_ScrollableCalendarView> {
         date.year == widget.selectedDate.year;
     final bool isWeekend = date.weekday == 5 || date.weekday == 6;
 
-    return SizedBox(
-      width: cellWidth,
-      child: CalendarDateCell(
-        viewModel: CalendarDateCellViewModel(
-          date: date,
-          hijriDay: hijri.hDay,
-          isSelected: isSelected,
-          isWeekend: isWeekend,
-          isToday: isToday,
-        ),
-        theme: widget.theme,
-        onTap: widget.onDateSelected,
-        presenter: widget.presenter,
+    return CalendarDateCell(
+      viewModel: CalendarDateCellViewModel(
+        date: date,
+        hijriDay: hijri.hDay,
+        isSelected: isSelected,
+        isWeekend: isWeekend,
+        isToday: isToday,
       ),
+      theme: widget.theme,
+      onTap: widget.onDateSelected,
+      presenter: widget.presenter,
     );
   }
 }
