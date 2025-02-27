@@ -66,19 +66,39 @@ class PrayerTrackerPage extends StatelessWidget {
                   FutureBuilder<Map<DateTime, List<PrayerTrackerModel>>>(
                     future: _presenter.getPrayerTrackerHistory(),
                     builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return PrayerTrackerHistoryWidget(
-                          theme: theme,
-                          trackerHistory: snapshot.data!,
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: LoadingIndicator(
+                            theme: theme,
+                            ringColor:
+                                context.color.primaryColor.withOpacityInt(0.5),
+                          ),
                         );
                       }
 
-                      return Center(
-                        child: LoadingIndicator(
-                          theme: theme,
-                          ringColor:
-                              context.color.primaryColor.withOpacityInt(0.5),
-                        ),
+                      if (!snapshot.hasData ||
+                          snapshot.data == null ||
+                          snapshot.data!.isEmpty) {
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: 30.percentWidth,
+                            ),
+                            Center(
+                              child: Text(
+                                'No data found',
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  color: context.color.titleColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+
+                      return PrayerTrackerHistoryWidget(
+                        theme: theme,
+                        trackerHistory: snapshot.data!,
                       );
                     },
                   ),
