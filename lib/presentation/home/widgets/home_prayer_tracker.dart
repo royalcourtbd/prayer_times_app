@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/presentation/common/prayer_tracker_items.dart';
+import 'package:qibla_and_prayer_times/presentation/common/section_header_with_action.dart';
 import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
 
 class HomePrayerTracker extends StatelessWidget {
@@ -33,7 +33,12 @@ class HomePrayerTracker extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _buildTrackerHeader(context),
+          SectionHeaderWithAction(
+            key: Key('prayer_tracker_header'),
+            title: 'Prayer Tracker',
+            actionText: 'See All',
+            onActionTap: () {},
+          ),
           gapH16,
           PrayerTrackerItems(
             theme: theme,
@@ -42,29 +47,6 @@ class HomePrayerTracker extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Row _buildTrackerHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'Prayer Tracker',
-          style: theme.textTheme.bodyMedium!.copyWith(
-            fontSize: fifteenPx,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        Text(
-          'See All',
-          style: theme.textTheme.bodyMedium!.copyWith(
-            fontSize: twelvePx,
-            fontWeight: FontWeight.normal,
-            color: context.color.subTitleColor,
-          ),
-        ),
-      ],
     );
   }
 }

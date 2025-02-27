@@ -23,7 +23,6 @@ class PrayerTrackerPage extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            centerTitle: true,
             title: const CustomAppBarTitle(
               title: 'Prayer Tracker',
             ),

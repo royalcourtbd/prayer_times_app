@@ -466,7 +466,7 @@ void closeKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 //   int get toTimestamp => millisecondsSinceEpoch;
 // }
 
-String getFormattedCurrentDateWithDate() {
+String getFormattedCurrentDateWithDay() {
   return DateFormat('MMM dd, yyyy - EEEE').format(DateTime.now());
 }
 

@@ -7,7 +7,6 @@ import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/circle_icon_widget.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_card.dart';
 import 'package:intl/intl.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/week_view_calendar.dart';
@@ -30,21 +29,17 @@ class PrayerTrackerCalendar extends StatelessWidget {
   Widget build(BuildContext context) {
     final HijriCalendar hijri = HijriCalendar.fromDate(selectedDate);
 
-    return CustomCard(
-      border: Border.all(
-        color: Colors.transparent,
-        width: 0,
-      ),
-      backgroundColor: Colors.transparent,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomCard(
-            border: Border.all(
-              color: Colors.transparent,
-              width: 0,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: twentyPx),
+          child: Container(
+            padding: padding18,
+            decoration: BoxDecoration(
+              color: context.color.primaryColor.withOpacityInt(0.05),
+              borderRadius: radius20,
             ),
-            backgroundColor: context.color.primaryColor.withOpacityInt(0.05),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -83,15 +78,18 @@ class PrayerTrackerCalendar extends StatelessWidget {
               ],
             ),
           ),
-          gapH20,
-          WeekViewCalendar(
+        ),
+        gapH20,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: twentyPx),
+          child: WeekViewCalendar(
             theme: theme,
             selectedDate: selectedDate,
             onDateSelected: onDateSelected,
             presenter: presenter,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

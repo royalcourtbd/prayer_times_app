@@ -22,101 +22,102 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return PresentableWidgetBuilder(
-        presenter: _homePresenter,
-        onInit: () {
-          _homePresenter.loadLocationAndPrayerTimes();
-          _homePresenter.prayerTrackerPresenter.resetState();
-        },
-        builder: () {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _homePresenter.scrollToActiveWaqtWithDelay(context);
-          });
-
-          return Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(SvgPath.appBgJpg),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: HomePageAppBar(
-                theme: theme,
-                presenter: _homePresenter,
-                onTapFetchLocation: () =>
-                    _homePresenter.refreshLocationAndPrayerTimes(),
-                onTapCategory: () {},
-              ),
-              body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: twentyPx,
-                        right: twentyPx,
-                        top: tenPx,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ClockSection(
-                            theme: theme,
-                            presenter: _homePresenter,
-                          ),
-                          gapW12,
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                LocationSection(
-                                  theme: theme,
-                                  presenter: _homePresenter,
-                                  onBuildContainer: _buildContainer,
-                                ),
-                                gapH10,
-                                RemainingPrayerSection(
-                                  theme: theme,
-                                  homePresenter: _homePresenter,
-                                  onBuildContainer: _buildContainer,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    gapH20,
-                    PrayerTimeList(
-                      theme: theme,
-                      waqtList: _homePresenter.waqtList,
-                      scrollController:
-                          _homePresenter.prayerTimesScrollController,
-                    ),
-                    gapH30,
-                    _buildHomaPageBottomContainer(
-                      children: [
-                        HomePrayerTracker(
-                          theme: theme,
-                          trackers: _homePresenter.prayerTrackerPresenter
-                              .currentUiState.prayerTrackers,
-                          onTap: (type) => _homePresenter.prayerTrackerPresenter
-                              .togglePrayerStatus(type: type),
-                        ),
-                        gapH15,
-                        RamadanTrackerSection(
-                          theme: theme,
-                          homePresenter: _homePresenter,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
+      presenter: _homePresenter,
+      onInit: () {
+        _homePresenter.loadLocationAndPrayerTimes();
+        _homePresenter.prayerTrackerPresenter.resetState();
+      },
+      builder: () {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _homePresenter.scrollToActiveWaqtWithDelay(context);
         });
+
+        return Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(SvgPath.appBgJpg),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: HomePageAppBar(
+              theme: theme,
+              presenter: _homePresenter,
+              onTapFetchLocation: () =>
+                  _homePresenter.refreshLocationAndPrayerTimes(),
+              onTapCategory: () {},
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: twentyPx,
+                      right: twentyPx,
+                      top: tenPx,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ClockSection(
+                          theme: theme,
+                          presenter: _homePresenter,
+                        ),
+                        gapW12,
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              LocationSection(
+                                theme: theme,
+                                presenter: _homePresenter,
+                                onBuildContainer: _buildContainer,
+                              ),
+                              gapH10,
+                              RemainingPrayerSection(
+                                theme: theme,
+                                homePresenter: _homePresenter,
+                                onBuildContainer: _buildContainer,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  gapH20,
+                  PrayerTimeList(
+                    theme: theme,
+                    waqtList: _homePresenter.waqtList,
+                    scrollController:
+                        _homePresenter.prayerTimesScrollController,
+                  ),
+                  gapH30,
+                  _buildHomaPageBottomContainer(
+                    children: [
+                      HomePrayerTracker(
+                        theme: theme,
+                        trackers: _homePresenter.prayerTrackerPresenter
+                            .currentUiState.prayerTrackers,
+                        onTap: (type) => _homePresenter.prayerTrackerPresenter
+                            .togglePrayerStatus(type: type),
+                      ),
+                      gapH15,
+                      RamadanTrackerSection(
+                        theme: theme,
+                        homePresenter: _homePresenter,
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Container _buildHomaPageBottomContainer({

@@ -58,4 +58,6 @@ class SvgPath {
   static const String appBgJpg = 'assets/jpg/app_bg.jpg';
   static const String imgAppName = 'assets/jpg/img_app_name.png';
   static const String imgClockBg = 'assets/svg/img_clock_bg.svg';
+
+  static const String bgEvent = 'assets/svg/bg_event.svg';
 }
