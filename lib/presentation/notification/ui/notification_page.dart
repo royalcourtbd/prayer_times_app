@@ -145,7 +145,7 @@ class NotificationPage extends StatelessWidget {
                               horizontalPadding: 0,
                               title: 'Support Now',
                               onPressed: () {},
-                              iconPath: SvgPath.icLovely,
+                              liftIconPath: SvgPath.icLovely,
                             ),
                           ),
                         ),

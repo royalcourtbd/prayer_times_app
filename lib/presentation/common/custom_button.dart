@@ -10,7 +10,8 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.isPrimary = true,
     this.horizontalPadding,
-    this.iconPath,
+    this.liftIconPath,
+    this.rightIconPath,
     super.key,
   });
 
@@ -18,8 +19,8 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isPrimary;
   final double? horizontalPadding;
-  final String? iconPath;
-
+  final String? liftIconPath;
+  final String? rightIconPath;
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -42,8 +43,8 @@ class CustomButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (iconPath != null) ...[
-                SvgImage(iconPath!),
+              if (liftIconPath != null) ...[
+                SvgImage(liftIconPath!),
                 gapW10,
               ],
               Text(
@@ -56,6 +57,10 @@ class CustomButton extends StatelessWidget {
                       : context.color.buttonBgColor,
                 ),
               ),
+              if (rightIconPath != null) ...[
+                gapW10,
+                SvgImage(rightIconPath!),
+              ],
             ],
           ),
         ),
