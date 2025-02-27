@@ -486,7 +486,7 @@ String getFormattedTimeForFasting(DateTime? time) {
   return time != null ? DateFormat('hh:mm a').format(time) : '--:--';
 }
 
-String getFormattedDate(DateTime? date, {String format = 'dd MMM yyyy'}) {
+String getFormattedDate(DateTime? date, {String format = 'MMM dd, yyyy'}) {
   if (date == null) return '';
   return DateFormat(format).format(date);
 }

@@ -6,7 +6,7 @@ import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/event/widgets/holiday_section.dart';
 import 'package:qibla_and_prayer_times/presentation/event/widgets/ramadan_calendar_banner.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_calendar.dart';
+import 'package:qibla_and_prayer_times/presentation/event/widgets/event_calendar.dart';
 
 class EventPage extends StatelessWidget {
   EventPage({super.key});
@@ -28,7 +28,7 @@ class EventPage extends StatelessWidget {
             padding: EdgeInsets.zero,
             child: Column(
               children: [
-                PrayerTrackerCalendar(
+                EventCalendar(
                   theme: theme,
                   onDateSelected: presenter.onDateSelected,
                   selectedDate: presenter.currentUiState.selectedDate,

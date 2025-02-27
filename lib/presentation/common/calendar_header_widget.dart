@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
-import 'package:intl/intl.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
@@ -14,6 +13,7 @@ class CalendarHeaderWidget extends StatelessWidget {
     required this.onPreviousDate,
     required this.onNextDate,
     this.onTap,
+    this.isEventCalendar = false,
     super.key,
   });
 
@@ -22,6 +22,7 @@ class CalendarHeaderWidget extends StatelessWidget {
   final VoidCallback onPreviousDate;
   final VoidCallback onNextDate;
   final VoidCallback? onTap;
+  final bool isEventCalendar;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,8 @@ class CalendarHeaderWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: padding18,
+          padding: EdgeInsets.symmetric(
+              horizontal: fourteenPx, vertical: eighteenPx),
           decoration: BoxDecoration(
             color: context.color.primaryColor.withOpacityInt(0.05),
             borderRadius: radius20,
@@ -48,25 +50,9 @@ class CalendarHeaderWidget extends StatelessWidget {
                   onTap: onPreviousDate,
                 ),
               ),
-              Column(
-                children: [
-                  Text(
-                    '${hijri.getLongMonthName()}, ${hijri.hYear} H',
-                    style: theme.textTheme.titleMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: fourteenPx,
-                    ),
-                  ),
-                  gapH4,
-                  Text(
-                    DateFormat('MMMM, yyyy').format(selectedDate),
-                    style: theme.textTheme.bodyMedium!.copyWith(
-                      color: context.color.subTitleColor,
-                      fontSize: twelvePx,
-                    ),
-                  ),
-                ],
-              ),
+              isEventCalendar
+                  ? _buildEventCalendarDateShowWidget(hijri, context)
+                  : _buildPrayerTrackerDateShowWidget(context, hijri),
               CircleIconWidget(
                 icon: SvgPath.icArrowRight,
                 size: fortyPx,
@@ -76,6 +62,52 @@ class CalendarHeaderWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Column _buildPrayerTrackerDateShowWidget(
+      BuildContext context, HijriCalendar hijri) {
+    return Column(
+      children: [
+        Text(
+          getFormattedDate(selectedDate),
+          style: theme.textTheme.titleMedium!.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: fourteenPx,
+          ),
+        ),
+        gapH4,
+        Text(
+          'Tracking Today',
+          style: theme.textTheme.bodyMedium!.copyWith(
+            color: context.color.subTitleColor,
+            fontSize: twelvePx,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _buildEventCalendarDateShowWidget(
+      HijriCalendar hijri, BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          '${hijri.getLongMonthName()} ${hijri.hDay}, ${hijri.hYear} H',
+          style: theme.textTheme.titleMedium!.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: fourteenPx,
+          ),
+        ),
+        gapH4,
+        Text(
+          getFormattedDate(selectedDate),
+          style: theme.textTheme.bodyMedium!.copyWith(
+            color: context.color.subTitleColor,
+            fontSize: twelvePx,
+          ),
+        ),
+      ],
     );
   }
 }

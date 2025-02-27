@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_builder.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
+import 'package:qibla_and_prayer_times/presentation/common/calendar_header_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar_title.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/islamic_event_card.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_calendar.dart';
 
 class PrayerTrackerPage extends StatelessWidget {
   PrayerTrackerPage({super.key});
@@ -32,18 +31,15 @@ class PrayerTrackerPage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  PrayerTrackerCalendar(
+                  CalendarHeaderWidget(
                     theme: theme,
-                    onDateSelected: _presenter.onDateSelected,
                     selectedDate: _presenter.currentUiState.selectedDate,
-                    presenter: _presenter,
-                  ),
-                  gapH16,
-                  IslamicEventCard(
-                    theme: theme,
-                    date: 'Tue, 26 Nov 2024',
-                    eventName: 'Shab-e-Meraj (tentative)',
-                    eventType: 'Holidays in Bangladesh',
+                    onPreviousDate: _presenter.onPreviousDate,
+                    onNextDate: _presenter.onNextDate,
+                    isEventCalendar: false,
+                    onTap: () {
+                      print('tapped');
+                    },
                   ),
                   gapH16,
                   PrayerTrackerWidget(

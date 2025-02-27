@@ -7,8 +7,8 @@ import 'package:qibla_and_prayer_times/presentation/common/calendar_header_widge
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/week_view_calendar.dart';
 
-class PrayerTrackerCalendar extends StatelessWidget {
-  const PrayerTrackerCalendar({
+class EventCalendar extends StatelessWidget {
+  const EventCalendar({
     required this.theme,
     required this.selectedDate,
     required this.onDateSelected,
@@ -31,6 +31,7 @@ class PrayerTrackerCalendar extends StatelessWidget {
           selectedDate: selectedDate,
           onPreviousDate: presenter.onPreviousDate,
           onNextDate: presenter.onNextDate,
+          isEventCalendar: true,
           onTap: () {
             print('tapped');
           },
