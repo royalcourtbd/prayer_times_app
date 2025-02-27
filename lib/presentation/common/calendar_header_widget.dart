@@ -28,38 +28,35 @@ class CalendarHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final HijriCalendar hijri = HijriCalendar.fromDate(selectedDate);
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: twentyPx),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: EdgeInsets.symmetric(
-              horizontal: fourteenPx, vertical: eighteenPx),
-          decoration: BoxDecoration(
-            color: context.color.primaryColor.withOpacityInt(0.05),
-            borderRadius: radius20,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              RotatedBox(
-                quarterTurns: 2,
-                child: CircleIconWidget(
-                  icon: SvgPath.icArrowRight,
-                  size: fortyPx,
-                  onTap: onPreviousDate,
-                ),
-              ),
-              isEventCalendar
-                  ? _buildEventCalendarDateShowWidget(hijri, context)
-                  : _buildPrayerTrackerDateShowWidget(context, hijri),
-              CircleIconWidget(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding:
+            EdgeInsets.symmetric(horizontal: fourteenPx, vertical: eighteenPx),
+        decoration: BoxDecoration(
+          color: context.color.primaryColor.withOpacityInt(0.05),
+          borderRadius: radius20,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            RotatedBox(
+              quarterTurns: 2,
+              child: CircleIconWidget(
                 icon: SvgPath.icArrowRight,
                 size: fortyPx,
-                onTap: onNextDate,
+                onTap: onPreviousDate,
               ),
-            ],
-          ),
+            ),
+            isEventCalendar
+                ? _buildEventCalendarDateShowWidget(hijri, context)
+                : _buildPrayerTrackerDateShowWidget(context, hijri),
+            CircleIconWidget(
+              icon: SvgPath.icArrowRight,
+              size: fortyPx,
+              onTap: onNextDate,
+            ),
+          ],
         ),
       ),
     );

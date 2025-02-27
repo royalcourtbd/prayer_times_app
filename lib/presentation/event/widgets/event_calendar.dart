@@ -26,15 +26,18 @@ class EventCalendar extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CalendarHeaderWidget(
-          theme: theme,
-          selectedDate: selectedDate,
-          onPreviousDate: presenter.onPreviousDate,
-          onNextDate: presenter.onNextDate,
-          isEventCalendar: true,
-          onTap: () {
-            print('tapped');
-          },
+        Padding(
+          padding: paddingH20,
+          child: CalendarHeaderWidget(
+            theme: theme,
+            selectedDate: selectedDate,
+            onPreviousDate: presenter.onPreviousDate,
+            onNextDate: presenter.onNextDate,
+            isEventCalendar: true,
+            onTap: () {
+              print('tapped');
+            },
+          ),
         ),
         gapH20,
         Padding(

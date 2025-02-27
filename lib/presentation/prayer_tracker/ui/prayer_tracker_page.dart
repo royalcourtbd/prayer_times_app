@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_builder.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
@@ -26,11 +27,13 @@ class PrayerTrackerPage extends StatelessWidget {
               title: 'Prayer Tracker',
             ),
           ),
-          body: Padding(
-            padding: padding15,
-            child: SingleChildScrollView(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: paddingH20,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  gapH10,
                   CalendarHeaderWidget(
                     theme: theme,
                     selectedDate: _presenter.currentUiState.selectedDate,
@@ -46,10 +49,20 @@ class PrayerTrackerPage extends StatelessWidget {
                     theme: theme,
                     trackers: _presenter.currentUiState.prayerTrackers,
                     onTap: (type) => _presenter.togglePrayerStatus(type: type),
-                    showNavigationArrow: true,
-                    onNextTap: () => _presenter.onNextDate(),
-                    onPreviousTap: () => _presenter.onPreviousDate(),
                   ),
+                  gapH25,
+                  Text(
+                    'All Tracking History',
+                    style: theme.textTheme.bodyMedium!.copyWith(
+                      fontSize: sixteenPx,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  gapH10,
+                  // GovtHolidayList(
+                  //   theme: theme,
+                  //   events: _presenter.currentUiState.prayerTrackers,
+                  // )
                 ],
               ),
             ),

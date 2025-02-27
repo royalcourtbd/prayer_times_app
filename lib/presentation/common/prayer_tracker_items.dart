@@ -29,6 +29,7 @@ class PrayerTrackerItems extends StatelessWidget {
         trackers.length,
         (index) {
           final PrayerTrackerModel tracker = trackers[index];
+          final bool isLastItem = index == trackers.length - 1;
           if (!tracker.type.shouldShowInTracker) {
             return const SizedBox.shrink();
           }
@@ -38,7 +39,7 @@ class PrayerTrackerItems extends StatelessWidget {
               overlayColor: WidgetStateProperty.all(Colors.transparent),
               child: Container(
                 height: itemHeight ?? 21.percentWidth,
-                margin: EdgeInsets.only(right: fivePx),
+                margin: EdgeInsets.only(right: isLastItem ? 0 : fivePx),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: tracker.status != PrayerStatus.none
