@@ -34,3 +34,25 @@ class PrayerTrackerEntity extends BaseEntity {
         updatedAt,
       ];
 }
+
+class PrayerTrackerHistoryEntity extends BaseEntity {
+  final DateTime date;
+  final String? trackerData;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  const PrayerTrackerHistoryEntity({
+    required this.date,
+    required this.trackerData,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  @override
+  List<Object?> get props => [
+        date,
+        trackerData,
+        createdAt,
+        updatedAt,
+      ];
+}

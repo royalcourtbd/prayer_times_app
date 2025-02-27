@@ -54,6 +54,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart
 import 'package:qibla_and_prayer_times/domain/usecases/get_notifications_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_all_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/save_first_time_use_case.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
@@ -166,8 +167,8 @@ class ServiceLocator {
   Future<void> _setUpPresenters() async {
     _serviceLocator
       ..registerFactory(() => loadPresenter(MainPresenter(locate())))
-      ..registerLazySingleton(() => loadPresenter(
-          PrayerTrackerPresenter(locate(), locate(), locate(), locate())))
+      ..registerLazySingleton(() => loadPresenter(PrayerTrackerPresenter(
+          locate(), locate(), locate(), locate(), locate())))
       ..registerLazySingleton(() => loadPresenter(ProfilePagePresenter()))
       ..registerLazySingleton(() => loadPresenter(SettingsPagePresenter(
             locate(),
@@ -202,6 +203,8 @@ class ServiceLocator {
           () => SavePrayerTrackerUseCase(locate(), locate()))
       ..registerLazySingleton(
           () => GetPrayerTrackerDataUseCase(locate(), locate()))
+      ..registerLazySingleton(
+          () => GetAllPrayerTrackerDataUseCase(locate(), locate()))
       ..registerLazySingleton(() => GetCountriesUseCase(locate(), locate()))
       ..registerLazySingleton(() => SearchCountriesUseCase(locate(), locate()))
       ..registerLazySingleton(() => GetLocationUseCase(locate(), locate()))

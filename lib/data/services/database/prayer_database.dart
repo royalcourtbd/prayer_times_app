@@ -59,4 +59,11 @@ class PrayerDatabase extends _$PrayerDatabase {
 
     return result?.trackerData;
   }
+
+  Future<List<PrayerTrackerTableData>> getAllPrayerTrackerData() async {
+    final query = select(prayerTrackerTable)
+      ..orderBy([(t) => OrderingTerm.desc(t.date)]);
+
+    return await query.get();
+  }
 }

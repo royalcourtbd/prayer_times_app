@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
@@ -11,6 +12,7 @@ import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_all_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_ui_state.dart';
 
@@ -19,12 +21,14 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
   final TimeService _timeService;
   final SavePrayerTrackerUseCase _savePrayerTrackerUseCase;
   final GetPrayerTrackerDataUseCase _getPrayerTrackerDataUseCase;
+  final GetAllPrayerTrackerDataUseCase _getAllPrayerTrackerDataUseCase;
 
   PrayerTrackerPresenter(
     this._waqtCalculationService,
     this._timeService,
     this._savePrayerTrackerUseCase,
     this._getPrayerTrackerDataUseCase,
+    this._getAllPrayerTrackerDataUseCase,
   );
 
   final Obs<PrayerTrackerUiState> uiState = Obs(PrayerTrackerUiState.empty());
@@ -288,42 +292,46 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     uiState.value = currentUiState.copyWith(isLoading: loading);
   }
 
-  Map<DateTime, List<PrayerTrackerModel>> getPrayerTrackerHistory() {
+  Future<Map<DateTime, List<PrayerTrackerModel>>>
+      getPrayerTrackerHistory() async {
     final Map<DateTime, List<PrayerTrackerModel>> history = {};
-    final DateTime today = _timeService.getStartOfDay(DateTime.now());
 
-    // গত 7 দিনের ট্র্যাকিং হিস্ট্রি লোড করা
-    for (int i = 0; i < 7; i++) {
-      final DateTime date = today.subtract(Duration(days: i));
-      final List<PrayerTrackerModel> trackers =
-          _loadPrayerTrackerDataForDate(date);
-      history[date] = trackers;
-    }
-
-    return history;
-  }
-
-  List<PrayerTrackerModel> _loadPrayerTrackerDataForDate(DateTime date) {
-    final List<PrayerTrackerModel> initialTrackers = _getInitialTrackers(date);
-
-    // সিম্পলি ডিফল্ট ট্র্যাকারগুলি ফেরত দিন, যেহেতু এটি একটি উদাহরণ
-    // রিয়েল কেসে আমাদের অবশ্যই সিঙ্ক্রোনাস লজিক ইমপ্লিমেন্ট করতে হবে
-    final dateString = _timeService.getStartOfDay(date).toIso8601String();
     try {
-      // এই ফাংশন কল গুলো আমরা মক করব এবং আসল ইমপ্লিমেন্টেশন পরে করা হবে
-      // সেখানে সিঙ্ক্রোনাস স্টোরেজ API ব্যবহার করতে হবে
-      return initialTrackers.map((tracker) {
-        // বাংলাদেশে এখন সকাল ৯টা হলে, ফজর আর যোহর মার্ক করব
-        final bool isCompleted =
-            tracker.type == WaqtType.fajr || tracker.type == WaqtType.dhuhr;
+      final Either<String, List<PrayerTrackerHistoryEntity>> result =
+          await _getAllPrayerTrackerDataUseCase.execute();
 
-        return tracker.copyWith(
-          status: isCompleted ? PrayerStatus.completed : PrayerStatus.none,
-        );
-      }).toList();
+      return await result.fold(
+        (failure) {
+          addUserMessage('Failed to load prayer tracker history');
+          return history;
+        },
+        (trackerEntries) {
+          for (final entry in trackerEntries) {
+            final date = _timeService.getStartOfDay(entry.date);
+
+            if (entry.trackerData != null && entry.trackerData!.isNotEmpty) {
+              try {
+                final List<dynamic> decodedData =
+                    jsonDecode(entry.trackerData!);
+                final List<PrayerTrackerModel> trackers = decodedData
+                    .map((e) => PrayerTrackerModel.fromJson(e))
+                    .toList();
+
+                if (trackers.isNotEmpty) {
+                  history[date] = trackers;
+                }
+              } catch (e) {
+                log('JSON parsing error: $e');
+              }
+            }
+          }
+
+          return history;
+        },
+      );
     } catch (e) {
-      log('Exception in _loadPrayerTrackerDataForDate: $e');
-      return initialTrackers;
+      log('getPrayerTrackerHistory error: $e');
+      return history;
     }
   }
 }
