@@ -18,7 +18,6 @@ class ContactUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    contactPresenter.updateContext(context);
 
     return PresentableWidgetBuilder(
         presenter: contactPresenter,

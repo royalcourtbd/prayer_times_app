@@ -238,7 +238,7 @@ Future<void> shareText({required String text}) async {
 Future<void> launchFacebookPage() async {
   final String fbProtocolUrl = Platform.isIOS
       ? 'fb://profile/153267368647572'
-      : 'fb://page/153267368647572';
+      : 'fb://page/579001025294960';
   await openUrl(
     url: fbProtocolUrl,
     fallbackUrl: facebookPageUrl,
@@ -270,9 +270,10 @@ Future<void> launchTwitter() async {
 }
 
 Future<void> launchLinkedInProfile() async {
-  const String userId = "md-abu-sayed-938334257";
-  const String linkedInProtocolUrl = 'linkedin://in/$userId';
-  const String fallbackUrl = 'https://www.linkedin.com/in/$userId/';
+  const String companyId = "oratiq";
+
+  const String linkedInProtocolUrl = 'linkedin://company/$companyId';
+  const String fallbackUrl = 'https://www.linkedin.com/company/$companyId/';
 
   await openUrl(
     url: linkedInProtocolUrl,

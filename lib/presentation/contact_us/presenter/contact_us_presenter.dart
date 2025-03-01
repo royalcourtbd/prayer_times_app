@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/static/constants.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
@@ -46,9 +45,7 @@ class ContactUsPresenter extends BasePresenter<ContactUsUiState> {
       SocialLinkEntity(
         title: 'Website',
         icon: SvgPath.icGlobalSearch,
-        onLinkClick: () => openUrl(
-          url: websiteUrl,
-        ),
+        onLinkClick: () => openUrl(url: websiteUrl),
       ),
     ];
 
@@ -58,10 +55,6 @@ class ContactUsPresenter extends BasePresenter<ContactUsUiState> {
   // Future<void> onSocialLinkTap(String url) async {
   //   await openUrl(url: url, context: currentUiState.context!);
   // }
-
-  void updateContext(BuildContext context) {
-    uiState.value = currentUiState.copyWith(context: context);
-  }
 
   @override
   Future<void> addUserMessage(String message) async {
