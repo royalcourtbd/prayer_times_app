@@ -5,6 +5,7 @@ import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_bui
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/presentation/common/rounded_top_container.dart';
 import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/home/widgets/home_page_app_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/home/widgets/clock_section.dart';
@@ -95,7 +96,7 @@ class HomePage extends StatelessWidget {
                         _homePresenter.prayerTimesScrollController,
                   ),
                   gapH30,
-                  _buildHomaPageBottomContainer(
+                  RoundedTopContainer(
                     children: [
                       HomePrayerTracker(
                         theme: theme,
@@ -117,26 +118,6 @@ class HomePage extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  Container _buildHomaPageBottomContainer({
-    required List<Widget> children,
-  }) {
-    return Container(
-      width: double.infinity,
-      padding: padding20,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacityInt(0.5),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(thirtyPx)),
-        border: Border.all(
-          color: Colors.white,
-          width: 1,
-        ),
-      ),
-      child: Column(
-        children: children,
-      ),
     );
   }
 

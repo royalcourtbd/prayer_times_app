@@ -44,7 +44,7 @@ dependencies:
   network_info_plus: ^6.1.0
   get_it: ^8.0.2
   connectivity_plus: ^6.1.0
-  intl: ^0.19.0
+  intl: ^0.20.2
   talker_logger: ^4.4.1
   equatable: ^2.0.5
   fpdart: ^1.1.0
