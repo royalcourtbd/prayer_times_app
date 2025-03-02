@@ -58,7 +58,7 @@ class RamadanCalendarPresenter extends BasePresenter<RamadanCalendarUiState> {
   @override
   Future<void> addUserMessage(String message) async {
     uiState.value = currentUiState.copyWith(userMessage: message);
-    showMessage(message: message);
+    showMessage(message: currentUiState.userMessage);
   }
 
   Future<void> loadRamadanCalendar() async {
