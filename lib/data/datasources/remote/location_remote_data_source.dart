@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
 
@@ -24,7 +25,6 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource {
         final List<String> addressParts = [
           if (place.subLocality?.isNotEmpty == true) place.subLocality!,
           if (place.locality?.isNotEmpty == true) place.locality!,
-          // if (place.country?.isNotEmpty == true) place.country!,
         ];
 
         return LocationEntity(
@@ -33,10 +33,19 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource {
           placeName: addressParts.join(', '),
         );
       } else {
-        return LocationEntity(latitude: latitude, longitude: longitude);
+        return LocationEntity(
+          latitude: latitude,
+          longitude: longitude,
+          placeName: 'Unknown Place',
+        );
       }
     } catch (e) {
-      throw Exception(e.toString());
+      debugPrint('Geocoding error: $e');
+      return LocationEntity(
+        latitude: latitude,
+        longitude: longitude,
+        placeName: 'Unknown Place',
+      );
     }
   }
 }
