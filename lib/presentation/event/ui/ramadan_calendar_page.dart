@@ -7,7 +7,7 @@ import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/ramadan_day_entity.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar.dart';
-import 'package:qibla_and_prayer_times/presentation/common/rounded_top_container.dart';
+
 import 'package:qibla_and_prayer_times/presentation/event/pesenter/ramadan_calendar_presenter.dart';
 
 class RamadanCalendarPage extends StatelessWidget {
@@ -38,42 +38,116 @@ class RamadanCalendarPage extends StatelessWidget {
               theme: theme,
               backgroundColor: Colors.transparent,
             ),
-            body: SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Ramadan Calendar 2025',
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        fontSize: twentyTwoPx,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    gapH10,
-                    Text(
-                      calendarState.location != null
-                          ? 'Ramadan Time Schedule in ${calendarState.location?.placeName}\n(GMT +6) Hijri 1446'
-                          : 'Ramadan Time Schedule in Dhaka\nDistrict (GMT +6) Hijri 1446',
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        fontSize: thirteenPx,
-                      ),
-                    ),
-                    gapH30,
-                    RoundedTopContainer(
+            body: CustomScrollView(
+              key: Key('ramadan_calendar_page'),
+              slivers: [
+                // Title Section
+                SliverToBoxAdapter(
+                  key: Key('ramadan_calendar_title_section'),
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Ramadan 2025 Timetable',
-                          style: theme.textTheme.titleMedium!.copyWith(
+                          'Ramadan Calendar 2025',
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            fontSize: twentyTwoPx,
                             fontWeight: FontWeight.bold,
-                            fontSize: sixteenPx,
                           ),
                         ),
-                        gapH20,
+                        gapH10,
+                        Text(
+                          calendarState.location != null
+                              ? 'Ramadan Time Schedule in ${calendarState.location?.placeName}\n(GMT +6) Hijri 1446'
+                              : 'Ramadan Time Schedule in Dhaka\nDistrict (GMT +6) Hijri 1446',
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            fontSize: thirteenPx,
+                          ),
+                        ),
+                        gapH30,
+                      ],
+                    ),
+                  ),
+                ),
+
+                // Rounded Container with Sticky Title Header
+                SliverPersistentHeader(
+                  key: Key('ramadan_calendar_title_header'),
+                  pinned: true,
+                  delegate: _StickyHeaderDelegate(
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(
+                        top: sixteenPx,
+                        left: sixteenPx,
+                        right: sixteenPx,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(twentyFourPx),
+                          topRight: Radius.circular(twentyFourPx),
+                        ),
+                      ),
+                      child: Text(
+                        'Ramadan 2025 Timetable',
+                        style: theme.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: sixteenPx,
+                        ),
+                      ),
+                    ),
+                    minHeight: 60,
+                    maxHeight: 60,
+                  ),
+                ),
+
+                // Small gap before table header
+                SliverToBoxAdapter(
+                  key: Key('ramadan_calendar_table_header_gap'),
+                  child: Container(
+                    color: Colors.white,
+                    height: 20,
+                  ),
+                ),
+
+                // Sticky Table Header
+                SliverPersistentHeader(
+                  key: Key('ramadan_calendar_table_header'),
+                  pinned: true,
+                  delegate: _StickyHeaderDelegate(
+                    child: Container(
+                      key: Key('ramadan_calendar_table_header_container'),
+                      color: Colors.white,
+                      padding: EdgeInsets.symmetric(horizontal: sixteenPx),
+                      child: _buildTableHeader(theme),
+                    ),
+                    minHeight: 45,
+                    maxHeight: 45,
+                  ),
+                ),
+                // Wrap gapH10 with SliverToBoxAdapter
+                SliverToBoxAdapter(
+                  child: Container(
+                    color: Colors.white,
+                    child: gapH10,
+                  ),
+                ),
+
+                // Calendar Content (Table Body Only)
+                SliverToBoxAdapter(
+                  key: Key('ramadan_calendar_table_body'),
+                  child: Container(
+                    key: Key('ramadan_calendar_table_body_container'),
+                    padding: EdgeInsets.symmetric(horizontal: sixteenPx),
+                    color: Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         calendarState.isLoading
                             ? _buildLoadingIndicator()
-                            : _buildCalendarTable(
+                            : _buildTableBody(
                                 calendarState.ramadanCalendar,
                                 theme,
                                 calendarState.currentRamadanDay - 1,
@@ -87,11 +161,12 @@ class RamadanCalendarPage extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
+                        gapH20,
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         );
@@ -105,16 +180,6 @@ class RamadanCalendarPage extends StatelessWidget {
         padding: EdgeInsets.all(32.0),
         child: CircularProgressIndicator(),
       ),
-    );
-  }
-
-  Widget _buildCalendarTable(
-      List<RamadanDayEntity> calendarData, ThemeData theme, int currentDay) {
-    return Column(
-      children: [
-        _buildTableHeader(theme),
-        _buildTableBody(calendarData, theme, currentDay),
-      ],
     );
   }
 
@@ -230,5 +295,41 @@ class RamadanCalendarPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+// Custom SliverPersistentHeaderDelegate for the sticky header
+class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+  final double minHeight;
+  final double maxHeight;
+
+  _StickyHeaderDelegate({
+    required this.child,
+    required this.minHeight,
+    required this.maxHeight,
+  });
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    // Ensure the child takes the full height to avoid layout/paint discrepancy
+    return SizedBox(
+      height: maxExtent,
+      child: child,
+    );
+  }
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  bool shouldRebuild(_StickyHeaderDelegate oldDelegate) {
+    return child != oldDelegate.child ||
+        minHeight != oldDelegate.minHeight ||
+        maxHeight != oldDelegate.maxHeight;
   }
 }
