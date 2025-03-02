@@ -35,8 +35,8 @@ class CircleStatusIndicator extends StatelessWidget {
             color: isSelected ? context.color.primaryColor50 : null,
             border: Border.all(
               color: isSelected
-                  ? selectedBorderColor ?? context.color.primaryColor900
-                  : unselectedBorderColor ?? context.color.primaryColor500,
+                  ? selectedBorderColor ?? context.color.primaryColor
+                  : unselectedBorderColor ?? context.color.subTitleColor,
               width: borderWidth,
             ),
           ),
@@ -48,7 +48,7 @@ class CircleStatusIndicator extends StatelessWidget {
               height: innerCircleSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: selectedFillColor ?? context.color.primaryColor900,
+                color: selectedFillColor ?? context.color.primaryColor,
               ),
             ),
           ),

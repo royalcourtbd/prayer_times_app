@@ -11,6 +11,7 @@ import 'package:qibla_and_prayer_times/presentation/home/ui/home_page.dart';
 
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/ui/prayer_tracker_page.dart';
 import 'package:qibla_and_prayer_times/presentation/profile/ui/profile_page.dart';
+import 'package:qibla_and_prayer_times/presentation/settings/ui/settings_page.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -22,7 +23,7 @@ class MainPage extends StatelessWidget {
     PrayerTrackerPage(),
     EventPage(),
     ProfilePage(),
-    ProfilePage(),
+    SettingsPage(),
   ];
 
   @override

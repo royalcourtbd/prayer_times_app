@@ -1,5 +1,4 @@
 // prayer_time_ui_state.dart
-import 'package:flutter/widgets.dart';
 import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
 import 'package:qibla_and_prayer_times/domain/entities/country_entity.dart';
 
@@ -7,7 +6,6 @@ class SettingsPageUiState extends BaseUiState {
   const SettingsPageUiState({
     required super.isLoading,
     required super.userMessage,
-    this.context,
     required this.selectedJuristicMethod,
     required this.selectedCountry,
     required this.isManualLocationSelected,
@@ -16,7 +14,6 @@ class SettingsPageUiState extends BaseUiState {
     required this.selectedCity,
   });
 
-  final BuildContext? context;
   final String selectedJuristicMethod;
   final String selectedCountry;
   final String selectedCity;
@@ -28,7 +25,6 @@ class SettingsPageUiState extends BaseUiState {
     return const SettingsPageUiState(
       isLoading: false,
       userMessage: '',
-      context: null,
       selectedJuristicMethod: '',
       selectedCountry: '',
       selectedCity: '',
@@ -42,7 +38,6 @@ class SettingsPageUiState extends BaseUiState {
   List<Object?> get props => [
         isLoading,
         userMessage,
-        context,
         selectedJuristicMethod,
         selectedCountry,
         selectedCity,
@@ -54,7 +49,6 @@ class SettingsPageUiState extends BaseUiState {
   SettingsPageUiState copyWith({
     bool? isLoading,
     String? userMessage,
-    BuildContext? context,
     String? selectedJuristicMethod,
     String? selectedCountry,
     String? selectedCity,
@@ -65,7 +59,6 @@ class SettingsPageUiState extends BaseUiState {
     return SettingsPageUiState(
       isLoading: isLoading ?? this.isLoading,
       userMessage: userMessage ?? this.userMessage,
-      context: context ?? this.context,
       selectedJuristicMethod:
           selectedJuristicMethod ?? this.selectedJuristicMethod,
       selectedCountry: selectedCountry ?? this.selectedCountry,

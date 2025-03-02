@@ -102,7 +102,7 @@ class SelectLocationBottomsheet extends StatelessWidget {
             gapH25,
             CustomButton(
               title: 'Save',
-              onPressed: () => presenter.onSaveLocationSelected(),
+              onPressed: () => presenter.onSaveLocationSelected(context),
               horizontalPadding: 0,
             ),
           ],

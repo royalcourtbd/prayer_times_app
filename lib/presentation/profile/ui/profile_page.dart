@@ -8,7 +8,7 @@ import 'package:qibla_and_prayer_times/presentation/common/custom_card.dart';
 import 'package:qibla_and_prayer_times/presentation/contact_us/ui/contact_us_page.dart';
 import 'package:qibla_and_prayer_times/presentation/notification/ui/notification_page.dart';
 import 'package:qibla_and_prayer_times/presentation/profile/presenter/profile_page_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/profile/widgets/profile_menu_item.dart';
+import 'package:qibla_and_prayer_times/presentation/common/menu_item.dart';
 import 'package:qibla_and_prayer_times/presentation/support_us/ui/support_us_page.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -29,13 +29,13 @@ class ProfilePage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ProfileMenuItem(
+              MenuItem(
                 icon: SvgPath.icSettingsOutline,
                 title: 'Settings',
                 onTap: () => profilePresenter.onSettingsTap(context),
               ),
               gapH20,
-              ProfileMenuItem(
+              MenuItem(
                 icon: SvgPath.icSettingsOutline,
                 title: 'About This App',
                 onTap: () => showMessage(
@@ -43,19 +43,19 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               gapH20,
-              ProfileMenuItem(
+              MenuItem(
                 icon: SvgPath.icSettingsOutline,
                 title: 'Contact Us',
                 onTap: () => context.navigatorPush(ContactUsPage()),
               ),
               gapH20,
-              ProfileMenuItem(
+              MenuItem(
                 icon: SvgPath.icGpsOutline,
                 title: 'Support Us',
                 onTap: () => context.navigatorPush(SupportUsPage()),
               ),
               gapH20,
-              ProfileMenuItem(
+              MenuItem(
                 icon: SvgPath.icSettingsOutline,
                 title: 'Report a Bug',
                 onTap: () => showMessage(
@@ -63,23 +63,13 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               gapH20,
-              ProfileMenuItem(
+              MenuItem(
                 icon: SvgPath.icNotificationOutline,
                 title: 'Notification',
                 onTap: () => context.navigatorPush(NotificationPage()),
               ),
               gapH20,
-              ProfileMenuItem(
-                icon: SvgPath.icCategoryOutline,
-                title: 'Rate This App',
-                onTap: profilePresenter.onRatingClicked,
-              ),
               gapH20,
-              ProfileMenuItem(
-                icon: SvgPath.icShare,
-                title: 'Share',
-                onTap: profilePresenter.onShareAppTap,
-              ),
             ],
           ),
         ),

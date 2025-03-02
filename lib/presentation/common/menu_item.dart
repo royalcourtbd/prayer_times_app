@@ -5,8 +5,8 @@ import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/circle_icon_widget.dart';
 
-class ProfileMenuItem extends StatelessWidget {
-  const ProfileMenuItem({
+class MenuItem extends StatelessWidget {
+  const MenuItem({
     required this.icon,
     required this.title,
     this.subtitle,

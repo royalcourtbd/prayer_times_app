@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
+import 'package:qibla_and_prayer_times/core/static/font_family.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
@@ -43,16 +43,19 @@ class ClockSection extends StatelessWidget {
               children: [
                 Text(
                   presenter.getCurrentTime(),
-                  style: GoogleFonts.bigShouldersText(
+                  style: theme.textTheme.bodyMedium!.copyWith(
                     fontSize: fiftyFivePx,
+                    fontFamily: FontFamily.bigShouldersText,
                     height: 1,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   _getAmPm(),
                   style: theme.textTheme.bodyMedium!.copyWith(
-                    fontSize: fourteenPx,
+                    fontSize: fifteenPx,
                     color: context.color.subTitleColor,
+                    fontFamily: FontFamily.bigShouldersText,
                   ),
                 ),
               ],

@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/flutter_toast/debouncer.dart';
+import 'package:qibla_and_prayer_times/core/static/constants.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/country_entity.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
@@ -34,7 +36,6 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
 
   final TextEditingController countryController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
-  // Add to SettingsPagePresenter class
   final _searchDebouncer = Debouncer(milliseconds: 500);
 
   @override
@@ -78,16 +79,16 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
     return _homePresenter.currentUiState.location?.placeName ?? '';
   }
 
-  void showJuristicMethodBottomSheet() {
+  void showJuristicMethodBottomSheet(BuildContext context) {
     JuristicMethodBottomSheet.show(
-      context: currentUiState.context!,
+      context: context,
       presenter: this,
     );
   }
 
-  void showSelectLocationBottomSheet() {
+  void showSelectLocationBottomSheet(BuildContext context) {
     SelectLocationBottomsheet.show(
-      context: currentUiState.context!,
+      context: context,
     );
   }
 
@@ -101,8 +102,8 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
     await _homePresenter.loadLocationAndPrayerTimes();
   }
 
-  void onSaveLocationSelected() {
-    currentUiState.context!.navigatorPop();
+  void onSaveLocationSelected(BuildContext context) {
+    context.navigatorPop();
     clearControllers();
   }
 
@@ -176,8 +177,12 @@ class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
     );
   }
 
-  void updateContext(BuildContext context) {
-    uiState.value = currentUiState.copyWith(context: context);
+  Future<void> onRatingClicked() {
+    return openUrl(url: Platform.isIOS ? appStoreUrl : playStoreUrl);
+  }
+
+  Future<void> onShareAppTap() async {
+    await shareText(text: playStoreUrl);
   }
 
   @override
