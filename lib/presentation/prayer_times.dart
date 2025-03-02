@@ -34,8 +34,8 @@ class PrayerTimes extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: PrayerTimeTheme.lightTheme,
           title: 'Prayer Times',
-          // home: isFirstRun ? OnboardingPage() : MainPage(),
-          home: RamadanCalendarPage(),
+          home: isFirstRun ? OnboardingPage() : MainPage(),
+          // home: RamadanCalendarPage(),
         );
       },
     );

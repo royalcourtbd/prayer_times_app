@@ -136,6 +136,7 @@ class RamadanCalendarPresenter extends BasePresenter<RamadanCalendarUiState> {
       final result = await _getPrayerTimesUseCase.execute(
         latitude: location.latitude,
         longitude: location.longitude,
+        date: date,
       );
 
       return result.fold(

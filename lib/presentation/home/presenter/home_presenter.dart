@@ -108,6 +108,7 @@ class HomePresenter extends BasePresenter<HomeUiState> {
         task: () => _getPrayerTimesUseCase.execute(
           latitude: location.latitude,
           longitude: location.longitude,
+          date: _timeService.getCurrentTime(),
         ),
         onDataLoaded: (PrayerTimeEntity data) {
           uiState.value =

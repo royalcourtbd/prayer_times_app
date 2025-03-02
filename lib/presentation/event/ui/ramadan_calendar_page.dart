@@ -90,16 +90,30 @@ class RamadanCalendarPage extends StatelessWidget {
                           topRight: Radius.circular(twentyFourPx),
                         ),
                       ),
-                      child: Text(
-                        'Ramadan 2025 Timetable',
-                        style: theme.textTheme.titleMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: sixteenPx,
-                        ),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: paddingH10,
+                            height: fourPx,
+                            width: sixtyPx,
+                            decoration: BoxDecoration(
+                              color: context.color.primaryColor200,
+                              borderRadius: radius3,
+                            ),
+                          ),
+                          gapH15,
+                          Text(
+                            'Ramadan 2025 Timetable',
+                            style: theme.textTheme.titleMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: sixteenPx,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    minHeight: 60,
-                    maxHeight: 60,
+                    minHeight: 70,
+                    maxHeight: 70,
                   ),
                 ),
 

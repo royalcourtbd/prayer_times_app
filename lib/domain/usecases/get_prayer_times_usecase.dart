@@ -17,12 +17,14 @@ class GetPrayerTimesUseCase extends BaseUseCase<PrayerTimeEntity> {
   Future<Either<String, PrayerTimeEntity>> execute({
     required double latitude,
     required double longitude,
+    DateTime? date,
   }) async {
     return mapResultToEither(() async {
       final Either<String, PrayerTimeEntity> result =
           await _repository.getPrayerTimes(
         latitude: latitude,
         longitude: longitude,
+        date: date,
       );
       return result.fold(
         (l) => throw Exception(l),

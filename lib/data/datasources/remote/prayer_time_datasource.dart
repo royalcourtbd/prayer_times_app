@@ -9,6 +9,7 @@ abstract class PrayerTimeDataSource {
   Future<PrayerTimeEntity> getPrayerTimes({
     required double latitude,
     required double longitude,
+    DateTime? date,
   });
 }
 
@@ -21,6 +22,7 @@ class PrayerTimeDataSourceImpl implements PrayerTimeDataSource {
   Future<PrayerTimeEntity> getPrayerTimes({
     required double latitude,
     required double longitude,
+    DateTime? date,
   }) async {
     final Either<String, String> methodResult =
         await _juristicMethodRepository.getJuristicMethod();
@@ -34,10 +36,11 @@ class PrayerTimeDataSourceImpl implements PrayerTimeDataSource {
 
         params.madhab = method == 'Hanafi' ? Madhab.hanafi : Madhab.shafi;
 
-        final DateTime date = DateTime.now();
+        // Use the provided date or fallback to current date
+        final DateTime prayerDate = date ?? DateTime.now();
         final PrayerTimes prayerTimes = PrayerTimes(
           coordinates,
-          DateComponents(date.year, date.month, date.day),
+          DateComponents(prayerDate.year, prayerDate.month, prayerDate.day),
           params,
         );
 

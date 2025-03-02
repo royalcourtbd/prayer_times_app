@@ -14,11 +14,13 @@ class PrayerTimeRepositoryImpl implements PrayerTimeRepository {
   Future<Either<String, PrayerTimeEntity>> getPrayerTimes({
     required double latitude,
     required double longitude,
+    DateTime? date,
   }) async {
     try {
       final PrayerTimeEntity result = await _dataSource.getPrayerTimes(
         latitude: latitude,
         longitude: longitude,
+        date: date,
       );
       return right(result);
     } catch (e) {
