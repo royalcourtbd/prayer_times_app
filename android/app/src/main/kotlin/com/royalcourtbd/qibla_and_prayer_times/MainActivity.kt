@@ -1,4 +1,4 @@
-package com.royalcourtbd.qibla_and_prayer_times
+package com.oratiq.prayer_times
 
 import io.flutter.embedding.android.FlutterActivity
 
