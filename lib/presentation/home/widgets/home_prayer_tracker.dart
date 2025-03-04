@@ -24,6 +24,7 @@ class HomePrayerTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: Key('prayer_tracker_container'),
       padding: padding15,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -44,6 +45,7 @@ class HomePrayerTracker extends StatelessWidget {
           ),
           gapH16,
           PrayerTrackerItems(
+            key: Key('prayer_tracker_items'),
             theme: theme,
             trackers: trackers,
             onTap: onTap,

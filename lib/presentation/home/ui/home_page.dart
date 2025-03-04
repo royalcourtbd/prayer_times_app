@@ -43,77 +43,82 @@ class HomePage extends StatelessWidget {
           child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: HomePageAppBar(
+              key: Key('home_page_app_bar'),
               theme: theme,
               presenter: _homePresenter,
               onTapFetchLocation: () =>
                   _homePresenter.refreshLocationAndPrayerTimes(),
               onTapCategory: () {},
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: twentyPx,
-                      right: twentyPx,
-                      top: tenPx,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ClockSection(
-                          theme: theme,
-                          presenter: _homePresenter,
-                        ),
-                        gapW12,
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              LocationSection(
-                                theme: theme,
-                                presenter: _homePresenter,
-                                onBuildContainer: _buildContainer,
-                              ),
-                              gapH10,
-                              RemainingPrayerSection(
-                                theme: theme,
-                                homePresenter: _homePresenter,
-                                onBuildContainer: _buildContainer,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+            body: ListView(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: twentyPx,
+                    right: twentyPx,
+                    top: tenPx,
                   ),
-                  gapH20,
-                  PrayerTimeList(
-                    theme: theme,
-                    waqtList: _homePresenter.waqtList,
-                    scrollController:
-                        _homePresenter.prayerTimesScrollController,
-                  ),
-                  gapH30,
-                  RoundedTopContainer(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      HomePrayerTracker(
+                      ClockSection(
+                        key: Key('clock_section'),
                         theme: theme,
-                        trackers: _homePresenter.prayerTrackerPresenter
-                            .currentUiState.prayerTrackers,
-                        onTap: (type) => _homePresenter.prayerTrackerPresenter
-                            .togglePrayerStatus(type: type),
+                        presenter: _homePresenter,
                       ),
-                      gapH15,
-                      RamadanTrackerSection(
-                        theme: theme,
-                        homePresenter: _homePresenter,
-                      )
+                      gapW12,
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            LocationSection(
+                              key: Key('location_section'),
+                              theme: theme,
+                              presenter: _homePresenter,
+                              onBuildContainer: _buildContainer,
+                            ),
+                            gapH10,
+                            RemainingPrayerSection(
+                              key: Key('remaining_prayer_section'),
+                              theme: theme,
+                              homePresenter: _homePresenter,
+                              onBuildContainer: _buildContainer,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
-                  )
-                ],
-              ),
+                  ),
+                ),
+                gapH20,
+                PrayerTimeList(
+                  key: Key('prayer_time_list'),
+                  theme: theme,
+                  waqtList: _homePresenter.waqtList,
+                  scrollController: _homePresenter.prayerTimesScrollController,
+                ),
+                gapH30,
+                RoundedTopContainer(
+                  key: Key('rounded_top_container'),
+                  children: [
+                    HomePrayerTracker(
+                      key: Key('home_prayer_tracker'),
+                      theme: theme,
+                      trackers: _homePresenter
+                          .prayerTrackerPresenter.currentUiState.prayerTrackers,
+                      onTap: (type) => _homePresenter.prayerTrackerPresenter
+                          .togglePrayerStatus(type: type),
+                    ),
+                    gapH15,
+                    RamadanTrackerSection(
+                      key: Key('ramadan_tracker_section'),
+                      theme: theme,
+                      homePresenter: _homePresenter,
+                    )
+                  ],
+                )
+              ],
             ),
           ),
         );
