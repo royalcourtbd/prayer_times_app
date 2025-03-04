@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1050515848109",
+    "project_id": "prayer-times-e5083",
+    "storage_bucket": "prayer-times-e5083.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050515848109:android:ff04c2f6533254d095ff24",
+        "android_client_info": {
+          "package_name": "com.oratiq.prayer_times"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDls8AzfFq5edviqVHAXHjarh6OO4VlL0U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
