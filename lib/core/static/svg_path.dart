@@ -13,6 +13,7 @@ class SvgPath {
   static const String icProfileOutline = 'assets/svg/ic_profile_outline.svg';
   static const String icProfileFill = 'assets/svg/ic_profile_fill.svg';
   static const String icSettingsFill = 'assets/svg/ic_settings_fill.svg';
+  static const String appLogo = 'assets/svg/app_logo.png';
   static const String icNotificationOutline =
       'assets/svg/ic_notification_outline.svg';
   static const String icGpsOutline = 'assets/svg/ic_gps_outline.svg';

@@ -14,11 +14,11 @@ import 'package:qibla_and_prayer_times/presentation/home/widgets/location_sectio
 import 'package:qibla_and_prayer_times/presentation/home/widgets/prayer_time_list.dart';
 import 'package:qibla_and_prayer_times/presentation/home/widgets/ramadan_tracker_section.dart';
 import 'package:qibla_and_prayer_times/presentation/home/widgets/remaining_prayer_section.dart';
+import 'package:qibla_and_prayer_times/presentation/main/widgets/menu_drawer_bottom_sheet.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final HomePresenter _homePresenter = locate<HomePresenter>();
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
               presenter: _homePresenter,
               onTapFetchLocation: () =>
                   _homePresenter.refreshLocationAndPrayerTimes(),
-              onTapCategory: () {},
+              onTapCategory: () => MenuDrawerBottomSheet.show(context: context),
             ),
             body: ListView(
               children: [
