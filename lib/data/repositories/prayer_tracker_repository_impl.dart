@@ -51,4 +51,14 @@ class PrayerTrackerRepositoryImpl implements PrayerTrackerRepository {
       return left(e.toString());
     }
   }
+
+  @override
+  Future<Either<String, void>> clearAllPrayerTrackerData() async {
+    try {
+      await _database.clearAllPrayerTrackerData();
+      return right(null);
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
 }

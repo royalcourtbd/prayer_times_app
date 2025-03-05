@@ -13,6 +13,7 @@ import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.d
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_all_prayer_tracker_data_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/clear_all_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_ui_state.dart';
 
@@ -22,6 +23,7 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
   final SavePrayerTrackerUseCase _savePrayerTrackerUseCase;
   final GetPrayerTrackerDataUseCase _getPrayerTrackerDataUseCase;
   final GetAllPrayerTrackerDataUseCase _getAllPrayerTrackerDataUseCase;
+  final ClearAllPrayerTrackerDataUseCase _clearAllPrayerTrackerDataUseCase;
 
   PrayerTrackerPresenter(
     this._waqtCalculationService,
@@ -29,6 +31,7 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     this._savePrayerTrackerUseCase,
     this._getPrayerTrackerDataUseCase,
     this._getAllPrayerTrackerDataUseCase,
+    this._clearAllPrayerTrackerDataUseCase,
   );
 
   final Obs<PrayerTrackerUiState> uiState = Obs(PrayerTrackerUiState.empty());
@@ -65,11 +68,11 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     );
 
     uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
-    if (newStatus == PrayerStatus.completed) {
-      // addUserMessage("✅  ${type.displayName} prayer completed. Alhamdulillah!");
-    } else {
-      addUserMessage('❌  ${type.displayName} prayer not completed.');
-    }
+    // if (newStatus == PrayerStatus.completed) {
+    //   addUserMessage("✅  ${type.displayName} prayer completed. Alhamdulillah!");
+    // } else {
+    //   addUserMessage('❌  ${type.displayName} prayer not completed.');
+    // }
 
     _savePrayerTrackerData();
   }
@@ -281,17 +284,6 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     return !nextDate.isAfter(now);
   }
 
-  @override
-  Future<void> addUserMessage(String message) async {
-    uiState.value = currentUiState.copyWith(userMessage: message);
-    showMessage(message: currentUiState.userMessage);
-  }
-
-  @override
-  Future<void> toggleLoading({required bool loading}) async {
-    uiState.value = currentUiState.copyWith(isLoading: loading);
-  }
-
   Future<Map<DateTime, List<PrayerTrackerModel>>>
       getPrayerTrackerHistory() async {
     final Map<DateTime, List<PrayerTrackerModel>> history = {};
@@ -333,5 +325,26 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
       log('getPrayerTrackerHistory error: $e');
       return history;
     }
+  }
+
+  Future<void> clearAllPrayerTrackerData() async {
+    await parseDataFromEitherWithUserMessage(
+      task: () => _clearAllPrayerTrackerDataUseCase.execute(),
+      onDataLoaded: (result) {
+        addUserMessage('সকল প্রেয়ার ট্র্যাকিং ডাটা মুছে ফেলা হয়েছে');
+        resetState();
+      },
+    );
+  }
+
+  @override
+  Future<void> addUserMessage(String message) async {
+    uiState.value = currentUiState.copyWith(userMessage: message);
+    showMessage(message: currentUiState.userMessage);
+  }
+
+  @override
+  Future<void> toggleLoading({required bool loading}) async {
+    uiState.value = currentUiState.copyWith(isLoading: loading);
   }
 }

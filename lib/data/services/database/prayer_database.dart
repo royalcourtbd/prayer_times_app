@@ -66,4 +66,8 @@ class PrayerDatabase extends _$PrayerDatabase {
 
     return await query.get();
   }
+
+  Future<void> clearAllPrayerTrackerData() async {
+    await delete(prayerTrackerTable).go();
+  }
 }

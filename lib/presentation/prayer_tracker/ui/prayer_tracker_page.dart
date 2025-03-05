@@ -54,12 +54,51 @@ class PrayerTrackerPage extends StatelessWidget {
                     onTap: (type) => _presenter.togglePrayerStatus(type: type),
                   ),
                   gapH25,
-                  Text(
-                    'All Tracking History',
-                    style: theme.textTheme.bodyMedium!.copyWith(
-                      fontSize: sixteenPx,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'All Tracking History',
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          fontSize: sixteenPx,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('সতর্কতা'),
+                              content: const Text(
+                                  'আপনি কি সত্যিই সকল প্রেয়ার ট্র্যাকিং ডাটা মুছে ফেলতে চান?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: const Text('না'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    _presenter.clearAllPrayerTrackerData();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('হ্যাঁ'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.delete_forever, size: 16),
+                        label: const Text('Clear'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: theme.colorScheme.error,
+                          foregroundColor: Colors.white,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+                          minimumSize: Size(60, 28),
+                        ),
+                      ),
+                    ],
                   ),
                   gapH10,
                   FutureBuilder<Map<DateTime, List<PrayerTrackerModel>>>(

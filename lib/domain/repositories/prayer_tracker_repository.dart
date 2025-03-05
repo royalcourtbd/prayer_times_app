@@ -8,4 +8,5 @@ abstract class PrayerTrackerRepository {
   Future<Either<String, String?>> getPrayerTrackerData(DateTime date);
   Future<Either<String, List<PrayerTrackerHistoryEntity>>>
       getAllPrayerTrackerData();
+  Future<Either<String, void>> clearAllPrayerTrackerData();
 }
