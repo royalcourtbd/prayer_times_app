@@ -1,4 +1,4 @@
-# qibla_and_prayer_times
+# prayer_times_and_qibla_finder
 
 A new Flutter project.
 
