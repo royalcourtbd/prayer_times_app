@@ -22,10 +22,16 @@ class RamadanCalendarPresenter extends BasePresenter<RamadanCalendarUiState> {
       Obs(RamadanCalendarUiState.empty());
   RamadanCalendarUiState get currentUiState => uiState.value;
 
-  // Ramadan 2025 start date (March 1, 2025)
-  final DateTime _ramadanStartDate = DateTime(2025, 3, 1);
+  // Adjusted Ramadan 2025 start date - this can be updated based on actual moon sighting
+  // For now, adjusting to one day later to fix the current day issue (showing 6 when it should be 5)
+  final DateTime _ramadanStartDate = DateTime(2025, 3, 2);
 
-  // Calculate current Ramadan day based on today's date
+  // Correction offset - this can be adjusted if needed based on local moon sighting decisions
+  // Positive value means Ramadan starts later than calculated date
+  // Negative value means Ramadan starts earlier than calculated date
+  final int _moonSightingOffset = 0;
+
+  // Calculate current Ramadan day based on today's date with adjustment for moon sighting
   int getCurrentRamadanDay() {
     final DateTime now = DateTime.now();
 
@@ -40,8 +46,8 @@ class RamadanCalendarPresenter extends BasePresenter<RamadanCalendarUiState> {
       return 31; // Ramadan has ended
     }
 
-    // Calculate which day of Ramadan
-    return now.difference(_ramadanStartDate).inDays + 1;
+    // Calculate which day of Ramadan with adjustment for moon sighting
+    return now.difference(_ramadanStartDate).inDays + 1 - _moonSightingOffset;
   }
 
   @override
@@ -82,8 +88,6 @@ class RamadanCalendarPresenter extends BasePresenter<RamadanCalendarUiState> {
       LocationEntity location) async {
     List<RamadanDayEntity> calendarData = [];
 
-    // Ramadan 2025 starts on March 1, 2025 (approx.)
-    // This date corresponds to Ramadan 1, 1446 in Hijri calendar
     DateTime startDate = _ramadanStartDate;
 
     // Generate 30 days of Ramadan calendar
@@ -98,8 +102,8 @@ class RamadanCalendarPresenter extends BasePresenter<RamadanCalendarUiState> {
       // Calculate Hijri date
       final hijriDate = HijriCalendar.fromDate(currentDate);
 
-      // Ramadan day number
-      final ramadanDay = (i + 1).toString();
+      // Adjusted Ramadan day number to account for moon sighting correction
+      final ramadanDay = (i + 1 - _moonSightingOffset).toString();
 
       // Sehri time (start of Fajr)
       final sehriTime = getFormattedTime(prayerTime.startFajr);
