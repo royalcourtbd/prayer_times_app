@@ -4,7 +4,6 @@ import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_modal_sheet.dart';
 import 'package:qibla_and_prayer_times/presentation/main/widgets/drawer_top_widget.dart';
 
 class MenuDrawerBottomSheet extends StatelessWidget {
@@ -13,152 +12,78 @@ class MenuDrawerBottomSheet extends StatelessWidget {
   static Future<void> show({required BuildContext context}) async {
     final MenuDrawerBottomSheet menuDrawerBottomSheet = MenuDrawerBottomSheet();
 
-    if (context.mounted) {
-      await context.showBottomSheet(menuDrawerBottomSheet, context);
-    }
+    if (!context.mounted) return;
+
+    await context.showBottomSheet(menuDrawerBottomSheet, context);
   }
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    return CustomModalSheet(
-      theme: theme,
-      // bottomSheetTitle: 'Menus',
+    return Stack(
       children: [
-        DrawerTopWidget(theme: theme),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icNotificationOutline,
-          title: 'Notification',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
+        ModalBarrier(
+          color: Colors.transparent,
+          dismissible: true,
+          onDismiss: () => context.navigatorPop(),
         ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icNotificationOutline,
-          title: 'Notification',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icNotificationOutline,
-          title: 'Notification',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icNotificationOutline,
-          title: 'Notification',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icNotificationOutline,
-          title: 'Notification',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icNotificationOutline,
-          title: 'Notification',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icNotificationOutline,
-          title: 'Notification',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icNotificationOutline,
-          title: 'Notification',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icGlobalSearch,
-          title: 'About Us',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icLovely,
-          title: 'Support Us',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icChart,
-          title: 'Report Us',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icUserProfile,
-          title: 'Privacy Policy',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icShare,
-          title: 'Share This App',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icCrown,
-          title: 'Rate this App',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
-          },
-        ),
-        _buildMenuItem(
-          context: context,
-          icon: SvgPath.icCheckMark,
-          title: 'Thanks & Credit',
-          onTap: () {
-            context.navigatorPop();
-            showMessage(message: 'Coming soon');
+        DraggableScrollableSheet(
+          initialChildSize: 0.65,
+          minChildSize: 0.5,
+          maxChildSize: 0.95,
+          builder: (context, scrollController) {
+            return Container(
+              decoration: BoxDecoration(
+                color: theme.scaffoldBackgroundColor,
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(twentyPx)),
+              ),
+              child: Column(
+                children: [
+                  DrawerTopWidget(theme: theme),
+                  Expanded(
+                      child: ListView(
+                    children: [
+                      _buildMenuItem(
+                          context: context,
+                          icon: SvgPath.bkash,
+                          title: ' wehfegw',
+                          onTap: () {}),
+                      _buildMenuItem(
+                          context: context,
+                          icon: SvgPath.bkash,
+                          title: ' wehfegw',
+                          onTap: () {}),
+                      _buildMenuItem(
+                          context: context,
+                          icon: SvgPath.bkash,
+                          title: ' wehfegw',
+                          onTap: () {}),
+                      _buildMenuItem(
+                          context: context,
+                          icon: SvgPath.bkash,
+                          title: ' wehfegw',
+                          onTap: () {}),
+                      _buildMenuItem(
+                          context: context,
+                          icon: SvgPath.bkash,
+                          title: ' wehfegw',
+                          onTap: () {}),
+                      _buildMenuItem(
+                          context: context,
+                          icon: SvgPath.bkash,
+                          title: ' wehfegw',
+                          onTap: () {}),
+                      _buildMenuItem(
+                          context: context,
+                          icon: SvgPath.bkash,
+                          title: ' wehfegw',
+                          onTap: () {}),
+                    ],
+                  ))
+                ],
+              ),
+            );
           },
         ),
       ],
