@@ -18,7 +18,7 @@ class DrawerTopWidget extends StatelessWidget {
       key: Key('menu_drawer_bottom_sheet_container'),
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        vertical: tenPx,
+        vertical: twentyPx,
       ),
       decoration: BoxDecoration(
           // color: context.color.primaryColor200,
@@ -69,7 +69,7 @@ class DrawerTopWidget extends StatelessWidget {
             ],
           ),
           Text(
-            'Precise Qibla Direction & Prayer Times, Anytime, Anywhere',
+            'Precise Qibla Direction & Prayer Times,\nAnytime, Anywhere',
             textAlign: TextAlign.center,
             style: theme.textTheme.titleMedium!.copyWith(
               fontSize: twelvePx,

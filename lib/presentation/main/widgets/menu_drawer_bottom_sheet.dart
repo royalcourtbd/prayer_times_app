@@ -14,17 +14,11 @@ class MenuDrawerBottomSheet extends StatelessWidget {
   final MenuDrawerPresenter menuDrawerPresenter = locate<MenuDrawerPresenter>();
 
   static Future<void> show({required BuildContext context}) async {
+    final MenuDrawerBottomSheet menuDrawerBottomsheet = MenuDrawerBottomSheet();
+
     if (!context.mounted) return;
 
-    await showModalBottomSheet<void>(
-      context: context,
-      enableDrag: true,
-      isScrollControlled: true,
-      isDismissible: true,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      backgroundColor: Colors.transparent,
-      builder: (_) => MenuDrawerBottomSheet(),
-    );
+    context.showBottomSheet(menuDrawerBottomsheet, context);
   }
 
   @override
@@ -61,6 +55,10 @@ class MenuDrawerBottomSheet extends StatelessWidget {
                         shrinkWrap: true,
                         padding: EdgeInsets.zero,
                         children: [
+                          Container(
+                            padding: padding8,
+                            child: Text('Menus'),
+                          ),
                           _buildMenuItem(
                             context: context,
                             icon: SvgPath.bkash,
