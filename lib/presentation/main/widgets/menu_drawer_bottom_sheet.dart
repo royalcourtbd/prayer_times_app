@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/presentation/common/settings_grid_item.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/menu_drawer_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/main/widgets/drawer_top_widget.dart';
 
@@ -15,9 +15,7 @@ class MenuDrawerBottomSheet extends StatelessWidget {
 
   static Future<void> show({required BuildContext context}) async {
     final MenuDrawerBottomSheet menuDrawerBottomsheet = MenuDrawerBottomSheet();
-
     if (!context.mounted) return;
-
     context.showBottomSheet(menuDrawerBottomsheet, context);
   }
 
@@ -33,9 +31,9 @@ class MenuDrawerBottomSheet extends StatelessWidget {
           onDismiss: () => Navigator.of(context).pop(),
         ),
         DraggableScrollableSheet(
-          initialChildSize: 0.65,
+          initialChildSize: 0.9,
           minChildSize: 0.5,
-          maxChildSize: 0.88,
+          maxChildSize: 0.9,
           builder: (BuildContext context, ScrollController scrollController) {
             return Container(
               decoration: BoxDecoration(
@@ -57,49 +55,73 @@ class MenuDrawerBottomSheet extends StatelessWidget {
                         children: [
                           Container(
                             padding: padding8,
-                            child: Text('Menus'),
+                            decoration: BoxDecoration(
+                              color: context.color.primaryColor50,
+                              borderRadius: radius6,
+                            ),
+                            child: Text(
+                              'Menus',
+                              style: theme.textTheme.bodyMedium!.copyWith(
+                                color: context.color.btnText,
+                                fontWeight: FontWeight.w600,
+                                fontSize: thirteenPx,
+                              ),
+                            ),
                           ),
-                          _buildMenuItem(
-                            context: context,
-                            icon: SvgPath.bkash,
-                            title: 'নামাজের সময়সূচী',
-                            onTap: () {},
-                          ),
-                          _buildMenuItem(
-                            context: context,
-                            icon: SvgPath.bkash,
-                            title: 'ক্যালেন্ডার',
-                            onTap: () {},
-                          ),
-                          _buildMenuItem(
-                            context: context,
-                            icon: SvgPath.bkash,
-                            title: 'কিবলা',
-                            onTap: () {},
-                          ),
-                          _buildMenuItem(
-                            context: context,
-                            icon: SvgPath.bkash,
-                            title: 'প্রোফাইল',
-                            onTap: () {},
-                          ),
-                          _buildMenuItem(
-                            context: context,
-                            icon: SvgPath.bkash,
-                            title: 'সেটিংস',
-                            onTap: () {},
-                          ),
-                          _buildMenuItem(
-                            context: context,
-                            icon: SvgPath.bkash,
-                            title: 'নোটিফিকেশন',
-                            onTap: () {},
-                          ),
-                          _buildMenuItem(
-                            context: context,
-                            icon: SvgPath.bkash,
-                            title: 'আমাদের সাপোর্ট করুন',
-                            onTap: () {},
+                          gapH10,
+                          GridView(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
+                              childAspectRatio: 1.6,
+                            ),
+                            children: [
+                              SettingsGridItem(
+                                icon: SvgPath.icNotificationFill,
+                                title: 'Notification',
+                                onTap: () {},
+                              ),
+                              SettingsGridItem(
+                                icon: SvgPath.icInformation,
+                                title: 'Aboute',
+                                onTap: () {},
+                              ),
+                              SettingsGridItem(
+                                icon: SvgPath.icLovelyFill,
+                                title: 'Support Us',
+                                onTap: () {},
+                              ),
+                              SettingsGridItem(
+                                icon: SvgPath.icSmsEdit,
+                                title: 'Report Us',
+                                onTap: () {},
+                              ),
+                              SettingsGridItem(
+                                icon: SvgPath.icSecuritySafe,
+                                title: 'Privacy Policy',
+                                onTap: () {},
+                              ),
+                              SettingsGridItem(
+                                icon: SvgPath.icShare,
+                                title: 'Share This App',
+                                onTap: () {},
+                              ),
+                              SettingsGridItem(
+                                icon: SvgPath.icLike,
+                                title: 'Thanks & Credit',
+                                onTap: () {},
+                              ),
+                              SettingsGridItem(
+                                icon: SvgPath.icStar,
+                                title: 'Rate this App',
+                                onTap: () {},
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -111,40 +133,6 @@ class MenuDrawerBottomSheet extends StatelessWidget {
           },
         ),
       ],
-    );
-  }
-
-  Widget _buildMenuItem({
-    required BuildContext context,
-    required String icon,
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: tenPx),
-        child: Row(
-          children: [
-            Container(
-              padding: EdgeInsets.all(tenPx),
-              decoration: BoxDecoration(
-                color: context.color.primaryColor.withOpacityInt(0.1),
-                borderRadius: BorderRadius.circular(tenPx),
-              ),
-              child: SvgPicture.asset(icon),
-            ),
-            gapW15,
-            Text(
-              title,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: fourteenPx,
-                    fontWeight: FontWeight.w500,
-                  ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

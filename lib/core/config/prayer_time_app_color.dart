@@ -52,8 +52,7 @@ class PrayerTimeAppColor {
   static const Color tapGroupBgColor = Color(0xFFE0E0E0);
   static const Color tabActiveColor = primaryColor500;
   static const Color borderColor = primaryColor500;
-  static const Color titleColor = blackColor800;
-  static const Color subTitleColor = blackColor600;
+
   static const Color bodyColor = Color(0xFF333333);
   static const Color placeHolderColor = Color(0xFFA9A9A9);
   static const Color linkColor = Color(0xFF005B9A);
@@ -63,6 +62,20 @@ class PrayerTimeAppColor {
   static const Color disableColor = Color(0xFFBDBDBD);
   static const Color successColor = Color(0xFF039855);
   static const Color warningColor = Color(0xFFDC6803);
-  static const Color errorColor =
-      Color(0xFFD92D20); // This is same as errorColor600
+  static const Color errorColor = Color(0xFFD92D20);
+
+  //Button
+  static const Color primaryBtn = primaryColor500;
+  static const Color secondaryBtn = primaryColor50;
+  static const Color btnIcon2 = primaryColor500;
+  static const Color btnIcon = whiteColor;
+  static const Color btnText = primaryColor500;
+  static const Color filledText = secondaryTitleColor;
+
+  //TextColor
+
+  static const Color titleColor = blackColor800;
+  static const Color subTitleColor = blackColor600;
+  static const Color secondaryTitleColor = whiteColor;
+  static const Color secondarySubTitleColor = blackColor600;
 }

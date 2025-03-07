@@ -47,7 +47,7 @@ final List<NotificationModel> notifications = [
     type: 'prayer_time',
     isRead: false,
     actionUrl: 'https://www.google.com',
-    imageUrl: SvgPath.icLovely,
+    imageUrl: SvgPath.icLovelyOutline,
   ),
   NotificationModel(
     id: '2',

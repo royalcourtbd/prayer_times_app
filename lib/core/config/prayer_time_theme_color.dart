@@ -65,6 +65,18 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
   final Color errorColor50;
   final Color errorColor25;
 
+  // New Button Properties
+  final Color primaryBtn;
+  final Color secondaryBtn;
+  final Color btnIcon2;
+  final Color btnIcon;
+  final Color btnText;
+  final Color filledText;
+
+  // New Text Color Properties
+  final Color secondaryTitleColor;
+  final Color secondarySubTitleColor;
+
   const PrayerTimeThemeColor({
     // Existing required properties
     required this.scaffoldBachgroundColor,
@@ -128,6 +140,18 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     required this.errorColor100,
     required this.errorColor50,
     required this.errorColor25,
+
+    // New Button required properties
+    required this.primaryBtn,
+    required this.secondaryBtn,
+    required this.btnIcon2,
+    required this.btnIcon,
+    required this.btnText,
+    required this.filledText,
+
+    // New Text Color required properties
+    required this.secondaryTitleColor,
+    required this.secondarySubTitleColor,
   });
 
   @override
@@ -194,6 +218,18 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     Color? errorColor100,
     Color? errorColor50,
     Color? errorColor25,
+
+    // New Button properties
+    Color? primaryBtn,
+    Color? secondaryBtn,
+    Color? btnIcon2,
+    Color? btnIcon,
+    Color? btnText,
+    Color? filledText,
+
+    // New Text Color properties
+    Color? secondaryTitleColor,
+    Color? secondarySubTitleColor,
   }) {
     return PrayerTimeThemeColor(
       // Existing properties
@@ -259,6 +295,19 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       errorColor100: errorColor100 ?? this.errorColor100,
       errorColor50: errorColor50 ?? this.errorColor50,
       errorColor25: errorColor25 ?? this.errorColor25,
+
+      // New Button properties
+      primaryBtn: primaryBtn ?? this.primaryBtn,
+      secondaryBtn: secondaryBtn ?? this.secondaryBtn,
+      btnIcon2: btnIcon2 ?? this.btnIcon2,
+      btnIcon: btnIcon ?? this.btnIcon,
+      btnText: btnText ?? this.btnText,
+      filledText: filledText ?? this.filledText,
+
+      // New Text Color properties
+      secondaryTitleColor: secondaryTitleColor ?? this.secondaryTitleColor,
+      secondarySubTitleColor:
+          secondarySubTitleColor ?? this.secondarySubTitleColor,
     );
   }
 
@@ -333,6 +382,20 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
       errorColor100: Color.lerp(errorColor100, other.errorColor100, t)!,
       errorColor50: Color.lerp(errorColor50, other.errorColor50, t)!,
       errorColor25: Color.lerp(errorColor25, other.errorColor25, t)!,
+
+      // New Button properties
+      primaryBtn: Color.lerp(primaryBtn, other.primaryBtn, t)!,
+      secondaryBtn: Color.lerp(secondaryBtn, other.secondaryBtn, t)!,
+      btnIcon2: Color.lerp(btnIcon2, other.btnIcon2, t)!,
+      btnIcon: Color.lerp(btnIcon, other.btnIcon, t)!,
+      btnText: Color.lerp(btnText, other.btnText, t)!,
+      filledText: Color.lerp(filledText, other.filledText, t)!,
+
+      // New Text Color properties
+      secondaryTitleColor:
+          Color.lerp(secondaryTitleColor, other.secondaryTitleColor, t)!,
+      secondarySubTitleColor:
+          Color.lerp(secondarySubTitleColor, other.secondarySubTitleColor, t)!,
     );
   }
 
@@ -400,5 +463,17 @@ class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
     errorColor100: PrayerTimeAppColor.errorColor100,
     errorColor50: PrayerTimeAppColor.errorColor50,
     errorColor25: PrayerTimeAppColor.errorColor25,
+
+    // New Button properties
+    primaryBtn: PrayerTimeAppColor.primaryColor500,
+    secondaryBtn: PrayerTimeAppColor.primaryColor50,
+    btnIcon2: PrayerTimeAppColor.primaryColor500,
+    btnIcon: PrayerTimeAppColor.whiteColor,
+    btnText: PrayerTimeAppColor.primaryColor500,
+    filledText: PrayerTimeAppColor.whiteColor,
+
+    // New Text Color properties
+    secondaryTitleColor: PrayerTimeAppColor.whiteColor,
+    secondarySubTitleColor: PrayerTimeAppColor.blackColor600,
   );
 }

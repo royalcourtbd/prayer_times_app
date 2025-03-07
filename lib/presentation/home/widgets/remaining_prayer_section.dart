@@ -58,7 +58,7 @@ class RemainingPrayerSection extends StatelessWidget {
                   fontSize: tenPx,
                   color: context.color.subTitleColor,
                   fontWeight: FontWeight.normal,
-                  height: 1,
+                  height: .9,
                 ),
               ),
               Text(
@@ -68,7 +68,7 @@ class RemainingPrayerSection extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodyMedium!.copyWith(
                   fontSize: tenPx,
-                  // height: 1,
+                  height: .9,
                   color: context.color.subTitleColor,
                   fontWeight: FontWeight.normal,
                 ),
@@ -81,7 +81,7 @@ class RemainingPrayerSection extends StatelessWidget {
                 style: theme.textTheme.bodyMedium!.copyWith(
                   fontSize: nineteenPx,
                   fontWeight: FontWeight.bold,
-                  height: 1,
+                  height: .7,
                 ),
               ),
             ],

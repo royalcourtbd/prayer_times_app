@@ -34,7 +34,7 @@ class CircleIconWidget extends StatelessWidget {
         ),
         child: SvgImage(
           icon,
-          color: iconColor ?? context.color.primaryColor900,
+          color: iconColor ?? context.color.primaryColor,
         ),
       ),
     );
