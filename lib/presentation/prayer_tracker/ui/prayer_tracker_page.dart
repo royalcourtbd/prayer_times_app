@@ -7,6 +7,7 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/presentation/common/calendar_header_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar_title.dart';
+import 'package:qibla_and_prayer_times/presentation/common/remove_dialog.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_history_widget.dart';
@@ -64,40 +65,23 @@ class PrayerTrackerPage extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('সতর্কতা'),
-                              content: const Text(
-                                  'আপনি কি সত্যিই সকল প্রেয়ার ট্র্যাকিং ডাটা মুছে ফেলতে চান?'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: const Text('না'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    _presenter.clearAllPrayerTrackerData();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('হ্যাঁ'),
-                                ),
-                              ],
+                      InkWell(
+                          onTap: () async {
+                            await RemoveDialog.show(
+                                context: context,
+                                title: 'Delete',
+                                onRemove: () async {
+                                  _presenter.clearAllPrayerTrackerData();
+                                });
+                          },
+                          child: Text(
+                            'Clear',
+                            style: theme.textTheme.bodyMedium!.copyWith(
+                              fontSize: twelvePx,
+                              fontWeight: FontWeight.normal,
+                              color: context.color.subTitleColor,
                             ),
-                          );
-                        },
-                        icon: const Icon(Icons.delete_forever, size: 16),
-                        label: const Text('Clear'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: theme.colorScheme.error,
-                          foregroundColor: Colors.white,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-                          minimumSize: Size(60, 28),
-                        ),
-                      ),
+                          )),
                     ],
                   ),
                   gapH10,

@@ -68,13 +68,14 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     );
 
     uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
-    // if (newStatus == PrayerStatus.completed) {
-    //   addUserMessage("✅  ${type.displayName} prayer completed. Alhamdulillah!");
-    // } else {
-    //   addUserMessage('❌  ${type.displayName} prayer not completed.');
-    // }
+    if (newStatus == PrayerStatus.completed) {
+      addUserMessage("✅  ${type.displayName} prayer completed. Alhamdulillah!");
+    } else {
+      addUserMessage('❌  ${type.displayName} prayer not completed.');
+    }
 
     _savePrayerTrackerData();
+    // _loadPrayerTrackerData();
   }
 
   void initializePrayerTracker({required PrayerTimeEntity prayerTimeEntity}) {
@@ -331,7 +332,7 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     await parseDataFromEitherWithUserMessage(
       task: () => _clearAllPrayerTrackerDataUseCase.execute(),
       onDataLoaded: (result) {
-        addUserMessage('সকল প্রেয়ার ট্র্যাকিং ডাটা মুছে ফেলা হয়েছে');
+        addUserMessage('Remove All Prayer Tracking Data');
         resetState();
       },
     );

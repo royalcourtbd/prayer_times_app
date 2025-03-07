@@ -9,6 +9,7 @@ class CustomButton extends StatelessWidget {
     required this.title,
     required this.onPressed,
     this.isPrimary = true,
+    this.width,
     this.horizontalPadding,
     this.liftIconPath,
     this.rightIconPath,
@@ -21,6 +22,7 @@ class CustomButton extends StatelessWidget {
   final double? horizontalPadding;
   final String? liftIconPath;
   final String? rightIconPath;
+  final double? width;
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -32,7 +34,7 @@ class CustomButton extends StatelessWidget {
         child: Container(
           height: fiftyPx,
           alignment: Alignment.center,
-          width: double.infinity,
+          width: width ?? double.infinity,
           decoration: BoxDecoration(
             color: isPrimary ? theme.colorScheme.primary : Colors.transparent,
             border: isPrimary

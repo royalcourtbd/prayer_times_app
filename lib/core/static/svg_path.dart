@@ -14,6 +14,8 @@ class SvgPath {
   static const String icProfileFill = 'assets/svg/ic_profile_fill.svg';
   static const String icSettingsFill = 'assets/svg/ic_settings_fill.svg';
   static const String appLogo = 'assets/svg/app_logo.png';
+  static const String icDelete = 'assets/svg/ic_delete.svg';
+  static const String dicBG = 'assets/svg/dialog_bg.svg';
   static const String icNotificationOutline =
       'assets/svg/ic_notification_outline.svg';
   static const String icGpsOutline = 'assets/svg/ic_gps_outline.svg';
