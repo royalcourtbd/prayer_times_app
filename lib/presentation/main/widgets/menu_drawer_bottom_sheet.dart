@@ -7,11 +7,16 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/settings_grid_item.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/menu_drawer_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/main/widgets/drawer_top_widget.dart';
+import 'package:qibla_and_prayer_times/presentation/notification/ui/notification_page.dart';
+import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/support_us/ui/support_us_page.dart';
 
 class MenuDrawerBottomSheet extends StatelessWidget {
   MenuDrawerBottomSheet({super.key});
 
   final MenuDrawerPresenter menuDrawerPresenter = locate<MenuDrawerPresenter>();
+  late final SettingsPagePresenter _settingsPagePresenter =
+      locate<SettingsPagePresenter>();
 
   static Future<void> show({required BuildContext context}) async {
     final MenuDrawerBottomSheet menuDrawerBottomsheet = MenuDrawerBottomSheet();
@@ -84,42 +89,52 @@ class MenuDrawerBottomSheet extends StatelessWidget {
                               SettingsGridItem(
                                 icon: SvgPath.icNotificationFill,
                                 title: 'Notification',
-                                onTap: () {},
+                                onTap: () =>
+                                    context.navigatorPush(NotificationPage()),
                               ),
                               SettingsGridItem(
                                 icon: SvgPath.icInformation,
                                 title: 'Aboute',
-                                onTap: () {},
+                                onTap: () => showMessage(
+                                  message: 'Under Construction',
+                                ),
                               ),
                               SettingsGridItem(
                                 icon: SvgPath.icLovelyFill,
                                 title: 'Support Us',
-                                onTap: () {},
+                                onTap: () =>
+                                    context.navigatorPush(SupportUsPage()),
                               ),
                               SettingsGridItem(
                                 icon: SvgPath.icSmsEdit,
                                 title: 'Report Us',
-                                onTap: () {},
+                                onTap: () => showMessage(
+                                  message: 'Under Construction',
+                                ),
                               ),
                               SettingsGridItem(
                                 icon: SvgPath.icSecuritySafe,
                                 title: 'Privacy Policy',
-                                onTap: () {},
+                                onTap: () => showMessage(
+                                  message: 'Under Construction',
+                                ),
                               ),
                               SettingsGridItem(
                                 icon: SvgPath.icShare,
                                 title: 'Share This App',
-                                onTap: () {},
+                                onTap: _settingsPagePresenter.onShareAppTap,
                               ),
                               SettingsGridItem(
                                 icon: SvgPath.icLike,
                                 title: 'Thanks & Credit',
-                                onTap: () {},
+                                onTap: () => showMessage(
+                                  message: 'Under Construction',
+                                ),
                               ),
                               SettingsGridItem(
                                 icon: SvgPath.icStar,
                                 title: 'Rate this App',
-                                onTap: () {},
+                                onTap: _settingsPagePresenter.onRatingClicked,
                               ),
                             ],
                           ),
