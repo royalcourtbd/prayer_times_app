@@ -68,11 +68,11 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     );
 
     uiState.value = currentUiState.copyWith(prayerTrackers: trackers);
-    if (newStatus == PrayerStatus.completed) {
-      addUserMessage("✅  ${type.displayName} prayer completed. Alhamdulillah!");
-    } else {
-      addUserMessage('❌  ${type.displayName} prayer not completed.');
-    }
+    // if (newStatus == PrayerStatus.completed) {
+    //   addUserMessage("✅  ${type.displayName} prayer completed. Alhamdulillah!");
+    // } else {
+    //   addUserMessage('❌  ${type.displayName} prayer not completed.');
+    // }
 
     _savePrayerTrackerData();
     // _loadPrayerTrackerData();
