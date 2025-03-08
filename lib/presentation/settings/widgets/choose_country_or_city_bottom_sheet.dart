@@ -6,7 +6,7 @@ import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/country_entity.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_modal_sheet.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_text__input_field.dart';
+import 'package:qibla_and_prayer_times/presentation/common/custom_text_input_field.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
 
 class ChooseCountryOrCityBottomSheet extends StatelessWidget {
