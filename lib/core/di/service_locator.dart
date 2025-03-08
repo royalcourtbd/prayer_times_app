@@ -62,6 +62,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/search_countries_usecase.
 import 'package:qibla_and_prayer_times/domain/usecases/update_juristic_method_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/clear_all_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/contact_us/presenter/contact_us_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/event/pesenter/event_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/menu_drawer_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_preenter.dart';
@@ -197,7 +198,8 @@ class ServiceLocator {
             locate(),
             locate(),
           )))
-      ..registerLazySingleton(() => loadPresenter(MenuDrawerPresenter()));
+      ..registerLazySingleton(() => loadPresenter(MenuDrawerPresenter()))
+      ..registerLazySingleton(() => loadPresenter(EventPresenter()));
   }
 
   Future<void> _setUpUseCase() async {
