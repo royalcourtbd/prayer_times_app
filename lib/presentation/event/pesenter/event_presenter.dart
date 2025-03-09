@@ -8,44 +8,52 @@ class EventPresenter extends BasePresenter<EventUiState> {
   final Obs<EventUiState> uiState = Obs(EventUiState.empty());
   EventUiState get currentUiState => uiState.value;
 
+  final TextEditingController searchController = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
     processEvents();
+
+    // TextEditingController এ লিসেনার যোগ করি যাতে ইনপুট পরিবর্তন হলেও সার্চ কাজ করে
+    searchController.addListener(() {
+      if (currentUiState.searchQuery != searchController.text) {
+        updateSearchQuery(searchController.text);
+      }
+    });
   }
 
   @override
-  Future<void> toggleLoading({bool loading = true}) async {
-    uiState.value = currentUiState.copyWith(isLoading: loading);
+  void onClose() {
+    searchController.dispose();
+    super.onClose();
   }
 
-  @override
-  Future<void> addUserMessage(String message) async {
-    uiState.value = currentUiState.copyWith(userMessage: message);
-    showMessage(message: currentUiState.userMessage);
-  }
-
+  // সার্চ কুয়েরি আপডেট মেথড
   void updateSearchQuery(String query) {
-    uiState.value = currentUiState.copyWith(searchQuery: query);
-    processEvents();
-    update();
+    if (currentUiState.searchQuery != query) {
+      uiState.value = currentUiState.copyWith(searchQuery: query);
+      processEvents();
+    }
   }
 
+  // ইভেন্ট প্রসেসিং এবং গ্রুপিং মেথড
   void processEvents() {
     final filteredAndSortedEvents =
         _processEvents(eventList, currentUiState.searchQuery);
     final groupedEvents = _groupEventsByMonth(filteredAndSortedEvents);
     uiState.value = currentUiState.copyWith(groupedEvents: groupedEvents);
-    update();
   }
 
+  // ইভেন্ট ফিল্টারিং মেথড
   List<EventModel> _processEvents(List<EventModel> events, String query) {
     var filteredEvents = events;
     if (query.isNotEmpty) {
       filteredEvents = events
           .where((event) =>
               event.title.toLowerCase().contains(query.toLowerCase()) ||
-              event.description.toLowerCase().contains(query.toLowerCase()))
+              event.description.toLowerCase().contains(query.toLowerCase()) ||
+              event.holidayType.toLowerCase().contains(query.toLowerCase()))
           .toList();
     }
     filteredEvents.sort((a, b) => a.date.compareTo(b.date));
@@ -68,17 +76,21 @@ class EventPresenter extends BasePresenter<EventUiState> {
     return grouped;
   }
 
-  (Color, String) getHolidayTypeInfo(EventModel event) {
-    if (event.title.contains('Optional')) {
-      return (Colors.blue, 'Optional Holiday in Bangladesh');
-    } else if (event.title.contains('Cultural') ||
-        event.title.contains('Festival')) {
-      return (Colors.red, 'Cultural Festival in Bangladesh');
-    } else if (event.title.contains('National')) {
-      return (Colors.red, 'National Holiday in Bangladesh');
-    } else {
-      return (Colors.red, 'Holiday in Bangladesh');
-    }
+  // কন্ট্রোলার ক্লিয়ার করার মেথড
+  void clearSearchController() {
+    searchController.clear();
+    updateSearchQuery('');
+  }
+
+  @override
+  Future<void> toggleLoading({bool loading = true}) async {
+    uiState.value = currentUiState.copyWith(isLoading: loading);
+  }
+
+  @override
+  Future<void> addUserMessage(String message) async {
+    uiState.value = currentUiState.copyWith(userMessage: message);
+    showMessage(message: currentUiState.userMessage);
   }
 }
 

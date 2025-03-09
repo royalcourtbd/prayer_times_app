@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_builder.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar.dart';
@@ -8,55 +8,64 @@ import 'package:qibla_and_prayer_times/presentation/common/custom_text_input_fie
 import 'package:qibla_and_prayer_times/presentation/event/pesenter/event_presenter.dart';
 
 class HolidayPage extends StatelessWidget {
-  HolidayPage({super.key});
-  final EventPresenter evenPresenter = locate<EventPresenter>();
-  final TextEditingController searchController = TextEditingController();
+  const HolidayPage({super.key, required this.eventPresenter});
+  final EventPresenter eventPresenter;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: CustomAppBar(theme: theme, title: 'Govt Holiday\'s 2025'),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(sixteenPx),
-            child: CustomTextInputField(
-              theme: theme,
-              controller: searchController,
-              hintText: 'Search Holiday',
-              onChanged: (searchValue) =>
-                  evenPresenter.updateSearchQuery(searchValue),
+    return PresentableWidgetBuilder(
+        presenter: eventPresenter,
+        builder: () {
+          return PopScope(
+            canPop: true,
+            onPopInvokedWithResult: (didPop, result) {
+              eventPresenter.clearSearchController();
+            },
+            child: Scaffold(
+              appBar: CustomAppBar(theme: theme, title: 'Govt Holiday\'s 2025'),
+              body: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(sixteenPx),
+                    child: CustomTextInputField(
+                      theme: theme,
+                      controller: eventPresenter.searchController,
+                      hintText: 'Search Holiday',
+                      onChanged: eventPresenter.updateSearchQuery,
+                    ),
+                  ),
+                  Expanded(
+                    child: HolidayListView(
+                      groupedEvents:
+                          eventPresenter.currentUiState.groupedEvents,
+                      theme: theme,
+                      eventPresenter: eventPresenter,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: HolidayListView(
-              presenter: evenPresenter,
-              theme: theme,
-            ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }
 
 class HolidayListView extends StatelessWidget {
   const HolidayListView({
     super.key,
-    required this.presenter,
+    required this.groupedEvents,
     required this.theme,
+    required this.eventPresenter,
   });
 
-  final EventPresenter presenter;
+  final Map<String, List<EventModel>> groupedEvents;
   final ThemeData theme;
+  final EventPresenter eventPresenter;
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, List<EventModel>> groupedEvents =
-        presenter.currentUiState.groupedEvents;
-
     if (groupedEvents.isEmpty) {
       return const Center(
         child: Text('No Event\'s Found'),
@@ -73,7 +82,7 @@ class HolidayListView extends StatelessWidget {
           month: monthEntry.key,
           events: monthEntry.value,
           theme: theme,
-          eventPresenter: presenter,
+          eventPresenter: eventPresenter,
         );
       },
     );

@@ -37,6 +37,7 @@ class CustomTextInputField extends StatelessWidget {
         TextField(
           controller: controller,
           onChanged: onChanged,
+          onTapUpOutside: (_) => FocusScope.of(context).unfocus(),
           style: theme.textTheme.bodyMedium!.copyWith(
             fontSize: fourteenPx,
             fontWeight: FontWeight.w400,
