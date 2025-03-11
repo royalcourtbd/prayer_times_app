@@ -49,29 +49,29 @@ Swift Code: ${bankPayment.swiftCode}
       accountNumber: '1234567890',
       accountHolderName: 'John Doe',
       branchName: 'Dhaka',
-      routingNumber: '1234567890',
-      swiftCode: '1234567890',
+      routingNumber: '',
+      swiftCode: '',
       cardColor: Colors.blue,
     ),
   ];
 
   final List<MobilePaymentEntity> mobilePayments = [
     const MobilePaymentEntity(
-      bankName: 'bKash',
+      bankName: '',
       iconPath: SvgPath.bkash,
-      mobileNumber: '+8801749247855',
+      mobileNumber: '',
       cardColor: Colors.blue,
     ),
     const MobilePaymentEntity(
       bankName: 'Rocket',
       iconPath: SvgPath.rocket,
-      mobileNumber: '+88016422943211',
+      mobileNumber: '',
       cardColor: Colors.red,
     ),
     const MobilePaymentEntity(
       bankName: 'Nagad',
       iconPath: SvgPath.nagad,
-      mobileNumber: '+8801842081997',
+      mobileNumber: '',
       cardColor: Colors.green,
     ),
   ];
