@@ -45,7 +45,6 @@ import 'package:qibla_and_prayer_times/domain/repositories/user_data_repository.
 import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
-
 import 'package:qibla_and_prayer_times/domain/usecases/determine_first_run_use_case.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
@@ -69,9 +68,7 @@ import 'package:qibla_and_prayer_times/presentation/notification/presenter/notif
 import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/event/pesenter/ramadan_calendar_presenter.dart';
-
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/profile/presenter/profile_page_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support_us_presenter.dart';
 
@@ -173,7 +170,6 @@ class ServiceLocator {
       ..registerFactory(() => loadPresenter(MainPresenter(locate())))
       ..registerLazySingleton(() => loadPresenter(PrayerTrackerPresenter(
           locate(), locate(), locate(), locate(), locate(), locate())))
-      ..registerLazySingleton(() => loadPresenter(ProfilePagePresenter()))
       ..registerLazySingleton(() => loadPresenter(SettingsPagePresenter(
             locate(),
             locate(),

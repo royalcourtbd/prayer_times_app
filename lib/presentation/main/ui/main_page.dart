@@ -9,7 +9,6 @@ import 'package:qibla_and_prayer_times/presentation/main/widgets/double_tap_back
 import 'package:qibla_and_prayer_times/presentation/main/widgets/main_navigation_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/home/ui/home_page.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/ui/prayer_tracker_page.dart';
-import 'package:qibla_and_prayer_times/presentation/profile/ui/profile_page.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/ui/settings_page.dart';
 
 class MainPage extends StatelessWidget {
@@ -21,7 +20,8 @@ class MainPage extends StatelessWidget {
     HomePage(),
     PrayerTrackerPage(),
     EventPage(),
-    ProfilePage(),
+    EventPage(),
+
     SettingsPage(),
   ];
 
