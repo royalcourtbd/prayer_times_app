@@ -51,29 +51,18 @@ class RemainingPrayerSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'Remaining',
-                maxLines: 1,
+                'Remaining\n${homePresenter.getRemainingTimeText()}',
+                // maxLines: 1,
+                textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodyMedium!.copyWith(
                   fontSize: tenPx,
                   color: context.color.subTitleColor,
                   fontWeight: FontWeight.normal,
-                  height: .9,
+                  height: 1,
                 ),
               ),
-              Text(
-                homePresenter
-                    .getRemainingTimeText(), // দ্বিতীয় লাইনে বাকি টেক্সট
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodyMedium!.copyWith(
-                  fontSize: tenPx,
-                  height: .9,
-                  color: context.color.subTitleColor,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              gapH5,
+              gapH10,
               Text(
                 homePresenter.getFormattedRemainingTime(),
                 maxLines: 1,
