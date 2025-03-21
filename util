@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+MAGENTA='\033[0;35m'  # Added for spinner
+CHECKMARK='\033[32m✓\033[0m'  # Added for success checkmark
+CROSS='\033[31m𐄂\033[0m'  # Added for failure cross
+
 # Function: show_loading
 # Description: Displays a loading spinner with a custom message while a process is running
 # Parameters:
@@ -15,22 +24,23 @@ function show_loading() {
 
   # Continue spinning while the process is running
   while ps -p "$process_id" >/dev/null; do
-    printf "\b\033[35m%s\033[0m" "${braille_spinner_list:spinner_index:1}"
+    printf "\b${MAGENTA}%s${NC}" "${braille_spinner_list:spinner_index:1}"
     spinner_index=$(( (spinner_index + 1) % ${#braille_spinner_list} ))
     sleep 0.025
   done
 
   # Display success or failure icon based on the process exit status
-  if wait $process_id; then
-    echo -e "\b\033[32m✓\033[0m "
+  if wait $process_id; then  # Changed: Using wait $process_id instead of [ $? -eq 0 ]
+    echo -e "\b${CHECKMARK} "
   else
-    echo -e "\b\033[31m𐄂\033[0m "
+    echo -e "\b${CROSS} "
   fi
 }
 
 # Main script logic
-if [ "$1" == "build" ]; then
-  echo -e "Building APK...\n"
+if [ "$1" == "apk" ]; then
+  echo -e "${YELLOW}Building APK (Full Process)...${NC}\n"
+  
   (flutter clean >/dev/null 2>&1) &
   PID=$!
   show_loading "Cleaning project...                                   " $PID
@@ -39,7 +49,7 @@ if [ "$1" == "build" ]; then
   PID=$!
   show_loading "Getting dependencies...                              " $PID
 
-  (flutter pub run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
+  (dart run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
   PID=$!
   show_loading "Generating build files...                            " $PID
 
@@ -47,6 +57,8 @@ if [ "$1" == "build" ]; then
   PID=$!
   show_loading "Building APK...                                      " $PID
 
+  echo -e "\n${GREEN}✓ APK built successfully!${NC}"
+  
   # Open the APK directory
   if [[ "$OSTYPE" == "darwin"* ]]; then
     open build/app/outputs/flutter-apk/
@@ -58,39 +70,9 @@ if [ "$1" == "build" ]; then
     echo "Cannot open directory automatically. Please check: build/app/outputs/flutter-apk/"
   fi
 
-elif [ "$1" == "db" ]; then
-  echo -e "Executing build_runner...\n"
-  (flutter pub run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Running build_runner                                  " $PID
-
-elif [ "$1" == "cleanup" ]; then
-  echo -e "Cleaning up project...\n"
-  (flutter clean >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Cleaning project                                      " $PID
-
-  (flutter pub get >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Getting dependencies                                  " $PID
-
-elif [ "$1" == "setup" ]; then
-  echo -e "Setting up project...\n"
-  (flutter pub get >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Getting dependencies                                  " $PID
-
-  (flutter pub run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
-  PID=$!
-  show_loading "Generating build files                                " $PID
-
-elif [ "$1" == "unused" ]; then
-  echo -e "Finding unused files...\n"
-  flutter analyze
-
 elif [ "$1" == "aab" ]; then
-  echo -e "Building AAB...\n"
-
+  echo -e "${YELLOW}Building AAB...${NC}\n"
+  
   (flutter clean >/dev/null 2>&1) &
   PID=$!
   show_loading "Cleaning project...                                   " $PID
@@ -99,15 +81,17 @@ elif [ "$1" == "aab" ]; then
   PID=$!
   show_loading "Getting dependencies...                              " $PID
 
-  (flutter pub run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
+  (dart run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
   PID=$!
   show_loading "Generating build files...                            " $PID
 
-  (flutter build appbundle --release >/dev/null 2>&1) &
+  (flutter build appbundle --release --obfuscate --split-debug-info=./ >/dev/null 2>&1) &
   PID=$!
-  show_loading "Building AAB file...                                 " $PID
-
-  # Open the AAB directory
+  show_loading "Building AAB...                                      " $PID
+  
+  echo -e "\n${GREEN}✓ AAB built successfully!${NC}"
+  
+  # Open the directory containing the AAB
   if [[ "$OSTYPE" == "darwin"* ]]; then
     open build/app/outputs/bundle/release/
   elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -118,11 +102,114 @@ elif [ "$1" == "aab" ]; then
     echo "Cannot open directory automatically. Please check: build/app/outputs/bundle/release/"
   fi
 
+elif [ "$1" == "lang" ]; then
+  # Run flutter gen-l10n to generate localization files
+  (flutter gen-l10n >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Generating localizations                              " $PID
+  
+  echo -e "\n${CHECKMARK}  Localizations generated successfully."
+
+elif [ "$1" == "db" ]; then
+  echo -e "${YELLOW}Executing build_runner...${NC}  \n"
+  # Run build_runner to generate Dart code
+  (dart run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Running build_runner     " $PID
+
+elif [ "$1" == "setup" ]; then
+  echo -e "${YELLOW}Performing full setup...${NC}  \n"
+
+  (flutter clean >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Cleaning project...                                  " $PID
+
+  (flutter pub upgrade >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Upgrading dependencies...                            " $PID
+
+  (dart run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Running build_runner...                              " $PID
+
+  (flutter gen-l10n >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Generating localizations...                          " $PID
+
+  (flutter pub upgrade >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Refreshing dependencies...                           " $PID
+
+  (flutter analyze >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Analyzing code...                                    " $PID
+
+  (dart format . >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Formatting code...                                   " $PID
+
+  echo -e "\n ${GREEN}✓  Full setup completed successfully.  ${NC}"
+
+elif [ "$1" == "cache-repair" ]; then
+  echo -e "${YELLOW}Repairing pub cache...${NC}\n"
+  
+  (flutter pub cache repair >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Repairing pub cache...                               " $PID
+  
+  echo -e "\n ${GREEN}✓  Pub cache repaired successfully.  ${NC}"
+
+elif [ "$1" == "cleanup" ]; then
+  echo -e "${YELLOW}Cleaning up project...${NC}\n"
+  
+  (flutter clean >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Cleaning project...                                   " $PID
+
+  (flutter pub get >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Getting dependencies...                              " $PID
+  
+  echo -e "\n${GREEN}✓ Project cleaned successfully!${NC}"
+
 else
-  echo "Invalid argument: $1"
-  echo "Usage: ./script.sh [build|db|cleanup|setup|unused|aab]"
+  echo -e "${YELLOW}Usage: $0 [command]${NC}"
+  echo -e "\nAvailable commands:"
+  echo -e "  apk          Build release APK (Full Process)"
+  echo -e "  aab          Build release AAB"
+  echo -e "  lang         Generate localization files"
+  echo -e "  db           Run build_runner"
+  echo -e "  setup        Perform full project setup"
+  echo -e "  cache-repair Repair pub cache"
+  echo -e "  cleanup      Clean project and get dependencies"
   exit 1
 fi
 
 
-#Flutter এর সব প্যাকেজকে forcefully update করার জন্য
+#//comment//
+# আউটপুট লুকানো এবং দেখার জন্য কমান্ড কীভাবে পরিবর্তন করবেন
+#
+# 1. আউটপুট লুকানোর জন্য:
+#    - প্রতিটি কমান্ডের শেষে `>/dev/null 2>&1` যোগ করতে হবে।
+#    - এটি করলে কমান্ডের আউটপুট টার্মিনালে দেখাবে না, শুধু লোডিং স্পিনার দেখাবে।
+#    - উদাহরণ:
+#      (flutter clean >/dev/null 2>&1) &
+#      PID=$!
+#      show_loading "Cleaning project...                                   " $PID
+#
+# 2. আউটপুট দেখার জন্য:
+#    - প্রতিটি কমান্ড থেকে `>/dev/null 2>&1` সরিয়ে ফেলতে হবে।
+#    - এটি করলে কমান্ডের পুরো আউটপুট টার্মিনালে দেখাবে, যেমন কী হচ্ছে, কোন ফাইল তৈরি হচ্ছে ইত্যাদি।
+#    - উদাহরণ:
+#      (flutter clean) &
+#      PID=$!
+#      show_loading "Cleaning project...                                   " $PID
+#
+# কীভাবে চালাবেন:
+# - আউটপুট লুকানো সহ: ফাইলটি সেভ করুন (যেমন, build.sh), তারপর:
+#   chmod +x build.sh
+#   ./build.sh setup
+# - আউটপুট দেখার জন্য: ফাইলটি সেভ করুন (যেমন, build_with_output.sh), তারপর:
+#   chmod +x build_with_output.sh
+#   ./build_with_output.sh setup
+#//comment//
