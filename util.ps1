@@ -1,119 +1,184 @@
+# Colors for output
+$RED = "`e[0;31m"
+$GREEN = "`e[0;32m"
+$YELLOW = "`e[1;33m"
+$NC = "`e[0m" # No Color
+$MAGENTA = "`e[0;35m" # Added for spinner
+$CHECKMARK = "`e[32m✓`e[0m" # Added for success checkmark
+$CROSS = "`e[31m𐄂`e[0m" # Added for failure cross
+
+# Function: show_loading
+# Description: Displays a loading spinner with a custom message while a process is running
+# Parameters:
+#   $1: Description message to display
+#   $2: Process ID to monitor
 function Show-Loading {
     param (
         [string]$description,
-        [int]$processId
+        [int]$process_id
     )
-    $spinnerIndex = 0
-    $brailleSpinnerList = '⡿⣟⣯⣷⣾⣽⣻⢿'
+
+    $spinner_index = 0
+    $braille_spinner_list = '⡿⣟⣯⣷⣾⣽⣻⢿'
+
     Write-Host -NoNewline $description
-    while (Get-Process -Id $processId -ErrorAction SilentlyContinue) {
-        Write-Host -NoNewline "`b$([char]27)[35m$($brailleSpinnerList[$spinnerIndex])$([char]27)[0m"
-        $spinnerIndex = ($spinnerIndex + 1) % $brailleSpinnerList.Length
+
+    # Continue spinning while the process is running
+    while (Get-Process -Id $process_id -ErrorAction SilentlyContinue) {
+        Write-Host -NoNewline "`b$MAGENTA$($braille_spinner_list[$spinner_index])$NC"
+        $spinner_index = ($spinner_index + 1) % $braille_spinner_list.Length
         Start-Sleep -Milliseconds 25
     }
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "`b$([char]27)[32m✓$([char]27)[0m "
-    }
-    else {
-        Write-Host "`b$([char]27)[31m𐄂$([char]27)[0m "
+
+    # Display success or failure icon based on the process exit status
+    $process = Get-Process -Id $process_id -ErrorAction SilentlyContinue
+    if ($process.ExitCode -eq 0) {
+        Write-Host -NoNewline "`b$CHECKMARK "
+    } else {
+        Write-Host -NoNewline "`b$CROSS "
     }
 }
 
+# Main script logic
 switch ($args[0]) {
-    "build" {
-        Write-Host "Building APK...`n"
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "clean" -PassThru | ForEach-Object {
-            Show-Loading "Cleaning project...                                    " $_.Id
-        }
-       
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "pub", "get" -PassThru | ForEach-Object {
-            Show-Loading "Getting dependencies...                                " $_.Id
-        }
+    "apk" {
+        Write-Host "$YELLOW Building APK (Full Process)...$NC`n"
 
-        start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "pub", "run", "build_runner", "build", "--delete-conflicting-outputs" -PassThru | ForEach-Object {
-            Show-Loading "Generating build files...                                    " $_.Id
-        }
+        $process = Start-Process -FilePath "flutter" -ArgumentList "clean" -NoNewWindow -PassThru
+        Show-Loading "Cleaning project...                                   " $process.Id
 
-       
-    
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "build", "apk", "--release", "--obfuscate", "--target-platform", "android-arm64", "--split-debug-info=./" -PassThru | ForEach-Object {
-            Show-Loading "Building APK...                                        " $_.Id
-        }
-        Start-Process -FilePath "explorer.exe" -ArgumentList "build\app\outputs\flutter-apk\"
+        $process = Start-Process -FilePath "flutter" -ArgumentList "pub get" -NoNewWindow -PassThru
+        Show-Loading "Getting dependencies...                              " $process.Id
+
+        $process = Start-Process -FilePath "dart" -ArgumentList "run build_runner build --delete-conflicting-outputs" -NoNewWindow -PassThru
+        Show-Loading "Generating build files...                            " $process.Id
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "build apk --release --obfuscate --target-platform android-arm64 --split-debug-info=./" -NoNewWindow -PassThru
+        Show-Loading "Building APK...                                      " $process.Id
+
+        Write-Host "`n$GREEN✓ APK built successfully!$NC"
+
+        # Open the APK directory
+        Start-Process "explorer.exe" "build\app\outputs\flutter-apk"
     }
 
-    
-    "build-aab" {
-        Write-Host "Building AAB...`n"
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "clean" -PassThru | ForEach-Object {
-            Show-Loading "Cleaning project...                                      " $_.Id
-        }
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "pub", "get" -PassThru | ForEach-Object {
-            Show-Loading "Getting dependencies...                                  " $_.Id
-        }
-        start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "pub", "run", "build_runner", "build", "--delete-conflicting-outputs" -PassThru | ForEach-Object {
-            Show-Loading "Generating build files...                                    " $_.Id
-        }
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "build", "appbundle", "--release" -PassThru | ForEach-Object {
-            Show-Loading "Building AAB...                                          " $_.Id
-        }
-        Start-Process -FilePath "explorer.exe" -ArgumentList "build\app\outputs\bundle\release\"
+    "aab" {
+        Write-Host "$YELLOW Building AAB...$NC`n"
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "clean" -NoNewWindow -PassThru
+        Show-Loading "Cleaning project...                                   " $process.Id
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "pub get" -NoNewWindow -PassThru
+        Show-Loading "Getting dependencies...                              " $process.Id
+
+        $process = Start-Process -FilePath "dart" -ArgumentList "run build_runner build --delete-conflicting-outputs" -NoNewWindow -PassThru
+        Show-Loading "Generating build files...                            " $process.Id
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "build appbundle --release --obfuscate --split-debug-info=./" -NoNewWindow -PassThru
+        Show-Loading "Building AAB...                                      " $process.Id
+
+        Write-Host "`n$GREEN✓ AAB built successfully!$NC"
+
+        # Open the directory containing the AAB
+        Start-Process "explorer.exe" "build\app\outputs\bundle\release"
     }
-    "cleanup" {
-        Write-Host "Cleaning up project...     `n"
-        Start-Process -NoNewWindow -FilePath "dart" -ArgumentList "fix", "--apply" -PassThru | ForEach-Object {
-            Show-Loading "Fixing code                                           " $_.Id
-        }
-        Start-Process -NoNewWindow -FilePath "dart" -ArgumentList "format", "--fix", "." -PassThru | ForEach-Object {
-            Show-Loading "Following dart guidelines                             " $_.Id
-        }
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "pub", "run", "import_path_converter:main" -PassThru | ForEach-Object {
-            Show-Loading "Converting import paths from relative to absolute     " $_.Id
-        }
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "pub", "upgrade", "--major-versions" -PassThru | ForEach-Object {
-            Show-Loading "Upgrading the dependencies                            " $_.Id
-        }
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "pub", "upgrade" -PassThru | ForEach-Object {
-            Show-Loading "Upgrading the dependencies                            " $_.Id
-        }
-        Write-Host "`n$([char]27)[32m✓  All cleaning tasks finished.  $([char]27)[0m"
+
+    "lang" {
+        # Run flutter gen-l10n to generate localization files
+        $process = Start-Process -FilePath "flutter" -ArgumentList "gen-l10n" -NoNewWindow -PassThru
+        Show-Loading "Generating localizations                              " $process.Id
+
+        Write-Host "`n$CHECKMARK  Localizations generated successfully."
     }
+
+    "db" {
+        Write-Host "$YELLOW Executing build_runner...$NC  `n"
+        # Run build_runner to generate Dart code
+        $process = Start-Process -FilePath "dart" -ArgumentList "run build_runner build --delete-conflicting-outputs" -NoNewWindow -PassThru
+        Show-Loading "Running build_runner     " $process.Id
+    }
+
     "setup" {
-        Write-Host "Setting up project...  `n"
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "pub", "get" -PassThru | ForEach-Object {
-            Show-Loading "Getting dependencies     " $_.Id
-        }
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "pub", "run", "build_runner", "build", "--delete-conflicting-outputs" -PassThru | ForEach-Object {
-            Show-Loading "Generating build files     " $_.Id
-        }
-        Start-Process -NoNewWindow -FilePath "flutter" -ArgumentList "pub", "run", "flutter_native_splash:create" -PassThru | ForEach-Object {
-            Show-Loading "Generating splash screen     " $_.Id
-        }
+        Write-Host "$YELLOW Performing full setup...$NC  `n"
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "clean" -NoNewWindow -PassThru
+        Show-Loading "Cleaning project...                                  " $process.Id
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "pub upgrade" -NoNewWindow -PassThru
+        Show-Loading "Upgrading dependencies...                            " $process.Id
+
+        $process = Start-Process -FilePath "dart" -ArgumentList "run build_runner build --delete-conflicting-outputs" -NoNewWindow -PassThru
+        Show-Loading "Running build_runner...                              " $process.Id
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "gen-l10n" -NoNewWindow -PassThru
+        Show-Loading "Generating localizations...                          " $process.Id
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "pub upgrade" -NoNewWindow -PassThru
+        Show-Loading "Refreshing dependencies...                           " $process.Id
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "analyze" -NoNewWindow -PassThru
+        Show-Loading "Analyzing code...                                    " $process.Id
+
+        $process = Start-Process -FilePath "dart" -ArgumentList "format ." -NoNewWindow -PassThru
+        Show-Loading "Formatting code...                                   " $process.Id
+
+        Write-Host "`n $GREEN✓  Full setup completed successfully.  $NC"
     }
-    "unused" {
-        Write-Host "Analyzing project for unused code...`n"
-        flutter analyze
-        Write-Host "`nShowing suggested fixes...`n"
-        dart fix --dry-run
+
+    "cache-repair" {
+        Write-Host "$YELLOW Repairing pub cache...$NC`n"
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "pub cache repair" -NoNewWindow -PassThru
+        Show-Loading "Repairing pub cache...                               " $process.Id
+
+        Write-Host "`n $GREEN✓  Pub cache repaired successfully.  $NC"
     }
+
+    "cleanup" {
+        Write-Host "$YELLOW Cleaning up project...$NC`n"
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "clean" -NoNewWindow -PassThru
+        Show-Loading "Cleaning project...                                   " $process.Id
+
+        $process = Start-Process -FilePath "flutter" -ArgumentList "pub get" -NoNewWindow -PassThru
+        Show-Loading "Getting dependencies...                              " $process.Id
+
+        Write-Host "`n$GREEN✓ Project cleaned successfully!$NC"
+    }
+
     default {
-        Write-Host "Invalid argument: $($args[0])"
-        Write-Host "Usage: .\script.ps1 [build|cleanup|setup|unused]"
+        Write-Host "$YELLOW Usage: $PSCommandPath [command]$NC"
+        Write-Host "`nAvailable commands:"
+        Write-Host "  apk          Build release APK (Full Process)"
+        Write-Host "  aab          Build release AAB"
+        Write-Host "  lang         Generate localization files"
+        Write-Host "  db           Run build_runner"
+        Write-Host "  setup        Perform full project setup"
+        Write-Host "  cache-repair Repair pub cache"
+        Write-Host "  cleanup      Clean project and get dependencies"
         exit 1
     }
-
-
-    <# 
-    এই স্ক্রিপ্টটি ব্যবহার করার জন্য:
-
-    এটিকে একটি ফাইলে সেভ করুন, যেমন util.ps1।
-    PowerShell খুলুন।
-    স্ক্রিপ্টটি যেখানে সেভ করেছেন সেই ডিরেক্টরিতে নেভিগেট করুন।
-    স্ক্রিপ্টটি চালানোর জন্য নিম্নলিখিত কমান্ড ব্যবহার করুন:
-    .\util.ps1 [build|cleanup|setup|unused]
-
-    যেমন: .\util.ps1 build
-
-    
-    #>
 }
+
+<#
+আউটপুট লুকানো এবং দেখার জন্য কমান্ড কীভাবে পরিবর্তন করবেন
+
+1. আউটপুট লুকানোর জন্য:
+   - Start-Process এর সাথে -RedirectStandardOutput "NUL" -RedirectStandardError "NUL" যোগ করতে হবে।
+   - এটি করলে কমান্ডের আউটপুট টার্মিনালে দেখাবে না, শুধু লোডিং স্পিনার দেখাবে।
+   - উদাহরণ:
+     $process = Start-Process -FilePath "flutter" -ArgumentList "clean" -NoNewWindow -PassThru -RedirectStandardOutput "NUL" -RedirectStandardError "NUL"
+     Show-Loading "Cleaning project...                                   " $process.Id
+
+2. আউটপুট দেখার জন্য:
+   - -RedirectStandardOutput "NUL" -RedirectStandardError "NUL" সরিয়ে ফেলতে হবে।
+   - এটি করলে কমান্ডের পুরো আউটপুট টার্মিনালে দেখাবে, যেমন কী হচ্ছে, কোন ফাইল তৈরি হচ্ছে ইত্যাদি।
+   - উদাহরণ:
+     $process = Start-Process -FilePath "flutter" -ArgumentList "clean" -NoNewWindow -PassThru
+     Show-Loading "Cleaning project...                                   " $process.Id
+
+কীভাবে চালাবেন:
+- ফাইলটি সেভ করুন (যেমন, build.ps1), তারপর:
+  PowerShell খুলুন এবং নিচের কমান্ড চালান:
+  .\build.ps1 setup
+#>
