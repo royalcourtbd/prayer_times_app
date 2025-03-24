@@ -26,19 +26,20 @@ class ServiceSetup implements SetupModule {
   @override
   Future<void> setup() async {
     log('init service setup');
+    await _setUpFirebaseServices();
     _serviceLocator
       ..registerLazySingleton<ErrorMessageHandler>(
           () => ErrorMessageHandlerImpl())
       ..registerLazySingleton<WaqtCalculationService>(
           () => WaqtCalculationServiceImpl())
       ..registerLazySingleton(() => TimeService())
-      ..registerLazySingleton(() => BackendAsAService())
+      ..registerLazySingleton(BackendAsAService.new)
       ..registerLazySingleton(() => PrayerDatabase())
       ..registerLazySingleton(() => LocationService())
       ..registerLazySingleton(() => InAppReview.instance)
       ..registerLazySingleton(() => LocalCacheService());
     await LocalCacheService.setUp();
-    await _setUpFirebaseServices();
+
     await _setUpAudioService();
   }
 
