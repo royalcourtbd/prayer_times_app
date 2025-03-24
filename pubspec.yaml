@@ -43,7 +43,6 @@ dependencies:
   get: ^4.6.6
   network_info_plus: ^6.1.0
   get_it: ^8.0.2
-  connectivity_plus: ^6.1.0
   intl: ^0.20.2
   talker_logger: ^4.4.1
   equatable: ^2.0.5
@@ -64,7 +63,6 @@ dependencies:
   geocoding: ^3.0.0
   http: ^1.2.2
   logger: ^2.5.0
-  isolate_helper: ^0.2.0
   isolates_helper: ^0.5.2
   hive: ^2.2.3
   firebase_core: ^3.11.0
@@ -77,6 +75,7 @@ dependencies:
   in_app_review: ^2.0.10
   flutter_html: ^3.0.0-beta.2
   arc_progress_bar_new: ^1.0.4
+  device_info_plus: ^11.3.3
 
 dev_dependencies:
   flutter_test:
