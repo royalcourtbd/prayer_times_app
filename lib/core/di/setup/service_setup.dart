@@ -28,8 +28,7 @@ class ServiceSetup implements SetupModule {
     log('init service setup');
     await _setUpFirebaseServices();
     _serviceLocator
-      ..registerLazySingleton<ErrorMessageHandler>(
-          () => ErrorMessageHandlerImpl())
+      ..registerLazySingleton<ErrorMessageHandler>(ErrorMessageHandlerImpl.new)
       ..registerLazySingleton<WaqtCalculationService>(
           () => WaqtCalculationServiceImpl())
       ..registerLazySingleton(() => TimeService())
@@ -37,7 +36,7 @@ class ServiceSetup implements SetupModule {
       ..registerLazySingleton(() => PrayerDatabase())
       ..registerLazySingleton(() => LocationService())
       ..registerLazySingleton(() => InAppReview.instance)
-      ..registerLazySingleton(() => LocalCacheService());
+      ..registerLazySingleton(LocalCacheService.new);
     await LocalCacheService.setUp();
 
     await _setUpAudioService();
