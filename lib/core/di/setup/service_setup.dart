@@ -10,6 +10,7 @@ import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
 import 'package:qibla_and_prayer_times/data/services/backend_as_a_service.dart';
 import 'package:qibla_and_prayer_times/data/services/database/prayer_database.dart';
 import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.dart';
+import 'package:qibla_and_prayer_times/data/services/get_server_key.dart';
 import 'package:qibla_and_prayer_times/data/services/local_cache_service.dart';
 import 'package:qibla_and_prayer_times/data/services/location_service.dart';
 import 'package:qibla_and_prayer_times/data/services/waqt_calculation_service_impl.dart';
@@ -36,6 +37,7 @@ class ServiceSetup implements SetupModule {
       ..registerLazySingleton(() => PrayerDatabase())
       ..registerLazySingleton(() => LocationService())
       ..registerLazySingleton(() => InAppReview.instance)
+      ..registerLazySingleton(() => GetServerKey())
       ..registerLazySingleton(LocalCacheService.new);
     await LocalCacheService.setUp();
 
@@ -49,6 +51,7 @@ class ServiceSetup implements SetupModule {
           options: DefaultFirebaseOptions.currentPlatform,
         );
       });
+
       if (firebaseApp == null) return;
       if (kDebugMode) return;
 
