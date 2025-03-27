@@ -78,6 +78,7 @@ dependencies:
   device_info_plus: ^11.3.3
   awesome_notifications: ^0.10.1
   googleapis_auth: ^1.6.0
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
