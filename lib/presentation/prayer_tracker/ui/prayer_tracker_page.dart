@@ -44,9 +44,7 @@ class PrayerTrackerPage extends StatelessWidget {
                     onPreviousDate: _presenter.onPreviousDate,
                     onNextDate: _presenter.onNextDate,
                     isEventCalendar: false,
-                    onTap: () {
-                      print('tapped');
-                    },
+                    onTap: () {},
                   ),
                   gapH16,
                   PrayerTrackerWidget(

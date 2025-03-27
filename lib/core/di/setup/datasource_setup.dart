@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get_it/get_it.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/di/setup/setup_module.dart';
@@ -15,7 +13,6 @@ class DatasourceSetup implements SetupModule {
 
   @override
   Future<void> setup() async {
-    log('init datasource setup');
     _serviceLocator
       ..registerLazySingleton<PrayerTimeDataSource>(
           () => PrayerTimeDataSourceImpl(locate()))

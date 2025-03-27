@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -26,7 +24,6 @@ class ServiceSetup implements SetupModule {
 
   @override
   Future<void> setup() async {
-    log('init service setup');
     await _setUpFirebaseServices();
     _serviceLocator
       ..registerLazySingleton<ErrorMessageHandler>(ErrorMessageHandlerImpl.new)

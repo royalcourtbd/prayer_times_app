@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:googleapis_auth/auth_io.dart';
-import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
 
 class GetServerKey {
@@ -26,7 +25,6 @@ class GetServerKey {
       );
 
       final String token = client.credentials.accessToken.data;
-      logDebug(token);
 
       return token;
     });

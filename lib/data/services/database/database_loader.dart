@@ -11,7 +11,6 @@ const String _dbName = "prayer_tracker.db";
 Future<void> loadEnv() async {
   try {
     await dotenv.load(fileName: '.env');
-    logDebugStatic('Env file loaded successfully', 'DatabaseLoader');
   } catch (e) {
     logErrorStatic('Error loading .env file: $e', 'DatabaseLoader');
     throw Exception('Error loading .env file: $e');

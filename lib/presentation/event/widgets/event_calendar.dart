@@ -34,9 +34,7 @@ class EventCalendar extends StatelessWidget {
             onPreviousDate: presenter.onPreviousDate,
             onNextDate: presenter.onNextDate,
             isEventCalendar: true,
-            onTap: () {
-              print('tapped');
-            },
+            onTap: () {},
           ),
         ),
         gapH20,
