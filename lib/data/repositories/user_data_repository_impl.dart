@@ -34,7 +34,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
   Future<Either<String, AppUpdateEntity>> getAppUpdateInfo() async {
     try {
       final Map<String, dynamic> result =
-          await _backendService.getAppUpdateInfoStream().first;
+          await _backendService.getAppUpdateInfo();
       return right(AppUpdateModel.fromJson(result));
     } catch (e) {
       return left(e.toString());

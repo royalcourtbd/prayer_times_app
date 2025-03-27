@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
 
 /// By separating the Firebase code into its own class, we can make it easier to
 /// replace Firebase with another backend-as-a-service provider in the future.
@@ -27,7 +29,7 @@ class BackendAsAService {
   void _initAnalytics() {
     _analytics
         .setAnalyticsCollectionEnabled(true)
-        .then((_) => _analytics.logEvent(name: 'app_open'));
+        .then((_) => _analytics.logAppOpen());
   }
 
   Future<void> logEvent(
@@ -37,24 +39,36 @@ class BackendAsAService {
 
   late final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
   late final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+  late final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+
+  static const String noticeCollection = 'notice';
+  static const String noticeDoc = 'notice-bn';
+  static const String appUpdateDoc = 'app-update';
+  static const String deviceTokensCollection = 'device_tokens';
 
   Future<void> getRemoteNotice({
     required void Function(Map<String, Object?>) onNotification,
   }) async {
     _fireStore
-        .collection('notice')
-        .doc('notice-bn')
+        .collection(noticeCollection)
+        .doc(noticeDoc)
         .snapshots()
         .listen((docSnapshot) {
-      //
+      onNotification(docSnapshot.data() ?? {});
     });
   }
 
-  Stream<Map<String, dynamic>> getAppUpdateInfoStream() {
-    return _fireStore
-        .collection("notice")
-        .doc("app-update")
-        .snapshots()
-        .map((snapshot) => snapshot.data() ?? {});
+  Future<Map<String, dynamic>> getAppUpdateInfo() async {
+    Map<String, dynamic>? appUpdateInfo = {};
+    appUpdateInfo = await catchAndReturnFuture(() async {
+      final DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+          await _fireStore.collection(noticeCollection).doc(appUpdateDoc).get();
+      return docSnapshot.data();
+    });
+    return appUpdateInfo ?? {};
+  }
+
+  Future<void> addDeviceToken(String token) async {
+    await _fireStore.collection(deviceTokensCollection).doc(token).set({});
   }
 }

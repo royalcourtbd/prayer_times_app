@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_notifications_usecase.dart';
@@ -10,10 +9,6 @@ class NotificationPresenter extends BasePresenter<NotificationUiState> {
   NotificationPresenter(this._getNotificationsUseCase);
   final Obs<NotificationUiState> uiState = Obs(NotificationUiState.empty());
   NotificationUiState get currentUiState => uiState.value;
-
-  void updateContext(BuildContext context) {
-    uiState.value = currentUiState.copyWith(context: context);
-  }
 
   @override
   Future<void> addUserMessage(String message) async {

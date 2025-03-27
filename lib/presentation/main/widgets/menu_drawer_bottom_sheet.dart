@@ -93,7 +93,7 @@ class MenuDrawerBottomSheet extends StatelessWidget {
                               ),
                               SettingsGridItem(
                                 icon: SvgPath.icInformation,
-                                title: 'Aboute',
+                                title: 'About',
                                 onTap: () => showMessage(
                                   message: 'Under Construction',
                                 ),

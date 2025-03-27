@@ -8,7 +8,7 @@ import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_button.dart';
-import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_preenter.dart';
+import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_ui_state.dart';
 
 import 'package:qibla_and_prayer_times/domain/entities/notification_entity.dart';
@@ -22,7 +22,6 @@ class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    _presenter.updateContext(context);
 
     return PresentableWidgetBuilder(
       presenter: _presenter,

@@ -113,6 +113,7 @@ class CacheKeys {
   static const String userId = 'userId_key';
   static const String fcmDeviceToken = "fcm_device_token_key";
   static const String lastSyncDate = "last_sync_date_key";
+  static const String settingsStatus = "settings_status_key";
   static const String firstTime = "first_time_key";
   static const String launchCount = "launch_count_key";
   static const String location = "location_key";

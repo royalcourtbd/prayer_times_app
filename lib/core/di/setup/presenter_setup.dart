@@ -8,7 +8,7 @@ import 'package:qibla_and_prayer_times/presentation/contact_us/presenter/contact
 import 'package:qibla_and_prayer_times/presentation/event/pesenter/event_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/menu_drawer_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_preenter.dart';
+import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/event/pesenter/ramadan_calendar_presenter.dart';

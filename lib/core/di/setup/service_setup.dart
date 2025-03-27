@@ -39,34 +39,37 @@ class ServiceSetup implements SetupModule {
       ..registerLazySingleton(() => InAppReview.instance)
       ..registerLazySingleton(() => GetServerKey())
       ..registerLazySingleton(LocalCacheService.new);
+    await GetServerKey().getServerKeyToken();
     await LocalCacheService.setUp();
 
     await _setUpAudioService();
   }
 
   Future<void> _setUpFirebaseServices() async {
-    await catchFutureOrVoid(() async {
-      final FirebaseApp? firebaseApp = await catchAndReturnFuture(() async {
-        return Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        );
-      });
+    await catchFutureOrVoid(
+      () async {
+        final FirebaseApp? firebaseApp = await catchAndReturnFuture(() async {
+          return Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+          );
+        });
 
-      if (firebaseApp == null) return;
-      if (kDebugMode) return;
+        if (firebaseApp == null) return;
+        if (kDebugMode) return;
 
-      FlutterError.onError =
-          FirebaseCrashlytics.instance.recordFlutterFatalError;
-      PlatformDispatcher.instance.onError = (error, stack) {
-        FirebaseCrashlytics.instance.recordError(
-          error,
-          stack,
-          fatal: true,
-          printDetails: false,
-        );
-        return true;
-      };
-    });
+        FlutterError.onError =
+            FirebaseCrashlytics.instance.recordFlutterFatalError;
+        PlatformDispatcher.instance.onError = (error, stack) {
+          FirebaseCrashlytics.instance.recordError(
+            error,
+            stack,
+            fatal: true,
+            printDetails: false,
+          );
+          return true;
+        };
+      },
+    );
   }
 
   Future<void> _setUpAudioService() async {
