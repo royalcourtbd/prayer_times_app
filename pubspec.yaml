@@ -114,6 +114,7 @@ flutter:
     - assets/fonts/Big_Shoulders_Text/
     - assets/db/
     - assets/jpg/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
