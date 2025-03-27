@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
+import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
 
 class GetServerKey {
   static const _scopes = [
@@ -12,28 +12,29 @@ class GetServerKey {
   ];
 
   Future<String> getServerKeyToken() async {
-    log('getServerKeyToken');
-
-    try {
-      final credentialsJson = dotenv.env['FIREBASE_CREDENTIALS'];
+    final token = await catchAndReturnFuture<String>(() async {
+      final String? credentialsJson = dotenv.env['FIREBASE_CREDENTIALS'];
       if (credentialsJson == null) {
         throw Exception('FIREBASE_CREDENTIALS not found in .env file');
       }
 
-      final credentialsMap = json.decode(credentialsJson);
+      final dynamic credentialsMap = json.decode(credentialsJson);
 
-      final client = await clientViaServiceAccount(
+      final AutoRefreshingAuthClient client = await clientViaServiceAccount(
         ServiceAccountCredentials.fromJson(credentialsMap),
         _scopes,
       );
 
-      final token = client.credentials.accessToken.data;
+      final String token = client.credentials.accessToken.data;
       logDebug(token);
 
       return token;
-    } catch (e) {
-      logError('Error getting server key token: $e');
-      throw Exception('Error getting server key token: $e');
+    });
+
+    if (token == null) {
+      throw Exception('Failed to get server key token');
     }
+
+    return token;
   }
 }
