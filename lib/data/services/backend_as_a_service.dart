@@ -27,14 +27,18 @@ class BackendAsAService {
   }
 
   void _initAnalytics() {
-    _analytics
-        .setAnalyticsCollectionEnabled(true)
-        .then((_) => _analytics.logAppOpen());
+    catchVoid(() {
+      _analytics
+          .setAnalyticsCollectionEnabled(true)
+          .then((_) => _analytics.logAppOpen());
+    });
   }
 
   Future<void> logEvent(
       {required String name, Map<String, Object>? parameters}) async {
-    await _analytics.logEvent(name: name, parameters: parameters);
+    await catchFutureOrVoid(() async {
+      await _analytics.logEvent(name: name, parameters: parameters);
+    });
   }
 
   late final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
@@ -49,12 +53,14 @@ class BackendAsAService {
   Future<void> getRemoteNotice({
     required void Function(Map<String, Object?>) onNotification,
   }) async {
-    _fireStore
-        .collection(noticeCollection)
-        .doc(noticeDoc)
-        .snapshots()
-        .listen((docSnapshot) {
-      onNotification(docSnapshot.data() ?? {});
+    await catchFutureOrVoid(() async {
+      _fireStore
+          .collection(noticeCollection)
+          .doc(noticeDoc)
+          .snapshots()
+          .listen((docSnapshot) {
+        onNotification(docSnapshot.data() ?? {});
+      });
     });
   }
 
@@ -69,6 +75,8 @@ class BackendAsAService {
   }
 
   Future<void> addDeviceToken(String token) async {
-    await _fireStore.collection(deviceTokensCollection).doc(token).set({});
+    await catchFutureOrVoid(() async {
+      await _fireStore.collection(deviceTokensCollection).doc(token).set({});
+    });
   }
 }
