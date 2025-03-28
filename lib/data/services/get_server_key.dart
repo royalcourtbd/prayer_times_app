@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:googleapis_auth/auth_io.dart';
+import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
+import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 
 class GetServerKey {
   static const _scopes = [
@@ -11,6 +13,12 @@ class GetServerKey {
   ];
 
   Future<String> getServerKeyToken() async {
+    bool isConnected = await checkInternetConnection();
+    if (!isConnected) {
+      logDebug('No internet connection');
+      return '';
+    }
+
     final token = await catchAndReturnFuture<String>(() async {
       final String? credentialsJson = dotenv.env['FIREBASE_CREDENTIALS'];
       if (credentialsJson == null) {
