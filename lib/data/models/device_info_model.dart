@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qibla_and_prayer_times/domain/entities/device_info_entity.dart';
 
 class DeviceInfoModel extends DeviceInfoEntity {
@@ -15,6 +16,17 @@ class DeviceInfoModel extends DeviceInfoEntity {
   });
 
   factory DeviceInfoModel.fromJson(Map<String, dynamic> json) {
+    // Firestore Timestamp থেকে DateTime এ কনভার্ট করার ফাংশন
+    DateTime? convertTimestampToDateTime(dynamic value) {
+      if (value == null) return null;
+      if (value is Timestamp) {
+        return value.toDate();
+      } else if (value is String) {
+        return DateTime.tryParse(value);
+      }
+      return null;
+    }
+
     return DeviceInfoModel(
       deviceId: json['deviceId'] as String,
       token: json['token'] as String,
@@ -22,10 +34,11 @@ class DeviceInfoModel extends DeviceInfoEntity {
       model: json['model'] as String,
       osVersion: json['osVersion'] as String,
       appVersion: json['appVersion'] as String,
-      installedAt: DateTime.tryParse(json['installedAt'] as String),
-      lastActiveAt: DateTime.parse(json['lastActiveAt'] as String),
+      installedAt: convertTimestampToDateTime(json['installedAt']),
+      lastActiveAt:
+          convertTimestampToDateTime(json['lastActiveAt']) ?? DateTime.now(),
       isOnline: json['isOnline'] as bool? ?? false,
-      onlineUpdatedAt: DateTime.tryParse(json['onlineUpdatedAt'] as String),
+      onlineUpdatedAt: convertTimestampToDateTime(json['onlineUpdatedAt']),
     );
   }
 

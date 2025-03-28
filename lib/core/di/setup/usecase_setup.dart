@@ -6,6 +6,7 @@ import 'package:qibla_and_prayer_times/core/di/setup/setup_module.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/determine_first_run_use_case.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_device_info_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_juristic_method_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_notifications_usecase.dart';
@@ -46,7 +47,7 @@ class UsecaseSetup implements SetupModule {
       ..registerLazySingleton(
           () => DetermineFirstRunUseCase(locate(), locate()))
       ..registerLazySingleton(() => SaveFirstTimeUseCase(locate(), locate()))
-      ..registerLazySingleton(
-          () => GetNotificationsUseCase(locate(), locate()));
+      ..registerLazySingleton(() => GetNotificationsUseCase(locate(), locate()))
+      ..registerLazySingleton(() => GetDeviceInfoUsecase(locate(), locate()));
   }
 }

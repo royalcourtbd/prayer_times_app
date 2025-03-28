@@ -4,6 +4,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
+import 'package:qibla_and_prayer_times/data/models/device_info_model.dart';
+import 'package:qibla_and_prayer_times/domain/entities/device_info_entity.dart';
 import 'package:synchronized/synchronized.dart';
 
 /// By separating the Firebase code into its own class, we can make it easier to
@@ -99,6 +101,26 @@ class BackendAsAService {
           if (token != null) onTokenFound(token);
         });
       });
+    });
+  }
+
+  Stream<List<DeviceInfoEntity>> getAllRegisteredDevices() {
+    return _fireStore.collection(deviceTokensCollection).snapshots().map(
+      (snapshot) {
+        return snapshot.docs
+            .map((doc) {
+              return catchAndReturn<DeviceInfoEntity>(() {
+                return DeviceInfoModel.fromJson(doc.data());
+              });
+            })
+            .where((entity) => entity != null)
+            .cast<DeviceInfoEntity>()
+            .toList();
+      },
+    ).handleError((error, stackTrace) {
+      logError(
+          "Error in getAllRegisteredDevices stream: $error stackTrace: $stackTrace");
+      return <DeviceInfoEntity>[];
     });
   }
 }

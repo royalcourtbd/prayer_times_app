@@ -1,16 +1,19 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:qibla_and_prayer_times/domain/entities/device_info_entity.dart';
 import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_device_info_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
@@ -26,6 +29,7 @@ class HomePresenter extends BasePresenter<HomeUiState> {
   final GetActiveWaqtUseCase _getActiveWaqtUseCase;
   final GetRemainingTimeUseCase _getRemainingTimeUseCase;
   final TimeService _timeService;
+  final GetDeviceInfoUsecase _getDeviceInfoUsecase;
   final WaqtCalculationService _waqtCalculationService;
   StreamSubscription<DateTime>? _timeSubscription;
 
@@ -40,6 +44,7 @@ class HomePresenter extends BasePresenter<HomeUiState> {
     this._getRemainingTimeUseCase,
     this._timeService,
     this._waqtCalculationService,
+    this._getDeviceInfoUsecase,
   );
 
   final Obs<HomeUiState> uiState = Obs<HomeUiState>(HomeUiState.empty());
@@ -54,7 +59,7 @@ class HomePresenter extends BasePresenter<HomeUiState> {
   void onInit() {
     super.onInit();
     _startTimer();
-
+    fetchDeviceInfo();
     // স্ক্রোল কন্ট্রোলারে লিসেনার যোগ করছি ম্যানুয়াল স্ক্রোল ডিটেক্ট করার জন্য
     prayerTimesScrollController.addListener(_onUserScroll);
   }
@@ -89,6 +94,21 @@ class HomePresenter extends BasePresenter<HomeUiState> {
     } finally {
       await toggleLoading(loading: false);
     }
+  }
+
+  StreamSubscription<Either<String, List<DeviceInfoEntity>>>?
+      _deviceInfoSubscription;
+
+  Future<void> fetchDeviceInfo() async {
+    await executeTaskWithLoading(() async {
+      await handleStreamEvents<List<DeviceInfoEntity>>(
+        stream: _getDeviceInfoUsecase.execute(),
+        onData: (List<DeviceInfoEntity> data) {
+          log('deviceInfo: $data');
+        },
+        subscription: _deviceInfoSubscription,
+      );
+    });
   }
 
   Future<void> _fetchLocationAndPrayerTimes({required bool forceRemote}) async {

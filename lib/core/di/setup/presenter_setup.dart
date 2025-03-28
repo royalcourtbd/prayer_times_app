@@ -47,6 +47,7 @@ class PresenterSetup implements SetupModule {
             locate(),
             locate(),
             locate(),
+            locate(),
           )))
       ..registerLazySingleton(() => loadPresenter(MenuDrawerPresenter()))
       ..registerLazySingleton(() => loadPresenter(EventPresenter()));
