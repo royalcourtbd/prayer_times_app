@@ -127,7 +127,7 @@ class BackendAsAService {
     });
   }
 
-  Future<void> registerDevice() async {
+  Future<void> registerDevice({int maxRetry = 3}) async {
     await catchFutureOrVoid(() async {
       final String? token = await _messaging.getToken();
       if (token == null) {
@@ -135,7 +135,6 @@ class BackendAsAService {
         return;
       }
 
-      // ডিভাইস তথ্য পাওয়া
       DeviceInfoModel deviceInfo = await _getDeviceInfo();
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
@@ -145,41 +144,55 @@ class BackendAsAService {
         return;
       }
 
-      // প্রথমবার ইনস্টল কিনা তা চেক করা
-      final bool isFirstInstall = await catchAndReturnFuture(() async {
-            final DocumentSnapshot<Map<String, dynamic>> doc = await _fireStore
-                .collection(deviceTokensCollection)
-                .doc(deviceId)
-                .get();
-            return !doc.exists;
-          }) ??
-          true;
+      try {
+        final bool isFirstInstall = await catchAndReturnFuture(() async {
+              final DocumentSnapshot<Map<String, dynamic>> doc =
+                  await _fireStore
+                      .collection(deviceTokensCollection)
+                      .doc(deviceId)
+                      .get();
+              return !doc.exists;
+            }) ??
+            true;
 
-      // ডিভাইস তথ্য আপডেট করা
-      deviceInfo = deviceInfo.copyWith(
-        token: token,
-        appVersion: packageInfo.version,
-        installedAt: isFirstInstall ? DateTime.now() : null,
-        lastActiveAt: DateTime.now(),
-        isOnline: true,
-        onlineUpdatedAt: DateTime.now(),
-      );
+        deviceInfo = deviceInfo.copyWith(
+          token: token,
+          appVersion: packageInfo.version,
+          isOnline: true,
+        );
 
-      if (isFirstInstall) {
-        await _fireStore.collection(deviceTokensCollection).doc(deviceId).set(
-              deviceInfo.toJson(),
-              SetOptions(merge: true),
-            );
-        logDebug('New device token registered: $token');
-      } else {
-        // আগে থেকে থাকা ডিভাইসের জন্য আপডেট করা
-        Map<String, dynamic> updateData = deviceInfo.toJson();
-        updateData.remove('installedAt'); // installedAt ফিল্ড বাদ দেওয়া
-        await _fireStore
-            .collection(deviceTokensCollection)
-            .doc(deviceId)
-            .update(updateData);
-        logDebug('Device token updated: $token');
+        // এটি সার্ভার টাইমস্ট্যাম্প ব্যবহার করে
+        final Map<String, dynamic> updateData =
+            deviceInfo.toJsonWithServerTimestamp(
+          isFirstInstall: isFirstInstall,
+        );
+
+        if (isFirstInstall) {
+          await _fireStore.collection(deviceTokensCollection).doc(deviceId).set(
+                updateData,
+                SetOptions(merge: true),
+              );
+          logDebug('New device token registered: $token');
+        } else {
+          // আপডেট ব্যবহার করার সময় installedAt ফিল্ড ডিলিট করার দরকার নেই
+          // toJsonWithServerTimestamp মেথড স্বয়ংক্রিয়ভাবে হ্যান্ডেল করবে
+          await _fireStore
+              .collection(deviceTokensCollection)
+              .doc(deviceId)
+              .update(updateData);
+          logDebug('Device token updated: $token');
+        }
+      } catch (e) {
+        logError('Error registering device: $e');
+
+        // ব্যর্থ হলে পুনরায় চেষ্টা করুন, কিন্তু maxRetry সীমা অতিক্রম না করে
+        if (maxRetry > 0) {
+          logDebug(
+              'Retrying device registration. Attempts left: ${maxRetry - 1}');
+          await Future.delayed(
+              Duration(seconds: 2)); // পুনঃচেষ্টার আগে অপেক্ষা করুন
+          await registerDevice(maxRetry: maxRetry - 1);
+        }
       }
     });
   }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/device_info_entity.dart';
 
 class DeviceInfoModel extends DeviceInfoEntity {
@@ -28,12 +29,12 @@ class DeviceInfoModel extends DeviceInfoEntity {
     }
 
     return DeviceInfoModel(
-      deviceId: json['deviceId'] as String,
-      token: json['token'] as String,
-      platform: json['platform'] as String,
-      model: json['model'] as String,
-      osVersion: json['osVersion'] as String,
-      appVersion: json['appVersion'] as String,
+      deviceId: json['deviceId'] as String? ?? '',
+      token: json['token'] as String? ?? '',
+      platform: json['platform'] as String? ?? '',
+      model: json['model'] as String? ?? '',
+      osVersion: json['osVersion'] as String? ?? '',
+      appVersion: json['appVersion'] as String? ?? '',
       installedAt: convertTimestampToDateTime(json['installedAt']),
       lastActiveAt:
           convertTimestampToDateTime(json['lastActiveAt']) ?? DateTime.now(),
@@ -42,6 +43,7 @@ class DeviceInfoModel extends DeviceInfoEntity {
     );
   }
 
+  /// সাধারণ সংরক্ষণ করা নিজস্থ ফিল্ড সহ JSON তৈরি করে
   Map<String, dynamic> toJson() {
     return {
       'deviceId': deviceId,
@@ -50,11 +52,47 @@ class DeviceInfoModel extends DeviceInfoEntity {
       'model': model,
       'osVersion': osVersion,
       'appVersion': appVersion,
-      'installedAt': installedAt?.toIso8601String(),
-      'lastActiveAt': lastActiveAt.toIso8601String(),
+      'installedAt':
+          installedAt != null ? Timestamp.fromDate(installedAt!) : null,
+      'lastActiveAt': Timestamp.fromDate(lastActiveAt),
       'isOnline': isOnline,
-      'onlineUpdatedAt': onlineUpdatedAt?.toIso8601String(),
+      'onlineUpdatedAt':
+          onlineUpdatedAt != null ? Timestamp.fromDate(onlineUpdatedAt!) : null,
     };
+  }
+
+  /// সার্ভার টাইমস্ট্যাম্প ব্যবহার করে JSON তৈরি করে
+  /// নতুন রেজিস্ট্রেশন বা আপডেটের সময় ব্যবহার করুন
+  Map<String, dynamic> toJsonWithServerTimestamp(
+      {bool isFirstInstall = false}) {
+    try {
+      final Map<String, dynamic> data = {
+        'deviceId': deviceId,
+        'token': token,
+        'platform': platform,
+        'model': model,
+        'osVersion': osVersion,
+        'appVersion': appVersion,
+        'lastActiveAt': FieldValue.serverTimestamp(),
+        'isOnline': isOnline,
+        'onlineUpdatedAt': FieldValue.serverTimestamp(),
+      };
+
+      // শুধুমাত্র নতুন ইনস্টল হলে installedAt যোগ করুন
+      if (isFirstInstall) {
+        data['installedAt'] = FieldValue.serverTimestamp();
+      }
+
+      return data;
+    } catch (e) {
+      // এরর লগ করুন এবং ফলব্যাক হিসেবে রেগুলার টাইমস্ট্যাম্প ব্যবহার করুন
+      logError('Server timestamp creation failed: $e');
+      final regularData = toJson();
+
+      // ফলব্যাক মোডে লগ করুন
+      logDebug('Falling back to regular timestamps due to error');
+      return regularData;
+    }
   }
 
   DeviceInfoModel copyWith({

@@ -29,15 +29,12 @@ Future<bool> _checkFirstRun() {
 }
 
 Future<void> _registerDevice() async {
-  // সার্ভিস লোকেটর থেকে ইউজকেসটি পান
   final registerDeviceUsecase = locate<RegisterDeviceUsecase>();
 
-  // ইউজকেস এক্সিকিউট করুন
   final result = await registerDeviceUsecase.execute();
 
-  // রেজাল্ট হ্যান্ডেল করুন (অপশনাল)
   result.fold(
-    (error) => debugPrint('ডিভাইস রেজিস্ট্রেশন ব্যর্থ: $error'),
-    (_) => debugPrint('ডিভাইস সফলভাবে রেজিস্টার করা হয়েছে'),
+    (error) => debugPrint('Failed to register device: $error'),
+    (_) => debugPrint('Device registered successfully'),
   );
 }

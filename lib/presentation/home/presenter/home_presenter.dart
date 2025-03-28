@@ -104,7 +104,7 @@ class HomePresenter extends BasePresenter<HomeUiState> {
       await handleStreamEvents<List<DeviceInfoEntity>>(
         stream: _getDeviceInfoUsecase.execute(),
         onData: (List<DeviceInfoEntity> data) {
-          log('deviceInfo: $data');
+          // log('deviceInfo: $data');
         },
         subscription: _deviceInfoSubscription,
       );
