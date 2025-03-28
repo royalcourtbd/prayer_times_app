@@ -4,6 +4,7 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 MAGENTA='\033[0;35m'  # Added for spinner
 CHECKMARK='\033[32m✓\033[0m'  # Added for success checkmark
@@ -37,6 +38,22 @@ function show_loading() {
   fi
 }
 
+# Function to display APK size
+function display_apk_size() {
+  local apk_path="build/app/outputs/flutter-apk/app-release.apk"
+  
+  if [ -f "$apk_path" ]; then
+    # Get size in bytes
+    local size_bytes=$(wc -c < "$apk_path")
+    # Convert to megabytes (with 2 decimal places)
+    local size_mb=$(echo "scale=2; $size_bytes / 1048576" | bc)
+    
+    echo -e "${BLUE}APK Size: ${size_mb} MB${NC}"
+  else
+    echo -e "${RED}APK file not found at $apk_path${NC}"
+  fi
+}
+
 # Main script logic
 if [ "$1" == "apk" ]; then
   echo -e "${YELLOW}Building APK (Full Process)...${NC}\n"
@@ -58,6 +75,9 @@ if [ "$1" == "apk" ]; then
   show_loading "Building APK...                                      " $PID
 
   echo -e "\n${GREEN}✓ APK built successfully!${NC}"
+  
+  # Display APK size
+  display_apk_size
   
   # Open the APK directory
   if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -191,6 +211,9 @@ elif [ "$1" == "release-run" ]; then
   PID=$!
   show_loading "Building APK...                                      " $PID
 
+  # Display APK size after building
+  display_apk_size
+
   (flutter install --release >/dev/null 2>&1) &
   PID=$!
   show_loading "Installing on device...                              " $PID
@@ -210,32 +233,3 @@ else
   echo -e "  release-run  Build & install release APK on connected device"
   exit 1
 fi
-
-
-#//comment//
-# আউটপুট লুকানো এবং দেখার জন্য কমান্ড কীভাবে পরিবর্তন করবেন
-#
-# 1. আউটপুট লুকানোর জন্য:
-#    - প্রতিটি কমান্ডের শেষে `>/dev/null 2>&1` যোগ করতে হবে।
-#    - এটি করলে কমান্ডের আউটপুট টার্মিনালে দেখাবে না, শুধু লোডিং স্পিনার দেখাবে।
-#    - উদাহরণ:
-#      (flutter clean >/dev/null 2>&1) &
-#      PID=$!
-#      show_loading "Cleaning project...                                   " $PID
-#
-# 2. আউটপুট দেখার জন্য:
-#    - প্রতিটি কমান্ড থেকে `>/dev/null 2>&1` সরিয়ে ফেলতে হবে।
-#    - এটি করলে কমান্ডের পুরো আউটপুট টার্মিনালে দেখাবে, যেমন কী হচ্ছে, কোন ফাইল তৈরি হচ্ছে ইত্যাদি।
-#    - উদাহরণ:
-#      (flutter clean) &
-#      PID=$!
-#      show_loading "Cleaning project...                                   " $PID
-#
-# কীভাবে চালাবেন:
-# - আউটপুট লুকানো সহ: ফাইলটি সেভ করুন (যেমন, build.sh), তারপর:
-#   chmod +x build.sh
-#   ./build.sh setup
-# - আউটপুট দেখার জন্য: ফাইলটি সেভ করুন (যেমন, build_with_output.sh), তারপর:
-#   chmod +x build_with_output.sh
-#   ./build_with_output.sh setup
-#//comment//
