@@ -2,11 +2,14 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
 import 'package:qibla_and_prayer_times/data/models/device_info_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/device_info_entity.dart';
 import 'package:synchronized/synchronized.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'dart:io';
 
 /// By separating the Firebase code into its own class, we can make it easier to
 /// replace Firebase with another backend-as-a-service provider in the future.
@@ -122,5 +125,105 @@ class BackendAsAService {
           "Error in getAllRegisteredDevices stream: $error stackTrace: $stackTrace");
       return <DeviceInfoEntity>[];
     });
+  }
+
+  Future<void> registerDeviceToken() async {
+    await catchFutureOrVoid(() async {
+      final String? token = await _messaging.getToken();
+      if (token == null) {
+        logDebug('Token not found');
+        return;
+      }
+
+      // ডিভাইস তথ্য পাওয়া
+      DeviceInfoModel deviceInfo = await _getDeviceInfo();
+      final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+      final String deviceId = deviceInfo.deviceId;
+      if (deviceId.isEmpty) {
+        logError('Device ID is empty');
+        return;
+      }
+
+      // প্রথমবার ইনস্টল কিনা তা চেক করা
+      final bool isFirstInstall = await catchAndReturnFuture(() async {
+            final DocumentSnapshot<Map<String, dynamic>> doc = await _fireStore
+                .collection(deviceTokensCollection)
+                .doc(deviceId)
+                .get();
+            return !doc.exists;
+          }) ??
+          true;
+
+      // ডিভাইস তথ্য আপডেট করা
+      deviceInfo = deviceInfo.copyWith(
+        token: token,
+        appVersion: packageInfo.version,
+        installedAt: isFirstInstall ? DateTime.now() : null,
+        lastActiveAt: DateTime.now(),
+        isOnline: true,
+        onlineUpdatedAt: DateTime.now(),
+      );
+
+      if (isFirstInstall) {
+        await _fireStore.collection(deviceTokensCollection).doc(deviceId).set(
+              deviceInfo.toJson(),
+              SetOptions(merge: true),
+            );
+        logDebug('New device token registered: $token');
+      } else {
+        // আগে থেকে থাকা ডিভাইসের জন্য আপডেট করা
+        Map<String, dynamic> updateData = deviceInfo.toJson();
+        updateData.remove('installedAt'); // installedAt ফিল্ড বাদ দেওয়া
+        await _fireStore
+            .collection(deviceTokensCollection)
+            .doc(deviceId)
+            .update(updateData);
+        logDebug('Device token updated: $token');
+      }
+    });
+  }
+
+  Future<DeviceInfoModel> _getDeviceInfo() async {
+    return await catchAndReturnFuture<DeviceInfoModel>(() async {
+          final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+          String deviceId = '';
+          String platform = '';
+          String model = '';
+          String osVersion = '';
+
+          if (Platform.isAndroid) {
+            final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+            platform = 'android';
+            model = '${androidInfo.brand} ${androidInfo.model}';
+            osVersion = androidInfo.version.release;
+            deviceId = androidInfo.id;
+          } else if (Platform.isIOS) {
+            final IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+            platform = 'ios';
+            model = iosInfo.model;
+            osVersion = iosInfo.systemVersion;
+            deviceId = iosInfo.identifierForVendor ?? '';
+          }
+
+          return DeviceInfoModel(
+            deviceId: deviceId,
+            token: '', // এটি পরে আপডেট করা হবে
+            platform: platform,
+            model: model,
+            osVersion: osVersion,
+            appVersion: '',
+            lastActiveAt: DateTime.now(),
+          );
+        }) ??
+        DeviceInfoModel(
+          deviceId: '',
+          token: '',
+          platform: '',
+          model: '',
+          osVersion: '',
+          appVersion: '',
+          lastActiveAt: DateTime.now(),
+        );
   }
 }
