@@ -127,7 +127,7 @@ class BackendAsAService {
     });
   }
 
-  Future<void> registerDeviceToken() async {
+  Future<void> registerDevice() async {
     await catchFutureOrVoid(() async {
       final String? token = await _messaging.getToken();
       if (token == null) {

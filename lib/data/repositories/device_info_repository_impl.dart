@@ -9,8 +9,8 @@ class DeviceInfoRepositoryImpl extends DeviceInfoRepository {
   final DeviceInfoRemoteDataSource _deviceInfoRemoteDataSource;
 
   @override
-  Future<void> registerDeviceToken(String token) async {
-    // TODO: implement registerDeviceToken
+  Future<void> registerDevice() async {
+    return _deviceInfoRemoteDataSource.registerDevice();
   }
 
   @override

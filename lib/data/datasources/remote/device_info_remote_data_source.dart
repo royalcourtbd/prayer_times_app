@@ -2,18 +2,19 @@ import 'package:qibla_and_prayer_times/data/services/backend_as_a_service.dart';
 import 'package:qibla_and_prayer_times/domain/entities/device_info_entity.dart';
 
 abstract class DeviceInfoRemoteDataSource {
-  Future<void> registerDeviceToken(String token);
-
+  Future<void> registerDevice();
   Stream<List<DeviceInfoEntity>> getAllRegisteredDevices();
 }
+
+/// ডিভাইস তথ্য রিমোট ডাটাসোর্স
 
 class DeviceInfoRemoteDataSourceImpl extends DeviceInfoRemoteDataSource {
   DeviceInfoRemoteDataSourceImpl(this._backendAsAService);
   final BackendAsAService _backendAsAService;
 
   @override
-  Future<void> registerDeviceToken(String token) async {
-    // TODO: implement registerDeviceToken
+  Future<void> registerDevice() async {
+    return _backendAsAService.registerDevice();
   }
 
   @override
