@@ -76,7 +76,6 @@ dependencies:
   flutter_html: ^3.0.0-beta.2
   arc_progress_bar_new: ^1.0.4
   device_info_plus: ^11.3.3
-  awesome_notifications: ^0.10.1
   googleapis_auth: ^1.6.0
   flutter_dotenv: ^5.2.1
   synchronized: ^3.3.1

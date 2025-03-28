@@ -172,6 +172,31 @@ elif [ "$1" == "cleanup" ]; then
   
   echo -e "\n${GREEN}✓ Project cleaned successfully!${NC}"
 
+elif [ "$1" == "release-run" ]; then
+  echo -e "${YELLOW}Building & Installing Release APK...${NC}\n"
+  
+  (flutter clean >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Cleaning project...                                   " $PID
+
+  (flutter pub get >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Getting dependencies...                              " $PID
+
+  (dart run build_runner build --delete-conflicting-outputs >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Generating build files...                            " $PID
+
+  (flutter build apk --release --obfuscate --target-platform android-arm64 --split-debug-info=./ >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Building APK...                                      " $PID
+
+  (flutter install --release >/dev/null 2>&1) &
+  PID=$!
+  show_loading "Installing on device...                              " $PID
+
+  echo -e "\n${GREEN}✓ APK built and installed successfully!${NC}"
+
 else
   echo -e "${YELLOW}Usage: $0 [command]${NC}"
   echo -e "\nAvailable commands:"
@@ -182,6 +207,7 @@ else
   echo -e "  setup        Perform full project setup"
   echo -e "  cache-repair Repair pub cache"
   echo -e "  cleanup      Clean project and get dependencies"
+  echo -e "  release-run  Build & install release APK on connected device"
   exit 1
 fi
 
