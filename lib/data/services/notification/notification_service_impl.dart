@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/throttle_service.dart';
+import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/number_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
@@ -104,11 +105,14 @@ class NotificationServiceImpl implements NotificationService {
 
   @override
   Future<bool> isNotificationAllowed() async {
-    try {
-      final settings = await _firebaseMessaging.getNotificationSettings();
-      return settings.authorizationStatus == AuthorizationStatus.authorized;
-    } catch (e) {
-      return false;
-    }
+    return await catchAndReturnFuture<bool>(() async {
+          final NotificationSettings settings =
+              await _firebaseMessaging.getNotificationSettings();
+          final bool isAllowed =
+              settings.authorizationStatus == AuthorizationStatus.authorized;
+          logDebug('Notification allowed: $isAllowed');
+          return isAllowed;
+        }) ??
+        false; // Default to false if an error occurs
   }
 }

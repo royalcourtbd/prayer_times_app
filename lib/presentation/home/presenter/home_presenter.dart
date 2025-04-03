@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:get/get.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
@@ -12,11 +14,13 @@ import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/check_notification_permission_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_device_info_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/request_notification_permission_usecase.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/home/models/fasting_state.dart';
 import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
@@ -31,6 +35,9 @@ class HomePresenter extends BasePresenter<HomeUiState> {
   final TimeService _timeService;
   final GetDeviceInfoUsecase _getDeviceInfoUsecase;
   final WaqtCalculationService _waqtCalculationService;
+  final RequestNotificationPermissionUsecase
+      _requestNotificationPermissionUsecase;
+  final CheckNotificationPermissionUsecase _checkNotificationPermissionUsecase;
   StreamSubscription<DateTime>? _timeSubscription;
 
   final ScrollController prayerTimesScrollController = ScrollController();
@@ -45,6 +52,8 @@ class HomePresenter extends BasePresenter<HomeUiState> {
     this._timeService,
     this._waqtCalculationService,
     this._getDeviceInfoUsecase,
+    this._requestNotificationPermissionUsecase,
+    this._checkNotificationPermissionUsecase,
   );
 
   final Obs<HomeUiState> uiState = Obs<HomeUiState>(HomeUiState.empty());
@@ -60,6 +69,7 @@ class HomePresenter extends BasePresenter<HomeUiState> {
     super.onInit();
     _startTimer();
     fetchDeviceInfo();
+    checkNotificationPermission();
     // স্ক্রোল কন্ট্রোলারে লিসেনার যোগ করছি ম্যানুয়াল স্ক্রোল ডিটেক্ট করার জন্য
     prayerTimesScrollController.addListener(_onUserScroll);
   }
@@ -70,6 +80,74 @@ class HomePresenter extends BasePresenter<HomeUiState> {
     prayerTimesScrollController.dispose();
     _timeSubscription?.cancel();
     super.onClose();
+  }
+
+  Future<void> checkNotificationPermission() async {
+    await parseDataFromEitherWithUserMessage<bool>(
+      task: () => _checkNotificationPermissionUsecase.execute(),
+      showLoading: false,
+      onDataLoaded: (bool hasPermission) {
+        if (!hasPermission) {
+          // পারমিশন নেই, রিকোয়েস্ট করুন
+          log('requestNotificationPermission');
+          requestNotificationPermission();
+        } else {
+          log('hasPermission: $hasPermission');
+          // পারমিশন আছে, প্রয়োজনীয় সেটআপ করুন (যেমন ডিভাইস রেজিস্ট্রেশন)
+          // আপনি ইতিমধ্যেই onInit-এ fetchDeviceInfo() কল করেছেন, যা ঠিক আছে
+        }
+      },
+    );
+  }
+
+  // নতুন মেথড যোগ করুন
+  Future<void> requestNotificationPermission() async {
+    await parseDataFromEitherWithUserMessage<void>(
+      task: () => _requestNotificationPermissionUsecase.execute(
+        onGrantedOrSkippedForNow: () {
+          // পারমিশন দেওয়া হয়েছে
+          log('onGrantedOrSkippedForNow');
+        },
+        onDenied: () {
+          // পারমিশন দেওয়া হয়নি
+          log('onDenied ');
+          showNotificationDeniedDialog();
+        },
+      ),
+      showLoading: false,
+      onDataLoaded: (_) {
+        // এখানে কিছু করার দরকার নেই
+      },
+    );
+  }
+
+  // নতুন মেথড যোগ করুন
+  void showNotificationDeniedDialog() {
+    Get.dialog(
+      AlertDialog(
+        title: Text("নোটিফিকেশন পারমিশন"),
+        content: Text(
+            "নামাজের সময় এবং গুরুত্বপূর্ণ আপডেট পেতে দয়া করে নোটিফিকেশন পারমিশন দিন। "
+            "আপনি কি সেটিংস-এ গিয়ে পারমিশন দিতে চান?"),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text("না, ধন্যবাদ"),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.back();
+              openNotificationSettings();
+            },
+            child: Text("সেটিংস খুলুন"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void openNotificationSettings() {
+    AppSettings.openAppSettings(type: AppSettingsType.notification);
   }
 
   Future<void> loadLocationAndPrayerTimes() async {
