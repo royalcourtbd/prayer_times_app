@@ -40,6 +40,6 @@ class RepositorySetup implements SetupModule {
       ..registerLazySingleton<NotificationRepository>(
           () => NotificationRepositoryImpl())
       ..registerLazySingleton<DeviceInfoRepository>(
-          () => DeviceInfoRepositoryImpl(locate()));
+          () => DeviceInfoRepositoryImpl(locate(), locate(), locate()));
   }
 }

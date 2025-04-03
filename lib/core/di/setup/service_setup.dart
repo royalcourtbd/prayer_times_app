@@ -11,9 +11,11 @@ import 'package:qibla_and_prayer_times/data/services/error_message_handler_impl.
 import 'package:qibla_and_prayer_times/data/services/get_server_key.dart';
 import 'package:qibla_and_prayer_times/data/services/local_cache_service.dart';
 import 'package:qibla_and_prayer_times/data/services/location_service.dart';
+import 'package:qibla_and_prayer_times/data/services/notification/notification_service_impl.dart';
 import 'package:qibla_and_prayer_times/data/services/waqt_calculation_service_impl.dart';
 
 import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
+import 'package:qibla_and_prayer_times/domain/service/notification_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
 import 'package:qibla_and_prayer_times/domain/service/waqt_calculation_service.dart';
 import 'package:qibla_and_prayer_times/firebase_options.dart';
@@ -27,6 +29,7 @@ class ServiceSetup implements SetupModule {
     await _setUpFirebaseServices();
     _serviceLocator
       ..registerLazySingleton<ErrorMessageHandler>(ErrorMessageHandlerImpl.new)
+      ..registerLazySingleton<NotificationService>(NotificationServiceImpl.new)
       ..registerLazySingleton<WaqtCalculationService>(
           () => WaqtCalculationServiceImpl())
       ..registerLazySingleton(() => TimeService())

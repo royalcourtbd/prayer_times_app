@@ -1,13 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_color.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_theme_color.dart';
-import 'package:qibla_and_prayer_times/core/static/constants.dart';
 import 'package:qibla_and_prayer_times/core/static/font_family.dart';
-import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_times.dart';
 
 class PrayerTimeTheme {
   PrayerTimeTheme._();
@@ -279,38 +273,4 @@ class PrayerTimeTheme {
   //     inverseSurface: QuranColor.scaffoldBachgroundColorDark,
   //   ).copyWith(background: const Color(0xff122337)),
   // );
-}
-
-Future<SystemUiOverlayStyle?> getSystemUiOverlayStyle({
-  bool? isDark,
-  BuildContext? context,
-}) async {
-  final SystemUiOverlayStyle? uiOverlayStyle =
-      await catchAndReturnFuture(() async {
-    final ThemeData theme = Theme.of(context ?? PrayerTimes.globalContext);
-    final Color statusBarColor = isDark == null
-        ? Colors.yellow
-        : (isDark
-            ? const Color.fromARGB(0, 48, 22, 196)
-            : const Color.fromARGB(0, 253, 51, 51));
-    final Color systemNavigationBarColor = isDark == null
-        ? theme.cardColor
-        : (isDark ? const Color(0xff161C23) : const Color(0xffffffff));
-    return SystemUiOverlayStyle(
-      statusBarColor: statusBarColor,
-      statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: systemNavigationBarColor,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    );
-  });
-  return uiOverlayStyle;
-}
-
-Future<T?> catchAndReturnFuture<T>(FutureOr<T> Function() function) async {
-  try {
-    return await function();
-  } catch (error, trace) {
-    logErrorStatic("error: $error trace: $trace", packageName);
-    return null;
-  }
 }
