@@ -21,6 +21,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_remaining_time_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/request_notification_permission_usecase.dart';
+import 'package:qibla_and_prayer_times/presentation/common/notification_denied_dialog.dart';
 import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/home/models/fasting_state.dart';
 import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
@@ -70,7 +71,7 @@ class HomePresenter extends BasePresenter<HomeUiState> {
     _startTimer();
     fetchDeviceInfo();
     checkNotificationPermission();
-    // স্ক্রোল কন্ট্রোলারে লিসেনার যোগ করছি ম্যানুয়াল স্ক্রোল ডিটেক্ট করার জন্য
+
     prayerTimesScrollController.addListener(_onUserScroll);
   }
 
@@ -111,38 +112,18 @@ class HomePresenter extends BasePresenter<HomeUiState> {
         onDenied: () {
           // পারমিশন দেওয়া হয়নি
           log('onDenied ');
-          showNotificationDeniedDialog();
+          NotificationDeniedDialog.show(
+            context: Get.context!,
+            onSubmit: () async {
+              openNotificationSettings();
+            },
+          );
         },
       ),
       showLoading: false,
       onDataLoaded: (_) {
         // এখানে কিছু করার দরকার নেই
       },
-    );
-  }
-
-  // নতুন মেথড যোগ করুন
-  void showNotificationDeniedDialog() {
-    Get.dialog(
-      AlertDialog(
-        title: Text("নোটিফিকেশন পারমিশন"),
-        content: Text(
-            "নামাজের সময় এবং গুরুত্বপূর্ণ আপডেট পেতে দয়া করে নোটিফিকেশন পারমিশন দিন। "
-            "আপনি কি সেটিংস-এ গিয়ে পারমিশন দিতে চান?"),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: Text("না, ধন্যবাদ"),
-          ),
-          TextButton(
-            onPressed: () {
-              Get.back();
-              openNotificationSettings();
-            },
-            child: Text("সেটিংস খুলুন"),
-          ),
-        ],
-      ),
     );
   }
 
@@ -433,45 +414,45 @@ class HomePresenter extends BasePresenter<HomeUiState> {
     uiState.value = currentUiState.copyWith(isLoading: loading);
   }
 
-  /// আ্যক্টিভ ওয়াক্ত স্ক্রিনের মাঝে আনার জন্য স্ক্রল করা
+  /// Scroll to the active waqt in the center of the screen
   void scrollToActiveWaqt([BuildContext? context, bool forceScroll = false]) {
     try {
-      // ইউজার ম্যানুয়ালি স্ক্রল করেছে এবং ফোর্স না করা হলে স্ক্রল করা হবে না
+      // If the user is scrolling and forceScroll is not true, do not scroll
       if (_userScrolled && !forceScroll) return;
 
       if (waqtList.isEmpty || !prayerTimesScrollController.hasClients) return;
 
-      // আ্যক্টিভ ওয়াক্ত খুঁজে বের করা
+      // Find the active waqt
       int activeIndex = waqtList.indexWhere((waqt) => waqt.isActive);
       if (activeIndex == -1) return;
 
-      // সত্যিকারের স্ক্রিন উইডথ নেওয়া
+      // Get the actual screen width
       double screenWidth =
           prayerTimesScrollController.position.viewportDimension;
 
-      // যদি BuildContext থাকে তবে সঠিক স্ক্রিন উইডথ নেওয়া
+      // If BuildContext is provided, use the correct screen width
       if (context != null) {
         screenWidth = MediaQuery.of(context).size.width;
       }
 
-      // প্রতিটি আইটেমের পজিশন তৈরি করি
+      // Create the position of each item
       double offset = 0;
       double leftPadding = twentyPx; // ListView এর padding
       double rightMargin = twelvePx; // আইটেমের right margin
 
-      // সকল আইটেমের প্রস্থ এবং পজিশন হিসাব করি
+      // Calculate the position and width of each item
       List<double> itemPositions = [];
       List<double> itemWidths = [];
 
-      // পেডিং যোগ করি শুরুতে
+      // Add padding at the beginning
       offset += leftPadding;
 
-      // প্রতিটি আইটেমের পজিশন হিসাব করি
+      // Calculate the position of each item
       for (int i = 0; i < waqtList.length; i++) {
         if (waqtList[i].type == WaqtType.duha) continue; // duha স্কিপ করা
 
         bool isSpecial = waqtList[i].type == WaqtType.sunrise;
-        // সরাসরি ক্যালকুলেট করার পরিবর্তে percentWidth হিসেব করবো
+        // Instead of calculating directly, use percentWidth
         double widthPercentage = isSpecial ? 25 : 43;
         double width = (screenWidth * widthPercentage) / 100;
 
@@ -481,7 +462,7 @@ class HomePresenter extends BasePresenter<HomeUiState> {
         offset += width + rightMargin;
       }
 
-      // অ্যাক্টিভ আইটেমের ইনডেক্স চেক করি
+      // Check if the active item is within the bounds
       int visibleActiveIndex = activeIndex;
       // duha আইটেম সরিয়ে দেওয়ার কারণে কিছু ইনডেক্স বদলাতে পারে
       for (int i = 0; i < activeIndex; i++) {
@@ -490,20 +471,20 @@ class HomePresenter extends BasePresenter<HomeUiState> {
         }
       }
 
-      // অ্যাক্টিভ আইটেমের পজিশন
+      // Check if the active item is within the bounds
       if (visibleActiveIndex >= itemPositions.length) return;
 
       double activePosition = itemPositions[visibleActiveIndex];
       double activeWidth = itemWidths[visibleActiveIndex];
 
-      // আইটেমকে সেন্টারে আনার জন্য স্ক্রোল পজিশন হিসাব করি
+      // Calculate the scroll position to center the active item
       double scrollTo = activePosition - (screenWidth / 2) + (activeWidth / 2);
 
-      // স্ক্রোলের সীমা চেক করি
+      // Check if the scroll is within the bounds
       scrollTo = scrollTo.clamp(
           0.0, prayerTimesScrollController.position.maxScrollExtent);
 
-      // স্মুথ অ্যানিমেশনে স্ক্রোল করি
+      // Smooth scroll to the active waqt
       prayerTimesScrollController.animateTo(
         scrollTo,
         duration: Duration(milliseconds: 800),
@@ -514,26 +495,26 @@ class HomePresenter extends BasePresenter<HomeUiState> {
     }
   }
 
-  // পেজে যাওয়ার পরে স্ক্রোল করার মেথড
+  // When user goes to other page and comes back to this page, scroll to the active waqt
   void scrollToActiveWaqtWithDelay([BuildContext? context]) {
-    // প্রথম লোডে ম্যানুয়াল স্ক্রোল রিসেট করা
+    // If the user is scrolling, set the userScrolled to true
     _userScrolled = false;
 
-    // UI রেন্ডার হওয়ার পরে স্ক্রোল করার জন্য ডিলে দেওয়া
+    // After the UI is rendered, scroll to the active waqt
     Future.delayed(Duration(milliseconds: 500), () {
       scrollToActiveWaqt(context);
     });
   }
 
-  // ইউজার যখন ম্যানুয়ালি স্ক্রোল করে তখন এই মেথড কল হবে
+  // If the user is scrolling, set the userScrolled to true
   void _onUserScroll() {
-    // স্ক্রোল কন্ট্রোলার ইউজার ইন্টারঅ্যাকশন ডিটেক্ট করা
+    // If the user is scrolling, set the userScrolled to true
     if (prayerTimesScrollController.position.isScrollingNotifier.value) {
       _userScrolled = true;
     }
   }
 
-  // ইউজার যখন এই পেজে ফিরে আসবে তখন স্ক্রোল রিসেট করার মেথড
+  // When user goes to other page and comes back to this page, reset the user scroll
   void resetUserScroll() {
     _userScrolled = false;
   }
