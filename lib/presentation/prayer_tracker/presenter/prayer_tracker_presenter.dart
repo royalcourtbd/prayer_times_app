@@ -235,11 +235,12 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
       addUserMessage('No data to clear');
     } else {
       await RemoveDialog.show(
-          context: context,
-          title: 'Delete',
-          onRemove: () async {
-            clearAllPrayerTrackerData();
-          });
+        context: context,
+        title: 'Delete',
+        onRemove: () async {
+          clearAllPrayerTrackerData();
+        },
+      );
     }
   }
 
