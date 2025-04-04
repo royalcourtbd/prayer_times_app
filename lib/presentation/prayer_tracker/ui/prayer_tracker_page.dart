@@ -7,7 +7,6 @@ import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/presentation/common/calendar_header_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar_title.dart';
-import 'package:qibla_and_prayer_times/presentation/common/remove_dialog.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/prayer_tracker_history_widget.dart';
@@ -23,8 +22,6 @@ class PrayerTrackerPage extends StatelessWidget {
     return PresentableWidgetBuilder(
       presenter: _presenter,
       builder: () {
-        // final PrayerTrackerUiState currentUiState = _presenter.currentUiState;
-
         return Scaffold(
           appBar: AppBar(
             title: const CustomAppBarTitle(
@@ -64,22 +61,16 @@ class PrayerTrackerPage extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                          onTap: () async {
-                            await RemoveDialog.show(
-                                context: context,
-                                title: 'Delete',
-                                onRemove: () async {
-                                  _presenter.clearAllPrayerTrackerData();
-                                });
-                          },
-                          child: Text(
-                            'Clear',
-                            style: theme.textTheme.bodyMedium!.copyWith(
-                              fontSize: twelvePx,
-                              fontWeight: FontWeight.normal,
-                              color: context.color.subTitleColor,
-                            ),
-                          )),
+                        onTap: () => _presenter.handleClearButtonTap(context),
+                        child: Text(
+                          'Clear',
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            fontSize: twelvePx,
+                            fontWeight: FontWeight.normal,
+                            color: context.color.subTitleColor,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   gapH10,

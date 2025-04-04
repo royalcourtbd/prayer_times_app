@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
+import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
+import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
@@ -14,6 +15,7 @@ import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_u
 import 'package:qibla_and_prayer_times/domain/usecases/save_prayer_tracker_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_all_prayer_tracker_data_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/clear_all_prayer_tracker_data_usecase.dart';
+import 'package:qibla_and_prayer_times/presentation/common/remove_dialog.dart';
 import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
 import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_ui_state.dart';
 
@@ -225,6 +227,22 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
     );
   }
 
+  Future<void> handleClearButtonTap(BuildContext context) async {
+    final Map<DateTime, List<PrayerTrackerModel>> historyData =
+        await getPrayerTrackerHistory();
+
+    if (historyData.isEmpty) {
+      addUserMessage('No data to clear');
+    } else {
+      await RemoveDialog.show(
+          context: context,
+          title: 'Delete',
+          onRemove: () async {
+            clearAllPrayerTrackerData();
+          });
+    }
+  }
+
   Future<void> _loadPrayerTrackerData() async {
     await parseDataFromEitherWithUserMessage(
       task: () => _getPrayerTrackerDataUseCase.execute(
@@ -289,43 +307,46 @@ class PrayerTrackerPresenter extends BasePresenter<PrayerTrackerUiState> {
       getPrayerTrackerHistory() async {
     final Map<DateTime, List<PrayerTrackerModel>> history = {};
 
-    try {
-      final Either<String, List<PrayerTrackerHistoryEntity>> result =
-          await _getAllPrayerTrackerDataUseCase.execute();
+    return await catchAndReturnFuture(() async {
+          final Either<String, List<PrayerTrackerHistoryEntity>> result =
+              await _getAllPrayerTrackerDataUseCase.execute();
 
-      return await result.fold(
-        (failure) {
-          addUserMessage('Failed to load prayer tracker history');
-          return history;
-        },
-        (trackerEntries) {
-          for (final entry in trackerEntries) {
-            final date = _timeService.getStartOfDay(entry.date);
+          return result.fold(
+            (failure) {
+              logError('Failed to load prayer tracker history: $failure');
+              addUserMessage('Failed to load prayer tracker history');
+              return history;
+            },
+            (trackerEntries) {
+              for (final entry in trackerEntries) {
+                catchFutureOrVoid(() async {
+                  final date = _timeService.getStartOfDay(entry.date);
 
-            if (entry.trackerData != null && entry.trackerData!.isNotEmpty) {
-              try {
-                final List<dynamic> decodedData =
-                    jsonDecode(entry.trackerData!);
-                final List<PrayerTrackerModel> trackers = decodedData
-                    .map((e) => PrayerTrackerModel.fromJson(e))
-                    .toList();
+                  if (entry.trackerData != null &&
+                      entry.trackerData!.isNotEmpty) {
+                    final List<PrayerTrackerModel>? trackers =
+                        catchAndReturn(() {
+                      final List<dynamic> decodedData =
+                          jsonDecode(entry.trackerData!);
+                      return decodedData
+                          .map((e) => PrayerTrackerModel.fromJson(e))
+                          .toList();
+                    });
 
-                if (trackers.isNotEmpty) {
-                  history[date] = trackers;
-                }
-              } catch (e) {
-                log('JSON parsing error: $e');
+                    if (trackers != null && trackers.isNotEmpty) {
+                      history[date] = trackers;
+                    } else {
+                      logError('JSON parsing failed for date $date');
+                    }
+                  }
+                });
               }
-            }
-          }
 
-          return history;
-        },
-      );
-    } catch (e) {
-      log('getPrayerTrackerHistory error: $e');
-      return history;
-    }
+              return history;
+            },
+          );
+        }) ??
+        history;
   }
 
   Future<void> clearAllPrayerTrackerData() async {
