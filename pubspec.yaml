@@ -1,9 +1,9 @@
 name: qibla_and_prayer_times
-description: "Prayer Times & Qibla Finder - Your essential Muslim companion app with accurate prayer times, Qibla direction, and Azan notifications. Features precise GPS-based Qibla finder, prayer times for all Islamic prayers (Fajr, Dhuhr, Asr, Maghrib, Isha), multiple calculation methods, and beautiful Azan sounds. Works offline with worldwide coverage."
+description: "Prayer Times & Qibla Finder - Your essential Muslim companion app with accurate prayer times, Qibla direction, and Azan notifications. Features precise GPS-based Qibla finder, prayer times for all Islamic prayers (Fajr, Dhuhr, Asr, Maghrib, Isha), multiple calculation methods. Works offline with worldwide coverage."
 
 homepage: https://www.oratiq.com
 
-keywords: qibla finder, prayer times, islamic prayer times, muslim prayer times, azan times, namaz times, qibla direction, qibla compass, prayer time today, salah times, prayer alarm, azan alarm, islamic calendar, hijri calendar, muslim calendar, qibla locator, prayer tracker, prayer reminder, qibla detector, mosque finder, islamic app, muslim app, namaz timing, prayer schedule, salat times, prayer calendar, qibla direction finder, prayer times widget, offline prayer times, gps qibla
+keywords: qibla finder, prayer times, islamic prayer times, offline prayer times, gps qibla
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -21,7 +21,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.2+5
+version: 1.0.0+1
 
 environment:
   sdk: ^3.5.4
