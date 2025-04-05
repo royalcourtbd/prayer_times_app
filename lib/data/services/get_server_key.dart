@@ -33,6 +33,7 @@ class GetServerKey {
       );
 
       final String token = client.credentials.accessToken.data;
+      logDebugStatic('Token: $token', 'GetServerKey');
 
       return token;
     });
