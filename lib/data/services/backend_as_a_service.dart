@@ -6,6 +6,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
 import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
 import 'package:qibla_and_prayer_times/data/models/device_info_model.dart';
+import 'package:qibla_and_prayer_times/data/models/payment_model.dart';
 import 'package:qibla_and_prayer_times/domain/entities/device_info_entity.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -43,6 +44,9 @@ class BackendAsAService {
   static const String noticeDoc = 'notice-bn';
   static const String appUpdateDoc = 'app-update';
   static const String deviceTokensCollection = 'device_tokens';
+  static const String paymentsCollection = 'payments';
+  static const String paymentType = 'payment_type';
+  static const String isActive = 'is_active';
 
   void _initAnalytics() {
     catchVoid(() {
@@ -238,5 +242,45 @@ class BackendAsAService {
           appVersion: '',
           lastActiveAt: DateTime.now(),
         );
+  }
+
+  Stream<List<BankPaymentModel>> getBankPaymentsStream() {
+    return _fireStore
+        .collection(paymentsCollection)
+        .where(paymentType, isEqualTo: 'bank')
+        .where(isActive, isEqualTo: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs
+          .map((doc) => catchAndReturn<BankPaymentModel>(() {
+                return BankPaymentModel.fromFirestore(doc.data());
+              }))
+          .where((model) => model != null)
+          .cast<BankPaymentModel>()
+          .toList();
+    }).handleError((error) {
+      logError('Error in bank payments stream: $error');
+      return <BankPaymentModel>[];
+    });
+  }
+
+  Stream<List<MobilePaymentModel>> getMobilePaymentsStream() {
+    return _fireStore
+        .collection(paymentsCollection)
+        .where(paymentType, isEqualTo: 'mobile')
+        .where(isActive, isEqualTo: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs
+          .map((doc) => catchAndReturn<MobilePaymentModel>(() {
+                return MobilePaymentModel.fromFirestore(doc.data());
+              }))
+          .where((model) => model != null)
+          .cast<MobilePaymentModel>()
+          .toList();
+    }).handleError((error) {
+      logError('Error in mobile payments stream: $error');
+      return <MobilePaymentModel>[];
+    });
   }
 }

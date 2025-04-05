@@ -6,10 +6,12 @@ import 'package:qibla_and_prayer_times/core/di/setup/setup_module.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/check_notification_permission_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/determine_first_run_use_case.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_active_waqt_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_bank_payments_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_device_info_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_juristic_method_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
+import 'package:qibla_and_prayer_times/domain/usecases/get_mobile_payments_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_notifications_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
 import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_tracker_data_usecase.dart';
@@ -53,6 +55,9 @@ class UsecaseSetup implements SetupModule {
       ..registerLazySingleton(() => GetNotificationsUseCase(locate(), locate()))
       ..registerLazySingleton(() => GetDeviceInfoUsecase(locate(), locate()))
       ..registerLazySingleton(() => RegisterDeviceUsecase(locate(), locate()))
+      ..registerLazySingleton(() => GetBankPaymentsUseCase(locate(), locate()))
+      ..registerLazySingleton(
+          () => GetMobilePaymentsUseCase(locate(), locate()))
       ..registerLazySingleton(() => CheckNotificationPermissionUsecase(
             locate(),
             locate(),

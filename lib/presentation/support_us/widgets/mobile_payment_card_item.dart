@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
-import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
 import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/payment_entity.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_container.dart';
+import 'package:qibla_and_prayer_times/presentation/support_us/widgets/payment_icon_row.dart';
 
 class MobilePaymentCardItem extends StatelessWidget {
   const MobilePaymentCardItem({
@@ -29,20 +28,7 @@ class MobilePaymentCardItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SvgImage(
-                  mobilePaymentEntity.iconPath,
-                  width: thirtyTwoPx,
-                  height: thirtyTwoPx,
-                ),
-                SvgImage(
-                  SvgPath.icCopy,
-                  color: mobilePaymentEntity.cardColor,
-                )
-              ],
-            ),
+            PaymentIconRow(mobilePaymentEntity: mobilePaymentEntity),
             gapH22,
             Text(
               mobilePaymentEntity.bankName,

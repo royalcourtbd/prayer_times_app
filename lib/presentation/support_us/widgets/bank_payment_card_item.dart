@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
 import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
@@ -30,10 +31,14 @@ class BankPaymentCardItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset(
-                SvgPath.logoIbbl,
+              CachedNetworkImage(
+                imageUrl: bankPaymentEntity.iconPath,
                 width: fiftyFivePx,
                 height: fiftyFivePx,
+                placeholder: (context, url) =>
+                    const Icon(Icons.image, color: Colors.grey),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.error, color: Colors.red),
               ),
               InkWell(
                 onTap: () {
@@ -61,6 +66,10 @@ class BankPaymentCardItem extends StatelessWidget {
           _buildLabelValueText(
             label: 'Branch Name: ',
             value: bankPaymentEntity.branchName,
+          ),
+          _buildLabelValueText(
+            label: 'District: ',
+            value: bankPaymentEntity.district!,
           ),
           _buildLabelValueText(
             label: 'Routing Number: ',

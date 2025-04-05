@@ -55,9 +55,7 @@ class ChooseCountryOrCityBottomSheet extends StatelessWidget {
                 SizedBox(
                   height: 70.percentHeight,
                   child: settingsPresenter.currentUiState.countries.isEmpty
-                      ? const Center(
-                          child:
-                              Text('No countries found')) // দেশ না পাওয়া গেলে
+                      ? const Center(child: Text('No countries found'))
                       : ListView.builder(
                           shrinkWrap: true,
                           itemCount:

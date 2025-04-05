@@ -35,7 +35,10 @@ class PresenterSetup implements SetupModule {
       ..registerLazySingleton(
           () => loadPresenter(NotificationPresenter(locate())))
       ..registerLazySingleton(() => loadPresenter(ContactUsPresenter()))
-      ..registerLazySingleton(() => loadPresenter(SupportUsPresenter()))
+      ..registerLazySingleton(() => loadPresenter(SupportUsPresenter(
+            locate(),
+            locate(),
+          )))
       ..registerLazySingleton(() => loadPresenter(RamadanCalendarPresenter(
             locate(),
             locate(),

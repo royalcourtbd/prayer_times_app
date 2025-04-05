@@ -6,6 +6,7 @@ import 'package:qibla_and_prayer_times/data/repositories/device_info_repository_
 import 'package:qibla_and_prayer_times/data/repositories/juristic_method_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/location_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/notification_repository_impl.dart';
+import 'package:qibla_and_prayer_times/data/repositories/payment_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/prayer_time_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/prayer_tracker_repository_impl.dart';
 import 'package:qibla_and_prayer_times/data/repositories/user_data_repository_impl.dart';
@@ -14,6 +15,7 @@ import 'package:qibla_and_prayer_times/domain/repositories/device_info_repositor
 import 'package:qibla_and_prayer_times/domain/repositories/juristic_method_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/location_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/notification_repository.dart';
+import 'package:qibla_and_prayer_times/domain/repositories/payment_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_time_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/prayer_tracker_repository.dart';
 import 'package:qibla_and_prayer_times/domain/repositories/user_data_repository.dart';
@@ -40,6 +42,8 @@ class RepositorySetup implements SetupModule {
       ..registerLazySingleton<NotificationRepository>(
           () => NotificationRepositoryImpl())
       ..registerLazySingleton<DeviceInfoRepository>(
-          () => DeviceInfoRepositoryImpl(locate(), locate(), locate()));
+          () => DeviceInfoRepositoryImpl(locate(), locate(), locate()))
+      ..registerLazySingleton<PaymentRepository>(
+          () => PaymentRepositoryImpl(locate(), locate()));
   }
 }

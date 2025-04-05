@@ -5,14 +5,12 @@ import 'package:qibla_and_prayer_times/domain/entities/payment_entity.dart';
 class SupportUsUiState extends BaseUiState {
   final List<BankPaymentEntity> bankPayments;
   final List<MobilePaymentEntity> mobilePayments;
-  final BuildContext? context;
 
   const SupportUsUiState({
     required super.isLoading,
     required super.userMessage,
     required this.bankPayments,
     required this.mobilePayments,
-    this.context,
   });
 
   factory SupportUsUiState.empty() {
@@ -21,7 +19,6 @@ class SupportUsUiState extends BaseUiState {
       userMessage: '',
       bankPayments: [],
       mobilePayments: [],
-      context: null,
     );
   }
 
@@ -31,7 +28,6 @@ class SupportUsUiState extends BaseUiState {
         userMessage,
         bankPayments,
         mobilePayments,
-        context,
       ];
 
   SupportUsUiState copyWith({
@@ -46,7 +42,6 @@ class SupportUsUiState extends BaseUiState {
       userMessage: userMessage ?? this.userMessage,
       bankPayments: bankPayments ?? this.bankPayments,
       mobilePayments: mobilePayments ?? this.mobilePayments,
-      context: context ?? this.context,
     );
   }
 }

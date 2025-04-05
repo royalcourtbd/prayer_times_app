@@ -5,10 +5,12 @@ import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_bui
 import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
 import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
 import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
+import 'package:qibla_and_prayer_times/core/utility/utility.dart';
 import 'package:qibla_and_prayer_times/domain/entities/payment_entity.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar.dart';
 import 'package:qibla_and_prayer_times/presentation/common/custom_container.dart';
 import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support_us_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support_us_ui_state.dart';
 import 'package:qibla_and_prayer_times/presentation/support_us/widgets/bank_payment_card_item.dart';
 import 'package:qibla_and_prayer_times/presentation/support_us/widgets/mobile_payment_card_item.dart';
 
@@ -20,31 +22,38 @@ class SupportUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    _supportUsPresenter.updateBuildContext(context);
     return PresentableWidgetBuilder(
-        presenter: _supportUsPresenter,
-        builder: () {
-          return Scaffold(
-            appBar: CustomAppBar(
-              title: 'Support Us',
-              theme: theme,
-            ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: padding15,
-                child: Column(
-                  spacing: sixteenPx,
-                  children: [
-                    const SizedBox(
-                      height: 150,
-                      width: double.infinity,
-                      child: SvgImage(SvgPath.imgCurrency),
-                    ),
-                    CustomContainer(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: twelvePx,
-                        children: [
+      presenter: _supportUsPresenter,
+      builder: () {
+        final SupportUsUiState uiState = _supportUsPresenter.currentUiState;
+
+        final bool hasActiveBankPayment = uiState.bankPayments
+            .any((bankPayment) => bankPayment.isActive == true);
+        final bool hasActiveMobilePayment = uiState.mobilePayments
+            .any((mobilePayment) => mobilePayment.isActive == true);
+
+        return Scaffold(
+          appBar: CustomAppBar(
+            title: 'Support Us',
+            theme: theme,
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: padding15,
+              child: Column(
+                spacing: sixteenPx,
+                children: [
+                  const SizedBox(
+                    height: 150,
+                    width: double.infinity,
+                    child: SvgImage(SvgPath.imgCurrency),
+                  ),
+                  CustomContainer(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: twelvePx,
+                      children: [
+                        if (hasActiveMobilePayment) ...[
                           Text(
                             'Tap to copy number - ',
                             style: theme.textTheme.bodyMedium!.copyWith(
@@ -54,8 +63,7 @@ class SupportUsPage extends StatelessWidget {
                           ),
                           GridView.builder(
                             padding: EdgeInsets.zero,
-                            itemCount: _supportUsPresenter
-                                .currentUiState.mobilePayments.length,
+                            itemCount: uiState.mobilePayments.length,
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
@@ -67,8 +75,7 @@ class SupportUsPage extends StatelessWidget {
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               final MobilePaymentEntity mobilePaymentEntity =
-                                  _supportUsPresenter
-                                      .currentUiState.mobilePayments[index];
+                                  uiState.mobilePayments[index];
 
                               return MobilePaymentCardItem(
                                 theme: theme,
@@ -81,6 +88,8 @@ class SupportUsPage extends StatelessWidget {
                             },
                           ),
                           gapH20,
+                        ],
+                        if (hasActiveBankPayment) ...[
                           Text(
                             'Bank Payment',
                             style: theme.textTheme.bodyMedium!.copyWith(
@@ -89,15 +98,13 @@ class SupportUsPage extends StatelessWidget {
                             ),
                           ),
                           ListView.builder(
-                            itemCount: _supportUsPresenter
-                                .currentUiState.bankPayments.length,
+                            itemCount: uiState.bankPayments.length,
                             padding: EdgeInsets.zero,
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               final BankPaymentEntity bankPaymentEntity =
-                                  _supportUsPresenter
-                                      .currentUiState.bankPayments[index];
+                                  uiState.bankPayments[index];
 
                               return BankPaymentCardItem(
                                 theme: theme,
@@ -110,13 +117,29 @@ class SupportUsPage extends StatelessWidget {
                             },
                           ),
                         ],
-                      ),
+                        if (!hasActiveMobilePayment &&
+                            !hasActiveBankPayment) ...[
+                          SizedBox(height: 25.percentWidth),
+                          Center(
+                            child: Text(
+                              'No payment methods found',
+                              style: theme.textTheme.bodyMedium!.copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: eighteenPx,
+                                color: context.color.titleColor,
+                              ),
+                            ),
+                          ),
+                        ]
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
