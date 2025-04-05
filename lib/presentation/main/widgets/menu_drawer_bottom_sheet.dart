@@ -9,6 +9,7 @@ import 'package:qibla_and_prayer_times/presentation/main/presenter/menu_drawer_p
 import 'package:qibla_and_prayer_times/presentation/main/widgets/drawer_top_widget.dart';
 import 'package:qibla_and_prayer_times/presentation/notification/ui/notification_page.dart';
 import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
+import 'package:qibla_and_prayer_times/presentation/support_us/ui/support_us_page.dart';
 
 class MenuDrawerBottomSheet extends StatelessWidget {
   MenuDrawerBottomSheet({super.key});
@@ -101,9 +102,8 @@ class MenuDrawerBottomSheet extends StatelessWidget {
                               SettingsGridItem(
                                 icon: SvgPath.icLovelyFill,
                                 title: 'Support Us',
-                                onTap: () => showMessage(
-                                  message: 'Under Construction',
-                                ),
+                                onTap: () =>
+                                    context.navigatorPush(SupportUsPage()),
                               ),
                               SettingsGridItem(
                                 icon: SvgPath.icSmsEdit,
