@@ -1,9 +1,9 @@
 // lib/data/repositories/prayer_tracker_repository_impl.dart
 
 import 'package:fpdart/fpdart.dart';
-import 'package:qibla_and_prayer_times/data/services/database/prayer_database.dart';
-import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/prayer_tracker_repository.dart';
+import 'package:prayer_times/data/services/database/prayer_database.dart';
+import 'package:prayer_times/domain/entities/prayer_tracker_entity.dart';
+import 'package:prayer_times/domain/repositories/prayer_tracker_repository.dart';
 
 class PrayerTrackerRepositoryImpl implements PrayerTrackerRepository {
   final PrayerDatabase _database;

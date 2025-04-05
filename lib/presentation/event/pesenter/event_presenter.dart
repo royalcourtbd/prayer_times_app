@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/event/pesenter/event_ui_state.dart';
+import 'package:prayer_times/core/base/base_presenter.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/presentation/event/pesenter/event_ui_state.dart';
 
 class EventPresenter extends BasePresenter<EventUiState> {
   final Obs<EventUiState> uiState = Obs(EventUiState.empty());

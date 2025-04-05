@@ -1,12 +1,12 @@
 import 'package:hijri/hijri_calendar.dart';
-import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
-import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
-import 'package:qibla_and_prayer_times/domain/entities/ramadan_day_entity.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_location_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_prayer_times_usecase.dart';
-import 'package:qibla_and_prayer_times/presentation/event/pesenter/ramadan_calendar_ui_state.dart';
+import 'package:prayer_times/core/base/base_presenter.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/domain/entities/location_entity.dart';
+import 'package:prayer_times/domain/entities/prayer_time_entity.dart';
+import 'package:prayer_times/domain/entities/ramadan_day_entity.dart';
+import 'package:prayer_times/domain/usecases/get_location_usecase.dart';
+import 'package:prayer_times/domain/usecases/get_prayer_times_usecase.dart';
+import 'package:prayer_times/presentation/event/pesenter/ramadan_calendar_ui_state.dart';
 import 'package:intl/intl.dart';
 
 class RamadanCalendarPresenter extends BasePresenter<RamadanCalendarUiState> {

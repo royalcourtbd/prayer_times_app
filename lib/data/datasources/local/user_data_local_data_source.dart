@@ -1,4 +1,4 @@
-import 'package:qibla_and_prayer_times/data/services/local_cache_service.dart';
+import 'package:prayer_times/data/services/local_cache_service.dart';
 
 class UserDataLocalDataSource {
   UserDataLocalDataSource(

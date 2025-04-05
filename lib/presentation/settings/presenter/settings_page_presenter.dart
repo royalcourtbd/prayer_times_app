@@ -1,20 +1,20 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
-import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/flutter_toast/debouncer.dart';
-import 'package:qibla_and_prayer_times/core/static/constants.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/domain/entities/country_entity.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_countries_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_juristic_method_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/search_countries_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/update_juristic_method_usecase.dart';
-import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_ui_state.dart';
-import 'package:qibla_and_prayer_times/presentation/settings/widgets/juristic_method_bottom_sheet.dart';
-import 'package:qibla_and_prayer_times/presentation/settings/widgets/select_location_bottomsheet.dart';
+import 'package:prayer_times/core/base/base_presenter.dart';
+import 'package:prayer_times/core/di/service_locator.dart';
+import 'package:prayer_times/core/external_libs/flutter_toast/debouncer.dart';
+import 'package:prayer_times/core/static/constants.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/domain/entities/country_entity.dart';
+import 'package:prayer_times/domain/usecases/get_countries_usecase.dart';
+import 'package:prayer_times/domain/usecases/get_juristic_method_usecase.dart';
+import 'package:prayer_times/domain/usecases/search_countries_usecase.dart';
+import 'package:prayer_times/domain/usecases/update_juristic_method_usecase.dart';
+import 'package:prayer_times/presentation/home/presenter/home_presenter.dart';
+import 'package:prayer_times/presentation/settings/presenter/settings_page_ui_state.dart';
+import 'package:prayer_times/presentation/settings/widgets/juristic_method_bottom_sheet.dart';
+import 'package:prayer_times/presentation/settings/widgets/select_location_bottomsheet.dart';
 
 class SettingsPagePresenter extends BasePresenter<SettingsPageUiState> {
   final GetJuristicMethodUseCase _getJuristicMethodUseCase;

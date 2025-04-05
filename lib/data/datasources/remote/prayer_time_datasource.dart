@@ -2,8 +2,8 @@
 
 import 'package:adhan/adhan.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:qibla_and_prayer_times/domain/entities/prayer_time_entity.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/juristic_method_repository.dart';
+import 'package:prayer_times/domain/entities/prayer_time_entity.dart';
+import 'package:prayer_times/domain/repositories/juristic_method_repository.dart';
 
 abstract class PrayerTimeDataSource {
   Future<PrayerTimeEntity> getPrayerTimes({

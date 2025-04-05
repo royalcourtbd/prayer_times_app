@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/animate_do/slides.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_builder.dart';
-import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_button.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_dropdown_field.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_modal_sheet.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_radio_list_tile.dart';
-import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/settings/widgets/choose_country_or_city_bottom_sheet.dart';
+import 'package:prayer_times/core/di/service_locator.dart';
+import 'package:prayer_times/core/external_libs/animate_do/slides.dart';
+import 'package:prayer_times/core/external_libs/presentable_widget_builder.dart';
+import 'package:prayer_times/core/static/ui_const.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/presentation/common/custom_button.dart';
+import 'package:prayer_times/presentation/common/custom_dropdown_field.dart';
+import 'package:prayer_times/presentation/common/custom_modal_sheet.dart';
+import 'package:prayer_times/presentation/common/custom_radio_list_tile.dart';
+import 'package:prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
+import 'package:prayer_times/presentation/settings/widgets/choose_country_or_city_bottom_sheet.dart';
 
 class SelectLocationBottomsheet extends StatelessWidget {
   SelectLocationBottomsheet({super.key});

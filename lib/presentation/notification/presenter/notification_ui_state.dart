@@ -1,5 +1,5 @@
-import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
-import 'package:qibla_and_prayer_times/domain/entities/notification_entity.dart';
+import 'package:prayer_times/core/base/base_ui_state.dart';
+import 'package:prayer_times/domain/entities/notification_entity.dart';
 
 class NotificationUiState extends BaseUiState {
   final List<NotificationEntity> notifications;

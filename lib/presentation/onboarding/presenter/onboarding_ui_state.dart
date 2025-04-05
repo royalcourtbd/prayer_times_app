@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
-import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
-import 'package:qibla_and_prayer_times/domain/entities/onboarding_content_entity.dart';
+import 'package:prayer_times/core/base/base_ui_state.dart';
+import 'package:prayer_times/core/static/svg_path.dart';
+import 'package:prayer_times/domain/entities/onboarding_content_entity.dart';
 
 class OnboardingUiState extends BaseUiState {
   const OnboardingUiState({

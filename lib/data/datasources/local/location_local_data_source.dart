@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:qibla_and_prayer_times/data/models/location_model.dart';
-import 'package:qibla_and_prayer_times/data/services/local_cache_service.dart';
-import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
+import 'package:prayer_times/data/models/location_model.dart';
+import 'package:prayer_times/data/services/local_cache_service.dart';
+import 'package:prayer_times/domain/entities/location_entity.dart';
 
 abstract class LocationLocalDataSource {
   Future<LocationEntity?> getCachedLocation();

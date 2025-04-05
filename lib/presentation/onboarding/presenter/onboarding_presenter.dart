@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
-import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/throttle_service.dart';
-import 'package:qibla_and_prayer_times/core/utility/number_utility.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/determine_first_run_use_case.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/save_first_time_use_case.dart';
-import 'package:qibla_and_prayer_times/presentation/main/presenter/main_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/main/ui/main_page.dart';
-import 'package:qibla_and_prayer_times/presentation/onboarding/presenter/onboarding_ui_state.dart';
-import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
+import 'package:prayer_times/core/base/base_presenter.dart';
+import 'package:prayer_times/core/di/service_locator.dart';
+import 'package:prayer_times/core/external_libs/throttle_service.dart';
+import 'package:prayer_times/core/utility/number_utility.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/domain/usecases/determine_first_run_use_case.dart';
+import 'package:prayer_times/domain/usecases/save_first_time_use_case.dart';
+import 'package:prayer_times/presentation/main/presenter/main_presenter.dart';
+import 'package:prayer_times/presentation/main/ui/main_page.dart';
+import 'package:prayer_times/presentation/onboarding/presenter/onboarding_ui_state.dart';
+import 'package:prayer_times/presentation/home/presenter/home_presenter.dart';
 
 class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
   final DetermineFirstRunUseCase _determineFirstRunUseCase;

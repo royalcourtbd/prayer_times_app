@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_builder.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
-import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
-import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/domain/entities/payment_entity.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_container.dart';
-import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support_us_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support_us_ui_state.dart';
-import 'package:qibla_and_prayer_times/presentation/support_us/widgets/bank_payment_card_item.dart';
-import 'package:qibla_and_prayer_times/presentation/support_us/widgets/mobile_payment_card_item.dart';
+import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:prayer_times/core/di/service_locator.dart';
+import 'package:prayer_times/core/external_libs/presentable_widget_builder.dart';
+import 'package:prayer_times/core/external_libs/svg_image.dart';
+import 'package:prayer_times/core/static/svg_path.dart';
+import 'package:prayer_times/core/static/ui_const.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/domain/entities/payment_entity.dart';
+import 'package:prayer_times/presentation/common/custom_app_bar.dart';
+import 'package:prayer_times/presentation/common/custom_container.dart';
+import 'package:prayer_times/presentation/support_us/presenter/support_us_presenter.dart';
+import 'package:prayer_times/presentation/support_us/presenter/support_us_ui_state.dart';
+import 'package:prayer_times/presentation/support_us/widgets/bank_payment_card_item.dart';
+import 'package:prayer_times/presentation/support_us/widgets/mobile_payment_card_item.dart';
 
 class SupportUsPage extends StatelessWidget {
   SupportUsPage({super.key});

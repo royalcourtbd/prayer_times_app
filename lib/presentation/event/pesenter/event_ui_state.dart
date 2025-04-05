@@ -1,5 +1,5 @@
-import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
-import 'package:qibla_and_prayer_times/presentation/event/pesenter/event_presenter.dart';
+import 'package:prayer_times/core/base/base_ui_state.dart';
+import 'package:prayer_times/presentation/event/pesenter/event_presenter.dart';
 
 class EventUiState extends BaseUiState {
   final String searchQuery;

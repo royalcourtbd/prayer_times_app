@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:qibla_and_prayer_times/core/base/base_use_case.dart';
-import 'package:qibla_and_prayer_times/domain/entities/notification_entity.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/notification_repository.dart';
+import 'package:prayer_times/core/base/base_use_case.dart';
+import 'package:prayer_times/domain/entities/notification_entity.dart';
+import 'package:prayer_times/domain/repositories/notification_repository.dart';
 
 class GetNotificationsUseCase extends BaseUseCase<List<NotificationEntity>> {
   final NotificationRepository _repository;

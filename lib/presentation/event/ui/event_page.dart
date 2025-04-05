@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_builder.dart';
-import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar.dart';
-import 'package:qibla_and_prayer_times/presentation/event/pesenter/event_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/event/ui/ramadan_calendar_page.dart';
-import 'package:qibla_and_prayer_times/presentation/event/widgets/holiday_section.dart';
-import 'package:qibla_and_prayer_times/presentation/event/widgets/ramadan_calendar_banner.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/event/widgets/event_calendar.dart';
+import 'package:prayer_times/core/di/service_locator.dart';
+import 'package:prayer_times/core/external_libs/presentable_widget_builder.dart';
+import 'package:prayer_times/core/static/ui_const.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/presentation/common/custom_app_bar.dart';
+import 'package:prayer_times/presentation/event/pesenter/event_presenter.dart';
+import 'package:prayer_times/presentation/event/ui/ramadan_calendar_page.dart';
+import 'package:prayer_times/presentation/event/widgets/holiday_section.dart';
+import 'package:prayer_times/presentation/event/widgets/ramadan_calendar_banner.dart';
+import 'package:prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
+import 'package:prayer_times/presentation/event/widgets/event_calendar.dart';
 
 class EventPage extends StatelessWidget {
   EventPage({super.key});

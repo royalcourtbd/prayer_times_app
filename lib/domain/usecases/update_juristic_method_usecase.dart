@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/juristic_method_repository.dart';
+import 'package:prayer_times/domain/repositories/juristic_method_repository.dart';
 
 class UpdateJuristicMethodUseCase {
   final JuristicMethodRepository _repository;

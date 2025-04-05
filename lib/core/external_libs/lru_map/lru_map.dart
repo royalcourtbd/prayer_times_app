@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:qibla_and_prayer_times/core/external_libs/lru_map/generating_iterable.dart';
+import 'package:prayer_times/core/external_libs/lru_map/generating_iterable.dart';
 
 abstract class LruMap<K, V> implements Map<K, V> {
   factory LruMap({int? maximumSize}) = LinkedLruHashMap<K, V>;

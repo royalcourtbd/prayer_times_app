@@ -1,10 +1,10 @@
 import 'package:arc_progress_bar_new/arc_progress_bar_new.dart';
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
-import 'package:qibla_and_prayer_times/presentation/home/presenter/home_presenter.dart';
+import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:prayer_times/core/static/ui_const.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/presentation/home/models/waqt.dart';
+import 'package:prayer_times/presentation/home/presenter/home_presenter.dart';
 
 class RemainingPrayerSection extends StatelessWidget {
   const RemainingPrayerSection({

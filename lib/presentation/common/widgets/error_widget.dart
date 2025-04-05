@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/presentation/common/widgets/custom_error_widget.dart';
+import 'package:prayer_times/presentation/common/widgets/custom_error_widget.dart';
 
 class ErrorWidgetClass extends StatelessWidget {
   const ErrorWidgetClass({

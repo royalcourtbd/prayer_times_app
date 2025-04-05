@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:fpdart/fpdart.dart';
-import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/domain/entities/payment_entity.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_bank_payments_usecase.dart';
-import 'package:qibla_and_prayer_times/domain/usecases/get_mobile_payments_usecase.dart';
-import 'package:qibla_and_prayer_times/presentation/support_us/presenter/support_us_ui_state.dart';
+import 'package:prayer_times/core/base/base_presenter.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/domain/entities/payment_entity.dart';
+import 'package:prayer_times/domain/usecases/get_bank_payments_usecase.dart';
+import 'package:prayer_times/domain/usecases/get_mobile_payments_usecase.dart';
+import 'package:prayer_times/presentation/support_us/presenter/support_us_ui_state.dart';
 
 class SupportUsPresenter extends BasePresenter<SupportUsUiState> {
   final Obs<SupportUsUiState> uiState = Obs(SupportUsUiState.empty());

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
 
 SizedBox gapH2 = SizedBox(height: twoPx);
 SizedBox gapH3 = SizedBox(height: threePx);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/base/base_entity.dart';
+import 'package:prayer_times/core/base/base_entity.dart';
 
 class MobilePaymentEntity extends BaseEntity {
   final String paymentType;

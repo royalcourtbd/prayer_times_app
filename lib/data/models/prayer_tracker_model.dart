@@ -1,5 +1,5 @@
-import 'package:qibla_and_prayer_times/domain/entities/prayer_tracker_entity.dart';
-import 'package:qibla_and_prayer_times/presentation/home/models/waqt.dart';
+import 'package:prayer_times/domain/entities/prayer_tracker_entity.dart';
+import 'package:prayer_times/presentation/home/models/waqt.dart';
 
 class PrayerTrackerModel extends PrayerTrackerEntity {
   const PrayerTrackerModel({

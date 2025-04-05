@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/lru_map/lru_map.dart';
-import 'package:qibla_and_prayer_times/data/services/running_compute.dart';
+import 'package:prayer_times/core/external_libs/lru_map/lru_map.dart';
+import 'package:prayer_times/data/services/running_compute.dart';
 
 import 'trial_utility.dart';
 

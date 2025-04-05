@@ -1,8 +1,8 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:qibla_and_prayer_times/core/base/base_use_case.dart';
-import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/location_repository.dart';
-import 'package:qibla_and_prayer_times/domain/service/error_message_handler.dart';
+import 'package:prayer_times/core/base/base_use_case.dart';
+import 'package:prayer_times/domain/entities/location_entity.dart';
+import 'package:prayer_times/domain/repositories/location_repository.dart';
+import 'package:prayer_times/domain/service/error_message_handler.dart';
 
 class GetLocationUseCase extends BaseUseCase<LocationEntity> {
   final LocationRepository _repository;

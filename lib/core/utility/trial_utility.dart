@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:qibla_and_prayer_times/core/static/constants.dart';
+import 'package:prayer_times/core/static/constants.dart';
 
 import 'logger_utility.dart';
 

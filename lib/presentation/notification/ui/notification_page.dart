@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/presentable_widget_builder.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
-import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
-import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_button.dart';
-import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/notification/presenter/notification_ui_state.dart';
+import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:prayer_times/core/di/service_locator.dart';
+import 'package:prayer_times/core/external_libs/presentable_widget_builder.dart';
+import 'package:prayer_times/core/external_libs/svg_image.dart';
+import 'package:prayer_times/core/static/svg_path.dart';
+import 'package:prayer_times/core/static/ui_const.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/presentation/common/custom_app_bar.dart';
+import 'package:prayer_times/presentation/common/custom_button.dart';
+import 'package:prayer_times/presentation/notification/presenter/notification_presenter.dart';
+import 'package:prayer_times/presentation/notification/presenter/notification_ui_state.dart';
 
-import 'package:qibla_and_prayer_times/domain/entities/notification_entity.dart';
-import 'package:qibla_and_prayer_times/presentation/notification/ui/notification_details_page.dart';
+import 'package:prayer_times/domain/entities/notification_entity.dart';
+import 'package:prayer_times/presentation/notification/ui/notification_details_page.dart';
 
 class NotificationPage extends StatelessWidget {
   final NotificationPresenter _presenter = locate<NotificationPresenter>();

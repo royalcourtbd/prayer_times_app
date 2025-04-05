@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:qibla_and_prayer_times/core/di/service_locator.dart';
-import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/presentation/common/custom_app_bar.dart';
-import 'package:qibla_and_prayer_times/presentation/common/settings_grid_item.dart';
-import 'package:qibla_and_prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/settings/widgets/juristic_method_bottom_sheet.dart';
+import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:prayer_times/core/di/service_locator.dart';
+import 'package:prayer_times/core/static/svg_path.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/presentation/common/custom_app_bar.dart';
+import 'package:prayer_times/presentation/common/settings_grid_item.dart';
+import 'package:prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
+import 'package:prayer_times/presentation/settings/widgets/juristic_method_bottom_sheet.dart';
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});

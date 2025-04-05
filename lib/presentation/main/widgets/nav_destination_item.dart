@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/svg_image.dart';
+import 'package:prayer_times/core/external_libs/svg_image.dart';
 
 class NavDestinationItem extends StatelessWidget {
   const NavDestinationItem({

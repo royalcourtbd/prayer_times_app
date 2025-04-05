@@ -1,8 +1,8 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:qibla_and_prayer_times/core/static/svg_path.dart';
-import 'package:qibla_and_prayer_times/domain/entities/notification_entity.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/notification_repository.dart';
-import 'package:qibla_and_prayer_times/data/models/notification_model.dart';
+import 'package:prayer_times/core/static/svg_path.dart';
+import 'package:prayer_times/domain/entities/notification_entity.dart';
+import 'package:prayer_times/domain/repositories/notification_repository.dart';
+import 'package:prayer_times/data/models/notification_model.dart';
 
 class NotificationRepositoryImpl extends NotificationRepository {
   @override

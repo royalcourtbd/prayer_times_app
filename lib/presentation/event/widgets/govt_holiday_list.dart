@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:qibla_and_prayer_times/presentation/event/pesenter/event_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/event/widgets/govt_holiday_list_item.dart';
+import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:prayer_times/presentation/event/pesenter/event_presenter.dart';
+import 'package:prayer_times/presentation/event/widgets/govt_holiday_list_item.dart';
 
 class GovtHolidayList extends StatelessWidget {
   const GovtHolidayList({

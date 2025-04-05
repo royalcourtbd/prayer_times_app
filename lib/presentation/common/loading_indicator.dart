@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/loading_animation/ink_drop_loading_animation.dart';
+import 'package:prayer_times/core/external_libs/loading_animation/ink_drop_loading_animation.dart';
 
 class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator(

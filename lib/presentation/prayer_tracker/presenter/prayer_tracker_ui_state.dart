@@ -1,7 +1,7 @@
 // prayer_time_ui_state.dart
 
-import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
-import 'package:qibla_and_prayer_times/data/models/prayer_tracker_model.dart';
+import 'package:prayer_times/core/base/base_ui_state.dart';
+import 'package:prayer_times/data/models/prayer_tracker_model.dart';
 
 // lib/presentation/prayer_tracker/presenter/prayer_tracker_ui_state.dart
 

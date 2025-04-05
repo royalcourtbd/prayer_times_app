@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:qibla_and_prayer_times/data/services/database/prayer_database.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/juristic_method_repository.dart';
+import 'package:prayer_times/data/services/database/prayer_database.dart';
+import 'package:prayer_times/domain/repositories/juristic_method_repository.dart';
 
 class JuristicMethodRepositoryImpl implements JuristicMethodRepository {
   final PrayerDatabase _database;

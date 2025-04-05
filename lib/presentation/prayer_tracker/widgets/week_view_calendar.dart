@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hijri/hijri_calendar.dart';
-import 'package:qibla_and_prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
+import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
+import 'package:prayer_times/core/static/ui_const.dart';
 
-import 'package:qibla_and_prayer_times/presentation/prayer_tracker/model/calendar_date_cell_view_model.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/calendar_date_cell.dart';
-import 'package:qibla_and_prayer_times/presentation/prayer_tracker/widgets/day_name_list.dart';
+import 'package:prayer_times/presentation/prayer_tracker/model/calendar_date_cell_view_model.dart';
+import 'package:prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
+import 'package:prayer_times/presentation/prayer_tracker/widgets/calendar_date_cell.dart';
+import 'package:prayer_times/presentation/prayer_tracker/widgets/day_name_list.dart';
 
 class WeekViewCalendar extends StatelessWidget {
   const WeekViewCalendar({

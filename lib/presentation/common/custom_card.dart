@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/static/ui_const.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/core/static/ui_const.dart';
+import 'package:prayer_times/core/utility/utility.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({

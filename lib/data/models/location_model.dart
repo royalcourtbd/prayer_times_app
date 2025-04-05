@@ -1,4 +1,4 @@
-import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
+import 'package:prayer_times/domain/entities/location_entity.dart';
 
 class LocationModel extends LocationEntity {
   const LocationModel({

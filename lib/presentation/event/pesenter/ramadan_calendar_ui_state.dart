@@ -1,6 +1,6 @@
-import 'package:qibla_and_prayer_times/core/base/base_ui_state.dart';
-import 'package:qibla_and_prayer_times/domain/entities/location_entity.dart';
-import 'package:qibla_and_prayer_times/domain/entities/ramadan_day_entity.dart';
+import 'package:prayer_times/core/base/base_ui_state.dart';
+import 'package:prayer_times/domain/entities/location_entity.dart';
+import 'package:prayer_times/domain/entities/ramadan_day_entity.dart';
 
 class RamadanCalendarUiState extends BaseUiState {
   final List<RamadanDayEntity> ramadanCalendar;

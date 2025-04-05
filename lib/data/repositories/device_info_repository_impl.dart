@@ -1,11 +1,11 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
-import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
-import 'package:qibla_and_prayer_times/data/datasources/remote/device_info_remote_data_source.dart';
-import 'package:qibla_and_prayer_times/data/services/backend_as_a_service.dart';
-import 'package:qibla_and_prayer_times/data/services/local_cache_service.dart';
-import 'package:qibla_and_prayer_times/domain/entities/device_info_entity.dart';
-import 'package:qibla_and_prayer_times/domain/repositories/device_info_repository.dart';
+import 'package:prayer_times/core/utility/logger_utility.dart';
+import 'package:prayer_times/core/utility/trial_utility.dart';
+import 'package:prayer_times/data/datasources/remote/device_info_remote_data_source.dart';
+import 'package:prayer_times/data/services/backend_as_a_service.dart';
+import 'package:prayer_times/data/services/local_cache_service.dart';
+import 'package:prayer_times/domain/entities/device_info_entity.dart';
+import 'package:prayer_times/domain/repositories/device_info_repository.dart';
 
 class DeviceInfoRepositoryImpl extends DeviceInfoRepository {
   DeviceInfoRepositoryImpl(this._deviceInfoRemoteDataSource,

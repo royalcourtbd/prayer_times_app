@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:qibla_and_prayer_times/core/utility/logger_utility.dart';
-import 'package:qibla_and_prayer_times/core/utility/trial_utility.dart';
+import 'package:prayer_times/core/utility/logger_utility.dart';
+import 'package:prayer_times/core/utility/trial_utility.dart';
 
 const String _secretVaultName = "local_cache";
 

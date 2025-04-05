@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
-import 'package:qibla_and_prayer_times/core/base/base_presenter.dart';
-import 'package:qibla_and_prayer_times/core/utility/utility.dart';
-import 'package:qibla_and_prayer_times/domain/service/time_service.dart';
-import 'package:qibla_and_prayer_times/presentation/main/presenter/main_ui_state.dart';
+import 'package:prayer_times/core/base/base_presenter.dart';
+import 'package:prayer_times/core/utility/utility.dart';
+import 'package:prayer_times/domain/service/time_service.dart';
+import 'package:prayer_times/presentation/main/presenter/main_ui_state.dart';
 
 class MainPresenter extends BasePresenter<MainUiState> {
   final TimeService _timeService;

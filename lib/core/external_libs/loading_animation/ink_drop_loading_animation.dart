@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/external_libs/loading_animation/draw_arc.dart';
+import 'package:prayer_times/core/external_libs/loading_animation/draw_arc.dart';
 
 class InkDropLoading extends StatefulWidget {
   const InkDropLoading({

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qibla_and_prayer_times/core/config/prayer_time_app_color.dart';
+import 'package:prayer_times/core/config/prayer_time_app_color.dart';
 
 class PrayerTimeThemeColor extends ThemeExtension<PrayerTimeThemeColor> {
   // Existing properties

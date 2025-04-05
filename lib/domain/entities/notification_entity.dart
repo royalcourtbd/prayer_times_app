@@ -1,4 +1,4 @@
-import 'package:qibla_and_prayer_times/core/base/base_entity.dart';
+import 'package:prayer_times/core/base/base_entity.dart';
 
 class NotificationEntity extends BaseEntity {
   final String id;
