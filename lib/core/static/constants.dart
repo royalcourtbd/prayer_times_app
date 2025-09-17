@@ -18,18 +18,18 @@ const List<Color> availableColors = [
   Color(0xff90A4AE),
 ];
 
-const String packageName = "com.oratiq.prayer_times";
+const String packageName = "com.sarahtech.prayer_times";
 const String appStoreAppId = "1324615850";
 
 const String playStoreUrl =
     "https://play.google.com/store/apps/details?id=$packageName";
 const String appStoreUrl =
     "https://apps.apple.com/sa/app/al-hadith/id$appStoreAppId";
-const String websiteUrl = "https://oratiq.com";
+const String websiteUrl = "https://sarahtech.com";
 
 //==============================================//
-const String reportEmailAddress = 'report.irdfoundation@gmail.com';
-const String donationUrl = 'https://irdfoundation.com/sadaqa-jaria.html';
+const String reportEmailAddress = '';
+const String donationUrl = 'https://sarahtech.com/sadaqa-jaria.html';
 const String messengerUrl = "https://m.me/ihadis.official";
 const String twitterUrl = "https://twitter.com/irdofficial";
 const String facebookGroupUrl = "https://www.facebook.com/groups/irdofficial";

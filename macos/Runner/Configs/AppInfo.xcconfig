@@ -8,7 +8,7 @@
 PRODUCT_NAME = qibla_and_prayer_times
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.oratiq.prayerTimes
+PRODUCT_BUNDLE_IDENTIFIER = com.sarahTech.prayerTimes
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2024 com.oratiq. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 com.sarahTech. All rights reserved.
