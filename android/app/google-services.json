@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "648956975620",
+    "project_id": "prayer-times-15ad1",
+    "storage_bucket": "prayer-times-15ad1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648956975620:android:25d7fb04601943a4ff3351",
+        "android_client_info": {
+          "package_name": "com.sarahtech.prayer_times"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlSEBQUa2pc7MS0WvAH9x-S04okOcIcao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
