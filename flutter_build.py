@@ -9,6 +9,14 @@ import glob
 import re  # Added for git tag functionality
 from functools import wraps
 
+# Cross-platform color support
+try:
+    import colorama
+    if platform.system() == "Windows":
+        colorama.init(autoreset=True)
+except ImportError:
+    pass
+
 # Colors for output
 RED = '\033[0;31m'
 GREEN = '\033[0;32m'
@@ -49,13 +57,18 @@ def show_loading(description, process):
         process: Process object to monitor
     """
     spinner_index = 0
-    braille_spinner_list = '⡿⣟⣯⣷⣾⣽⣻⢿'
+    # Use different spinners based on OS
+    if platform.system() == "Windows":
+        braille_spinner_list = '|/-\\'
+    else:
+        braille_spinner_list = '⡿⣟⣯⣷⣾⣽⣻⢿'
+    
     print(description, end='', flush=True)
     # Continue spinning while the process is running
     while process.poll() is None:
         print(f"\b{MAGENTA}{braille_spinner_list[spinner_index]}{NC}", end='', flush=True)
         spinner_index = (spinner_index + 1) % len(braille_spinner_list)
-        time.sleep(0.025)
+        time.sleep(0.1 if platform.system() == "Windows" else 0.025)
     stdout, stderr = process.communicate()
     # Display success or failure icon based on the process exit status
     if process.returncode == 0:
@@ -68,9 +81,15 @@ def show_loading(description, process):
         print(f"\b{CROSS} ", flush=True)
         # Nicher ei stdout statement ta comment out korle r command er out put dekha jabe na.
         if stdout:
-            print(f"\n{GREEN}Output:\n{stdout.decode()}{NC}")
+            try:
+                print(f"\n{GREEN}Output:\n{stdout.decode('utf-8', errors='ignore')}{NC}")
+            except:
+                print(f"\n{GREEN}Output:\n{stdout}{NC}")
         if stderr:
-            print(f"\n{RED}Error Output:\n{stderr.decode()}{NC}")
+            try:
+                print(f"\n{RED}Error Output:\n{stderr.decode('utf-8', errors='ignore')}{NC}")
+            except:
+                print(f"\n{RED}Error Output:\n{stderr}{NC}")
         return False
 
 def display_apk_size():
@@ -91,24 +110,41 @@ def run_flutter_command(cmd_list, description):
         cmd_list: List of command arguments
         description: Description to show with spinner
     """
+    # Windows compatibility for shell commands
+    shell_needed = platform.system() == "Windows" and cmd_list[0] in ['timeout', 'start', 'flutter', 'dart']
+    
     process = subprocess.Popen(
         cmd_list,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stderr=subprocess.PIPE,
+        shell=shell_needed,
+        text=True if sys.version_info >= (3, 7) else False,
+        encoding='utf-8' if sys.version_info >= (3, 6) else None,
+        errors='ignore' if sys.version_info >= (3, 6) else None
     )
     return show_loading(description, process)
 
 def open_directory(directory_path):
     """Opens a directory based on the operating system"""
     try:
+        # Normalize path for the current OS
+        norm_path = os.path.normpath(directory_path)
+        
+        # Check if directory exists
+        if not os.path.exists(norm_path):
+            print(f"{YELLOW}Warning: Directory does not exist: {norm_path}{NC}")
+            print(f"{YELLOW}Creating directory...{NC}")
+            os.makedirs(norm_path, exist_ok=True)
+            
         if platform.system() == "Darwin":  # macOS
-            subprocess.run(["open", directory_path])
+            subprocess.run(["open", norm_path])
         elif platform.system() == "Linux":
-            subprocess.run(["xdg-open", directory_path])
+            subprocess.run(["xdg-open", norm_path])
         elif platform.system() == "Windows":
-            subprocess.run(["start", directory_path], shell=True)
+            # Use os.startfile for Windows - more reliable
+            os.startfile(norm_path)
         else:
-            print(f"Cannot open directory automatically. Please check: {directory_path}")
+            print(f"Cannot open directory automatically. Please check: {norm_path}")
     except Exception as e:
         print(f"Error opening directory: {e}")
         print(f"Please check: {directory_path}")
@@ -290,8 +326,11 @@ def update_pods():
     # Delete Podfile.lock
     try:
         os.remove("Podfile.lock")
-        # Use a dummy process for the loading animation
-        run_flutter_command(["sleep", "0.1"], "Removing Podfile.lock                                 ")
+        # Use platform-specific dummy process for the loading animation
+        if platform.system() == "Windows":
+            run_flutter_command(["timeout", "/t", "1", "/nobreak"], "Removing Podfile.lock                                 ")
+        else:
+            run_flutter_command(["sleep", "0.1"], "Removing Podfile.lock                                 ")
     except FileNotFoundError:
         pass
     # Update pod repo
@@ -309,7 +348,7 @@ def update_pods():
 def get_version_from_pubspec():
     """Get the version from pubspec.yaml using regex"""
     if os.path.isfile("pubspec.yaml"):
-        with open("pubspec.yaml", 'r') as file:
+        with open("pubspec.yaml", 'r', encoding='utf-8') as file:
             try:
                 content = file.read()
                 # Use regex to find the version field in pubspec.yaml
