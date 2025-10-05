@@ -40,10 +40,10 @@ class NotificationServiceImpl implements NotificationService {
     );
     if (notificationSettings.authorizationStatus ==
         AuthorizationStatus.authorized) {
-      print('Notification permission granted');
+      logDebug('Notification permission granted');
     } else if (notificationSettings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      print('Notification permission provisional');
+      logDebug('Notification permission provisional');
     } else {
       showMessage(
         message: 'Notification permission denied',
