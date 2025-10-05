@@ -1,4 +1,4 @@
-import 'package:prayer_times/domain/entities/notification_entity.dart';
+import 'package:salat_times/domain/entities/notification_entity.dart';
 
 class NotificationModel extends NotificationEntity {
   const NotificationModel({

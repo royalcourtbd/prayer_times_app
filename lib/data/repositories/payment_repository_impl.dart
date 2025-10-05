@@ -1,8 +1,8 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:prayer_times/data/datasources/remote/payment_remote_data_source.dart';
-import 'package:prayer_times/domain/entities/payment_entity.dart';
-import 'package:prayer_times/domain/repositories/payment_repository.dart';
-import 'package:prayer_times/domain/service/error_message_handler.dart';
+import 'package:salat_times/data/datasources/remote/payment_remote_data_source.dart';
+import 'package:salat_times/domain/entities/payment_entity.dart';
+import 'package:salat_times/domain/repositories/payment_repository.dart';
+import 'package:salat_times/domain/service/error_message_handler.dart';
 
 class PaymentRepositoryImpl implements PaymentRepository {
   final PaymentRemoteDataSource _paymentRemoteDataSource;

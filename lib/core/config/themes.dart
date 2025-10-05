@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/config/prayer_time_app_color.dart';
-import 'package:prayer_times/core/config/prayer_time_theme_color.dart';
-import 'package:prayer_times/core/static/font_family.dart';
+import 'package:salat_times/core/config/prayer_time_app_color.dart';
+import 'package:salat_times/core/config/prayer_time_theme_color.dart';
+import 'package:salat_times/core/static/font_family.dart';
 
 class PrayerTimeTheme {
   PrayerTimeTheme._();

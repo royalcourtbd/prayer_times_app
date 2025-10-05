@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/utility/utility.dart';
+import 'package:salat_times/core/utility/utility.dart';
 
 class CustomSwitch extends StatelessWidget {
   final bool value;

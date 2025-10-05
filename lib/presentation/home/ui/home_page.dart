@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:prayer_times/core/di/service_locator.dart';
-import 'package:prayer_times/core/external_libs/presentable_widget_builder.dart';
-import 'package:prayer_times/core/static/svg_path.dart';
-import 'package:prayer_times/core/static/ui_const.dart';
-import 'package:prayer_times/core/utility/utility.dart';
-import 'package:prayer_times/presentation/common/rounded_top_container.dart';
-import 'package:prayer_times/presentation/home/presenter/home_presenter.dart';
-import 'package:prayer_times/presentation/home/widgets/home_page_app_bar.dart';
-import 'package:prayer_times/presentation/home/widgets/clock_section.dart';
-import 'package:prayer_times/presentation/home/widgets/home_prayer_tracker.dart';
-import 'package:prayer_times/presentation/home/widgets/location_section.dart';
-import 'package:prayer_times/presentation/home/widgets/prayer_time_list.dart';
-import 'package:prayer_times/presentation/home/widgets/ramadan_tracker_section.dart';
-import 'package:prayer_times/presentation/home/widgets/remaining_prayer_section.dart';
-import 'package:prayer_times/presentation/main/widgets/menu_drawer_bottom_sheet.dart';
+import 'package:salat_times/core/config/prayer_time_app_screen.dart';
+import 'package:salat_times/core/di/service_locator.dart';
+import 'package:salat_times/core/external_libs/presentable_widget_builder.dart';
+import 'package:salat_times/core/static/svg_path.dart';
+import 'package:salat_times/core/static/ui_const.dart';
+import 'package:salat_times/core/utility/utility.dart';
+import 'package:salat_times/presentation/common/rounded_top_container.dart';
+import 'package:salat_times/presentation/home/presenter/home_presenter.dart';
+import 'package:salat_times/presentation/home/widgets/home_page_app_bar.dart';
+import 'package:salat_times/presentation/home/widgets/clock_section.dart';
+import 'package:salat_times/presentation/home/widgets/home_prayer_tracker.dart';
+import 'package:salat_times/presentation/home/widgets/location_section.dart';
+import 'package:salat_times/presentation/home/widgets/prayer_time_list.dart';
+import 'package:salat_times/presentation/home/widgets/ramadan_tracker_section.dart';
+import 'package:salat_times/presentation/home/widgets/remaining_prayer_section.dart';
+import 'package:salat_times/presentation/main/widgets/menu_drawer_bottom_sheet.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});

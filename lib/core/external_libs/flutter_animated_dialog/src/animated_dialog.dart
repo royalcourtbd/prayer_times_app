@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:math' as math;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:prayer_times/core/external_libs/flutter_animated_dialog/src/custom_dialog_transitions.dart';
+import 'package:salat_times/core/external_libs/flutter_animated_dialog/src/custom_dialog_transitions.dart';
 
 bool isShowing = false;
 

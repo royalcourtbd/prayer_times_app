@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/presentation/main/presenter/main_presenter.dart';
+import 'package:salat_times/presentation/main/presenter/main_presenter.dart';
 
 class DoubleTapBackToExitApp extends StatelessWidget {
   const DoubleTapBackToExitApp({

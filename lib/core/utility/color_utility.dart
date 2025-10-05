@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/external_libs/lru_map/lru_map.dart';
-import 'package:prayer_times/data/services/running_compute.dart';
+import 'package:salat_times/core/external_libs/lru_map/lru_map.dart';
+import 'package:salat_times/data/services/running_compute.dart';
 
 import 'trial_utility.dart';
 

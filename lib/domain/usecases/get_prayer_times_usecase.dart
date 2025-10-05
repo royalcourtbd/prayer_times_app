@@ -1,10 +1,10 @@
 // lib/domain/usecases/get_prayer_times_usecase.dart
 
 import 'package:fpdart/fpdart.dart';
-import 'package:prayer_times/core/base/base_use_case.dart';
-import 'package:prayer_times/domain/entities/prayer_time_entity.dart';
-import 'package:prayer_times/domain/repositories/prayer_time_repository.dart';
-import 'package:prayer_times/domain/service/error_message_handler.dart';
+import 'package:salat_times/core/base/base_use_case.dart';
+import 'package:salat_times/domain/entities/prayer_time_entity.dart';
+import 'package:salat_times/domain/repositories/prayer_time_repository.dart';
+import 'package:salat_times/domain/service/error_message_handler.dart';
 
 class GetPrayerTimesUseCase extends BaseUseCase<PrayerTimeEntity> {
   final PrayerTimeRepository _repository;

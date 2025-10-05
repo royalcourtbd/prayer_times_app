@@ -1,4 +1,4 @@
-import 'package:prayer_times/domain/entities/location_entity.dart';
+import 'package:salat_times/domain/entities/location_entity.dart';
 
 class LocationModel extends LocationEntity {
   const LocationModel({

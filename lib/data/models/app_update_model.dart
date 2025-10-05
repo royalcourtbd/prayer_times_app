@@ -1,4 +1,4 @@
-import 'package:prayer_times/domain/entities/app_update_entity.dart';
+import 'package:salat_times/domain/entities/app_update_entity.dart';
 
 class AppUpdateModel extends AppUpdateEntity {
   const AppUpdateModel({

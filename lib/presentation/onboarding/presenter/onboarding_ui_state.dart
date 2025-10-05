@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/base/base_ui_state.dart';
-import 'package:prayer_times/core/static/svg_path.dart';
-import 'package:prayer_times/domain/entities/onboarding_content_entity.dart';
+import 'package:salat_times/core/base/base_ui_state.dart';
+import 'package:salat_times/core/static/svg_path.dart';
+import 'package:salat_times/domain/entities/onboarding_content_entity.dart';
 
 class OnboardingUiState extends BaseUiState {
   const OnboardingUiState({

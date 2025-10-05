@@ -1,4 +1,4 @@
-import 'package:prayer_times/data/services/local_cache_service.dart';
+import 'package:salat_times/data/services/local_cache_service.dart';
 
 class UserDataLocalDataSource {
   UserDataLocalDataSource(

@@ -1,5 +1,5 @@
-import 'package:prayer_times/core/base/base_ui_state.dart';
-import 'package:prayer_times/presentation/event/pesenter/event_presenter.dart';
+import 'package:salat_times/core/base/base_ui_state.dart';
+import 'package:salat_times/presentation/event/pesenter/event_presenter.dart';
 
 class EventUiState extends BaseUiState {
   final String searchQuery;

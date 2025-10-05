@@ -1,6 +1,6 @@
 // lib/domain/repositories/prayer_tracker_repository.dart
 import 'package:fpdart/fpdart.dart';
-import 'package:prayer_times/domain/entities/prayer_tracker_entity.dart';
+import 'package:salat_times/domain/entities/prayer_tracker_entity.dart';
 
 abstract class PrayerTrackerRepository {
   Future<Either<String, void>> savePrayerTrackerData(

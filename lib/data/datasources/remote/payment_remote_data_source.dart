@@ -1,6 +1,6 @@
-import 'package:prayer_times/core/utility/logger_utility.dart';
-import 'package:prayer_times/data/models/payment_model.dart';
-import 'package:prayer_times/data/services/backend_as_a_service.dart';
+import 'package:salat_times/core/utility/logger_utility.dart';
+import 'package:salat_times/data/models/payment_model.dart';
+import 'package:salat_times/data/services/backend_as_a_service.dart';
 
 abstract class PaymentRemoteDataSource {
   Stream<List<BankPaymentModel>> getBankPaymentsStream();

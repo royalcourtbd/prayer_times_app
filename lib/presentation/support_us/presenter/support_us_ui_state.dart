@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/base/base_ui_state.dart';
-import 'package:prayer_times/domain/entities/payment_entity.dart';
+import 'package:salat_times/core/base/base_ui_state.dart';
+import 'package:salat_times/domain/entities/payment_entity.dart';
 
 class SupportUsUiState extends BaseUiState {
   final List<BankPaymentEntity> bankPayments;

@@ -1,5 +1,5 @@
-import 'package:prayer_times/core/utility/trial_utility.dart';
-import 'package:prayer_times/data/services/backend_as_a_service.dart';
+import 'package:salat_times/core/utility/trial_utility.dart';
+import 'package:salat_times/data/services/backend_as_a_service.dart';
 
 class InfoRemoteDataSourse {
   InfoRemoteDataSourse(this._backendAsAService);

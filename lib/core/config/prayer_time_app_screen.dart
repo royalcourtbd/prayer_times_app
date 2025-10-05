@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:prayer_times/core/utility/logger_utility.dart';
-import 'package:prayer_times/presentation/prayer_times.dart';
+import 'package:salat_times/core/utility/logger_utility.dart';
+import 'package:salat_times/presentation/prayer_times.dart';
 
 /// Utility class for retrieving the screen dimensions of the device.
 ///

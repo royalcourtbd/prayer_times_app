@@ -1,7 +1,5 @@
 import 'dart:async';
-
-import 'package:prayer_times/core/static/constants.dart';
-
+import 'package:salat_times/core/static/constants.dart';
 import 'logger_utility.dart';
 
 // These functions provide error handling and logging capabilities that can be

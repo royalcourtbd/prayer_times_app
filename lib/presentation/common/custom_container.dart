@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/static/ui_const.dart';
-import 'package:prayer_times/core/utility/utility.dart';
+import 'package:salat_times/core/static/ui_const.dart';
+import 'package:salat_times/core/utility/utility.dart';
 
 class CustomContainer extends StatelessWidget {
   const CustomContainer({

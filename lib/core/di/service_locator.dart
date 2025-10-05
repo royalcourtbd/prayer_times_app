@@ -16,12 +16,12 @@
 // code changes and minimizes potential errors.
 import 'package:get_it/get_it.dart';
 
-import 'package:prayer_times/core/base/base_presenter.dart';
-import 'package:prayer_times/core/di/setup/datasource_setup.dart';
-import 'package:prayer_times/core/di/setup/presenter_setup.dart';
-import 'package:prayer_times/core/di/setup/repository_setup.dart';
-import 'package:prayer_times/core/di/setup/service_setup.dart';
-import 'package:prayer_times/core/di/setup/usecase_setup.dart';
+import 'package:salat_times/core/base/base_presenter.dart';
+import 'package:salat_times/core/di/setup/datasource_setup.dart';
+import 'package:salat_times/core/di/setup/presenter_setup.dart';
+import 'package:salat_times/core/di/setup/repository_setup.dart';
+import 'package:salat_times/core/di/setup/service_setup.dart';
+import 'package:salat_times/core/di/setup/usecase_setup.dart';
 
 final GetIt _serviceLocator = GetIt.instance;
 

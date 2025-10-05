@@ -1,7 +1,7 @@
 // lib/presentation/prayer_time/models/waqt.dart
 
-import 'package:prayer_times/core/static/svg_path.dart';
-import 'package:prayer_times/core/utility/utility.dart';
+import 'package:salat_times/core/static/svg_path.dart';
+import 'package:salat_times/core/utility/utility.dart';
 
 enum WaqtType {
   fajr,

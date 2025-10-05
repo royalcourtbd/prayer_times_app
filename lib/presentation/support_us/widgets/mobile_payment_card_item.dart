@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:prayer_times/core/static/ui_const.dart';
-import 'package:prayer_times/core/utility/utility.dart';
-import 'package:prayer_times/domain/entities/payment_entity.dart';
-import 'package:prayer_times/presentation/common/custom_container.dart';
-import 'package:prayer_times/presentation/support_us/widgets/payment_icon_row.dart';
+import 'package:salat_times/core/config/prayer_time_app_screen.dart';
+import 'package:salat_times/core/static/ui_const.dart';
+import 'package:salat_times/core/utility/utility.dart';
+import 'package:salat_times/domain/entities/payment_entity.dart';
+import 'package:salat_times/presentation/common/custom_container.dart';
+import 'package:salat_times/presentation/support_us/widgets/payment_icon_row.dart';
 
 class MobilePaymentCardItem extends StatelessWidget {
   const MobilePaymentCardItem({

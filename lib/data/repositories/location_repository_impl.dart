@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:prayer_times/data/datasources/local/location_local_data_source.dart';
-import 'package:prayer_times/data/datasources/remote/location_remote_data_source.dart';
-import 'package:prayer_times/data/services/location_service.dart';
-import 'package:prayer_times/domain/entities/location_entity.dart';
-import 'package:prayer_times/domain/repositories/location_repository.dart';
+import 'package:salat_times/data/datasources/local/location_local_data_source.dart';
+import 'package:salat_times/data/datasources/remote/location_remote_data_source.dart';
+import 'package:salat_times/data/services/location_service.dart';
+import 'package:salat_times/domain/entities/location_entity.dart';
+import 'package:salat_times/domain/repositories/location_repository.dart';
 
 class LocationRepositoryImpl implements LocationRepository {
   final LocationRemoteDataSource _remoteDataSource;

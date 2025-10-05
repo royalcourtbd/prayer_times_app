@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:prayer_times/core/static/svg_path.dart';
-import 'package:prayer_times/presentation/home/presenter/home_presenter.dart';
-import 'package:prayer_times/presentation/home/widgets/home_app_bar_action_button.dart';
+import 'package:salat_times/core/config/prayer_time_app_screen.dart';
+import 'package:salat_times/core/static/svg_path.dart';
+import 'package:salat_times/presentation/home/presenter/home_presenter.dart';
+import 'package:salat_times/presentation/home/widgets/home_app_bar_action_button.dart';
 
 class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomePageAppBar({

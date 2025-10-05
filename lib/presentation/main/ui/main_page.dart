@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/di/service_locator.dart';
-import 'package:prayer_times/core/external_libs/presentable_widget_builder.dart';
-import 'package:prayer_times/core/utility/utility.dart';
-import 'package:prayer_times/presentation/event/ui/event_page.dart';
-import 'package:prayer_times/presentation/main/presenter/main_presenter.dart';
-import 'package:prayer_times/presentation/main/presenter/main_ui_state.dart';
-import 'package:prayer_times/presentation/main/widgets/double_tap_back_to_exit_app.dart';
-import 'package:prayer_times/presentation/main/widgets/main_navigation_bar.dart';
-import 'package:prayer_times/presentation/home/ui/home_page.dart';
-import 'package:prayer_times/presentation/prayer_tracker/ui/prayer_tracker_page.dart';
-import 'package:prayer_times/presentation/settings/ui/settings_page.dart';
+import 'package:salat_times/core/di/service_locator.dart';
+import 'package:salat_times/core/external_libs/presentable_widget_builder.dart';
+import 'package:salat_times/core/utility/utility.dart';
+import 'package:salat_times/presentation/event/ui/event_page.dart';
+import 'package:salat_times/presentation/main/presenter/main_presenter.dart';
+import 'package:salat_times/presentation/main/presenter/main_ui_state.dart';
+import 'package:salat_times/presentation/main/widgets/double_tap_back_to_exit_app.dart';
+import 'package:salat_times/presentation/main/widgets/main_navigation_bar.dart';
+import 'package:salat_times/presentation/home/ui/home_page.dart';
+import 'package:salat_times/presentation/prayer_tracker/ui/prayer_tracker_page.dart';
+import 'package:salat_times/presentation/settings/ui/settings_page.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});

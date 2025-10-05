@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/di/service_locator.dart';
-import 'package:prayer_times/core/external_libs/presentable_widget_builder.dart';
-import 'package:prayer_times/core/utility/utility.dart';
-import 'package:prayer_times/presentation/common/custom_modal_sheet.dart';
-import 'package:prayer_times/presentation/home/presenter/home_presenter.dart';
-import 'package:prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
-import 'package:prayer_times/presentation/common/custom_radio_list_tile.dart';
+import 'package:salat_times/core/di/service_locator.dart';
+import 'package:salat_times/core/external_libs/presentable_widget_builder.dart';
+import 'package:salat_times/core/utility/utility.dart';
+import 'package:salat_times/presentation/common/custom_modal_sheet.dart';
+import 'package:salat_times/presentation/home/presenter/home_presenter.dart';
+import 'package:salat_times/presentation/settings/presenter/settings_page_presenter.dart';
+import 'package:salat_times/presentation/common/custom_radio_list_tile.dart';
 
 class JuristicMethodBottomSheet extends StatelessWidget {
   JuristicMethodBottomSheet({super.key, required this.presenter});

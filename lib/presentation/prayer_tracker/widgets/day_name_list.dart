@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:prayer_times/core/utility/utility.dart';
+import 'package:salat_times/core/config/prayer_time_app_screen.dart';
+import 'package:salat_times/core/utility/utility.dart';
 
 class DayNameList extends StatelessWidget {
   const DayNameList({

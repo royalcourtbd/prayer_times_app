@@ -4,13 +4,13 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:app_settings/app_settings.dart';
-import 'package:prayer_times/core/external_libs/throttle_service.dart';
-import 'package:prayer_times/core/utility/logger_utility.dart';
-import 'package:prayer_times/core/utility/trial_utility.dart';
-import 'package:prayer_times/core/utility/number_utility.dart';
-import 'package:prayer_times/core/utility/utility.dart';
+import 'package:salat_times/core/external_libs/throttle_service.dart';
+import 'package:salat_times/core/utility/logger_utility.dart';
+import 'package:salat_times/core/utility/trial_utility.dart';
+import 'package:salat_times/core/utility/number_utility.dart';
+import 'package:salat_times/core/utility/utility.dart';
 
-import 'package:prayer_times/domain/service/notification_service.dart';
+import 'package:salat_times/domain/service/notification_service.dart';
 
 class NotificationServiceImpl implements NotificationService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;

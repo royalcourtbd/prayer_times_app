@@ -1,4 +1,4 @@
-import 'package:prayer_times/core/base/base_ui_state.dart';
+import 'package:salat_times/core/base/base_ui_state.dart';
 
 class MainUiState extends BaseUiState {
   const MainUiState({

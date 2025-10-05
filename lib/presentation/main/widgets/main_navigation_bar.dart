@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:prayer_times/core/static/svg_path.dart';
-import 'package:prayer_times/core/utility/utility.dart';
-import 'package:prayer_times/presentation/main/widgets/nav_destination_item.dart';
+import 'package:salat_times/core/config/prayer_time_app_screen.dart';
+import 'package:salat_times/core/static/svg_path.dart';
+import 'package:salat_times/core/utility/utility.dart';
+import 'package:salat_times/presentation/main/widgets/nav_destination_item.dart';
 
 class MainNavigationBar extends StatelessWidget {
   const MainNavigationBar({

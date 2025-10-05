@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/external_libs/animate_do/fades.dart';
-import 'package:prayer_times/core/utility/utility.dart';
+import 'package:salat_times/core/external_libs/animate_do/fades.dart';
+import 'package:salat_times/core/utility/utility.dart';
 
 class CircleStatusIndicator extends StatelessWidget {
   const CircleStatusIndicator({

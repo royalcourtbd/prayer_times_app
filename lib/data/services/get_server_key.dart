@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:googleapis_auth/auth_io.dart';
-import 'package:prayer_times/core/utility/logger_utility.dart';
-import 'package:prayer_times/core/utility/trial_utility.dart';
-import 'package:prayer_times/core/utility/utility.dart';
+import 'package:salat_times/core/utility/logger_utility.dart';
+import 'package:salat_times/core/utility/trial_utility.dart';
+import 'package:salat_times/core/utility/utility.dart';
 
 class GetServerKey {
   static const _scopes = [

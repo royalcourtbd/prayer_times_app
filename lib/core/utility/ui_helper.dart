@@ -1,12 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:prayer_times/core/base/base_presenter.dart';
-import 'package:prayer_times/core/base/base_ui_state.dart';
-import 'package:prayer_times/core/utility/logger_utility.dart';
-import 'package:prayer_times/core/utility/trial_utility.dart';
-import 'package:prayer_times/core/utility/utility.dart';
+import 'package:salat_times/core/base/base_presenter.dart';
+import 'package:salat_times/core/base/base_ui_state.dart';
+import 'package:salat_times/core/utility/logger_utility.dart';
+import 'package:salat_times/core/utility/trial_utility.dart';
+import 'package:salat_times/core/utility/utility.dart';
 
 class UiHelper {
   UiHelper._();

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:prayer_times/core/utility/logger_utility.dart';
-import 'package:prayer_times/domain/service/error_message_handler.dart';
+import 'package:salat_times/core/utility/logger_utility.dart';
+import 'package:salat_times/domain/service/error_message_handler.dart';
 
 /// The BaseUseCase class serves as a base for all use cases in the application.
 ///

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:prayer_times/core/di/service_locator.dart';
-import 'package:prayer_times/core/external_libs/animate_do/slides.dart';
-import 'package:prayer_times/core/external_libs/presentable_widget_builder.dart';
-import 'package:prayer_times/core/static/ui_const.dart';
-import 'package:prayer_times/presentation/common/custom_button.dart';
-import 'package:prayer_times/presentation/onboarding/presenter/onboarding_presenter.dart';
-import 'package:prayer_times/presentation/onboarding/presenter/onboarding_ui_state.dart';
-import 'package:prayer_times/presentation/onboarding/widgets/onboarding_content_widget.dart';
-import 'package:prayer_times/presentation/onboarding/widgets/skip_button_widget.dart';
+import 'package:salat_times/core/di/service_locator.dart';
+import 'package:salat_times/core/external_libs/animate_do/slides.dart';
+import 'package:salat_times/core/external_libs/presentable_widget_builder.dart';
+import 'package:salat_times/core/static/ui_const.dart';
+import 'package:salat_times/presentation/common/custom_button.dart';
+import 'package:salat_times/presentation/onboarding/presenter/onboarding_presenter.dart';
+import 'package:salat_times/presentation/onboarding/presenter/onboarding_ui_state.dart';
+import 'package:salat_times/presentation/onboarding/widgets/onboarding_content_widget.dart';
+import 'package:salat_times/presentation/onboarding/widgets/skip_button_widget.dart';
 
 class OnboardingPage extends StatelessWidget {
   OnboardingPage({super.key});

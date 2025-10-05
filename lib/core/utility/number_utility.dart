@@ -1,4 +1,4 @@
-import 'package:prayer_times/core/utility/trial_utility.dart';
+import 'package:salat_times/core/utility/trial_utility.dart';
 
 extension NumberUtilityExt on num {
   Duration get inMilliseconds => Duration(microseconds: (this * 1000).round());

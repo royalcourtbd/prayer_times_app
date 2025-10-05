@@ -1,6 +1,6 @@
 // prayer_time_ui_state.dart
-import 'package:prayer_times/core/base/base_ui_state.dart';
-import 'package:prayer_times/domain/entities/country_entity.dart';
+import 'package:salat_times/core/base/base_ui_state.dart';
+import 'package:salat_times/domain/entities/country_entity.dart';
 
 class SettingsPageUiState extends BaseUiState {
   const SettingsPageUiState({

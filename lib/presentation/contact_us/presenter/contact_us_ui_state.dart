@@ -1,5 +1,5 @@
-import 'package:prayer_times/core/base/base_ui_state.dart';
-import 'package:prayer_times/domain/entities/social_link_entity.dart';
+import 'package:salat_times/core/base/base_ui_state.dart';
+import 'package:salat_times/domain/entities/social_link_entity.dart';
 
 class ContactUsUiState extends BaseUiState {
   final List<SocialLinkEntity> socialLinks;

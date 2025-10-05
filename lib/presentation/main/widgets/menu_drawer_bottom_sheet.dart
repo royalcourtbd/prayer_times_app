@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:prayer_times/core/di/service_locator.dart';
-import 'package:prayer_times/core/static/svg_path.dart';
-import 'package:prayer_times/core/static/ui_const.dart';
-import 'package:prayer_times/core/utility/utility.dart';
-import 'package:prayer_times/presentation/common/settings_grid_item.dart';
-import 'package:prayer_times/presentation/main/presenter/menu_drawer_presenter.dart';
-import 'package:prayer_times/presentation/main/widgets/drawer_top_widget.dart';
-import 'package:prayer_times/presentation/notification/ui/notification_page.dart';
-import 'package:prayer_times/presentation/settings/presenter/settings_page_presenter.dart';
-import 'package:prayer_times/presentation/support_us/ui/support_us_page.dart';
+import 'package:salat_times/core/config/prayer_time_app_screen.dart';
+import 'package:salat_times/core/di/service_locator.dart';
+import 'package:salat_times/core/static/svg_path.dart';
+import 'package:salat_times/core/static/ui_const.dart';
+import 'package:salat_times/core/utility/utility.dart';
+import 'package:salat_times/presentation/common/settings_grid_item.dart';
+import 'package:salat_times/presentation/main/presenter/menu_drawer_presenter.dart';
+import 'package:salat_times/presentation/main/widgets/drawer_top_widget.dart';
+import 'package:salat_times/presentation/notification/ui/notification_page.dart';
+import 'package:salat_times/presentation/settings/presenter/settings_page_presenter.dart';
+import 'package:salat_times/presentation/support_us/ui/support_us_page.dart';
 
 class MenuDrawerBottomSheet extends StatelessWidget {
   MenuDrawerBottomSheet({super.key});

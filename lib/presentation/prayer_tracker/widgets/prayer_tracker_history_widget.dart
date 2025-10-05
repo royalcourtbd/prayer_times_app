@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:prayer_times/core/external_libs/svg_image.dart';
-import 'package:prayer_times/core/static/svg_path.dart';
-import 'package:prayer_times/core/static/ui_const.dart';
-import 'package:prayer_times/core/utility/utility.dart';
-import 'package:prayer_times/data/models/prayer_tracker_model.dart';
-import 'package:prayer_times/domain/entities/prayer_tracker_entity.dart';
-import 'package:prayer_times/presentation/home/models/waqt.dart';
+import 'package:salat_times/core/config/prayer_time_app_screen.dart';
+import 'package:salat_times/core/external_libs/svg_image.dart';
+import 'package:salat_times/core/static/svg_path.dart';
+import 'package:salat_times/core/static/ui_const.dart';
+import 'package:salat_times/core/utility/utility.dart';
+import 'package:salat_times/data/models/prayer_tracker_model.dart';
+import 'package:salat_times/domain/entities/prayer_tracker_entity.dart';
+import 'package:salat_times/presentation/home/models/waqt.dart';
 
 class PrayerTrackerHistoryWidget extends StatelessWidget {
   const PrayerTrackerHistoryWidget({

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:prayer_times/core/external_libs/flutter_animated_dialog/src/animated_dialog.dart';
-import 'package:prayer_times/core/static/svg_path.dart';
-import 'package:prayer_times/core/static/ui_const.dart';
-import 'package:prayer_times/core/utility/utility.dart';
-import 'package:prayer_times/presentation/common/custom_button.dart';
+import 'package:salat_times/core/config/prayer_time_app_screen.dart';
+import 'package:salat_times/core/external_libs/flutter_animated_dialog/src/animated_dialog.dart';
+import 'package:salat_times/core/static/svg_path.dart';
+import 'package:salat_times/core/static/ui_const.dart';
+import 'package:salat_times/core/utility/utility.dart';
+import 'package:salat_times/presentation/common/custom_button.dart';
 
 class RemoveDialog extends StatelessWidget {
   const RemoveDialog({

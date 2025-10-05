@@ -1,9 +1,9 @@
 // lib/data/repositories/prayer_time_repository_impl.dart
 
 import 'package:fpdart/fpdart.dart';
-import 'package:prayer_times/data/datasources/remote/prayer_time_datasource.dart';
-import 'package:prayer_times/domain/entities/prayer_time_entity.dart';
-import 'package:prayer_times/domain/repositories/prayer_time_repository.dart';
+import 'package:salat_times/data/datasources/remote/prayer_time_datasource.dart';
+import 'package:salat_times/domain/entities/prayer_time_entity.dart';
+import 'package:salat_times/domain/repositories/prayer_time_repository.dart';
 
 class PrayerTimeRepositoryImpl implements PrayerTimeRepository {
   final PrayerTimeDataSource _dataSource;

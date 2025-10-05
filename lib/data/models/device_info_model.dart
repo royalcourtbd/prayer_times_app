@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:prayer_times/core/utility/logger_utility.dart';
-import 'package:prayer_times/domain/entities/device_info_entity.dart';
+import 'package:salat_times/core/utility/logger_utility.dart';
+import 'package:salat_times/domain/entities/device_info_entity.dart';
 
 class DeviceInfoModel extends DeviceInfoEntity {
   const DeviceInfoModel({

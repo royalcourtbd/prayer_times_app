@@ -4,7 +4,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:prayer_times/core/utility/logger_utility.dart';
+import 'package:salat_times/core/utility/logger_utility.dart';
 
 const String _dbName = "prayer_tracker.db";
 

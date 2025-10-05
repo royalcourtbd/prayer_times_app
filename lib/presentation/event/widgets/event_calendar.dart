@@ -1,11 +1,11 @@
 // lib/presentation/prayer_tracker/widgets/prayer_tracker_calendar.dart
 
 import 'package:flutter/material.dart';
-import 'package:prayer_times/core/config/prayer_time_app_screen.dart';
-import 'package:prayer_times/core/static/ui_const.dart';
-import 'package:prayer_times/presentation/common/calendar_header_widget.dart';
-import 'package:prayer_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
-import 'package:prayer_times/presentation/prayer_tracker/widgets/week_view_calendar.dart';
+import 'package:salat_times/core/config/prayer_time_app_screen.dart';
+import 'package:salat_times/core/static/ui_const.dart';
+import 'package:salat_times/presentation/common/calendar_header_widget.dart';
+import 'package:salat_times/presentation/prayer_tracker/presenter/prayer_tracker_presenter.dart';
+import 'package:salat_times/presentation/prayer_tracker/widgets/week_view_calendar.dart';
 
 class EventCalendar extends StatelessWidget {
   const EventCalendar({

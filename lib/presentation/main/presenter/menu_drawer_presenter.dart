@@ -1,6 +1,6 @@
-import 'package:prayer_times/core/base/base_presenter.dart';
-import 'package:prayer_times/core/utility/utility.dart';
-import 'package:prayer_times/presentation/main/presenter/menu_drawer_ui_state.dart';
+import 'package:salat_times/core/base/base_presenter.dart';
+import 'package:salat_times/core/utility/utility.dart';
+import 'package:salat_times/presentation/main/presenter/menu_drawer_ui_state.dart';
 
 class MenuDrawerPresenter extends BasePresenter<MenuDrawerUiState> {
   final Obs<MenuDrawerUiState> uiState = Obs(MenuDrawerUiState.empty());

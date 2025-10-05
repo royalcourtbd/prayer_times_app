@@ -1,9 +1,9 @@
 // lib/data/services/database/prayer_database.dart
 
 import 'package:drift/drift.dart';
-import 'package:prayer_times/data/services/database/table/juristic_method_table.dart';
-import 'package:prayer_times/data/services/database/database_loader.dart';
-import 'package:prayer_times/data/services/database/table/prayer_tracker_table.dart';
+import 'package:salat_times/data/services/database/table/juristic_method_table.dart';
+import 'package:salat_times/data/services/database/database_loader.dart';
+import 'package:salat_times/data/services/database/table/prayer_tracker_table.dart';
 part 'prayer_database.g.dart';
 
 @DriftDatabase(tables: [JuristicMethodTable, PrayerTrackerTable])

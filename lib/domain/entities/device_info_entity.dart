@@ -1,4 +1,4 @@
-import 'package:prayer_times/core/base/base_entity.dart';
+import 'package:salat_times/core/base/base_entity.dart';
 
 class DeviceInfoEntity extends BaseEntity {
   final String deviceId;

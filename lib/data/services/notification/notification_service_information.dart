@@ -1,4 +1,4 @@
-import 'package:prayer_times/core/static/constants.dart';
+import 'package:salat_times/core/static/constants.dart';
 
 const String pushNotificationChannelKey = "${packageName}_push_notification";
 const String pushNotificationChannelName = "Push Notification Channel";

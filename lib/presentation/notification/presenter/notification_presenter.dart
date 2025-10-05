@@ -1,7 +1,7 @@
-import 'package:prayer_times/core/base/base_presenter.dart';
-import 'package:prayer_times/core/utility/utility.dart';
-import 'package:prayer_times/domain/usecases/get_notifications_usecase.dart';
-import 'package:prayer_times/presentation/notification/presenter/notification_ui_state.dart';
+import 'package:salat_times/core/base/base_presenter.dart';
+import 'package:salat_times/core/utility/utility.dart';
+import 'package:salat_times/domain/usecases/get_notifications_usecase.dart';
+import 'package:salat_times/presentation/notification/presenter/notification_ui_state.dart';
 
 class NotificationPresenter extends BasePresenter<NotificationUiState> {
   final GetNotificationsUseCase _getNotificationsUseCase;

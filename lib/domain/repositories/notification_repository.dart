@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:prayer_times/domain/entities/notification_entity.dart';
+import 'package:salat_times/domain/entities/notification_entity.dart';
 
 abstract class NotificationRepository {
   Future<Either<String, List<NotificationEntity>>> getNotifications();

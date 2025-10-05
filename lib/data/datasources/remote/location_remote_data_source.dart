@@ -1,6 +1,6 @@
 import 'package:geocoding/geocoding.dart';
-import 'package:prayer_times/core/utility/trial_utility.dart';
-import 'package:prayer_times/domain/entities/location_entity.dart';
+import 'package:salat_times/core/utility/trial_utility.dart';
+import 'package:salat_times/domain/entities/location_entity.dart';
 
 abstract class LocationRemoteDataSource {
   Future<LocationEntity> getPlaceNameFromCoordinates({
