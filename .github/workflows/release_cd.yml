@@ -1,0 +1,193 @@
+name: Enhanced Release Pipeline
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+  actions: read
+  checks: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for changelog
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.5"
+          cache: true
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            ~/.gradle/caches
+          key: ${{ runner.os }}-deps-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate build files
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build APK
+        run: flutter build apk --release --obfuscate --split-debug-info=./debug-info
+
+      - name: Build AAB
+        run: flutter build appbundle --release --obfuscate --split-debug-info=./debug-info
+
+      # Combined: Build verification from Code 1
+      - name: Verify build outputs
+        run: |
+          echo "Checking APK file:"
+          ls -la build/app/outputs/flutter-apk/
+          echo "Checking AAB file:"
+          ls -la build/app/outputs/bundle/release/
+
+          # Verify files exist
+          if [ ! -f "build/app/outputs/flutter-apk/app-release.apk" ]; then
+            echo "❌ APK file not found!"
+            exit 1
+          fi
+
+          if [ ! -f "build/app/outputs/bundle/release/app-release.aab" ]; then
+            echo "❌ AAB file not found!"
+            exit 1
+          fi
+
+          echo "✅ Both files found successfully"
+
+      # Improved: Better app info extraction from Code 2
+      - name: Get app info from pubspec
+        id: app_info
+        run: |
+          # Get version (improved parsing)
+          VERSION=$(grep '^version:' pubspec.yaml | sed 's/version: *//' | cut -d '+' -f 1)
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+          # Get app name (dynamic) - fallback to repository name if not found
+          if grep -q '^name:' pubspec.yaml; then
+            APP_NAME=$(grep '^name:' pubspec.yaml | sed 's/name: *//' | tr '_' ' ' | sed 's/\b\w/\U&/g')
+          else
+            APP_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2 | tr '_-' ' ' | sed 's/\b\w/\U&/g')
+          fi
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_OUTPUT
+
+          # Generate changelog from commits since last tag
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
+          if [ -n "$PREVIOUS_TAG" ]; then
+            echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+            git log $PREVIOUS_TAG..HEAD --oneline --pretty=format:"- %s" >> $GITHUB_OUTPUT
+            echo "" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "CHANGELOG=Initial release" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Calculate file sizes
+        id: file_sizes
+        run: |
+          APK_SIZE=$(du -h build/app/outputs/flutter-apk/app-release.apk | cut -f1)
+          AAB_SIZE=$(du -h build/app/outputs/bundle/release/app-release.aab | cut -f1)
+          echo "APK_SIZE=$APK_SIZE" >> $GITHUB_OUTPUT
+          echo "AAB_SIZE=$AAB_SIZE" >> $GITHUB_OUTPUT
+          echo "APK Size: $APK_SIZE"
+          echo "AAB Size: $AAB_SIZE"
+
+      # Improved: Better date formatting with timezone support
+      - name: Format build date
+        id: build_date
+        run: |
+          # Convert to Bangladesh time and format (fallback to UTC if timezone not available)
+          if command -v timedatectl &> /dev/null; then
+            BUILD_DATE=$(TZ='Asia/Dhaka' date +'%d %B %Y - %l:%M%p' | sed 's/AM/am/g; s/PM/pm/g; s/  / /g')
+          else
+            BUILD_DATE=$(date -u +'%d %B %Y - %l:%M%p UTC' | sed 's/AM/am/g; s/PM/pm/g; s/  / /g')
+          fi
+          echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_OUTPUT
+
+      # Using ncipollo/release-action for better flexibility
+      - name: Create Enhanced Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref_name }}
+          name: 🚇 ${{ steps.app_info.outputs.APP_NAME }} ${{ github.ref_name }}
+          body: |
+            ## 🚇 ${{ steps.app_info.outputs.APP_NAME }} Release ${{ github.ref_name }}
+
+            ### 📱 Download
+
+            | File Type | Size | Description |
+            |-----------|------|-------------|
+            | **APK** | ${{ steps.file_sizes.outputs.APK_SIZE }} | Direct install for Android devices |
+            | **AAB** | ${{ steps.file_sizes.outputs.AAB_SIZE }} | Google Play Store bundle |
+
+            ### 🔄 What's Changed
+            ${{ steps.app_info.outputs.CHANGELOG }}
+
+            ### 📋 Installation Instructions
+
+            **For APK:**
+            1. Download `app-release.apk` below
+            2. Enable "Install from Unknown Sources" in Android Settings
+            3. Open and install the APK
+
+            **System Requirements:**
+            - Android 7.0+ (API 24)
+            - 50MB+ free storage
+
+            ### 🛡️ Security
+            - Code obfuscated for security
+            - Built with Flutter 3.32.5
+            - All dependencies up to date
+
+            ---
+
+            **App Version:** ${{ steps.app_info.outputs.VERSION }}  
+            **Build Date:** ${{ steps.build_date.outputs.BUILD_DATE }}  
+            **Commit:** [`${{ github.sha }}`](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+          draft: false
+          prerelease: false
+          artifacts: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/bundle/release/app-release.aab
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
+          removeArtifacts: false
+
+      - name: Upload to Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.app_info.outputs.APP_NAME }}-release-${{ github.ref_name }}
+          path: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/bundle/release/app-release.aab
+          retention-days: 30
+
+      # Additional: Notify on success/failure
+      - name: Notify on Success
+        if: success()
+        run: |
+          echo "✅ Release ${{ github.ref_name }} created successfully!"
+          echo "📱 APK Size: ${{ steps.file_sizes.outputs.APK_SIZE }}"
+          echo "📦 AAB Size: ${{ steps.file_sizes.outputs.AAB_SIZE }}"
+
+      - name: Notify on Failure
+        if: failure()
+        run: |
+          echo "❌ Release pipeline failed for ${{ github.ref_name }}"
+          echo "Please check the logs above for details."
