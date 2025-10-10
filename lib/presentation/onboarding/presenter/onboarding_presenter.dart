@@ -11,6 +11,7 @@ import 'package:salat_times/presentation/main/presenter/main_presenter.dart';
 import 'package:salat_times/presentation/main/ui/main_page.dart';
 import 'package:salat_times/presentation/onboarding/presenter/onboarding_ui_state.dart';
 import 'package:salat_times/presentation/home/presenter/home_presenter.dart';
+import 'package:salat_times/presentation/settings/presenter/settings_page_presenter.dart';
 
 class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
   final DetermineFirstRunUseCase _determineFirstRunUseCase;
@@ -25,6 +26,8 @@ class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
   OnboardingUiState get currentUiState => uiState.value;
   final MainPresenter mainPresenter = locate<MainPresenter>();
   final HomePresenter homePresenter = locate<HomePresenter>();
+  final SettingsPagePresenter settingsPresenter =
+      locate<SettingsPagePresenter>();
 
   final PageController pageController = PageController();
 
@@ -151,9 +154,10 @@ class OnboardingPresenter extends BasePresenter<OnboardingUiState> {
     }
   }
 
-  void onManualLocationTap() {
+  void onManualLocationTap(bool isManualLocationSelected) {
     Future.microtask(() async {
-      currentUiState.context!.navigatorPushReplacement(MainPage());
+      settingsPresenter.onManualLocationSelected(
+          isManualLocationSelected: isManualLocationSelected);
       await doneWithFirstTime();
     });
   }

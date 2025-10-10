@@ -34,49 +34,55 @@ class OnboardingPage extends StatelessWidget {
         return Scaffold(
           body: Stack(
             children: [
-              Column(
-                children: [
-                  Expanded(
-                    child: PageView.builder(
-                      controller: _presenter.pageController,
-                      onPageChanged: (page) =>
-                          _presenter.onPageChanged(page: page),
-                      itemCount: onboardingPages.length,
-                      itemBuilder: (context, index) => OnboardingContentWidget(
-                        content: onboardingPages[index],
-                        theme: theme,
+              SafeArea(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: PageView.builder(
+                        controller: _presenter.pageController,
+                        onPageChanged: (page) =>
+                            _presenter.onPageChanged(page: page),
+                        itemCount: onboardingPages.length,
+                        itemBuilder: (context, index) =>
+                            OnboardingContentWidget(
+                          content: onboardingPages[index],
+                          theme: theme,
+                        ),
                       ),
                     ),
-                  ),
-                  if (currentUiState.currentPage < 2) ...[
-                    SlideInUp(
-                      duration: const Duration(milliseconds: 400),
-                      child: CustomButton(
-                        title: 'Continue',
-                        onPressed: _presenter.onNextTap,
+                    if (currentUiState.currentPage < 2) ...[
+                      SlideInUp(
+                        duration: const Duration(milliseconds: 400),
+                        child: CustomButton(
+                          title: 'Continue',
+                          onPressed: _presenter.onNextTap,
+                        ),
                       ),
-                    ),
-                    gapH20,
-                  ] else ...[
-                    SlideInUp(
-                      duration: const Duration(milliseconds: 400),
-                      child: CustomButton(
-                        title: 'Allow Location Access',
-                        onPressed: _presenter.onLocationAccessTap,
+                      gapH20,
+                    ] else ...[
+                      SlideInUp(
+                        duration: const Duration(milliseconds: 400),
+                        child: CustomButton(
+                          title: 'Allow Location Access',
+                          onPressed: () {
+                            _presenter.onManualLocationTap(false);
+                            _presenter.onLocationAccessTap;
+                          },
+                        ),
                       ),
-                    ),
-                    // gapH20,
-                    // SlideInUp(
-                    //   duration: const Duration(milliseconds: 200),
-                    //   child: CustomButton(
-                    //     title: 'Select Location Manually',
-                    //     isPrimary: false,
-                    //     onPressed: _presenter.onManualLocationTap,
-                    //   ),
-                    // ),
-                    gapH20,
+                      gapH20,
+                      SlideInUp(
+                        duration: const Duration(milliseconds: 200),
+                        child: CustomButton(
+                          title: 'Select Location Manually',
+                          isPrimary: false,
+                          onPressed: () => _presenter.onManualLocationTap(true),
+                        ),
+                      ),
+                      gapH20,
+                    ],
                   ],
-                ],
+                ),
               ),
               if (currentUiState.currentPage < onboardingPages.length - 1) ...[
                 SkipButtonWidget(
